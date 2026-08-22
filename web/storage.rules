@@ -1,0 +1,23 @@
+rules_version = '2';
+
+// ═══════════════════════════════════════════════════════════════
+// Firebase Storage Rules — diBISAlitas / BiPINTAR
+// Aplikasi TIDAK memakai Firebase Storage (unggahan gambar melalui Cloudinary).
+// Karena itu bucket dikunci total sebagai default aman. Jika di kemudian hari
+// Anda memakai Storage, ganti aturan di bawah dengan kebijakan per-path yang tepat.
+// ═══════════════════════════════════════════════════════════════
+
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /obstacle_reports/{fileName} {
+      allow read: if true;
+      // Membatasi ukuran 5MB, format gambar, dan harus login
+      allow write: if request.auth != null 
+                   && request.resource.size < 5 * 1024 * 1024 
+                   && request.resource.contentType.matches('image/.*');
+    }
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}

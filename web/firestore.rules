@@ -1,0 +1,124 @@
+rules_version = '2';
+
+// ═══════════════════════════════════════════════════════════════
+// Firestore Security Rules — diBISAlitas / BiPINTAR
+// Prinsip: least-privilege. Otorisasi ditegakkan di server (rules),
+// BUKAN hanya di klien.
+//
+// CATATAN PENTING SEBELUM DEPLOY:
+//  1. Akun admin HARUS memiliki dokumen users/{uid} dengan field role == "admin".
+//     (Registrasi biasa menulis role: "user". Ubah manual lewat Console/Admin SDK,
+//      atau lebih baik pakai Custom Claims.)
+//  2. Uji rules ini di Firebase Console → Rules Playground / Emulator sebelum
+//     deploy ke produksi.
+//  3. Deploy: `firebase deploy --only firestore:rules,firestore:indexes`
+// ═══════════════════════════════════════════════════════════════
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ── Helper functions ──
+    function isSignedIn() {
+      return request.auth != null;
+    }
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+    function isAdmin() {
+      return isSignedIn()
+        && exists(/databases/$(database)/documents/users/$(request.auth.uid))
+        && (
+          get(/databases/$(database)/documents/users/$(request.auth.uid)).data.get('role', 'user') == 'admin'
+          || get(/databases/$(database)/documents/users/$(request.auth.uid)).data.get('isAdmin', false) == true
+        );
+    }
+
+    // ── users ──
+    // User hanya boleh membaca/menulis dokumennya sendiri, dan TIDAK BOLEH
+    // menetapkan/mengubah field privilege (role/isAdmin). Admin punya akses penuh.
+    match /users/{userId} {
+      allow read: if isOwner(userId) || isAdmin();
+      allow create: if isOwner(userId)
+        && request.resource.data.get('role', 'user') == 'user'
+        && request.resource.data.get('isAdmin', false) == false;
+      allow update: if isAdmin() || (
+        isOwner(userId)
+        && request.resource.data.get('role', 'user') == resource.data.get('role', 'user')
+        && request.resource.data.get('isAdmin', false) == resource.data.get('isAdmin', false)
+      );
+      allow delete: if isAdmin();
+    }
+
+    // ── emergency_reports (BiSAFE) ──
+    // Pengguna terautentikasi membuat laporan atas namanya sendiri.
+    // Pemilik dapat membaca/membatalkan laporannya; admin melihat & menindaklanjuti semua.
+    match /emergency_reports/{reportId} {
+      allow create: if isSignedIn()
+        && request.resource.data.get('userId', '') == request.auth.uid;
+      allow read: if isAdmin()
+        || (isSignedIn() && resource.data.get('userId', '') == request.auth.uid);
+      allow update, delete: if isAdmin()
+        || (isSignedIn() && resource.data.get('userId', '') == request.auth.uid);
+    }
+
+    // ── emergency_contacts ──
+    // Sepenuhnya milik pengguna (per userId).
+    match /emergency_contacts/{contactId} {
+      allow create: if isSignedIn()
+        && request.resource.data.get('userId', '') == request.auth.uid;
+      allow read, update, delete: if isSignedIn()
+        && resource.data.get('userId', '') == request.auth.uid;
+    }
+
+    // ── obstacle_reports (BiJALAN) ──
+    // Data komunitas: setiap pengguna terautentikasi boleh membuat, membaca,
+    // dan meng-upvote/menandai. Hapus hanya oleh pemilik atau admin.
+    match /obstacle_reports/{reportId} {
+      allow create: if isSignedIn();
+      allow read: if isSignedIn();
+      allow update: if isSignedIn();
+      allow delete: if isAdmin()
+        || (isSignedIn() && resource.data.get('reporterId', '') == request.auth.uid);
+    }
+
+    // ── accessible_routes ──
+    match /accessible_routes/{routeId} {
+      allow read: if isSignedIn();
+      allow write: if isAdmin();
+    }
+
+    // ── announcements ── (konten publik; tulis hanya admin)
+    match /announcements/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // ── bipintar_courses ── (konten publik; tulis hanya admin)
+    match /bipintar_courses/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // ── quiz_scores (BiPINTAR — Tantangan Isyarat / leaderboard) ──
+    // Papan peringkat: setiap pengguna terautentikasi boleh membaca.
+    // Menulis HANYA baris miliknya sendiri (data.userId == uid). Hapus oleh admin.
+    match /quiz_scores/{docId} {
+      allow read: if isSignedIn();
+      allow create, update: if isSignedIn()
+        && request.resource.data.get('userId', '') == request.auth.uid;
+      allow delete: if isAdmin();
+    }
+
+    // ── learning_stats (BiPINTAR — statistik belajar per user) ──
+    // Sepenuhnya milik pengguna: hanya pemilik yang boleh baca/tulis dokumennya.
+    match /learning_stats/{userId} {
+      allow read: if isOwner(userId) || isAdmin();
+      allow write: if isOwner(userId);
+    }
+
+    // ── Default: tolak semua yang tidak cocok di atas ──
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

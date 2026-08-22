@@ -1,0 +1,40 @@
+names:
+- Ain
+- Alif
+- Ba
+- Dal
+- Dhad
+- Dzal
+- Fa
+- Gain
+- Ha
+- Hha
+- Jim
+- Kaf
+- Kha
+- Lam
+- Mim
+- Nun
+- Qaf
+- Ra
+- Shad
+- Sin
+- Syin
+- Ta
+- TaMarbutah
+- Tha
+- Tsa
+- Waw
+- Ya
+- Zaa
+- Zay
+nc: 29
+roboflow:
+  license: CC BY 4.0
+  project: deteksi-huruf-hijaiyah
+  url: https://universe.roboflow.com/proyekskripsi/deteksi-huruf-hijaiyah/dataset/2
+  version: 2
+  workspace: proyekskripsi
+test: ../test/images
+train: ../train/images
+val: ../valid/images

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "844088774514",
+    "project_id": "dibisalitas-bcbcc",
+    "storage_bucket": "dibisalitas-bcbcc.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:844088774514:android:ac56b275decf775f31d7eb",
+        "android_client_info": {
+          "package_name": "com.dibisalitas.dibisalitas"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDpOfeTvm_x4VgbpjuP_kMrBMrX02PoWBs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

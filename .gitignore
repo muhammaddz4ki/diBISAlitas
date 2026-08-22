@@ -1,0 +1,46 @@
+# Environment and Local Configs
+.env
+.env*.local
+*.pem
+
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Build Outputs
+.next/
+out/
+build/
+dist/
+.vercel
+.firebase/
+
+# Flutter / Mobile
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+mobile/.dart_tool/
+mobile/build/
+mobile/.flutter-plugins
+mobile/.flutter-plugins-dependencies
+
+# IDE and OS
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.iml
+
+# Internal Development Docs & Notes (AI Prompts / Audits)
+ARCHITECTURE.md
+AUDIT_REPORT.md
+Prompt*.md
+STATUS*.md
+*.docx
+*.original.*
+CLAUDE.md
+AGENTS.md
+web/CLAUDE.md
+web/AGENTS.md
+web/scripts/README.md
