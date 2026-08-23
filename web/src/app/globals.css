@@ -69,7 +69,6 @@ body {
   padding: 1px;
   background: linear-gradient(135deg, #1B9981, #00D4AA, #0EA5E9);
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   opacity: 0;
