@@ -83,55 +83,68 @@ export default function BiSapaPage() {
   };
 
   return (
-    <div className="flex flex-col h-full bg-slate-50 font-sans">
+    <div className="flex flex-col h-full bg-[#f4f6fc] font-sans selection:bg-[#1B9981]/20">
       
       {/* ── TOP SECTION (Rotated 180) ── */}
-      <div className="flex-1 flex flex-col justify-end p-6 bg-[#00B894] rotate-180 rounded-b-3xl">
-        <div className="w-full h-full flex flex-col justify-between pt-6">
-          <div className="text-white/80 font-medium text-sm flex items-center justify-center gap-2">
-            <Mic className="w-4 h-4" /> Area Suara (Tunanetra)
+      <div className="flex-[0.45] flex flex-col p-6 pt-10 pb-12 bg-gradient-to-br from-[#1B9981] to-[#00D4AA] rotate-180 rounded-b-[2.5rem] shadow-3d z-20 border-b-2 border-white/40">
+        <div className="w-full h-full flex flex-col justify-between max-w-md mx-auto">
+          <div className="text-white/90 font-black tracking-wide text-[12px] uppercase flex items-center justify-center gap-2 drop-shadow-md">
+            <Mic className="w-4 h-4" strokeWidth={2.5} /> Area Suara (Tunanetra)
           </div>
           
           <textarea
             value={topText}
             onChange={(e) => setTopText(e.target.value)}
-            placeholder="Hasil suara akan muncul di sini..."
-            className="w-full flex-1 mt-4 bg-white/10 border-transparent rounded-3xl p-6 text-white placeholder-white/50 focus:bg-white/20 focus:ring-0 resize-none text-2xl font-bold leading-relaxed text-center"
+            placeholder="Ketuk tombol mic untuk bicara..."
+            className="w-full flex-1 my-5 bg-white/10 border-none rounded-[28px] p-6 text-white placeholder-white/60 focus:bg-white/20 focus:outline-none focus:ring-0 resize-none text-[24px] font-bold leading-relaxed text-center shadow-[inset_2px_2px_10px_rgba(0,0,0,0.1)] transition-all"
             readOnly={isListening}
           />
 
-          <div className="flex justify-center gap-4 mt-6">
+          <div className="flex justify-center items-center gap-5">
             <button
               onClick={() => speakText(topText)}
-              className="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-lg hover:scale-105 transition-transform"
+              className="w-[56px] h-[56px] bg-white/20 hover:bg-white/30 rounded-[20px] flex items-center justify-center shadow-[0_8px_16px_rgba(0,0,0,0.1)] border-none transition-all backdrop-blur-md active:scale-95"
             >
-              <Volume2 className="w-8 h-8 text-[#00B894]" />
+              <Volume2 className="w-6 h-6 text-white drop-shadow-md" strokeWidth={2.5} />
             </button>
-            <button
-              onClick={toggleListen}
-              className={`w-16 h-16 rounded-full flex items-center justify-center shadow-lg transition-all ${isListening ? "bg-red-500 hover:bg-red-600 scale-110" : "bg-white hover:scale-105"}`}
-            >
-              {isListening ? <MicOff className="w-8 h-8 text-white" /> : <Mic className="w-8 h-8 text-[#00B894]" />}
-            </button>
+            
+            {/* Main Action Button with Pulse if listening */}
+            <div className="relative">
+              {isListening && (
+                <span className="absolute inset-0 rounded-[28px] bg-rose-400 animate-ping opacity-75"></span>
+              )}
+              <button
+                onClick={toggleListen}
+                className={`relative w-[80px] h-[80px] rounded-[28px] flex items-center justify-center shadow-[0_8px_16px_rgba(0,0,0,0.15)] border-none transition-all active:scale-95 backdrop-blur-md
+                  ${isListening ? "bg-rose-500 hover:bg-rose-600 shadow-[0_0_30px_rgba(244,63,94,0.6)]" : "bg-white/20 hover:bg-white/30"}`}
+              >
+                {isListening ? (
+                  <MicOff className="w-9 h-9 text-white drop-shadow-md" strokeWidth={2.5} />
+                ) : (
+                  <Mic className="w-9 h-9 text-white drop-shadow-md" strokeWidth={2.5} />
+                )}
+              </button>
+            </div>
+
             <button
               onClick={() => setTopText("")}
-              className="w-16 h-16 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition-colors"
+              className="w-[56px] h-[56px] bg-white/10 hover:bg-white/20 rounded-[20px] flex items-center justify-center shadow-[0_8px_16px_rgba(0,0,0,0.1)] border-none transition-all backdrop-blur-md active:scale-95"
             >
-              <XCircle className="w-8 h-8 text-white" />
+              <XCircle className="w-6 h-6 text-white drop-shadow-md" strokeWidth={2.5} />
             </button>
           </div>
         </div>
       </div>
 
       {/* ── BOTTOM SECTION (Normal) ── */}
-      <div className="flex-1 flex flex-col p-6 bg-white rounded-t-3xl shadow-[0_-10px_40px_-15px_rgba(0,0,0,0.1)] z-10 -mt-6">
-        <div className="w-full h-full flex flex-col justify-between pb-6">
-          <div className="text-slate-500 font-medium text-sm flex items-center justify-center gap-2 pt-2">
-            <Type className="w-4 h-4" /> Area Ketik (Tunarungu)
+      <div className="flex-[0.55] flex flex-col p-6 bg-[#f4f6fc] rounded-t-[2.5rem] z-10 -mt-8 pt-14">
+        <div className="w-full h-full flex flex-col justify-between max-w-md mx-auto">
+          <div className="text-slate-800 font-black tracking-wide text-[12px] uppercase flex items-center justify-center gap-2 text-3d drop-shadow-sm">
+            <Type className="w-4 h-4" strokeWidth={2.5} /> Area Ketik (Tunarungu)
           </div>
 
-          {/* Frasa cepat — ketuk untuk langsung disuarakan */}
-          <div className="flex gap-2 overflow-x-auto mt-3 pb-1 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none']">
+          {/* Frasa cepat - Better spacing and touch targets */}
+          <div className="flex gap-4 overflow-x-auto mt-6 pb-4 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none'] px-2 -mx-2">
             {QUICK_PHRASES.map((p) => (
               <button
                 key={p}
@@ -139,7 +152,7 @@ export default function BiSapaPage() {
                   setBottomText(p);
                   speakText(p);
                 }}
-                className="shrink-0 px-4 py-2 rounded-full bg-[#00B894]/10 text-[#00B894] text-sm font-semibold hover:bg-[#00B894]/20 active:scale-95 transition-all whitespace-nowrap"
+                className="shrink-0 px-5 py-3.5 rounded-[16px] bg-[#f4f6fc] text-slate-700 hover:text-[#1B9981] text-[14px] font-bold transition-all duration-300 ease-out shadow-[4px_4px_10px_rgba(15,23,42,0.08),_-4px_-4px_10px_rgba(255,255,255,1)] active:shadow-[inset_4px_4px_10px_rgba(0,0,0,0.05),_inset_-4px_-4px_10px_rgba(255,255,255,1)] active:scale-[0.97]"
               >
                 {p}
               </button>
@@ -150,21 +163,21 @@ export default function BiSapaPage() {
             value={bottomText}
             onChange={(e) => setBottomText(e.target.value)}
             placeholder="Ketik pesan Anda di sini..."
-            className="w-full flex-1 mt-4 bg-slate-50 border-transparent rounded-3xl p-6 text-slate-800 placeholder-slate-400 focus:bg-slate-100 focus:ring-0 resize-none text-2xl font-bold leading-relaxed text-center"
+            className="w-full flex-1 my-4 bg-[#f4f6fc] border-none rounded-[28px] p-6 text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-0 resize-none text-[24px] font-bold leading-relaxed text-center shadow-[inset_4px_4px_10px_rgba(0,0,0,0.06),_inset_-4px_-4px_12px_rgba(255,255,255,1)] transition-all"
           />
 
-          <div className="flex justify-center gap-4 mt-6">
+          <div className="flex justify-center items-center gap-5 mt-2">
             <button
               onClick={() => speakText(bottomText)}
-              className="w-16 h-16 bg-[#00B894] rounded-full flex items-center justify-center shadow-lg hover:scale-105 transition-transform"
+              className="w-[80px] h-[80px] bg-gradient-to-br from-[#1B9981] to-[#00D4AA] rounded-[28px] flex items-center justify-center shadow-3d shadow-3d-active border-none icon-3d transition-all active:scale-95"
             >
-              <Volume2 className="w-8 h-8 text-white" />
+              <Volume2 className="w-9 h-9 text-white drop-shadow-md" strokeWidth={2.5} />
             </button>
             <button
               onClick={() => setBottomText("")}
-              className="w-16 h-16 bg-slate-100 hover:bg-slate-200 rounded-full flex items-center justify-center transition-colors"
+              className="w-[56px] h-[56px] bg-transparent hover:bg-slate-50 rounded-[20px] flex items-center justify-center shadow-[inset_2px_2px_5px_rgba(0,0,0,0.05),_inset_-3px_-3px_7px_rgba(255,255,255,1)] border-none transition-all active:scale-95"
             >
-              <XCircle className="w-8 h-8 text-slate-400" />
+              <XCircle className="w-6 h-6 text-slate-400" strokeWidth={2.5} />
             </button>
           </div>
         </div>

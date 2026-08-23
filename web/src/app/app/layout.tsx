@@ -42,9 +42,11 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
               if (pathname.includes("/bisafe")) return 2;
               if (pathname.includes("/peta")) return 3;
               if (pathname.includes("/profile")) return 4;
-              return 0;
+              return -1; // -1 jika di halaman lain yang bukan bagian dari menu bawah
             };
             const activeIndex = getActiveIndex();
+            // Posisi visual lubang dan bola (jika -1, sembunyikan di posisi tengah / BiSAFE)
+            const visualIndex = activeIndex === -1 ? 2 : activeIndex;
 
             return (
               <nav className="absolute bottom-0 w-full pt-3 pb-7 sm:pb-4 z-50 shadow-[0_-10px_40px_rgba(0,0,0,0.08)]" role="navigation" aria-label="Menu utama">
@@ -54,7 +56,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
                   <div 
                     className="absolute top-[-34px] w-[68px] h-[68px] bg-transparent rounded-full z-0"
                     style={{ 
-                      left: `calc(10% + 20% * ${activeIndex})`, 
+                      left: `calc(10% + 20% * ${visualIndex})`, 
                       transform: 'translateX(-50%)',
                       transition: 'left 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)',
                       boxShadow: '0 34px 0 2000px #ffffff' /* Menggambar latar navbar putih dengan presisi Y=0 */
@@ -77,10 +79,10 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
                 <div 
                   className="absolute top-[-26px] w-[52px] h-[52px] rounded-full bg-gradient-to-br from-[#1B9981] to-[#00D4AA] shadow-[0_4px_12px_rgba(0,184,148,0.4)] z-0 pointer-events-none"
                   style={{ 
-                    left: `calc(10% + 20% * ${activeIndex})`, 
+                    left: `calc(10% + 20% * ${visualIndex})`, 
                     transform: 'translateX(-50%)',
                     transition: 'left 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s',
-                    opacity: activeIndex === 2 ? 0 : 1 /* Sembunyikan bola hijau saat di BiSAFE */
+                    opacity: (activeIndex === 2 || activeIndex === -1) ? 0 : 1 /* Sembunyikan bola hijau saat di BiSAFE atau di luar menu */
                   }}
                 />
 
