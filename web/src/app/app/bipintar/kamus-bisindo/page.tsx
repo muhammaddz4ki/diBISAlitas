@@ -89,45 +89,45 @@ export default function KamusBisindoPage() {
   }, [stats]);
 
   return (
-    <div className="min-h-full bg-white flex flex-col pb-10">
+    <div className="min-h-full bg-[#f4f6fc] flex flex-col pb-10">
       {/* Header */}
       <div className="px-6 pt-12 pb-5">
         <div className="flex items-center justify-between mb-4">
           <Link
             href="/app/bipintar"
             aria-label="Kembali"
-            className="w-11 h-11 flex items-center justify-center rounded-full bg-[#00B894]/10 active:scale-95 transition-transform"
+            className="w-11 h-11 flex items-center justify-center rounded-full bg-[#f4f6fc] shadow-3d shadow-3d-active border border-white active:scale-95 transition-transform"
           >
-            <ArrowLeft className="w-5 h-5 text-[#00B894]" strokeWidth={2.5} />
+            <ArrowLeft className="w-5 h-5 text-[#0984E3] drop-shadow-sm" strokeWidth={2.5} />
           </Link>
           <div className="w-11 h-11" />
         </div>
-        <div className="flex items-center gap-3">
-          <div className="w-12 h-12 rounded-2xl bg-[#0984E3]/10 flex items-center justify-center">
-            <GraduationCap className="w-6 h-6 text-[#0984E3]" strokeWidth={2.4} />
+        <div className="flex items-center gap-4 mt-2">
+          <div className="w-14 h-14 rounded-2xl bg-[#f4f6fc] shadow-[inset_2px_2px_5px_rgba(0,0,0,0.05),_inset_-3px_-3px_7px_rgba(255,255,255,1)] border border-white flex items-center justify-center">
+            <GraduationCap className="w-7 h-7 text-[#0984E3]" strokeWidth={2.4} />
           </div>
           <div>
-            <h1 className="text-[22px] font-black text-slate-800 tracking-tight leading-none">Kamus BISINDO</h1>
-            <p className="text-slate-400 text-[12px] font-semibold mt-1">
-              48 isyarat BISINDO · {learnedCount} dikuasai
+            <h1 className="text-[24px] font-black text-slate-800 tracking-tight leading-none text-3d">Kamus BISINDO</h1>
+            <p className="text-slate-500 text-[12px] font-bold mt-1.5 uppercase tracking-wide text-3d">
+              48 Isyarat · {learnedCount} Dikuasai
             </p>
           </div>
         </div>
       </div>
 
       {/* Grid huruf */}
-      <div className="px-5 grid grid-cols-3 gap-3">
+      <div className="px-6 grid grid-cols-3 gap-4">
         {UMUM_LABELS.map((l) => {
           const m = masteryOf(stats?.letters?.[String(l.id)]);
           return (
             <button
               key={l.id}
               onClick={() => setSelected(l)}
-              className="relative bg-white border border-slate-100 rounded-3xl py-4 flex flex-col items-center shadow-[0_4px_16px_-10px_rgba(0,0,0,0.2)] active:scale-95 transition-transform"
+              className="relative bg-[#f4f6fc] border border-white rounded-[24px] py-4 flex flex-col items-center shadow-3d shadow-3d-active active:scale-95 transition-all"
             >
-              <span className={`absolute top-2.5 right-2.5 w-2.5 h-2.5 rounded-full ${masteryStyle[m].dot}`} />
+              <span className={`absolute top-3 right-3 w-2.5 h-2.5 rounded-full shadow-inner ${masteryStyle[m].dot}`} />
               
-              <div className="w-16 h-16 sm:w-20 sm:h-20 mb-2 overflow-hidden flex items-center justify-center">
+              <div className="w-16 h-16 sm:w-20 sm:h-20 mb-2 overflow-hidden flex items-center justify-center mix-blend-multiply opacity-80">
                 <StaticGif 
                   src={
                     l.label.length === 1
@@ -135,11 +135,11 @@ export default function KamusBisindoPage() {
                       : `/gifs/bisindo/${l.label.toLowerCase()}.gif`
                   } 
                   alt={`Isyarat ${l.indo}`} 
-                  className="w-full h-full object-contain"
+                  className="w-full h-full object-contain drop-shadow-sm"
                 />
               </div>
 
-              <span className="text-[13px] font-bold text-slate-700 leading-tight text-center px-2">{l.indo}</span>
+              <span className="text-[13px] font-black text-slate-700 leading-tight text-center px-2 text-3d">{l.indo}</span>
             </button>
           );
         })}
@@ -161,19 +161,19 @@ export default function KamusBisindoPage() {
               exit={{ y: "100%" }}
               transition={{ type: "spring", stiffness: 380, damping: 32 }}
               onClick={(e) => e.stopPropagation()}
-              className="w-full sm:w-[400px] bg-white rounded-t-[2rem] sm:rounded-[2rem] p-7 pb-10 shadow-2xl"
+              className="w-full sm:w-[400px] bg-[#f4f6fc] rounded-t-[32px] sm:rounded-[32px] p-7 pb-10 shadow-[0_-10px_40px_rgba(0,0,0,0.1)] border-t border-white"
             >
               <div className="flex justify-between items-start mb-3">
                 <div className="w-10" />
-                <div className="w-12 h-1.5 bg-slate-200 rounded-full mx-auto mt-1 sm:hidden" />
-                <button onClick={() => { setSelected(null); setShowDemonstration(false); }} className="w-10 h-10 flex items-center justify-center rounded-full bg-slate-100">
-                  <X className="w-5 h-5 text-slate-500" />
+                <div className="w-12 h-1.5 bg-white shadow-inner rounded-full mx-auto mt-1 sm:hidden border border-slate-200" />
+                <button onClick={() => { setSelected(null); setShowDemonstration(false); }} className="w-10 h-10 flex items-center justify-center rounded-full bg-[#f4f6fc] shadow-3d shadow-3d-active border border-white active:scale-95 transition-all">
+                  <X className="w-5 h-5 text-slate-500" strokeWidth={2.5} />
                 </button>
               </div>
 
               <div className="flex flex-col items-center">
                 {showDemonstration ? (
-                  <div className="w-full h-48 sm:h-56 bg-slate-50 rounded-2xl mb-4 mt-2 flex items-center justify-center overflow-hidden border-2 border-dashed border-slate-300 p-2">
+                  <div className="w-full h-48 sm:h-56 bg-[#f4f6fc] rounded-3xl mb-4 mt-2 flex items-center justify-center overflow-hidden shadow-[inset_2px_2px_5px_rgba(0,0,0,0.05),_inset_-3px_-3px_7px_rgba(255,255,255,1)] border border-white p-2 mix-blend-multiply opacity-90">
                     <img
                       src={
                         selected.label.length === 1
@@ -190,52 +190,57 @@ export default function KamusBisindoPage() {
                   </div>
                 ) : (
                   <span
-                    className="text-[80px] leading-none text-[#00B894] mb-2"
+                    className="text-[110px] leading-none text-[#0984E3] mb-2 drop-shadow-md"
                     style={{ fontFamily: "Arial, sans-serif" }}
                   >
                     {selected.label}
                   </span>
                 )}
-                <h2 className="text-[24px] font-black text-slate-800">{selected.indo}</h2>
+                <h2 className="text-[28px] font-black text-slate-800 text-3d">{selected.indo}</h2>
 
                 {(() => {
                   const m = masteryOf(selStat);
                   return (
-                    <span className={`mt-2 inline-flex items-center gap-1.5 text-[12px] font-bold ${masteryStyle[m].text}`}>
-                      <span className={`w-2 h-2 rounded-full ${masteryStyle[m].dot}`} />
-                      {masteryStyle[m].label}
+                    <div className="mt-3 flex items-center gap-2 bg-[#f4f6fc] px-4 py-2 rounded-full border border-white shadow-[inset_2px_2px_5px_rgba(0,0,0,0.05),_inset_-3px_-3px_7px_rgba(255,255,255,1)]">
+                      <span className={`w-2.5 h-2.5 rounded-full shadow-inner ${masteryStyle[m].dot}`} />
+                      <span className={`text-[12px] font-bold ${masteryStyle[m].text}`}>
+                        {masteryStyle[m].label}
+                      </span>
                       {selStat && selStat.seen > 0 && (
-                        <span className="text-slate-400 font-semibold">
-                          · {Math.round((selStat.correct / selStat.seen) * 100)}% ({selStat.correct}/{selStat.seen})
-                        </span>
+                        <>
+                          <span className="w-1 h-1 bg-slate-300 rounded-full mx-1"></span>
+                          <span className="text-[12px] font-black text-slate-500">
+                            {Math.round((selStat.correct / selStat.seen) * 100)}%
+                          </span>
+                        </>
                       )}
-                    </span>
+                    </div>
                   );
                 })()}
 
-                <div className="flex gap-2.5 mt-6 w-full">
+                <div className="flex gap-3 mt-7 w-full">
                   <button
                     onClick={() => speak(selected.indo)}
-                    className="flex-1 py-3.5 rounded-2xl bg-[#0984E3]/10 text-[#0984E3] font-bold text-[13px] flex items-center justify-center gap-2 active:scale-95 transition-transform"
+                    className="flex-1 py-4 rounded-[20px] bg-[#f4f6fc] shadow-3d shadow-3d-active border border-white text-[#0984E3] font-bold text-[14px] flex items-center justify-center gap-2 active:scale-95 transition-all"
                   >
-                    <Volume2 className="w-4 h-4" /> Dengar
+                    <Volume2 className="w-5 h-5 drop-shadow-sm" /> Dengar
                   </button>
                   <button
                     onClick={() => setShowDemonstration(!showDemonstration)}
-                    className={`flex-1 py-3.5 rounded-2xl font-bold text-[13px] flex items-center justify-center gap-2 active:scale-95 transition-transform ${
+                    className={`flex-1 py-4 rounded-[20px] font-bold text-[14px] flex items-center justify-center gap-2 active:scale-95 transition-all shadow-3d shadow-3d-active border border-white ${
                       showDemonstration 
-                        ? 'bg-amber-500 text-white' 
-                        : 'bg-amber-500/10 text-amber-600'
+                        ? 'bg-amber-100 text-amber-600' 
+                        : 'bg-[#f4f6fc] text-amber-500'
                     }`}
                   >
-                    <Video className="w-4 h-4" /> {showDemonstration ? 'Tutup' : 'Peragakan'}
+                    <Video className="w-5 h-5 drop-shadow-sm" /> {showDemonstration ? 'Tutup' : 'Peragakan'}
                   </button>
                 </div>
                 <Link
                   href="/app/bipintar/quiz"
-                  className="mt-2.5 w-full py-3.5 rounded-2xl bg-[#0984E3] text-white font-bold text-[14px] flex items-center justify-center gap-2 active:scale-95 transition-transform"
+                  className="mt-4 w-full py-4 rounded-[20px] bg-[#0984E3] shadow-[0_8px_16px_rgba(9,132,227,0.3)] border border-[#0984E3]/50 text-white font-black text-[15px] flex items-center justify-center gap-2 active:scale-95 transition-transform"
                 >
-                  <CheckCircle2 className="w-5 h-5" /> Latih Isyarat
+                  <CheckCircle2 className="w-5 h-5 drop-shadow-sm" /> Latih Isyarat
                 </Link>
 
                 <Link

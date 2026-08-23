@@ -38,18 +38,15 @@ export default function BisindoSignWebScreen() {
           />
         </div>
 
-        {/* HUD (Head-Up Display) Top Bar */}
-        <div className="absolute top-0 left-0 right-0 z-30 px-6 pt-12 pb-6 flex items-start justify-between pointer-events-none bg-gradient-to-b from-black/60 via-black/20 to-transparent">
-          {/* Tombol Kembali */}
+        {/* Tombol Kembali (3D Neumorphism) */}
+        <div className="absolute top-12 left-6 z-30">
           <button
             onClick={() => router.back()}
-            className="w-12 h-12 flex items-center justify-center bg-white/10 backdrop-blur-md rounded-full border border-white/20 text-white hover:bg-white/20 active:scale-95 transition-all shadow-sm -webkit-tap-highlight-color-transparent pointer-events-auto"
+            className="w-12 h-12 flex items-center justify-center bg-[#f4f6fc]/90 backdrop-blur-md rounded-full shadow-[0_8px_24px_rgba(0,0,0,0.25)] border border-white/80 text-slate-800 transition-all pointer-events-auto active:scale-95"
             aria-label="Kembali"
           >
-            <ArrowLeft className="w-6 h-6" strokeWidth={2.5} />
+            <ArrowLeft className="w-6 h-6 drop-shadow-sm" strokeWidth={2.5} />
           </button>
-
-
         </div>
 
         {/* Scanner Overlay Frame (Efek Visual AI Scanner) */}
@@ -74,9 +71,9 @@ export default function BisindoSignWebScreen() {
           </div>
         </div>
 
-        {/* Panel Hasil Deteksi (Result Card Premium) */}
+        {/* Panel Hasil Deteksi (Result Card 3D Neumorphism) */}
         <div className="absolute bottom-8 left-6 right-6 z-30">
-          <div className="bg-white/90 backdrop-blur-2xl rounded-[32px] p-6 shadow-[0_20px_48px_rgba(0,0,0,0.3)] flex flex-col items-center border border-white/40 min-h-[180px] justify-center overflow-hidden">
+          <div className="bg-[#f4f6fc]/90 backdrop-blur-xl rounded-[32px] p-8 shadow-[0_20px_60px_rgba(0,0,0,0.3)] border border-white/80 flex flex-col items-center min-h-[220px] justify-center overflow-hidden">
             <AnimatePresence mode="wait">
               {detectionResult ? (
                 <motion.div
@@ -87,21 +84,21 @@ export default function BisindoSignWebScreen() {
                   transition={{ type: "spring", stiffness: 300, damping: 25 }}
                   className="flex flex-col items-center w-full"
                 >
-                  <span className="text-[11px] font-extrabold text-slate-400 uppercase tracking-widest mb-2">
+                  <span className="text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-1 text-3d">
                     {detectionResult.label.isWord ? "Kata Terdeteksi" : "Huruf Terdeteksi"}
                   </span>
 
                   <h2
-                    className="text-[64px] leading-none font-black mb-3 tracking-tighter drop-shadow-sm"
+                    className="text-[64px] leading-none font-black mb-3 tracking-tighter drop-shadow-md"
                     style={{ color: brandColor, fontFamily: "Inter, system-ui, sans-serif" }}
                   >
                     {detectionResult.label.label}
                   </h2>
 
-                  <div className="flex items-center gap-2 mt-2 bg-slate-50/80 px-4 py-2 rounded-full border border-slate-200/50 shadow-inner">
-                    <Scan className="w-4 h-4 text-slate-400" strokeWidth={2.5} />
-                    <span className="text-[12px] font-semibold text-slate-500">Akurasi</span>
-                    <span className="text-[13px] font-bold drop-shadow-sm" style={{ color: brandColor }}>
+                  <div className="flex items-center gap-2 mt-4 bg-[#f4f6fc] border border-white shadow-[inset_2px_2px_5px_rgba(0,0,0,0.05),_inset_-3px_-3px_7px_rgba(255,255,255,1)] px-5 py-2 rounded-full">
+                    <Scan className="w-4 h-4 text-slate-500" strokeWidth={2.5} />
+                    <span className="text-[11px] font-bold text-slate-500 uppercase tracking-widest">Akurasi</span>
+                    <span className="text-[13px] font-black drop-shadow-sm" style={{ color: brandColor }}>
                       {(detectionResult.score * 100).toFixed(1)}%
                     </span>
                   </div>
@@ -116,24 +113,24 @@ export default function BisindoSignWebScreen() {
                 >
                   {isModelLoading ? (
                     <>
-                      <div className="w-10 h-10 border-4 border-[#1B9981]/20 border-t-[#1B9981] rounded-full animate-spin mb-4" />
-                      <span className="text-[11px] font-extrabold text-slate-400 uppercase tracking-widest mb-1">
+                      <div className="w-10 h-10 border-4 border-[#1B9981]/20 border-t-[#1B9981] rounded-full animate-spin mb-4 shadow-sm" />
+                      <span className="text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-1 text-3d">
                         Sistem AI
                       </span>
-                      <h3 className="text-[18px] font-bold text-slate-800 tracking-tight">
+                      <h3 className="text-[18px] font-black text-slate-800 tracking-tight text-3d">
                         Menyiapkan Model...
                       </h3>
                     </>
                   ) : (
                     <>
                       <div className="relative flex h-10 w-10 items-center justify-center mb-3">
-                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#1B9981] opacity-20"></span>
-                        <Scan className="relative w-6 h-6 text-[#1B9981]" strokeWidth={2.5} />
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#1B9981] opacity-40"></span>
+                        <Scan className="relative w-6 h-6 text-[#1B9981] drop-shadow-md" strokeWidth={2.5} />
                       </div>
-                      <span className="text-[11px] font-extrabold text-slate-400 uppercase tracking-widest mb-1">
+                      <span className="text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-1 text-3d">
                         Status
                       </span>
-                      <h3 className="text-[18px] font-bold text-slate-800 tracking-tight">
+                      <h3 className="text-[18px] font-black text-slate-800 tracking-tight text-3d">
                         Mencari Isyarat...
                       </h3>
                       <p className="text-[12px] text-slate-500 mt-2 text-center font-medium max-w-[220px]">

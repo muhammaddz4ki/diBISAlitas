@@ -62,24 +62,24 @@ export default function BibacaScreen() {
   };
 
   return (
-    <div className="min-h-full bg-white selection:bg-purple-500/20 flex flex-col pb-12 relative overflow-hidden">
+    <div className="min-h-full bg-[#f4f6fc] selection:bg-purple-500/20 flex flex-col pb-12 relative overflow-hidden">
 
-      {/* Header — Minimal White */}
-      <div className="px-6 pt-12 pb-4 bg-white border-b border-slate-100 shrink-0">
+      {/* Header — 3D Neumorphism */}
+      <div className="px-6 pt-12 pb-5 shrink-0">
         <div className="flex items-center justify-between">
           <Link
             href="/app/dashboard"
             aria-label="Kembali ke dashboard"
-            className="w-11 h-11 flex items-center justify-center rounded-full bg-slate-50 border border-slate-100 active:scale-95 transition-transform"
+            className="w-11 h-11 flex items-center justify-center rounded-full bg-[#f4f6fc] shadow-3d shadow-3d-active border border-white active:scale-95 transition-transform"
           >
-            <ArrowLeft className="w-5 h-5 text-slate-600" strokeWidth={2.5} />
+            <ArrowLeft className="w-5 h-5 text-purple-600 drop-shadow-sm" strokeWidth={2.5} />
           </Link>
 
           <div className="text-center">
-            <h1 className="text-[18px] font-black text-slate-900 tracking-tight">
+            <h1 className="text-[18px] font-black text-slate-800 tracking-tight text-3d">
               BiBACA
             </h1>
-            <p className="text-[11px] font-bold text-slate-400 uppercase tracking-widest mt-0.5">
+            <p className="text-[11px] font-bold text-slate-500 uppercase tracking-widest mt-0.5 text-3d">
               Pemindai Teks
             </p>
           </div>
@@ -97,16 +97,17 @@ export default function BibacaScreen() {
           className="flex flex-col gap-5"
         >
           {/* Camera / Preview Card */}
-          <motion.div variants={itemVariants} className="bg-white rounded-[24px] shadow-[0_8px_30px_-12px_rgba(0,0,0,0.12)] border border-slate-100 overflow-hidden relative group">
+          <motion.div variants={itemVariants} className="bg-[#f4f6fc] rounded-[32px] p-2 shadow-3d border border-white overflow-hidden relative group">
+            
+            <div className="rounded-[24px] overflow-hidden relative w-full min-h-[380px] bg-slate-900 flex flex-col shadow-inner">
+              <div className="absolute top-4 left-4 z-30 bg-black/40 backdrop-blur-md border border-white/20 px-3 py-1.5 rounded-full flex items-center gap-2">
+                <span className={`w-2 h-2 rounded-full ${isProcessing ? 'bg-amber-500 animate-pulse shadow-[0_0_8px_rgba(245,158,11,0.8)]' : 'bg-purple-400 shadow-[0_0_8px_rgba(192,132,252,0.8)]'}`}></span>
+                <span className="text-white text-[10px] font-bold tracking-wider">
+                  {isProcessing ? 'MEMINDAI...' : capturedUrl ? 'FOTO SIAP' : 'SIAP'}
+                </span>
+              </div>
 
-            <div className="absolute top-4 left-4 z-30 bg-black/40 backdrop-blur-md border border-white/20 px-3 py-1.5 rounded-full flex items-center gap-2">
-              <span className={`w-2 h-2 rounded-full ${isProcessing ? 'bg-amber-500 animate-pulse shadow-[0_0_8px_rgba(245,158,11,0.8)]' : 'bg-purple-400 shadow-[0_0_8px_rgba(192,132,252,0.8)]'}`}></span>
-              <span className="text-white text-[10px] font-bold tracking-wider">
-                {isProcessing ? 'MEMINDAI...' : capturedUrl ? 'FOTO SIAP' : 'SIAP'}
-              </span>
-            </div>
-
-            <div className="relative z-10 w-full min-h-[350px] bg-slate-900 flex flex-col items-center justify-center">
+              <div className="relative z-10 w-full h-full flex-1 flex flex-col items-center justify-center">
               <video
                 ref={videoRef}
                 autoPlay
@@ -192,50 +193,51 @@ export default function BibacaScreen() {
               onChange={handleFileChange}
             />
 
-            {/* Kontrol bawah: Galeri + Pindai / Pindai Ulang */}
-            <div className="absolute bottom-6 left-0 w-full flex items-center justify-center gap-8 z-30">
-              {/* Tombol Galeri */}
-              <button
-                onClick={() => fileInputRef.current?.click()}
-                disabled={isProcessing}
-                aria-label="Pilih dari galeri"
-                className="w-12 h-12 bg-white/90 backdrop-blur rounded-full shadow-[0_4px_16px_rgba(0,0,0,0.2)] flex items-center justify-center active:scale-90 transition-transform disabled:opacity-50"
-              >
-                <ImageIcon className="w-5 h-5 text-purple-600" strokeWidth={2.4} />
-              </button>
-
-              {capturedUrl && !isProcessing ? (
-                /* Tombol Pindai Ulang (kembali ke kamera live) */
+              {/* Kontrol bawah: Galeri + Pindai / Pindai Ulang */}
+              <div className="absolute bottom-6 left-0 w-full flex items-center justify-center gap-8 z-30">
+                {/* Tombol Galeri */}
                 <button
-                  onClick={reset}
-                  aria-label="Pindai ulang"
-                  className="w-16 h-16 bg-white rounded-full shadow-[0_4px_24px_rgba(0,0,0,0.2)] flex items-center justify-center active:scale-90 transition-transform border-[4px] border-purple-500/20"
+                  onClick={() => fileInputRef.current?.click()}
+                  disabled={isProcessing}
+                  aria-label="Pilih dari galeri"
+                  className="w-12 h-12 bg-[#f4f6fc] border border-white rounded-full shadow-[0_4px_16px_rgba(0,0,0,0.5)] flex items-center justify-center active:scale-90 transition-transform disabled:opacity-50"
                 >
-                  <div className="w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center">
-                    <RotateCcw className="w-5 h-5 text-white" />
-                  </div>
+                  <ImageIcon className="w-5 h-5 text-purple-600 drop-shadow-sm" strokeWidth={2.4} />
                 </button>
-              ) : (
-                /* Tombol Ambil Foto */
-                <button
-                  onClick={captureAndRead}
-                  disabled={isProcessing || !isCameraReady}
-                  aria-label="Ambil foto & pindai teks"
-                  className="w-16 h-16 bg-white rounded-full shadow-[0_4px_24px_rgba(0,0,0,0.2)] flex items-center justify-center active:scale-90 transition-transform disabled:opacity-50 disabled:scale-100 border-[4px] border-purple-500/20"
-                >
-                  <div className="w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center">
-                    <ScanText className="w-5 h-5 text-white" />
-                  </div>
-                </button>
-              )}
 
-              {/* Spacer agar tombol tengah tetap center */}
-              <div className="w-12 h-12" aria-hidden="true" />
+                {capturedUrl && !isProcessing ? (
+                  /* Tombol Pindai Ulang (kembali ke kamera live) */
+                  <button
+                    onClick={reset}
+                    aria-label="Pindai ulang"
+                    className="w-16 h-16 bg-[#f4f6fc] rounded-full shadow-[0_4px_24px_rgba(0,0,0,0.6)] flex items-center justify-center active:scale-90 transition-transform border-4 border-white"
+                  >
+                    <div className="w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center shadow-inner">
+                      <RotateCcw className="w-5 h-5 text-white" />
+                    </div>
+                  </button>
+                ) : (
+                  /* Tombol Ambil Foto */
+                  <button
+                    onClick={captureAndRead}
+                    disabled={isProcessing || !isCameraReady}
+                    aria-label="Ambil foto & pindai teks"
+                    className="w-16 h-16 bg-[#f4f6fc] rounded-full shadow-[0_4px_24px_rgba(0,0,0,0.6)] flex items-center justify-center active:scale-90 transition-transform disabled:opacity-50 disabled:scale-100 border-4 border-white"
+                  >
+                    <div className="w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center shadow-inner">
+                      <ScanText className="w-5 h-5 text-white" />
+                    </div>
+                  </button>
+                )}
+
+                {/* Spacer agar tombol tengah tetap center */}
+                <div className="w-12 h-12" aria-hidden="true" />
+              </div>
             </div>
           </motion.div>
 
           {/* Info & Status Section */}
-          <motion.div variants={itemVariants} className="bg-white rounded-[24px] p-5 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] border border-slate-100">
+          <motion.div variants={itemVariants} className="bg-[#f4f6fc] rounded-[32px] p-6 shadow-3d border border-white">
             <div className="flex flex-col items-center">
 
               {scannedText ? (
@@ -243,36 +245,36 @@ export default function BibacaScreen() {
                   <button
                     onClick={() => (isSpeaking ? stopSpeaking() : speak(scannedText))}
                     aria-label={isSpeaking ? "Hentikan suara" : "Bacakan teks"}
-                    className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-2 active:scale-90 transition-transform"
+                    className="w-14 h-14 bg-[#f4f6fc] shadow-3d shadow-3d-active border border-white rounded-full flex items-center justify-center mx-auto mb-4 active:scale-95 transition-transform"
                   >
-                    <Volume2 className={`w-6 h-6 text-purple-600 ${isSpeaking ? "animate-pulse" : ""}`} strokeWidth={2.5} />
+                    <Volume2 className={`w-7 h-7 text-purple-600 drop-shadow-sm ${isSpeaking ? "animate-pulse text-rose-500" : ""}`} strokeWidth={2.5} />
                   </button>
-                  <h2 className="text-[17px] font-extrabold text-slate-800 tracking-tight flex items-center justify-center gap-2">
-                    <CheckCircle2 className="w-5 h-5 text-emerald-500" /> Hasil Bacaan
+                  <h2 className="text-[18px] font-black text-slate-800 tracking-tight flex items-center justify-center gap-2 text-3d">
+                    <CheckCircle2 className="w-5 h-5 text-emerald-500 drop-shadow-sm" /> Hasil Bacaan
                   </h2>
-                  <div className="bg-slate-50 border border-slate-100 p-4 rounded-2xl max-h-[150px] overflow-y-auto text-left w-full shadow-inner">
-                    <p className="text-[14px] text-slate-700 leading-relaxed font-medium whitespace-pre-line">
+                  <div className="bg-[#f4f6fc] border border-white/50 shadow-[inset_2px_2px_5px_rgba(0,0,0,0.05),_inset_-3px_-3px_7px_rgba(255,255,255,1)] p-5 rounded-[24px] max-h-[180px] overflow-y-auto text-left w-full">
+                    <p className="text-[14px] text-slate-700 leading-relaxed font-bold whitespace-pre-line text-3d">
                       {scannedText}
                     </p>
                   </div>
                   <button
                     onClick={reset}
-                    className="text-[13px] font-bold text-purple-600 underline underline-offset-2 mt-1"
+                    className="text-[13px] font-black text-purple-600 active:scale-95 transition-transform mt-3 text-3d inline-block px-6 py-2 rounded-full bg-[#f4f6fc] shadow-3d shadow-3d-active border border-white"
                   >
                     Pindai teks baru
                   </button>
                 </div>
               ) : (
                 <>
-                  <div className="w-12 h-12 bg-purple-50 rounded-full flex items-center justify-center mb-4">
-                    <Glasses className="w-6 h-6 text-purple-500" strokeWidth={2.5} />
+                  <div className="w-14 h-14 bg-[#f4f6fc] shadow-[inset_2px_2px_5px_rgba(0,0,0,0.05),_inset_-3px_-3px_7px_rgba(255,255,255,1)] border border-white rounded-[16px] flex items-center justify-center mb-4">
+                    <Glasses className="w-7 h-7 text-purple-600 drop-shadow-sm" strokeWidth={2.5} />
                   </div>
 
                   <div className="text-center space-y-2 mb-2">
-                    <h2 className="text-[18px] font-extrabold text-slate-800 tracking-tight">
+                    <h2 className="text-[20px] font-black text-slate-800 tracking-tight text-3d">
                       Arahkan & Pindai
                     </h2>
-                    <p className="text-[13px] font-medium text-slate-500 max-w-[280px] mx-auto leading-relaxed">
+                    <p className="text-[13px] font-bold text-slate-500 max-w-[280px] mx-auto leading-relaxed text-3d">
                       Arahkan kamera ke teks (buku, menu, papan nama) lalu tekan tombol pindai, atau pilih foto dari galeri. Pastikan teks jelas & fokus.
                     </p>
                   </div>
