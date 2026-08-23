@@ -125,6 +125,7 @@ export function BisindoCameraDetector({
         playsInline
         autoPlay
         muted
+        aria-label="Kamera pengenalan bahasa isyarat BiPINTAR sedang aktif"
       />
 
       <canvas

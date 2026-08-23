@@ -112,6 +112,8 @@ export default function BibacaScreen() {
                 autoPlay
                 playsInline
                 muted
+                aria-label="Tampilan kamera langsung untuk memindai teks"
+                aria-hidden={!!capturedUrl}
                 className="absolute inset-0 w-full h-full object-cover"
               />
               <canvas ref={canvasRef} className="hidden" />
@@ -237,7 +239,7 @@ export default function BibacaScreen() {
             <div className="flex flex-col items-center">
 
               {scannedText ? (
-                <div className="w-full text-center space-y-3">
+                <div className="w-full text-center space-y-3" aria-live="polite" aria-atomic="true">
                   <button
                     onClick={() => (isSpeaking ? stopSpeaking() : speak(scannedText))}
                     aria-label={isSpeaking ? "Hentikan suara" : "Bacakan teks"}

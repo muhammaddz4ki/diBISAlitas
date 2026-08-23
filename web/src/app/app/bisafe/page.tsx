@@ -65,9 +65,9 @@ export default function BiSafePage() {
             <ShieldAlert className="w-6 h-6 text-rose-500" strokeWidth={2.4} />
           </div>
           <div>
-            <p className="text-slate-400 text-[11px] font-semibold uppercase tracking-widest">diBISAlitas</p>
+            <p className="text-slate-500 text-[12px] font-semibold uppercase tracking-widest">diBISAlitas</p>
             <h1 className="text-[24px] font-black text-slate-900 tracking-tight leading-tight">BiSAFE</h1>
-            <p className="text-slate-400 text-[12px] leading-snug line-clamp-2 max-w-[240px] mt-0.5">
+            <p className="text-slate-500 text-[13px] leading-snug line-clamp-2 max-w-[240px] mt-0.5">
               Layanan darurat terpusat — tombol panik, kontak, dan riwayat.
             </p>
           </div>
@@ -223,11 +223,11 @@ function DaruratTab() {
         )}
       </motion.button>
 
-      <p className="text-slate-400 font-medium text-sm mt-12 text-center max-w-[280px]">
+      <p className="text-slate-500 font-medium text-sm mt-12 text-center max-w-[280px]">
         Tekan tombol untuk mengirimkan koordinat lokasi Anda saat ini ke pusat kendali.
       </p>
 
-      <div className="absolute bottom-6 left-0 w-full flex items-center justify-center pointer-events-none px-6 z-50">
+      <div className="absolute bottom-6 left-0 w-full flex items-center justify-center pointer-events-none px-6 z-50" aria-live="assertive" role="alert">
         <AnimatePresence>
           {status !== "idle" && (
             <motion.div
@@ -324,7 +324,7 @@ function KontakTab({ me }: { me: { uid: string; name: string; email: string } | 
         <div className="flex flex-col items-center justify-center py-20 text-center">
           <Users className="w-14 h-14 text-slate-200 mb-3" />
           <p className="font-bold text-slate-700">Belum ada kontak darurat</p>
-          <p className="text-[13px] text-slate-400 mt-1 max-w-[240px]">Tambahkan kontak yang bisa dihubungi saat darurat.</p>
+          <p className="text-[13px] text-slate-500 mt-1 max-w-[240px]">Tambahkan kontak yang bisa dihubungi saat darurat.</p>
         </div>
       ) : (
         <div className="flex flex-col gap-3">
@@ -340,7 +340,7 @@ function KontakTab({ me }: { me: { uid: string; name: string; email: string } | 
                   <span className="text-[12px] font-medium capitalize">{c.relation}</span>
                 </div>
               </div>
-              <button onClick={() => del(c.id)} className="w-9 h-9 rounded-xl flex items-center justify-center text-rose-500 border border-rose-100 hover:bg-rose-500 hover:text-white transition-all shrink-0">
+              <button onClick={() => del(c.id)} aria-label="Hapus kontak" className="w-12 h-12 rounded-xl flex items-center justify-center text-rose-500 border border-rose-100 hover:bg-rose-500 hover:text-white transition-all shrink-0">
                 <Trash2 className="w-4 h-4" />
               </button>
             </div>
@@ -361,7 +361,7 @@ function KontakTab({ me }: { me: { uid: string; name: string; email: string } | 
             >
               <div className="flex items-center justify-between mb-4">
                 <h3 className="text-[17px] font-black text-slate-800">Tambah Kontak</h3>
-                <button onClick={() => setShowAdd(false)} className="w-9 h-9 rounded-full bg-slate-100 flex items-center justify-center">
+                <button onClick={() => setShowAdd(false)} aria-label="Tutup" className="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center">
                   <X className="w-5 h-5 text-slate-500" />
                 </button>
               </div>

@@ -59,6 +59,7 @@ export default function BijalanCameraDetector() {
         autoPlay
         playsInline
         muted
+        aria-label="Kamera deteksi rintangan BiJALAN sedang aktif"
         className="absolute w-full h-full object-cover"
       />
 

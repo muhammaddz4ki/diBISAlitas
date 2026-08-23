@@ -174,7 +174,7 @@ export default function VoiceCommand() {
   return (
     <>
       {listening && caption && (
-        <div className="absolute bottom-44 right-3 z-[60] max-w-[220px] bg-slate-900 text-white text-[13px] font-medium px-3.5 py-2 rounded-2xl shadow-xl">
+        <div className="absolute bottom-[12.5rem] right-6 z-[60] max-w-[220px] bg-slate-900 text-white text-[13px] font-medium px-3.5 py-2 rounded-2xl shadow-xl">
           &ldquo;{caption}&rdquo;
         </div>
       )}
@@ -184,9 +184,9 @@ export default function VoiceCommand() {
         onClick={() => setShowHelp(true)}
         aria-label="Panduan perintah suara"
         title="Panduan perintah suara"
-        className="absolute bottom-28 right-[4.9rem] z-[60] w-9 h-9 rounded-full bg-white border border-slate-200 shadow-md flex items-center justify-center text-slate-500 hover:text-[#00B894] active:scale-95 transition-all"
+        className="absolute bottom-[9.5rem] right-[5.5rem] z-[60] w-12 h-12 rounded-full bg-white border-2 border-white shadow-3d shadow-3d-hover shadow-3d-active icon-3d flex items-center justify-center text-slate-500 hover:text-[#00B894]"
       >
-        <HelpCircle className="w-5 h-5" />
+        <HelpCircle className="w-6 h-6" />
       </button>
 
       {/* Tombol mikrofon */}
@@ -194,11 +194,11 @@ export default function VoiceCommand() {
         onClick={toggle}
         aria-label={listening ? "Berhenti mendengarkan perintah suara" : "Aktifkan perintah suara"}
         title="Perintah suara"
-        className={`absolute bottom-28 right-3 z-[60] w-14 h-14 rounded-full flex items-center justify-center shadow-lg transition-all ${
-          listening ? "bg-rose-500 scale-110 animate-pulse" : "bg-[#00B894] hover:scale-105 active:scale-95"
+        className={`absolute bottom-36 right-6 z-[60] w-14 h-14 rounded-full flex items-center justify-center border-2 border-white shadow-3d shadow-3d-active icon-3d ${
+          listening ? "bg-gradient-to-br from-rose-400 to-rose-600 scale-105 animate-pulse" : "bg-gradient-to-br from-[#00B894] to-[#00D4AA]"
         }`}
       >
-        {listening ? <MicOff className="w-6 h-6 text-white" /> : <Mic className="w-6 h-6 text-white" />}
+        {listening ? <MicOff className="w-6 h-6 text-white drop-shadow-md" /> : <Mic className="w-6 h-6 text-white drop-shadow-md" />}
       </button>
 
       {/* Panel panduan */}

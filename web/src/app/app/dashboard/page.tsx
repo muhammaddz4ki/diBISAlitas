@@ -49,18 +49,28 @@ export default function DashboardPage() {
       setIsLoading(false);
     });
 
+    return () => unsubscribe();
+  }, [router]);
+
+  useEffect(() => {
+    if (!userEmail) return;
+
     const qNotif = query(collection(db, "announcements"), orderBy("createdAt", "desc"), limit(10));
     const unsubNotif = onSnapshot(qNotif, (snap) => {
       const data: any[] = [];
       snap.forEach((d) => data.push({ id: d.id, ...d.data() }));
       setNotifs(data);
-    }, () => {});
+    }, (error) => {
+      console.error("Notif fetch error:", error);
+    });
 
     const qCourses = query(collection(db, "bipintar_courses"), limit(3));
     const unsubCourses = onSnapshot(qCourses, (snap) => {
       const data: any[] = [];
       snap.forEach((d) => data.push({ id: d.id, ...d.data() }));
       setCourses(data);
+    }, (error) => {
+      console.error("Courses fetch error:", error);
     });
 
     const qAnnouncements = query(collection(db, "announcements"), orderBy("createdAt", "desc"), limit(2));
@@ -68,15 +78,16 @@ export default function DashboardPage() {
       const data: any[] = [];
       snap.forEach((d) => data.push({ id: d.id, ...d.data() }));
       setAnnouncements(data);
+    }, (error) => {
+      console.error("Announcements fetch error:", error);
     });
 
     return () => {
-      unsubscribe();
+      unsubNotif();
       unsubCourses();
       unsubAnnouncements();
-      unsubNotif();
     };
-  }, [router]);
+  }, [userEmail]);
 
   const toMillis = (ts: any): number =>
     ts?.toMillis ? ts.toMillis() : ts?.seconds ? ts.seconds * 1000 : 0;
@@ -118,19 +129,19 @@ export default function DashboardPage() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="relative min-h-full bg-white selection:bg-[#1B9981]/20 pb-12"
+      className="relative min-h-full bg-[#f4f6fc] selection:bg-[#1B9981]/20 pb-40"
     >
-      {/* Header — Minimal White */}
-      <div className="px-6 pt-14 pb-5 bg-white border-b border-slate-100">
+      {/* Header — Sticky 3D Neumorphism */}
+      <div className="sticky top-0 z-50 px-6 pt-12 pb-6 bg-[#f4f6fc]/95 backdrop-blur-xl border-b border-white shadow-3d rounded-b-[2rem] mb-6">
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-3.5">
             {/* Avatar */}
-            <div className="w-[52px] h-[52px] rounded-2xl bg-[#00B894]/10 flex items-center justify-center">
-              <span className="text-[20px] font-black text-[#00B894]">{userEmail ? userEmail.charAt(0).toUpperCase() : "U"}</span>
+            <div className="w-[52px] h-[52px] rounded-2xl bg-gradient-to-br from-[#00B894] to-[#00D4AA] flex items-center justify-center shadow-[0_8px_16px_rgba(0,184,148,0.3)] border-2 border-white icon-3d">
+              <span className="text-[20px] font-black text-white drop-shadow-md">{userEmail ? userEmail.charAt(0).toUpperCase() : "U"}</span>
             </div>
             <div>
-              <p className="text-slate-400 text-[12px] font-semibold">Selamat datang,</p>
-              <h1 className="text-[20px] font-black text-slate-900 tracking-tight leading-tight truncate max-w-[200px]">
+              <p className="text-slate-500 text-[13px] font-semibold text-3d">Selamat datang,</p>
+              <h1 className="text-[20px] font-black text-slate-900 tracking-tight leading-tight truncate max-w-[200px] text-3d">
                 {userEmail?.split('@')[0] || "Pengguna"}
               </h1>
             </div>
@@ -140,10 +151,10 @@ export default function DashboardPage() {
           <button
             onClick={openNotif}
             aria-label="Notifikasi"
-            className="relative w-11 h-11 rounded-full bg-slate-50 border border-slate-100 flex items-center justify-center active:scale-95 transition-transform"
+            className="relative w-12 h-12 rounded-[20px] bg-transparent flex items-center justify-center shadow-3d shadow-3d-hover shadow-3d-active"
           >
             {unreadCount > 0 && (
-              <span className="absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 bg-rose-500 rounded-full border-2 border-white text-[10px] font-bold text-white flex items-center justify-center">
+              <span className="absolute -top-1.5 -right-1.5 min-w-[20px] h-[20px] px-1 bg-gradient-to-br from-rose-400 to-rose-600 rounded-full border-2 border-white text-[10px] font-bold text-white flex items-center justify-center shadow-[0_4px_10px_rgba(244,63,94,0.5)]">
                 {unreadCount > 9 ? "9+" : unreadCount}
               </span>
             )}
@@ -163,6 +174,8 @@ export default function DashboardPage() {
               exit={{ opacity: 0, y: -8, scale: 0.98 }}
               transition={{ duration: 0.15 }}
               className="absolute right-6 top-[84px] w-[300px] max-h-[380px] overflow-y-auto bg-white rounded-2xl shadow-[0_20px_48px_rgba(0,0,0,0.25)] z-50 text-slate-800 border border-slate-100"
+              role="dialog"
+              aria-label="Panel notifikasi"
             >
               <div className="px-4 py-3 border-b border-slate-100 flex items-center justify-between sticky top-0 bg-white">
                 <span className="font-bold text-[14px]">Notifikasi</span>
@@ -171,7 +184,7 @@ export default function DashboardPage() {
                 </Link>
               </div>
               {notifs.length === 0 ? (
-                <div className="p-6 text-center text-slate-400 text-[13px] font-medium">Belum ada notifikasi</div>
+                <div className="p-6 text-center text-slate-500 text-[13px] font-medium">Belum ada notifikasi</div>
               ) : (
                 <div className="divide-y divide-slate-50">
                   {notifs.map((n) => (
@@ -181,11 +194,13 @@ export default function DashboardPage() {
                       onClick={() => setShowNotif(false)}
                       className="flex gap-3 px-4 py-3 hover:bg-slate-50 transition-colors"
                     >
-                      <span className={`mt-1.5 w-2 h-2 rounded-full shrink-0 ${notifColor[n.category] ?? "bg-slate-300"}`} />
+                      <span className="mt-1 shrink-0 text-[12px]" aria-hidden="true">
+                        {n.category === "darurat" ? "🔴" : n.category === "penting" ? "⚠️" : "ℹ️"}
+                      </span>
                       <div className="min-w-0">
                         <p className="text-[13px] font-bold text-slate-800 line-clamp-1">{n.title || "Pengumuman"}</p>
                         <p className="text-[12px] text-slate-500 line-clamp-2 leading-snug">{n.content}</p>
-                        <p className="text-[10px] text-slate-400 font-medium mt-1">{formatNotifTime(n.createdAt)}</p>
+                        <p className="text-[11px] text-slate-500 font-medium mt-1">{formatNotifTime(n.createdAt)}</p>
                       </div>
                     </Link>
                   ))}
@@ -205,49 +220,49 @@ export default function DashboardPage() {
           className="flex flex-col gap-3.5"
         >
           <div className="flex items-center justify-between px-1 mb-2 mt-2">
-            <h2 className="text-[17px] font-bold text-slate-800 tracking-tight">Layanan Utama</h2>
-            <span className="text-[11px] font-bold text-[#1B9981] bg-[#1B9981]/10 px-3 py-1.5 rounded-full tracking-wide">5 LAYANAN</span>
+            <h2 className="text-[17px] font-bold text-slate-800 tracking-tight text-3d">Layanan Utama</h2>
+            <span className="text-[11px] font-bold text-[#1B9981] bg-transparent shadow-3d px-3 py-1.5 rounded-full tracking-wide">5 LAYANAN</span>
           </div>
 
           <FeatureCard
             href="/app/bisafe"
             title="BiSAFE"
             desc="Panic Button & Darurat"
-            icon={<ShieldAlert className="w-[26px] h-[26px] text-rose-500" strokeWidth={2.5} />}
-            bg="bg-rose-100/50"
-            buttonColor="text-rose-500 bg-rose-50"
+            icon={<ShieldAlert className="w-[26px] h-[26px] text-white drop-shadow-md" strokeWidth={2.5} />}
+            bg="bg-gradient-to-br from-rose-400 to-rose-600"
+            buttonColor="text-rose-600 bg-rose-50 shadow-inner"
           />
           <FeatureCard
             href="/app/bisapa"
             title="BiSAPA"
             desc="Layanan Tatap Muka"
-            icon={<MessageCircle className="w-[26px] h-[26px] text-sky-500" strokeWidth={2.5} />}
-            bg="bg-sky-100/50"
-            buttonColor="text-sky-500 bg-sky-50"
+            icon={<MessageCircle className="w-[26px] h-[26px] text-white drop-shadow-md" strokeWidth={2.5} />}
+            bg="bg-gradient-to-br from-sky-400 to-sky-600"
+            buttonColor="text-sky-600 bg-sky-50 shadow-inner"
           />
           <FeatureCard
             href="/app/bipintar"
             title="BiPINTAR"
             desc="Platform E-Learning"
-            icon={<BookOpen className="w-[26px] h-[26px] text-amber-500" strokeWidth={2.5} />}
-            bg="bg-amber-100/50"
-            buttonColor="text-amber-500 bg-amber-50"
+            icon={<BookOpen className="w-[26px] h-[26px] text-white drop-shadow-md" strokeWidth={2.5} />}
+            bg="bg-gradient-to-br from-amber-400 to-amber-500"
+            buttonColor="text-amber-600 bg-amber-50 shadow-inner"
           />
           <FeatureCard
             href="/app/bijalan"
             title="BiJALAN"
             desc="Navigasi Arah Jalan"
-            icon={<Navigation className="w-[26px] h-[26px] text-[#1B9981]" strokeWidth={2.5} />}
-            bg="bg-[#1B9981]/15"
-            buttonColor="text-[#1B9981] bg-[#1B9981]/10"
+            icon={<Navigation className="w-[26px] h-[26px] text-white drop-shadow-md" strokeWidth={2.5} />}
+            bg="bg-gradient-to-br from-[#1B9981] to-[#00D4AA]"
+            buttonColor="text-[#1B9981] bg-[#1B9981]/10 shadow-inner"
           />
           <FeatureCard
             href="/app/bibaca"
             title="BiBACA"
             desc="Pemindai & Pembaca Teks"
-            icon={<Glasses className="w-[26px] h-[26px] text-purple-500" strokeWidth={2.5} />}
-            bg="bg-purple-100/50"
-            buttonColor="text-purple-500 bg-purple-50"
+            icon={<Glasses className="w-[26px] h-[26px] text-white drop-shadow-md" strokeWidth={2.5} />}
+            bg="bg-gradient-to-br from-purple-400 to-purple-600"
+            buttonColor="text-purple-600 bg-purple-50 shadow-inner"
           />
         </motion.div>
 
@@ -258,9 +273,9 @@ export default function DashboardPage() {
           transition={{ delay: 0.4 }}
           className="mt-8 mb-2"
         >
-          <div className="flex items-center justify-between px-1 mb-4">
-            <h2 className="text-[17px] font-bold text-slate-800 tracking-tight">Materi BiPINTAR</h2>
-            <Link href="/app/bipintar" className="text-[12px] font-semibold text-[#1B9981] flex items-center gap-1 active:opacity-70">
+          <div className="flex items-center justify-between px-1 mb-3">
+            <h2 className="text-[17px] font-bold text-slate-800 tracking-tight text-3d">Materi BiPINTAR</h2>
+            <Link href="/app/bipintar" className="text-[13px] font-bold text-[#1B9981] flex items-center gap-1 hover:gap-1.5 transition-all text-3d shadow-3d px-3 py-1 rounded-full">
               Lihat Semua <ArrowRight className="w-3.5 h-3.5" />
             </Link>
           </div>
@@ -279,7 +294,7 @@ export default function DashboardPage() {
                 />
               ))
             ) : (
-              <p className="text-sm text-slate-400 px-1">Belum ada materi terbaru.</p>
+              <p className="text-sm text-slate-500 px-1">Belum ada materi terbaru.</p>
             )}
           </div>
         </motion.div>
@@ -291,10 +306,10 @@ export default function DashboardPage() {
           transition={{ delay: 0.5 }}
           className="mt-4 mb-4"
         >
-          <div className="flex items-center justify-between px-1 mb-4">
-            <h2 className="text-[17px] font-bold text-slate-800 tracking-tight">Info Komunitas</h2>
-            <Link href="/app/komunitas" className="text-[12px] font-semibold text-[#1B9981] flex items-center gap-1 active:opacity-70">
-              Lihat Semua Forum <Users className="w-3.5 h-3.5 ml-0.5" />
+          <div className="flex items-center justify-between px-1 mb-3">
+            <h2 className="text-[17px] font-bold text-slate-800 tracking-tight text-3d">Info Komunitas</h2>
+            <Link href="/app/komunitas" className="text-[13px] font-bold text-[#1B9981] flex items-center gap-1 hover:gap-1.5 transition-all text-3d shadow-3d px-3 py-1 rounded-full">
+              Lihat Semua Forum <Users className="w-3.5 h-3.5" />
             </Link>
           </div>
 
@@ -309,7 +324,7 @@ export default function DashboardPage() {
                 />
               ))
             ) : (
-              <p className="text-sm text-slate-400 px-1">Belum ada info komunitas.</p>
+              <p className="text-sm text-slate-500 px-1">Belum ada info komunitas.</p>
             )}
           </div>
         </motion.div>
@@ -326,9 +341,9 @@ function FeatureCard({ href, title, desc, icon, bg, buttonColor }: { href: strin
         href={href}
         className="block group -webkit-tap-highlight-color-transparent"
       >
-        <div className="bg-white p-4 rounded-[24px] shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] active:shadow-none hover:shadow-[0_8px_24px_-8px_rgba(0,0,0,0.08)] border border-slate-100 transition-all duration-300 ease-out active:scale-[0.98] flex items-center gap-4 relative overflow-hidden">
+        <div className="bg-transparent p-4 rounded-[24px] shadow-3d shadow-3d-hover shadow-3d-active flex items-center gap-4 relative overflow-hidden">
 
-          <div className={`w-14 h-14 ${bg} rounded-[18px] flex items-center justify-center shrink-0`}>
+          <div className={`w-14 h-14 ${bg} rounded-[18px] flex items-center justify-center shrink-0 icon-3d`}>
             {icon}
           </div>
 
@@ -357,15 +372,15 @@ function FeatureCard({ href, title, desc, icon, bg, buttonColor }: { href: strin
 function CourseCard({ title, category, duration, image }: { title: string; category: string; duration: string; image: string }) {
   return (
     <Link href="/app/bipintar" className="snap-start shrink-0 w-[200px] block group -webkit-tap-highlight-color-transparent">
-      <div className="bg-white rounded-[20px] p-2.5 border border-slate-100 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] active:scale-[0.98] transition-all duration-300">
-        <div className="w-full h-[120px] rounded-[14px] mb-3 relative overflow-hidden">
+      <div className="bg-transparent rounded-[20px] p-2.5 shadow-3d shadow-3d-hover shadow-3d-active">
+        <div className="w-full h-[120px] rounded-[14px] mb-3 relative overflow-hidden icon-3d">
           <div className="absolute inset-0 bg-slate-200" style={{ backgroundImage: `url('${image}')`, backgroundSize: 'cover', backgroundPosition: 'center' }}></div>
-          <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors"></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent mix-blend-multiply"></div>
           <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-            <PlayCircle className="w-10 h-10 text-white drop-shadow-md" />
+            <PlayCircle className="w-12 h-12 text-white drop-shadow-[0_4px_10px_rgba(0,0,0,0.5)]" />
           </div>
-          <div className="absolute top-2.5 left-2.5 bg-black/50 backdrop-blur-md px-2 py-1 rounded-lg">
-            <span className="text-[10px] font-bold text-white tracking-wider uppercase">{category}</span>
+          <div className="absolute top-2.5 left-2.5 bg-white/20 backdrop-blur-md px-2 py-1 rounded-lg border border-white/40 shadow-sm">
+            <span className="text-[10px] font-bold text-white tracking-wider uppercase drop-shadow-md">{category}</span>
           </div>
         </div>
         <h3 className="font-bold text-slate-800 text-[14px] leading-tight mb-2 line-clamp-2 px-1">{title}</h3>
@@ -381,9 +396,9 @@ function CourseCard({ title, category, duration, image }: { title: string; categ
 function CommunityCard({ title, date, participants }: { title: string; date: string; participants: string }) {
   return (
     <Link href="/app/komunitas" className="block group -webkit-tap-highlight-color-transparent">
-      <div className="bg-white p-4 rounded-[20px] border border-slate-100 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] active:scale-[0.98] transition-all flex items-center gap-4">
-        <div className="w-12 h-12 bg-sky-50 rounded-[14px] flex items-center justify-center shrink-0">
-          <Users className="w-5 h-5 text-sky-500" />
+      <div className="bg-transparent p-4 rounded-[20px] shadow-3d shadow-3d-hover shadow-3d-active flex items-center gap-4">
+        <div className="w-12 h-12 bg-gradient-to-br from-sky-300 to-sky-500 rounded-[14px] flex items-center justify-center shrink-0 icon-3d border-2 border-white">
+          <Users className="w-5 h-5 text-white drop-shadow-md" />
         </div>
         <div className="flex-1">
           <h3 className="font-bold text-slate-800 text-[15px] mb-1.5 leading-tight">{title}</h3>

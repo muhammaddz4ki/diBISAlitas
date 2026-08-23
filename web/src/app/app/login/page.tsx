@@ -46,7 +46,7 @@ export default function LoginPage() {
 
   return (
     <div className="flex flex-col h-full bg-white px-8 pt-16 pb-8 relative">
-      <Link href="/" className="absolute top-6 left-6 text-slate-400 hover:text-[#1B9981] transition-colors p-2 rounded-full hover:bg-slate-50">
+      <Link href="/" className="absolute top-6 left-6 text-slate-500 hover:text-[#1B9981] transition-colors p-2 rounded-full hover:bg-slate-50">
         <ArrowLeft className="w-6 h-6" />
       </Link>
       
@@ -60,12 +60,12 @@ export default function LoginPage() {
         <h1 className="text-3xl font-extrabold tracking-tight text-slate-900 mb-2">
           Selamat Datang Kembali
         </h1>
-        <p className="text-slate-500 font-medium mb-10">
+        <p className="text-slate-600 font-medium mb-10">
           Masuk untuk mengakses layanan darurat dan fitur inklusif Anda.
         </p>
 
         {error && (
-          <div className="mb-6 flex items-center gap-3 p-4 bg-red-50 text-red-600 rounded-2xl text-sm font-medium">
+          <div id="login-error" role="alert" className="mb-6 flex items-center gap-3 p-4 bg-red-50 text-red-600 rounded-2xl text-sm font-medium">
             <AlertCircle className="w-5 h-5 flex-shrink-0" />
             <p>{error}</p>
           </div>
@@ -85,6 +85,7 @@ export default function LoginPage() {
                 onChange={(e) => setEmail(e.target.value)}
                 className="block w-full pl-11 pr-4 py-4 bg-slate-50 border-transparent rounded-2xl text-slate-900 placeholder-slate-400 focus:bg-white focus:border-[#00B894] focus:ring-2 focus:ring-[#00B894]/20 transition-all font-medium"
                 placeholder="nama@email.com"
+                aria-describedby={error ? "login-error" : undefined}
               />
             </div>
           </div>
@@ -102,6 +103,7 @@ export default function LoginPage() {
                 onChange={(e) => setPassword(e.target.value)}
                 className="block w-full pl-11 pr-4 py-4 bg-slate-50 border-transparent rounded-2xl text-slate-900 placeholder-slate-400 focus:bg-white focus:border-[#00B894] focus:ring-2 focus:ring-[#00B894]/20 transition-all font-medium"
                 placeholder="••••••••"
+                aria-describedby={error ? "login-error" : undefined}
               />
             </div>
           </div>

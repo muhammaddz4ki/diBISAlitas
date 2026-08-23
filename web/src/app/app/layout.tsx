@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Home, Users, ShieldAlert, MapPin, User } from "lucide-react";
@@ -10,8 +11,8 @@ import VoiceCommand from "@/components/VoiceCommand";
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
 
-  // Hide bottom navigation on login and register pages
-  const isAuthPage = pathname === "/app/login" || pathname === "/app/register";
+  // Hide bottom navigation on login, register, and onboarding (panduan) pages
+  const isAuthPage = pathname === "/app/login" || pathname === "/app/register" || pathname === "/app/panduan";
 
   return (
     <TalkbackProvider>
@@ -19,50 +20,81 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
       <div className="min-h-screen bg-[#F9FAFB] sm:py-8 flex items-center justify-center font-sans text-slate-800 selection:bg-[#00B894]/20">
         <div className="w-full max-w-[450px] h-[100dvh] sm:h-[850px] bg-white sm:rounded-[2.5rem] sm:shadow-2xl overflow-hidden relative flex flex-col">
 
+          {/* Skip to content — hanya tampil saat di-focus via keyboard */}
+          <a
+            href="#main-content"
+            className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:bg-[#1B9981] focus:text-white focus:px-4 focus:py-2 focus:rounded-xl focus:font-bold focus:text-sm focus:shadow-lg"
+          >
+            Loncat ke konten utama
+          </a>
+
           {/* Main Content Area */}
-          <main className="flex-1 overflow-y-auto pb-28 relative scroll-smooth [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none']">
+          <main id="main-content" className={`flex-1 overflow-y-auto relative scroll-smooth [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none'] ${isAuthPage ? "" : "pb-28"}`}>
             {children}
           </main>
 
           {/* Bottom Navigation Bar */}
-          {!isAuthPage && (
-            <div className="absolute bottom-0 w-full bg-white/90 backdrop-blur-2xl border-t border-slate-200/60 pt-3 pb-7 sm:pb-4 px-4 flex justify-between items-end z-50">
-              {/* 1. Beranda */}
-              <NavItem
-                href="/app/dashboard"
-                icon={<Home className="w-[24px] h-[24px]" strokeWidth={pathname === "/app/dashboard" ? 2.5 : 2} />}
-                label="Beranda"
-                isActive={pathname === "/app/dashboard"}
-              />
+          {!isAuthPage && (() => {
+            // Tentukan active index untuk posisi bola melayang
+            const getActiveIndex = () => {
+              if (pathname.includes("/dashboard")) return 0;
+              if (pathname.includes("/komunitas")) return 1;
+              if (pathname.includes("/bisafe")) return 2;
+              if (pathname.includes("/peta")) return 3;
+              if (pathname.includes("/profile")) return 4;
+              return 0;
+            };
+            const activeIndex = getActiveIndex();
 
-              {/* 2. Komunitas */}
-              <NavItem
-                href="/app/komunitas"
-                icon={<Users className="w-[24px] h-[24px]" strokeWidth={pathname === "/app/komunitas" ? 2.5 : 2} />}
-                label="Komunitas"
-                isActive={pathname === "/app/komunitas"}
-              />
+            return (
+              <nav className="absolute bottom-0 w-full pt-3 pb-7 sm:pb-4 z-50 shadow-[0_-10px_40px_rgba(0,0,0,0.08)]" role="navigation" aria-label="Menu utama">
+                
+                {/* Latar Putih Navbar & Lubang Transparan Asli (The flawless geometry trick) */}
+                <div className="absolute inset-0 overflow-hidden z-[-1] pointer-events-none rounded-t-[0px]">
+                  <div 
+                    className="absolute top-[-34px] w-[68px] h-[68px] bg-transparent rounded-full z-0"
+                    style={{ 
+                      left: `calc(10% + 20% * ${activeIndex})`, 
+                      transform: 'translateX(-50%)',
+                      transition: 'left 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)',
+                      boxShadow: '0 34px 0 2000px #ffffff' /* Menggambar latar navbar putih dengan presisi Y=0 */
+                    }}
+                  >
+                    {/* Sayap Lengkung Kiri */}
+                    <div 
+                      className="absolute top-[34px] left-[-24px] w-[24px] h-[24px] bg-transparent"
+                      style={{ background: 'radial-gradient(circle at top right, transparent 23.5px, #ffffff 24px)' }}
+                    />
+                    {/* Sayap Lengkung Kanan */}
+                    <div 
+                      className="absolute top-[34px] right-[-24px] w-[24px] h-[24px] bg-transparent"
+                      style={{ background: 'radial-gradient(circle at top left, transparent 23.5px, #ffffff 24px)' }}
+                    />
+                  </div>
+                </div>
 
-              {/* 3. BiSAFE FAB — Center, Raised Red Button */}
-              <FABItem href="/app/bisafe" isActive={pathname === "/app/bisafe"} />
+                {/* Bola Hijau Melayang */}
+                <div 
+                  className="absolute top-[-26px] w-[52px] h-[52px] rounded-full bg-gradient-to-br from-[#1B9981] to-[#00D4AA] shadow-[0_4px_12px_rgba(0,184,148,0.4)] z-0 pointer-events-none"
+                  style={{ 
+                    left: `calc(10% + 20% * ${activeIndex})`, 
+                    transform: 'translateX(-50%)',
+                    transition: 'left 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s',
+                    opacity: activeIndex === 2 ? 0 : 1 /* Sembunyikan bola hijau saat di BiSAFE */
+                  }}
+                />
 
-              {/* 4. Peta */}
-              <NavItem
-                href="/app/peta"
-                icon={<MapPin className="w-[24px] h-[24px]" strokeWidth={pathname === "/app/peta" ? 2.5 : 2} />}
-                label="Peta"
-                isActive={pathname === "/app/peta"}
-              />
-
-              {/* 5. Profil */}
-              <NavItem
-                href="/app/profile"
-                icon={<User className="w-[24px] h-[24px]" strokeWidth={pathname === "/app/profile" ? 2.5 : 2} />}
-                label="Profil"
-                isActive={pathname === "/app/profile"}
-              />
-            </div>
-          )}
+                {/* Kontainer Menu (Grid) */}
+                <div className="relative z-10 w-full grid grid-cols-5 items-end justify-items-center">
+                  <NavItem href="/app/dashboard" icon={<Home className="w-6 h-6" />} label="Beranda" isActive={activeIndex === 0} />
+                  <NavItem href="/app/komunitas" icon={<Users className="w-6 h-6" />} label="Komunitas" isActive={activeIndex === 1} />
+                  <FABItem href="/app/bisafe" isActive={activeIndex === 2} />
+                  <NavItem href="/app/peta" icon={<MapPin className="w-6 h-6" />} label="Peta" isActive={activeIndex === 3} />
+                  <NavItem href="/app/profile" icon={<User className="w-6 h-6" />} label="Profil" isActive={activeIndex === 4} />
+                </div>
+              </nav>
+            );
+          })()}
 
           {/* Perintah suara global (Tunanetra) */}
           <VoiceCommand />
@@ -84,20 +116,26 @@ function NavItem({ href, icon, label, isActive }: {
     <Link
       href={href}
       aria-label={label}
-      className="flex flex-col items-center gap-1.5 w-14 group"
+      className="flex flex-col items-center gap-1.5 w-14 group relative cursor-pointer"
     >
       <div className={`
-        relative flex items-center justify-center transition-all duration-300 ease-out
-        ${isActive ? "text-[#00B894] scale-110 -translate-y-0.5" : "text-slate-400 group-active:scale-90 group-hover:text-slate-500"}
-      `}>
-        {icon}
-        {/* Active dot indicator */}
-        <span className={`absolute -bottom-2.5 w-1 h-1 rounded-full bg-[#00B894] transition-all duration-300 ${isActive ? "opacity-100 scale-100" : "opacity-0 scale-0"}`} />
+        relative flex items-center justify-center z-20 h-6 w-full
+        ${isActive ? "-translate-y-[26px]" : "text-slate-500 group-active:scale-90 group-hover:text-slate-600"}
+      `} style={{ 
+        transition: isActive 
+          ? 'transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) 0.15s, color 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) 0.15s' 
+          : 'transform 0.25s ease-out 0s, color 0.25s ease-out 0s' 
+      }}>
+        {isActive ? React.cloneElement(icon as React.ReactElement<any>, { className: "w-[22px] h-[22px] text-white drop-shadow-md transition-all duration-300", strokeWidth: 2.5 }) : React.cloneElement(icon as React.ReactElement<any>, { className: "w-6 h-6 transition-all duration-300", strokeWidth: 2 })}
       </div>
       <span className={`
-        text-[10px] tracking-tight transition-all duration-300
-        ${isActive ? "font-bold text-[#00B894]" : "font-medium text-slate-400"}
-      `}>
+        text-[10px] tracking-tight z-20 mt-0.5
+        ${isActive ? "font-bold text-[#1B9981]" : "font-medium text-slate-500"}
+      `} style={{
+        transition: isActive 
+          ? 'all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) 0.15s' 
+          : 'all 0.25s ease-out 0s'
+      }}>
         {label}
       </span>
     </Link>
@@ -110,23 +148,24 @@ function FABItem({ href, isActive }: { href: string; isActive: boolean }) {
     <Link
       href={href}
       aria-label="BiSAFE - Panic Button Darurat"
-      className="relative flex flex-col items-center -mt-8 group"
+      className="relative flex flex-col items-center justify-end h-full w-14 group pt-2"
     >
-      {/* Pulsing ring animation */}
-      <span className="absolute top-0 left-1/2 -translate-x-1/2 w-14 h-14 rounded-full bg-rose-400/30 animate-ping" />
+      <div className="absolute bottom-[20px] flex flex-col items-center group-active:scale-95 transition-transform">
+        {/* Pulsing ring animation */}
+        <span className="absolute top-0 left-1/2 -translate-x-1/2 w-14 h-14 rounded-full bg-rose-400/30 animate-ping" />
 
-      {/* The FAB button */}
-      <div className={`
-        relative w-14 h-14 rounded-full flex items-center justify-center
-        shadow-[0_6px_24px_rgba(239,68,68,0.4)] transition-all duration-200 group-active:scale-90
-        ${isActive ? "bg-rose-600 scale-105" : "bg-rose-500"}
-      `}>
-        <ShieldAlert className="w-7 h-7 text-white" strokeWidth={2} />
+        {/* The FAB button */}
+        <div className={`
+          relative w-14 h-14 rounded-full flex items-center justify-center border-2 border-white icon-3d shadow-3d shadow-3d-active transition-all duration-200
+          ${isActive ? "bg-gradient-to-br from-rose-500 to-rose-700" : "bg-gradient-to-br from-rose-400 to-rose-600"}
+        `}>
+          <ShieldAlert className="w-7 h-7 text-white drop-shadow-md" strokeWidth={2.5} />
+        </div>
       </div>
 
       {/* Label */}
       <span className={`
-        mt-1.5 text-[10px] font-bold tracking-tight transition-all duration-300
+        text-[10px] font-bold tracking-tight transition-all duration-300 z-20 mt-0.5
         ${isActive ? "text-rose-600" : "text-rose-400"}
       `}>
         BiSAFE

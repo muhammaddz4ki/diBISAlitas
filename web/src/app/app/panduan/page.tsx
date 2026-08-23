@@ -158,7 +158,7 @@ export default function PanduanPage() {
       <div className="absolute top-6 right-6 z-20">
         <button 
           onClick={handleFinish}
-          className="text-slate-400 font-semibold text-sm hover:text-[#1B9981] transition-colors"
+          className="text-slate-500 font-semibold text-sm hover:text-[#1B9981] transition-colors"
         >
           Lewati
         </button>

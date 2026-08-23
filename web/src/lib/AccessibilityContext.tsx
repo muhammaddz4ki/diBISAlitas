@@ -39,6 +39,26 @@ export function AccessibilityProvider({ children }: { children: ReactNode }) {
   const [highContrast, setHighContrast] = useState<boolean>(() => readFlag("a11y_hc"));
   const [reduceMotion, setReduceMotion] = useState<boolean>(() => readFlag("a11y_rm"));
 
+  // Auto-detect OS preference: prefers-reduced-motion
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    // Hanya auto-set jika user belum pernah mengatur secara manual
+    const manuallySet = window.localStorage.getItem("a11y_rm");
+    if (manuallySet !== null) return;
+
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    if (mq.matches) setReduceMotion(true);
+
+    const handler = (e: MediaQueryListEvent) => {
+      if (window.localStorage.getItem("a11y_rm") === null) {
+        setReduceMotion(e.matches);
+      }
+    };
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
+  }, []);
+
   // Terapkan efek ke DOM (bukan setState → tidak memicu cascading render)
   useEffect(() => {
     if (typeof document === "undefined") return;

@@ -126,7 +126,7 @@ export default function BiSapaPage() {
       {/* ── BOTTOM SECTION (Normal) ── */}
       <div className="flex-1 flex flex-col p-6 bg-white rounded-t-3xl shadow-[0_-10px_40px_-15px_rgba(0,0,0,0.1)] z-10 -mt-6">
         <div className="w-full h-full flex flex-col justify-between pb-6">
-          <div className="text-slate-400 font-medium text-sm flex items-center justify-center gap-2 pt-2">
+          <div className="text-slate-500 font-medium text-sm flex items-center justify-center gap-2 pt-2">
             <Type className="w-4 h-4" /> Area Ketik (Tunarungu)
           </div>
 
