@@ -192,8 +192,8 @@ body {
 .shadow-3d {
   /* Realistis murni tanpa bayangan di dalam (inset), dibikin lebih kentara tebalnya */
   box-shadow: 
-    -10px -10px 20px rgba(255, 255, 255, 1),
-    10px 10px 20px rgba(15, 23, 42, 0.15);
+    -12px -12px 24px rgba(255, 255, 255, 1),
+    12px 12px 24px rgba(15, 23, 42, 0.22);
 }
 .shadow-3d-hover {
   /* Animasi dibuat lebih bouncy (memantul) dan perlahan */
@@ -203,21 +203,21 @@ body {
   /* Mengambang lebih tinggi dan membesar sedikit */
   transform: translateY(-4px) scale(1.02);
   box-shadow: 
-    -14px -14px 28px rgba(255, 255, 255, 1),
-    14px 14px 28px rgba(15, 23, 42, 0.20);
+    -16px -16px 32px rgba(255, 255, 255, 1),
+    16px 16px 32px rgba(15, 23, 42, 0.25);
 }
 .shadow-3d-active:active {
   /* Ditekan jauh lebih dalam dan mengecil */
   transform: translateY(4px) scale(0.96);
   box-shadow: 
-    -2px -2px 4px rgba(255, 255, 255, 1),
-    2px 2px 4px rgba(15, 23, 42, 0.12);
+    -3px -3px 6px rgba(255, 255, 255, 1),
+    3px 3px 6px rgba(15, 23, 42, 0.15);
 }
 /* Efek teks timbul (Embossed Text) dipertegas */
 .text-3d {
   text-shadow: 
-    -2px -2px 2px rgba(255, 255, 255, 1),
-    2px 2px 3px rgba(15, 23, 42, 0.25);
+    -2px -2px 3px rgba(255, 255, 255, 1),
+    2px 2px 4px rgba(15, 23, 42, 0.3);
 }
 
 

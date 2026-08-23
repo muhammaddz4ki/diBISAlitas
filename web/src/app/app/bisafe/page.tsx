@@ -57,27 +57,27 @@ export default function BiSafePage() {
   }, []);
 
   return (
-    <div className="min-h-full bg-white selection:bg-[#1B9981]/20 flex flex-col pb-12">
-      {/* Header — Minimal White */}
-      <div className="px-6 pt-14 pb-4 bg-white border-b border-slate-100 shrink-0">
+    <div className="min-h-full bg-[#f4f6fc] selection:bg-[#1B9981]/20 flex flex-col pb-40">
+      {/* Header — Sticky 3D Neumorphism */}
+      <div className="sticky top-0 z-50 px-6 pt-14 pb-6 bg-[#f4f6fc]/95 backdrop-blur-xl border-b border-white shadow-3d rounded-b-[2rem] shrink-0">
         <div className="flex items-center gap-3.5">
-          <div className="w-12 h-12 rounded-2xl bg-rose-500/10 flex items-center justify-center shrink-0">
-            <ShieldAlert className="w-6 h-6 text-rose-500" strokeWidth={2.4} />
+          <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-rose-500 to-rose-700 flex items-center justify-center shrink-0 shadow-[0_8px_16px_rgba(225,29,72,0.3)] border-2 border-white icon-3d">
+            <ShieldAlert className="w-7 h-7 text-white drop-shadow-md" strokeWidth={2.5} />
           </div>
           <div>
-            <p className="text-slate-500 text-[12px] font-semibold uppercase tracking-widest">diBISAlitas</p>
-            <h1 className="text-[24px] font-black text-slate-900 tracking-tight leading-tight">BiSAFE</h1>
-            <p className="text-slate-500 text-[13px] leading-snug line-clamp-2 max-w-[240px] mt-0.5">
+            <p className="text-slate-500 text-[12px] font-semibold uppercase tracking-widest text-3d">diBISAlitas</p>
+            <h1 className="text-[24px] font-black text-slate-900 tracking-tight leading-tight text-3d">BiSAFE</h1>
+            <p className="text-slate-500 text-[13px] leading-snug line-clamp-2 max-w-[240px] mt-0.5 text-3d">
               Layanan darurat terpusat — tombol panik, kontak, dan riwayat.
             </p>
           </div>
         </div>
 
         {/* Segmented Tabs */}
-        <div className="mt-4 flex gap-1 bg-slate-100 rounded-2xl p-1">
-          <TabButton active={tab === "darurat"} onClick={() => setTab("darurat")} icon={<ShieldAlert className="w-4 h-4" />} label="Darurat" />
-          <TabButton active={tab === "kontak"} onClick={() => setTab("kontak")} icon={<Users className="w-4 h-4" />} label="Kontak" />
-          <TabButton active={tab === "riwayat"} onClick={() => setTab("riwayat")} icon={<History className="w-4 h-4" />} label="Riwayat" />
+        <div className="mt-5 flex gap-1.5 bg-[#f4f6fc] rounded-[16px] p-1.5 shadow-[inset_3px_3px_8px_rgba(0,0,0,0.05),_inset_-4px_-4px_10px_rgba(255,255,255,1)] border border-white">
+          <TabButton active={tab === "darurat"} onClick={() => setTab("darurat")} icon={<ShieldAlert className="w-4 h-4" strokeWidth={2.5} />} label="Darurat" />
+          <TabButton active={tab === "kontak"} onClick={() => setTab("kontak")} icon={<Users className="w-4 h-4" strokeWidth={2.5} />} label="Kontak" />
+          <TabButton active={tab === "riwayat"} onClick={() => setTab("riwayat")} icon={<History className="w-4 h-4" strokeWidth={2.5} />} label="Riwayat" />
         </div>
       </div>
 
@@ -92,8 +92,8 @@ function TabButton({ active, onClick, icon, label }: { active: boolean; onClick:
   return (
     <button
       onClick={onClick}
-      className={`flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-[13px] font-bold transition-all ${
-        active ? "bg-white text-slate-900 shadow-sm" : "text-slate-400"
+      className={`flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-[12px] text-[13px] transition-all -webkit-tap-highlight-color-transparent outline-none ${
+        active ? "bg-[#f4f6fc] text-slate-800 shadow-3d border border-white font-black" : "text-slate-500 hover:text-slate-700 font-bold"
       }`}
     >
       {icon}
@@ -194,16 +194,24 @@ function DaruratTab() {
         </div>
       )}
 
-      <motion.button
-        whileTap={{ scale: 0.92 }}
-        onClick={handlePanic}
-        className={`relative z-10 w-56 h-56 sm:w-64 sm:h-64 rounded-full flex flex-col items-center justify-center transition-all duration-500 ease-out border-[6px] outline-none
-          ${status === "success"
-            ? "bg-[#1B9981] border-[#1B9981]/30 shadow-[0_20px_60px_-15px_rgba(27,153,129,0.6)]"
-            : "bg-rose-500 border-rose-500/30 hover:bg-rose-600 shadow-[0_20px_60px_-15px_rgba(225,29,72,0.6)]"
-          }`}
-      >
-        <div className="absolute inset-0 rounded-full bg-white/10" style={{ boxShadow: "inset 0 10px 20px rgba(255,255,255,0.25)" }} />
+      <div className="relative">
+        {/* Glow Element */}
+        <div 
+          className={`absolute inset-0 rounded-full blur-2xl opacity-60 transition-colors duration-500 ${
+            status === "success" ? "bg-[#1B9981]" : "bg-rose-500"
+          }`} 
+        />
+        
+        <motion.button
+          whileTap={{ scale: 0.92 }}
+          onClick={handlePanic}
+          className={`relative z-10 w-56 h-56 sm:w-64 sm:h-64 rounded-full flex flex-col items-center justify-center transition-all duration-500 ease-out outline-none shadow-3d shadow-3d-active
+            ${status === "success"
+              ? "bg-gradient-to-br from-[#1B9981] to-[#00D4AA]"
+              : "bg-gradient-to-br from-rose-500 to-rose-700"
+            }`}
+        >
+          <div className="absolute inset-0 rounded-full bg-white/10" style={{ boxShadow: "inset 0 10px 20px rgba(255,255,255,0.4)" }} />
         {status === "success" ? (
           <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: "spring", stiffness: 200, damping: 20 }} className="flex flex-col items-center">
             <CheckCircle2 className="w-24 h-24 text-white mb-2" strokeWidth={2} />
@@ -222,8 +230,10 @@ function DaruratTab() {
           </div>
         )}
       </motion.button>
+      </div>
 
-      <p className="text-slate-500 font-medium text-sm mt-12 text-center max-w-[280px]">
+
+      <p className="text-slate-500 font-semibold text-[13px] mt-12 text-center max-w-[280px] text-3d leading-relaxed">
         Tekan tombol untuk mengirimkan koordinat lokasi Anda saat ini ke pusat kendali.
       </p>
 
@@ -234,10 +244,10 @@ function DaruratTab() {
               initial={{ opacity: 0, y: 20, scale: 0.9 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 10, scale: 0.95 }}
-              className={`flex items-center gap-3 px-5 py-3.5 rounded-[20px] font-bold text-[13px] shadow-[0_8px_30px_-10px_rgba(0,0,0,0.12)] border
-                ${status === "error" ? "bg-rose-50 text-rose-600 border-rose-100" : ""}
-                ${status === "loading" ? "bg-white text-slate-700 border-slate-100" : ""}
-                ${status === "success" ? "bg-[#1B9981]/10 text-[#1B9981] border-[#1B9981]/20" : ""}`}
+              className={`flex items-center gap-3 px-5 py-3.5 rounded-[20px] font-bold text-[13px] shadow-3d border border-white
+                ${status === "error" ? "bg-rose-50 text-rose-600" : ""}
+                ${status === "loading" ? "bg-[#f4f6fc] text-slate-700" : ""}
+                ${status === "success" ? "bg-emerald-50 text-emerald-600" : ""}`}
             >
               {status === "error" && <AlertCircle className="w-5 h-5 shrink-0" strokeWidth={2.5} />}
               {status === "loading" && <div className="w-5 h-5 border-[3px] border-slate-200 border-t-slate-700 rounded-full animate-spin shrink-0" />}
@@ -310,38 +320,42 @@ function KontakTab({ me }: { me: { uid: string; name: string; email: string } | 
 
   return (
     <div className="flex-1 px-6 pt-5">
-      <div className="flex items-center justify-between mb-4">
-        <h2 className="text-[16px] font-black text-slate-800">Kontak Darurat</h2>
+      <div className="flex items-center justify-between mb-5">
+        <h2 className="text-[17px] font-black text-slate-800 text-3d">Kontak Darurat</h2>
         <button
           onClick={() => setShowAdd(true)}
-          className="flex items-center gap-1.5 bg-[#00B894] text-white text-[13px] font-bold rounded-full pl-3 pr-4 py-2 active:scale-95 transition-transform"
+          className="flex items-center gap-1.5 bg-gradient-to-br from-[#1B9981] to-[#00D4AA] text-white text-[13px] font-bold rounded-full pl-3 pr-4 py-2 transition-transform shadow-3d shadow-3d-active border border-white icon-3d"
         >
-          <Plus className="w-4 h-4" strokeWidth={3} /> Tambah
+          <Plus className="w-4 h-4 drop-shadow-sm" strokeWidth={3} /> <span className="drop-shadow-sm">Tambah</span>
         </button>
       </div>
 
       {contacts.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-20 text-center">
-          <Users className="w-14 h-14 text-slate-200 mb-3" />
-          <p className="font-bold text-slate-700">Belum ada kontak darurat</p>
-          <p className="text-[13px] text-slate-500 mt-1 max-w-[240px]">Tambahkan kontak yang bisa dihubungi saat darurat.</p>
+          <div className="w-20 h-20 rounded-full flex items-center justify-center mb-4 shadow-[inset_3px_3px_8px_rgba(0,0,0,0.05),_inset_-4px_-4px_10px_rgba(255,255,255,1)]">
+            <Users className="w-10 h-10 text-slate-300" strokeWidth={1.5} />
+          </div>
+          <p className="font-bold text-slate-700 text-[16px] text-3d">Belum ada kontak darurat</p>
+          <p className="text-[13px] text-slate-500 mt-1 max-w-[240px] text-3d leading-relaxed">Tambahkan kontak yang bisa dihubungi saat darurat.</p>
         </div>
       ) : (
         <div className="flex flex-col gap-3">
           {contacts.map((c) => (
-            <div key={c.id} className="flex items-center gap-3.5 bg-white border border-slate-100 rounded-[20px] p-4 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)]">
-              <div className="w-11 h-11 rounded-2xl bg-[#00B894]/10 flex items-center justify-center text-[20px] shrink-0">{relIcon(c.relation)}</div>
+            <div key={c.id} className="flex items-center gap-3.5 bg-transparent border border-white rounded-[24px] p-4 shadow-3d shadow-3d-hover transition-all group">
+              <div className="w-12 h-12 rounded-[16px] bg-transparent shadow-[inset_2px_2px_5px_rgba(0,0,0,0.05),_inset_-3px_-3px_7px_rgba(255,255,255,1)] flex items-center justify-center text-[22px] shrink-0 border border-white">
+                {relIcon(c.relation)}
+              </div>
               <div className="flex-1 min-w-0">
-                <h3 className="font-bold text-slate-800 text-[15px] truncate">{c.name}</h3>
-                <div className="flex items-center gap-1.5 text-slate-500 mt-0.5">
+                <h3 className="font-bold text-slate-800 text-[16px] truncate text-3d">{c.name}</h3>
+                <div className="flex items-center gap-1.5 text-slate-500 mt-1">
                   <Phone className="w-3.5 h-3.5" />
-                  <span className="text-[12px] font-medium">{c.phone}</span>
-                  <span className="w-1 h-1 rounded-full bg-slate-300" />
-                  <span className="text-[12px] font-medium capitalize">{c.relation}</span>
+                  <span className="text-[13px] font-semibold text-3d">{c.phone}</span>
+                  <span className="w-1.5 h-1.5 rounded-full shadow-[inset_1px_1px_2px_rgba(0,0,0,0.2)]" />
+                  <span className="text-[12px] font-bold capitalize text-3d">{c.relation}</span>
                 </div>
               </div>
-              <button onClick={() => del(c.id)} aria-label="Hapus kontak" className="w-12 h-12 rounded-xl flex items-center justify-center text-rose-500 border border-rose-100 hover:bg-rose-500 hover:text-white transition-all shrink-0">
-                <Trash2 className="w-4 h-4" />
+              <button onClick={() => del(c.id)} aria-label="Hapus kontak" className="w-12 h-12 rounded-[16px] flex items-center justify-center text-rose-500 shadow-[inset_2px_2px_5px_rgba(0,0,0,0.05),_inset_-3px_-3px_7px_rgba(255,255,255,1)] hover:bg-rose-50 border border-white transition-all shrink-0">
+                <Trash2 className="w-5 h-5" strokeWidth={2.5} />
               </button>
             </div>
           ))}
@@ -356,29 +370,29 @@ function KontakTab({ me }: { me: { uid: string; name: string; email: string } | 
               initial={{ y: 40, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: 40, opacity: 0 }}
-              className="w-full sm:w-[360px] bg-white rounded-t-[2rem] sm:rounded-[2rem] p-6 pb-8 shadow-2xl"
+              className="w-full sm:w-[360px] bg-[#f4f6fc] rounded-t-[2.5rem] sm:rounded-[2.5rem] p-6 pb-8 shadow-[0_-20px_40px_rgba(0,0,0,0.15)] border-t border-white"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-[17px] font-black text-slate-800">Tambah Kontak</h3>
-                <button onClick={() => setShowAdd(false)} aria-label="Tutup" className="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center">
-                  <X className="w-5 h-5 text-slate-500" />
+              <div className="flex items-center justify-between mb-5">
+                <h3 className="text-[18px] font-black text-slate-800 text-3d">Tambah Kontak</h3>
+                <button onClick={() => setShowAdd(false)} aria-label="Tutup" className="w-12 h-12 rounded-full shadow-[inset_2px_2px_5px_rgba(0,0,0,0.05),_inset_-3px_-3px_7px_rgba(255,255,255,1)] flex items-center justify-center border border-white">
+                  <X className="w-5 h-5 text-slate-500" strokeWidth={2.5} />
                 </button>
               </div>
               <input value={name} onChange={(e) => setName(e.target.value)} placeholder="Nama"
-                className="w-full mb-3 bg-slate-50 border border-slate-100 rounded-2xl px-4 py-3 text-[14px] text-slate-800 focus:outline-none focus:border-[#00B894]/50" />
+                className="w-full mb-3.5 bg-[#f4f6fc] border border-white rounded-[16px] px-4 py-3.5 text-[14px] font-semibold text-slate-800 shadow-[inset_3px_3px_8px_rgba(0,0,0,0.05),_inset_-4px_-4px_10px_rgba(255,255,255,1)] focus:outline-none focus:ring-2 focus:ring-[#1B9981]/30 placeholder:text-slate-400 placeholder:font-medium transition-all" />
               <input value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="No. Telepon" inputMode="tel"
-                className="w-full mb-3 bg-slate-50 border border-slate-100 rounded-2xl px-4 py-3 text-[14px] text-slate-800 focus:outline-none focus:border-[#00B894]/50" />
-              <div className="flex gap-2 mb-5">
+                className="w-full mb-4 bg-[#f4f6fc] border border-white rounded-[16px] px-4 py-3.5 text-[14px] font-semibold text-slate-800 shadow-[inset_3px_3px_8px_rgba(0,0,0,0.05),_inset_-4px_-4px_10px_rgba(255,255,255,1)] focus:outline-none focus:ring-2 focus:ring-[#1B9981]/30 placeholder:text-slate-400 placeholder:font-medium transition-all" />
+              <div className="flex gap-2 mb-6">
                 {RELATIONS.map((r) => (
                   <button key={r.value} onClick={() => setRelation(r.value)}
-                    className={`flex-1 py-2.5 rounded-xl text-[13px] font-bold border transition-all ${relation === r.value ? "bg-[#00B894] text-white border-[#00B894]" : "bg-slate-50 text-slate-600 border-slate-100"}`}>
+                    className={`flex-1 py-3 rounded-[14px] text-[13px] font-bold border transition-all shadow-3d-active ${relation === r.value ? "bg-gradient-to-br from-[#1B9981] to-[#00D4AA] text-white border-white shadow-3d icon-3d" : "bg-transparent text-slate-500 border-white shadow-[inset_2px_2px_5px_rgba(0,0,0,0.05),_inset_-3px_-3px_7px_rgba(255,255,255,1)]"}`}>
                     {r.label}
                   </button>
                 ))}
               </div>
               <button onClick={addContact} disabled={saving || !name.trim() || !phone.trim()}
-                className="w-full py-3.5 rounded-2xl bg-[#00B894] text-white font-bold text-[15px] active:scale-95 transition-transform disabled:opacity-50">
+                className="w-full py-4 rounded-[16px] bg-gradient-to-br from-[#1B9981] to-[#00D4AA] text-white font-bold text-[15px] shadow-3d shadow-3d-active border-2 border-white icon-3d transition-all disabled:opacity-50 disabled:shadow-none">
                 {saving ? "Menyimpan..." : "Simpan Kontak"}
               </button>
             </motion.div>
@@ -437,39 +451,43 @@ function RiwayatTab({ me }: { me: { uid: string; name: string; email: string } |
 
   return (
     <div className="flex-1 px-6 pt-5">
-      <h2 className="text-[16px] font-black text-slate-800 mb-4">Riwayat Laporan</h2>
+      <h2 className="text-[17px] font-black text-slate-800 mb-5 text-3d">Riwayat Laporan</h2>
       {reports.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-20 text-center">
-          <History className="w-14 h-14 text-slate-200 mb-3" />
-          <p className="font-bold text-slate-700">Belum ada riwayat laporan</p>
+          <div className="w-20 h-20 rounded-full flex items-center justify-center mb-4 shadow-[inset_3px_3px_8px_rgba(0,0,0,0.05),_inset_-4px_-4px_10px_rgba(255,255,255,1)] border border-white">
+            <History className="w-10 h-10 text-slate-300" strokeWidth={1.5} />
+          </div>
+          <p className="font-bold text-slate-700 text-[16px] text-3d">Belum ada riwayat laporan</p>
         </div>
       ) : (
         <div className="flex flex-col gap-3">
           {reports.map((r) => {
             const st = STATUS_LABEL[r.status] || { label: r.status || "-", cls: "bg-slate-100 text-slate-500 border-slate-200" };
             return (
-              <div key={r.id} className="bg-white border border-slate-100 rounded-[20px] p-4 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)]">
-                <div className="flex items-center justify-between mb-3">
-                  <span className={`inline-flex items-center px-3 py-1 rounded-full text-[11px] font-bold border uppercase tracking-wide ${st.cls}`}>{st.label}</span>
-                  <div className="flex items-center gap-2">
-                    <span className="flex items-center gap-1 text-[11px] text-slate-400 font-medium">
+              <div key={r.id} className="bg-transparent border border-white rounded-[24px] p-5 shadow-3d shadow-3d-hover transition-all">
+                <div className="flex items-center justify-between mb-4">
+                  <span className={`inline-flex items-center px-3 py-1.5 rounded-full text-[10px] font-bold border uppercase tracking-widest shadow-[inset_1px_1px_3px_rgba(0,0,0,0.05),_inset_-2px_-2px_4px_rgba(255,255,255,1)] ${st.cls}`}>{st.label}</span>
+                  <div className="flex items-center gap-3">
+                    <span className="flex items-center gap-1.5 text-[11px] text-slate-500 font-bold text-3d">
                       <Clock className="w-3.5 h-3.5" /> {fmt(r.createdAt)}
                     </span>
-                    <button onClick={() => del(r.id)} className="text-rose-400 hover:text-rose-600">
-                      <Trash2 className="w-4 h-4" />
+                    <button onClick={() => del(r.id)} className="w-8 h-8 rounded-full shadow-[inset_1px_1px_3px_rgba(0,0,0,0.05),_inset_-2px_-2px_4px_rgba(255,255,255,1)] flex items-center justify-center text-rose-400 hover:text-rose-600 transition-colors border border-white">
+                      <Trash2 className="w-3.5 h-3.5" />
                     </button>
                   </div>
                 </div>
-                <div className="flex items-center gap-1.5 text-slate-500">
-                  <MapPin className="w-3.5 h-3.5" />
-                  <span className="text-[12px] font-mono">
+                <div className="flex items-center gap-2 text-slate-600">
+                  <MapPin className="w-4 h-4" />
+                  <span className="text-[13px] font-bold text-3d font-mono">
                     {typeof r.latitude === "number" ? r.latitude.toFixed(5) : "-"}, {typeof r.longitude === "number" ? r.longitude.toFixed(5) : "-"}
                   </span>
                 </div>
                 {r.aiDescription && (
-                  <div className="mt-2 bg-sky-50 rounded-xl px-3 py-2 text-[12px] text-slate-600 leading-relaxed">{r.aiDescription}</div>
+                  <div className="mt-3.5 bg-[#f4f6fc] border border-white rounded-[16px] px-4 py-3 text-[13px] text-slate-600 font-medium leading-relaxed shadow-[inset_3px_3px_8px_rgba(0,0,0,0.05),_inset_-4px_-4px_10px_rgba(255,255,255,1)]">
+                    {r.aiDescription}
+                  </div>
                 )}
-                <div className="mt-2 text-[11px] text-slate-400 font-medium">Trigger: {r.triggerType || "button"}</div>
+                <div className="mt-3 text-[11px] text-slate-400 font-bold tracking-wide uppercase text-3d">Trigger: {r.triggerType || "button"}</div>
               </div>
             );
           })}

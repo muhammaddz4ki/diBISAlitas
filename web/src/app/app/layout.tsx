@@ -156,7 +156,7 @@ function FABItem({ href, isActive }: { href: string; isActive: boolean }) {
 
         {/* The FAB button */}
         <div className={`
-          relative w-14 h-14 rounded-full flex items-center justify-center border-2 border-white icon-3d shadow-3d shadow-3d-active transition-all duration-200
+          relative w-14 h-14 rounded-full flex items-center justify-center icon-3d shadow-3d shadow-3d-active transition-all duration-200
           ${isActive ? "bg-gradient-to-br from-rose-500 to-rose-700" : "bg-gradient-to-br from-rose-400 to-rose-600"}
         `}>
           <ShieldAlert className="w-7 h-7 text-white drop-shadow-md" strokeWidth={2.5} />
