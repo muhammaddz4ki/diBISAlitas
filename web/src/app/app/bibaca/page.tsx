@@ -14,7 +14,6 @@ import {
 } from "lucide-react";
 import { motion, AnimatePresence, Variants } from "framer-motion";
 import { useBibaca } from "@/hooks/useBibaca";
-import { useAccessibility } from "@/lib/AccessibilityContext";
 
 const containerVariants: Variants = {
   hidden: { opacity: 0 },
@@ -46,7 +45,6 @@ export default function BibacaScreen() {
     reset,
   } = useBibaca();
 
-  const { colorfulMode } = useAccessibility();
   const tSelection = "selection:bg-purple-500/20";
   const tText = "text-purple-600";
   const tBgIndicator = "bg-purple-400 shadow-[0_0_8px_rgba(192,132,252,0.8)]";

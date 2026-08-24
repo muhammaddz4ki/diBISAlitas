@@ -12,8 +12,6 @@ interface AccessibilityValue {
   setFontLevel: (n: number) => void;
   highContrast: boolean;
   toggleHighContrast: () => void;
-  colorfulMode: boolean;
-  toggleColorfulMode: () => void;
   reduceMotion: boolean;
   toggleReduceMotion: () => void;
 }
@@ -39,7 +37,6 @@ function readFlag(key: string): boolean {
 export function AccessibilityProvider({ children }: { children: ReactNode }) {
   const [fontLevel, setFontLevelState] = useState<number>(readFontLevel);
   const [highContrast, setHighContrast] = useState<boolean>(() => readFlag("a11y_hc"));
-  const [colorfulMode, setColorfulMode] = useState<boolean>(() => readFlag("a11y_cf"));
   const [reduceMotion, setReduceMotion] = useState<boolean>(() => readFlag("a11y_rm"));
 
   // Auto-detect OS preference: prefers-reduced-motion
@@ -69,9 +66,8 @@ export function AccessibilityProvider({ children }: { children: ReactNode }) {
     // `zoom` didukung Chromium/Safari/Firefox modern — memperbesar seluruh konten.
     (document.body.style as CSSStyleDeclaration & { zoom?: string }).zoom = String(scale);
     document.body.classList.toggle("a11y-hc", highContrast);
-    document.body.classList.toggle("a11y-colorful", colorfulMode);
     document.body.classList.toggle("a11y-reduce", reduceMotion);
-  }, [fontLevel, highContrast, colorfulMode, reduceMotion]);
+  }, [fontLevel, highContrast, reduceMotion]);
 
   const setFontLevel = (n: number) => {
     const clamped = Math.min(2, Math.max(0, n));
@@ -88,17 +84,6 @@ export function AccessibilityProvider({ children }: { children: ReactNode }) {
       const nv = !v;
       try {
         window.localStorage.setItem("a11y_hc", nv ? "1" : "0");
-      } catch {
-        /* abaikan */
-      }
-      return nv;
-    });
-
-  const toggleColorfulMode = () =>
-    setColorfulMode((v) => {
-      const nv = !v;
-      try {
-        window.localStorage.setItem("a11y_cf", nv ? "1" : "0");
       } catch {
         /* abaikan */
       }
@@ -123,8 +108,6 @@ export function AccessibilityProvider({ children }: { children: ReactNode }) {
         setFontLevel,
         highContrast,
         toggleHighContrast,
-        colorfulMode,
-        toggleColorfulMode,
         reduceMotion,
         toggleReduceMotion,
       }}
