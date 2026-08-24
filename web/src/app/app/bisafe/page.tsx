@@ -47,7 +47,7 @@ const STATUS_LABEL: Record<string, { label: string; cls: string }> = {
 };
 
 export default function BiSafePage() {
-  const { colorfulMode } = useAccessibility();
+  const colorfulMode = false;
   const [tab, setTab] = useState<Tab>("darurat");
   const [me, setMe] = useState<{ uid: string; name: string; email: string } | null>(null);
 
@@ -59,7 +59,7 @@ export default function BiSafePage() {
   }, []);
 
   return (
-    <div className={`min-h-full bg-[#f4f6fc] ${colorfulMode ? "selection:bg-rose-500/20" : "selection:bg-[#1B9981]/20"} flex flex-col pb-40`}>
+    <div className={`min-h-full bg-[#f4f6fc] ${colorfulMode ? "selection:bg-rose-500/20" : "selection:bg-[#1B9981]/20"} flex flex-col pb-24`}>
       {/* Header — Sticky 3D Neumorphism */}
       <div className="sticky top-0 z-50 px-6 pt-14 pb-6 bg-[#f4f6fc]/95 backdrop-blur-xl border-b border-white shadow-3d rounded-b-[2rem] shrink-0 mb-4">
         <div className="flex items-center gap-3.5">
@@ -265,7 +265,7 @@ function DaruratTab() {
 
 /* ─────────────────────────  KONTAK  ───────────────────────── */
 function KontakTab({ me }: { me: { uid: string; name: string; email: string } | null }) {
-  const { colorfulMode } = useAccessibility();
+  const colorfulMode = false;
   const themeGrad = "from-rose-500 to-rose-700";
   const themeRing = "focus:ring-rose-500/30";
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

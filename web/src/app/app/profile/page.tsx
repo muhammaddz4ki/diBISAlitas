@@ -159,7 +159,7 @@ export default function ProfilePage() {
   const initial = (user?.displayName || "Pengguna").charAt(0).toUpperCase() || "P";
 
   return (
-    <div className="min-h-full bg-[#f4f6fc] selection:bg-[#1B9981]/20 flex flex-col pb-40 relative overflow-hidden">
+    <div className="min-h-full bg-[#f4f6fc] selection:bg-[#1B9981]/20 flex flex-col pb-24 relative overflow-hidden">
 
       {/* Minimalist iOS-like Toast */}
       <AnimatePresence>

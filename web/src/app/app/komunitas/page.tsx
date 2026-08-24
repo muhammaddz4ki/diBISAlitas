@@ -104,7 +104,7 @@ export default function KomunitasPage() {
   };
 
   return (
-    <div className="min-h-full bg-[#f4f6fc] selection:bg-[#1B9981]/20 pb-40">
+    <div className="min-h-full bg-[#f4f6fc] selection:bg-[#1B9981]/20 pb-24">
       {/* Header — Sticky 3D Neumorphism */}
       <div className="sticky top-0 z-50 px-6 pt-14 pb-6 bg-[#f4f6fc]/95 backdrop-blur-xl border-b border-white shadow-3d rounded-b-[2rem] shrink-0 mb-4">
         <div className="flex items-center gap-3.5">

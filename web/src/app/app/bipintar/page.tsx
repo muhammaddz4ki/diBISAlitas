@@ -28,7 +28,7 @@ const itemVariants: Variants = {
 };
 
 export default function BiPintarPage() {
-  const { colorfulMode } = useAccessibility();
+  const colorfulMode = false;
   const themeGrad = "from-amber-400 to-amber-500";
   const themeShadow = "shadow-[0_8px_16px_rgba(245,158,11,0.3)]";
   const themeText = "text-amber-500";
@@ -56,7 +56,7 @@ export default function BiPintarPage() {
   }, []);
 
   return (
-    <div className={`min-h-[100dvh] bg-[#f4f6fc] ${themeSelection} flex flex-col pb-40`}>
+    <div className={`min-h-[100dvh] bg-[#f4f6fc] ${themeSelection} flex flex-col pb-24`}>
 
       {/* Header — Sticky 3D Neumorphism */}
       <div className="sticky top-0 z-50 px-6 pt-14 pb-6 bg-[#f4f6fc]/95 backdrop-blur-xl border-b border-white shadow-3d rounded-b-[2rem] shrink-0 mb-4">

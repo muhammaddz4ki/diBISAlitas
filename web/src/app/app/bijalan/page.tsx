@@ -31,7 +31,7 @@ const itemVariants: Variants = {
 
 export default function BijalanScreen() {
   return (
-    <div className="min-h-[100dvh] bg-[#f4f6fc] selection:bg-[#1B9981]/20 flex flex-col pb-12 relative overflow-hidden">
+    <div className="min-h-[100dvh] bg-[#f4f6fc] selection:bg-[#1B9981]/20 flex flex-col pb-4 relative overflow-x-hidden">
 
       {/* Header — Sticky 3D Neumorphism */}
       <div className="sticky top-0 z-50 px-6 pt-14 pb-6 bg-[#f4f6fc]/95 backdrop-blur-xl border-b border-white shadow-3d rounded-b-[2rem] shrink-0 mb-4">

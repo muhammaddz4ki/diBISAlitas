@@ -18,7 +18,7 @@ const QUICK_PHRASES = [
 ];
 
 export default function BiSapaPage() {
-  const { colorfulMode } = useAccessibility();
+  const colorfulMode = false;
   const themeGrad = "from-sky-500 to-sky-700";
   const themeTextHover = "hover:text-sky-600";
   
