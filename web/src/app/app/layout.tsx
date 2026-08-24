@@ -28,6 +28,9 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
             Loncat ke konten utama
           </a>
 
+          {/* Perintah suara global (Tunanetra) - Diurutkan di atas DOM agar Screen Reader mudah mencapainya */}
+          <VoiceCommand />
+
           {/* Wrapper for Z-Axis Push Back Animation */}
           <div id="app-wrapper" className="w-full h-full flex flex-col relative transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] origin-top bg-inherit">
             {/* Main Content Area */}
@@ -100,9 +103,6 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
             );
           })()}
           </div>
-
-          {/* Perintah suara global (Tunanetra) */}
-          <VoiceCommand />
         </div>
       </div>
       </AccessibilityProvider>

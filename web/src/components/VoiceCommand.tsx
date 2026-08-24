@@ -107,6 +107,7 @@ export default function VoiceCommand() {
 
   const handleCommand = (t: string) => {
     if (t.includes("bantuan") || t.includes("perintah") || t.includes("daftar")) {
+      recRef.current?.stop();
       speak(
         "Ucapkan salah satu kata ini: baca, ngobrol, jalan, belajar, peta, komunitas, profil, beranda, atau darurat."
       );
@@ -114,6 +115,7 @@ export default function VoiceCommand() {
     }
     const match = pickCommand(t);
     if (match) {
+      recRef.current?.stop();
       speak(`Membuka ${match.label}`);
       buzz(40);
       router.push(match.path);
@@ -131,7 +133,7 @@ export default function VoiceCommand() {
     supportedRef.current = true;
     const rec = new SR();
     rec.lang = "id-ID";
-    rec.continuous = false;
+    rec.continuous = true;
     rec.interimResults = false;
     rec.maxAlternatives = 1;
 
@@ -206,7 +208,7 @@ export default function VoiceCommand() {
         onClick={() => setShowHelp(true)}
         aria-label="Panduan perintah suara"
         title="Panduan perintah suara"
-        className="absolute bottom-[199px] right-7 z-[60] w-12 h-12 rounded-full bg-[#f4f6fc] shadow-[inset_2px_2px_5px_rgba(0,0,0,0.06),_inset_-3px_-3px_7px_rgba(255,255,255,1),_3px_3px_8px_rgba(0,0,0,0.08)] border border-white flex items-center justify-center text-slate-400 hover:text-[#1B9981] active:scale-90 transition-all"
+        className="absolute bottom-[170px] sm:bottom-[160px] right-6 sm:right-7 z-[100] w-10 h-10 rounded-full bg-gradient-to-br from-[#1B9981] to-[#00D4AA] shadow-[0_4px_12px_rgba(27,153,129,0.3)] flex items-center justify-center text-white hover:scale-105 active:scale-90 transition-all border-2 border-white/20"
       >
         <HelpCircle className="w-5 h-5" strokeWidth={2.5} />
       </button>
@@ -216,7 +218,7 @@ export default function VoiceCommand() {
         whileTap={{ scale: reduceMotion ? 1 : 0.95 }}
         onClick={toggleListening}
         aria-label={listening ? "Matikan panduan suara" : "Aktifkan panduan suara"}
-        className={`fixed bottom-[104px] sm:bottom-24 right-5 sm:right-6 w-12 h-12 rounded-full shadow-3d shadow-3d-active z-50 flex items-center justify-center transition-all duration-300 border-2
+        className={`absolute bottom-[104px] sm:bottom-24 right-5 sm:right-6 w-12 h-12 rounded-full shadow-3d shadow-3d-active z-[100] flex items-center justify-center transition-all duration-300 border-2
           ${listening 
             ? "bg-gradient-to-br from-rose-500 to-rose-700 border-rose-400" 
             : "bg-gradient-to-br from-[#1B9981] to-[#00D4AA] border-[#00B894] hover:scale-105"}`}
@@ -240,6 +242,7 @@ export default function VoiceCommand() {
           className="fixed inset-0 z-[70] bg-black/40 backdrop-blur-sm flex items-end sm:items-center justify-center sm:p-4"
           onClick={() => setShowHelp(false)}
           role="dialog"
+          aria-modal="true"
           aria-label="Panduan perintah suara"
         >
           <motion.div
@@ -255,11 +258,11 @@ export default function VoiceCommand() {
                 setShowHelp(false);
               }
             }}
-            className="w-full sm:max-w-md bg-[#f4f6fc] rounded-t-[28px] sm:rounded-[28px] max-h-[85vh] flex flex-col shadow-[0_-4px_20px_rgba(0,0,0,0.1)]"
+            className="w-full sm:max-w-md bg-[#f4f6fc] rounded-t-[28px] sm:rounded-[28px] max-h-[85vh] flex flex-col shadow-[0_-4px_20px_rgba(0,0,0,0.1)] border-t border-slate-200 sm:border-slate-200"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Header */}
-            <div className="flex items-center justify-between shrink-0 px-6 py-5 border-b border-white shadow-[0_4px_10px_rgba(0,0,0,0.02)] z-10 bg-[#f4f6fc] rounded-t-[28px]">
+            <div className="flex items-center justify-between shrink-0 px-6 py-5 border-b border-slate-200 shadow-[0_4px_10px_rgba(0,0,0,0.02)] z-10 bg-[#f4f6fc] rounded-t-[28px]">
               <div className="flex items-center gap-3">
                 <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-[#00B894] to-[#1B9981] flex items-center justify-center bubble-3d text-white shrink-0">
                   <Mic className="w-5 h-5 text-white drop-shadow-md" strokeWidth={2.5} />
@@ -270,9 +273,10 @@ export default function VoiceCommand() {
                 </div>
               </div>
               <button
+                autoFocus
                 onClick={() => setShowHelp(false)}
                 aria-label="Tutup"
-                className="w-9 h-9 rounded-full bg-[#f4f6fc] shadow-[inset_2px_2px_5px_rgba(0,0,0,0.05),_inset_-3px_-3px_7px_rgba(255,255,255,1)] border border-white flex items-center justify-center active:scale-90 transition-transform"
+                className="w-9 h-9 rounded-full bg-[#f4f6fc] shadow-[inset_2px_2px_5px_rgba(0,0,0,0.05),_inset_-3px_-3px_7px_rgba(255,255,255,1)] border border-slate-200 flex items-center justify-center active:scale-90 transition-transform"
               >
                 <X className="w-4 h-4 text-slate-400" strokeWidth={2.5} />
               </button>
@@ -281,11 +285,11 @@ export default function VoiceCommand() {
             {/* Scrollable Content */}
             <div className="flex-1 overflow-y-auto px-6 pt-5 pb-8 [&::-webkit-scrollbar]:hidden">
               {/* Command list — satu card besar */}
-              <div className="rounded-[15px] shadow-3d border border-white bg-white/50 p-4">
-              <div className="flex flex-col gap-0 divide-y divide-slate-100">
+              <div className="rounded-[15px] shadow-3d border border-slate-200 bg-white/50 p-4">
+              <div className="flex flex-col gap-0 divide-y divide-slate-200">
                 {HELP_ITEMS.map((it) => (
                   <div key={it.w} className="flex items-center gap-3.5 py-3 first:pt-0 last:pb-0">
-                    <span className="shrink-0 px-3 py-1.5 rounded-xl bg-[#f4f6fc] text-[#1B9981] font-bold text-[12px] min-w-[85px] text-center shadow-[2px_2px_5px_rgba(0,0,0,0.08),_-2px_-2px_5px_rgba(255,255,255,1)] border border-white">
+                    <span className="shrink-0 px-3 py-1.5 rounded-xl bg-[#f4f6fc] text-[#1B9981] font-bold text-[12px] min-w-[85px] text-center shadow-[2px_2px_5px_rgba(0,0,0,0.08),_-2px_-2px_5px_rgba(255,255,255,1)] border border-slate-200">
                       &ldquo;{it.w}&rdquo;
                     </span>
                     <span className="text-[13px] text-slate-600 font-medium">{it.d}</span>
