@@ -69,7 +69,7 @@ export default function BibacaScreen() {
   };
 
   return (
-    <div className={`min-h-[100dvh] bg-[#f4f6fc] ${tSelection} flex flex-col pb-12 relative overflow-hidden`}>
+    <div className={`min-h-[100dvh] bg-[#f4f6fc] ${tSelection} flex flex-col pb-4 relative overflow-x-hidden`}>
 
       {/* Header — Sticky 3D Neumorphism */}
       <div className="sticky top-0 z-50 px-6 pt-14 pb-6 bg-[#f4f6fc]/95 backdrop-blur-xl border-b border-white shadow-3d rounded-b-[2rem] shrink-0 mb-4">
@@ -97,7 +97,7 @@ export default function BibacaScreen() {
         </div>
       </div>
 
-      <main className="flex-1 w-full px-5 pt-4 relative z-20 flex flex-col gap-4 pb-4">
+      <main className="flex-1 w-full px-5 pt-4 relative z-20 flex flex-col gap-4 pb-2">
 
         <motion.div
           variants={containerVariants}
