@@ -64,14 +64,11 @@ export default function BibacaScreen() {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     readFromFile(file);
-    // reset input agar file yang sama bisa dipilih lagi
     e.target.value = "";
   };
 
   return (
     <div className={`min-h-[100dvh] bg-[#f4f6fc] ${tSelection} flex flex-col pb-4 relative overflow-x-hidden`}>
-
-      {/* Header — Sticky 3D Neumorphism */}
       <div className="sticky top-0 z-50 px-6 pt-14 pb-6 bg-[#f4f6fc]/95 backdrop-blur-xl border-b border-white shadow-3d rounded-b-[2rem] shrink-0 mb-4">
         <div className="flex items-start justify-between">
           <div className="flex items-center gap-3.5">
@@ -128,9 +125,7 @@ export default function BibacaScreen() {
               />
               <canvas ref={canvasRef} className="hidden" />
 
-              {/* Foto diam yang sudah ditangkap / diunggah */}
               {capturedUrl && (
-                // eslint-disable-next-line @next/next/no-img-element
                 <img
                   src={capturedUrl}
                   alt="Foto yang dipindai"

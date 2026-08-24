@@ -210,11 +210,11 @@ export default function VoiceCommand() {
           aria-label="Panduan perintah suara"
         >
           <div
-            className="w-full bg-[#f4f6fc] rounded-t-[28px] p-6 pb-8 max-h-[82%] overflow-y-auto [&::-webkit-scrollbar]:hidden shadow-[0_-4px_20px_rgba(0,0,0,0.1)]"
+            className="w-full bg-[#f4f6fc] rounded-t-[28px] max-h-[82%] flex flex-col shadow-[0_-4px_20px_rgba(0,0,0,0.1)]"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Header */}
-            <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center justify-between shrink-0 px-6 py-5 border-b border-white shadow-[0_4px_10px_rgba(0,0,0,0.02)] z-10 bg-[#f4f6fc] rounded-t-[28px]">
               <div className="flex items-center gap-3">
                 <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-[#00B894] to-[#1B9981] flex items-center justify-center bubble-3d text-white shrink-0">
                   <Mic className="w-5 h-5 text-white drop-shadow-md" strokeWidth={2.5} />
@@ -233,8 +233,10 @@ export default function VoiceCommand() {
               </button>
             </div>
 
-            {/* Command list — satu card besar */}
-            <div className="rounded-[15px] shadow-3d border border-white bg-white/50 p-4">
+            {/* Scrollable Content */}
+            <div className="flex-1 overflow-y-auto px-6 pt-5 pb-8 [&::-webkit-scrollbar]:hidden">
+              {/* Command list — satu card besar */}
+              <div className="rounded-[15px] shadow-3d border border-white bg-white/50 p-4">
               <div className="flex flex-col gap-0 divide-y divide-slate-100">
                 {HELP_ITEMS.map((it) => (
                   <div key={it.w} className="flex items-center gap-3.5 py-3 first:pt-0 last:pb-0">
@@ -257,6 +259,7 @@ export default function VoiceCommand() {
             <p className="text-[11px] text-slate-400 mt-3 text-center font-medium">
               Tips: ucapkan satu kata inti saja, mis. &ldquo;baca&rdquo;. Ucapkan &ldquo;bantuan&rdquo; kapan saja untuk mendengar daftar ini.
             </p>
+            </div>
           </div>
         </div>
       )}

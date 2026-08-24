@@ -157,23 +157,23 @@ export default function DashboardPage() {
     >
       {/* Header — Sticky 3D Neumorphism */}
       <div className="sticky top-0 z-50 px-6 pt-14 pb-6 bg-[#f4f6fc]/95 backdrop-blur-xl border-b border-white shadow-3d rounded-b-[2rem] shrink-0 mb-4">
-        <div className="flex justify-between items-center">
-          <div className="flex items-center gap-3.5">
+        <div className="flex justify-between items-center gap-3">
+          <div className="flex items-center gap-3.5 min-w-0 flex-1">
             {/* Avatar */}
             <div className="w-[52px] h-[52px] rounded-2xl bg-gradient-to-br from-[#00B894] to-[#00D4AA] flex items-center justify-center bubble-3d text-white">
               <span className="text-[20px] font-black text-white drop-shadow-md">{userEmail ? userEmail.charAt(0).toUpperCase() : "U"}</span>
             </div>
-            <div>
-              <p className="text-slate-500 text-[13px] font-semibold text-3d">Selamat datang,</p>
-              <h1 className="text-[20px] font-black text-slate-900 tracking-tight leading-tight truncate max-w-[200px] text-3d">
+            <div className="min-w-0 flex-1">
+              <p className="text-slate-500 text-[13px] font-semibold text-3d truncate">Selamat datang,</p>
+              <h1 className="text-[20px] font-black text-slate-900 tracking-tight leading-tight truncate text-3d">
                 {userEmail?.split('@')[0] || "Pengguna"}
               </h1>
-              <div className="mt-3 flex flex-col gap-1.5 relative z-0">
-                <div className="flex items-center justify-between text-[11px] font-extrabold text-slate-500 w-[200px]">
-                  <span className="uppercase tracking-wider">Poin Tantangan</span>
-                  <span className="text-[#1B9981]">{myScore} <span className="text-slate-400">/ {topScore >= 1000 ? (topScore/1000).toFixed(1).replace('.0','') + 'k' : topScore}</span></span>
+              <div className="mt-3 flex flex-col gap-1.5 relative z-0 w-full max-w-[180px]">
+                <div className="flex items-center justify-between text-[11px] font-extrabold text-slate-500 w-full">
+                  <span className="uppercase tracking-wider truncate mr-2">Poin Tantangan</span>
+                  <span className="text-[#1B9981] shrink-0">{myScore} <span className="text-slate-400">/ {topScore >= 1000 ? (topScore/1000).toFixed(1).replace('.0','') + 'k' : topScore}</span></span>
                 </div>
-                <div className="w-[200px] h-[12px] bg-white rounded-full overflow-visible shadow-[inset_1px_1px_3px_rgba(0,0,0,0.1)] relative border border-slate-100">
+                <div className="w-full h-[12px] bg-white rounded-full overflow-visible shadow-[inset_1px_1px_3px_rgba(0,0,0,0.1)] relative border border-slate-100">
                   <div 
                     className="absolute top-0 left-0 h-full bg-gradient-to-r from-[#00D4AA] to-[#1B9981] rounded-full shadow-[0_2px_5px_rgba(27,153,129,0.4)] transition-all duration-1000 ease-out min-w-[12px]" 
                     style={{ width: `${Math.min(100, Math.max(0, (myScore / topScore) * 100))}%` }} 
@@ -428,13 +428,13 @@ function FeatureCard({ href, title, desc, icon, bg, buttonColor }: { href: strin
             {icon}
           </div>
 
-          <div className="flex-1">
-            <h3 className="font-bold text-slate-800 text-[16px] mb-0.5 tracking-tight group-active:text-slate-600 transition-colors">
+          <div className="flex-1 min-w-0">
+            <h3 className="font-bold text-slate-800 text-[16px] mb-0.5 tracking-tight group-active:text-slate-600 transition-colors truncate">
               {title}
             </h3>
             <div className="flex items-center gap-2 opacity-80">
-              <span className="w-1 h-1 rounded-full bg-slate-300"></span>
-              <p className="text-slate-500 text-[12px] font-medium tracking-wide">
+              <span className="w-1 h-1 rounded-full bg-slate-300 shrink-0"></span>
+              <p className="text-slate-500 text-[12px] font-medium tracking-wide truncate">
                 {desc}
               </p>
             </div>

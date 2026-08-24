@@ -346,21 +346,25 @@ function KontakTab({ me }: { me: { uid: string; name: string; email: string } | 
       ) : (
         <div className="flex flex-col gap-3">
           {contacts.map((c) => (
-            <div key={c.id} className="flex items-center gap-3.5 bg-transparent border border-white rounded-[24px] p-4 shadow-3d shadow-3d-hover transition-all group">
+            <div key={c.id} className="flex flex-row items-center gap-3 sm:gap-4 bg-transparent border border-white rounded-[24px] p-4 shadow-3d shadow-3d-hover transition-all group">
               <div className="w-12 h-12 rounded-[16px] bg-transparent shadow-[inset_2px_2px_5px_rgba(0,0,0,0.05),_inset_-3px_-3px_7px_rgba(255,255,255,1)] flex items-center justify-center text-[22px] shrink-0 border border-white">
                 {relIcon(c.relation)}
               </div>
-              <div className="flex-1 min-w-0">
-                <h3 className="font-bold text-slate-800 text-[16px] truncate text-3d">{c.name}</h3>
-                <div className="flex items-center gap-1.5 text-slate-500 mt-1">
-                  <Phone className="w-3.5 h-3.5" />
-                  <span className="text-[13px] font-semibold text-3d">{c.phone}</span>
-                  <span className="w-1.5 h-1.5 rounded-full shadow-[inset_1px_1px_2px_rgba(0,0,0,0.2)]" />
-                  <span className="text-[12px] font-bold capitalize text-3d">{c.relation}</span>
+              <div className="flex-1 min-w-0 pr-2">
+                <h3 className="font-bold text-slate-800 text-[16px] truncate text-3d leading-snug">{c.name}</h3>
+                <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-slate-500 mt-1 min-w-0">
+                  <div className="flex items-center gap-1.5 shrink-0 min-w-0">
+                    <Phone className="w-3.5 h-3.5 shrink-0" />
+                    <span className="text-[13px] font-semibold text-3d truncate">{c.phone}</span>
+                  </div>
+                  <div className="flex items-center gap-1.5 shrink-0 min-w-0">
+                    <span className="w-1.5 h-1.5 rounded-full shadow-[inset_1px_1px_2px_rgba(0,0,0,0.2)] shrink-0" />
+                    <span className="text-[12px] font-bold capitalize text-3d truncate">{c.relation}</span>
+                  </div>
                 </div>
               </div>
-              <button onClick={() => del(c.id)} aria-label="Hapus kontak" className="w-12 h-12 rounded-[16px] flex items-center justify-center text-rose-500 shadow-[inset_2px_2px_5px_rgba(0,0,0,0.05),_inset_-3px_-3px_7px_rgba(255,255,255,1)] hover:bg-rose-50 border border-white transition-all shrink-0">
-                <Trash2 className="w-5 h-5" strokeWidth={2.5} />
+              <button onClick={() => del(c.id)} aria-label="Hapus kontak" className="w-12 h-12 rounded-[16px] flex items-center justify-center text-rose-500 shadow-[inset_2px_2px_5px_rgba(0,0,0,0.05),_inset_-3px_-3px_7px_rgba(255,255,255,1)] hover:bg-rose-50 border border-white transition-all shrink-0 ml-auto">
+                <Trash2 className="w-5 h-5 shrink-0" strokeWidth={2.5} />
               </button>
             </div>
           ))}
@@ -470,20 +474,20 @@ function RiwayatTab({ me }: { me: { uid: string; name: string; email: string } |
             const st = STATUS_LABEL[r.status] || { label: r.status || "-", cls: "bg-slate-100 text-slate-500 border-slate-200" };
             return (
               <div key={r.id} className="bg-transparent border border-white rounded-[24px] p-5 shadow-3d shadow-3d-hover transition-all">
-                <div className="flex items-center justify-between mb-4">
-                  <span className={`inline-flex items-center px-3 py-1.5 rounded-full text-[10px] font-bold border uppercase tracking-widest shadow-[inset_1px_1px_3px_rgba(0,0,0,0.05),_inset_-2px_-2px_4px_rgba(255,255,255,1)] ${st.cls}`}>{st.label}</span>
-                  <div className="flex items-center gap-3">
-                    <span className="flex items-center gap-1.5 text-[11px] text-slate-500 font-bold text-3d">
-                      <Clock className="w-3.5 h-3.5" /> {fmt(r.createdAt)}
+                <div className="flex flex-wrap items-center justify-between gap-3 mb-4 min-w-0">
+                  <span className={`inline-flex items-center px-3 py-1.5 rounded-full text-[10px] font-bold border uppercase tracking-widest shrink-0 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.05),_inset_-2px_-2px_4px_rgba(255,255,255,1)] ${st.cls}`}>{st.label}</span>
+                  <div className="flex flex-wrap items-center gap-2 sm:gap-3 min-w-0 ml-auto">
+                    <span className="flex items-center gap-1.5 text-[11px] text-slate-500 font-bold text-3d shrink-0">
+                      <Clock className="w-3.5 h-3.5 shrink-0" /> <span className="truncate">{fmt(r.createdAt)}</span>
                     </span>
-                    <button onClick={() => del(r.id)} className="w-8 h-8 rounded-full shadow-[inset_1px_1px_3px_rgba(0,0,0,0.05),_inset_-2px_-2px_4px_rgba(255,255,255,1)] flex items-center justify-center text-rose-400 hover:text-rose-600 transition-colors border border-white">
-                      <Trash2 className="w-3.5 h-3.5" />
+                    <button onClick={() => del(r.id)} className="w-8 h-8 rounded-full shadow-[inset_1px_1px_3px_rgba(0,0,0,0.05),_inset_-2px_-2px_4px_rgba(255,255,255,1)] flex items-center justify-center text-rose-400 hover:text-rose-600 transition-colors border border-white shrink-0 ml-auto">
+                      <Trash2 className="w-3.5 h-3.5 shrink-0" />
                     </button>
                   </div>
                 </div>
-                <div className="flex items-center gap-2 text-slate-600">
-                  <MapPin className="w-4 h-4" />
-                  <span className="text-[13px] font-bold text-3d font-mono">
+                <div className="flex items-start gap-2 text-slate-600 min-w-0">
+                  <MapPin className="w-4 h-4 shrink-0 mt-0.5" />
+                  <span className="text-[13px] font-bold text-3d font-mono break-all">
                     {typeof r.latitude === "number" ? r.latitude.toFixed(5) : "-"}, {typeof r.longitude === "number" ? r.longitude.toFixed(5) : "-"}
                   </span>
                 </div>

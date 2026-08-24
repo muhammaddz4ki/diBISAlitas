@@ -277,19 +277,22 @@ export default function PetaMapComponent() {
         })}
       </MapContainer>
 
-      {/* Badge dampak komunitas */}
-      <div className="absolute top-3 left-3 z-[500] bg-white/95 backdrop-blur rounded-full px-3.5 py-2 shadow-[0_4px_16px_-6px_rgba(0,0,0,0.2)] border border-slate-100 flex items-center gap-2">
-        <MapPin className="w-4 h-4 text-[#00B894]" strokeWidth={2.5} />
-        <span className="text-[12px] font-bold text-slate-700">{reports.length} titik komunitas</span>
-      </div>
+      {/* Top overlay controls */}
+      <div className="absolute top-3 left-3 right-3 z-[500] flex justify-between items-start gap-2 pointer-events-none">
+        {/* Badge dampak komunitas */}
+        <div className="bg-white/95 backdrop-blur rounded-full px-3.5 py-2 shadow-[0_4px_16px_-6px_rgba(0,0,0,0.2)] border border-slate-100 flex items-center gap-2 pointer-events-auto min-w-0">
+          <MapPin className="w-4 h-4 text-[#00B894] shrink-0" strokeWidth={2.5} />
+          <span className="text-[12px] font-bold text-slate-700 truncate">{reports.length} titik komunitas</span>
+        </div>
 
-      {/* Tombol Lapor */}
-      <button
-        onClick={() => setShowReport(true)}
-        className="absolute top-3 right-3 z-[500] bg-[#00B894] text-white rounded-full pl-3 pr-4 py-2.5 shadow-[0_8px_24px_-6px_rgba(0,184,148,0.6)] flex items-center gap-1.5 active:scale-95 transition-transform font-bold text-[13px]"
-      >
-        <Plus className="w-4 h-4" strokeWidth={3} /> Lapor
-      </button>
+        {/* Tombol Lapor */}
+        <button
+          onClick={() => setShowReport(true)}
+          className="bg-[#00B894] text-white rounded-full pl-3 pr-4 py-2.5 shadow-[0_8px_24px_-6px_rgba(0,184,148,0.6)] flex items-center gap-1.5 active:scale-95 transition-transform font-bold text-[13px] pointer-events-auto shrink-0"
+        >
+          <Plus className="w-4 h-4 shrink-0" strokeWidth={3} /> Lapor
+        </button>
+      </div>
 
       {/* Toast */}
       {toast && (
