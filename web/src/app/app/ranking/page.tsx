@@ -2,12 +2,9 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { ArrowLeft, Crown, Medal, Flame, Trophy } from "lucide-react";
+import { ArrowLeft, Crown, Medal, Flame, Trophy, Star, Zap } from "lucide-react";
 import { motion } from "framer-motion";
 import { subscribeLeaderboard, QuizScoreEntry } from "@/lib/quizService";
-
-const LOGO = "/logo/logo.png";
-const TOSCA = "#00B894";
 
 export default function RankingPage() {
   const [entries, setEntries] = useState<QuizScoreEntry[]>([]);
@@ -26,146 +23,250 @@ export default function RankingPage() {
   }, []);
 
   const top3 = entries.slice(0, 3);
-  const rest = entries.slice(3);
 
-  // Urutan podium: [2, 1, 3]
+  // Podium order: [2nd, 1st, 3rd]
   const podiumOrder = [top3[1], top3[0], top3[2]];
-  const podiumHeights = ["h-24", "h-32", "h-20"];
   const podiumRank = [2, 1, 3];
 
+  const podiumColors = [
+    "from-[#1B9981] to-[#00D4AA]",
+    "from-amber-400 to-yellow-300",
+    "from-[#1B9981]/60 to-[#00D4AA]/60"
+  ];
+
+  const avatarRings = [
+    "border-[#00D4AA]",
+    "border-amber-400",
+    "border-[#00D4AA]/60"
+  ];
+
+  const podiumH = ["h-[100px]", "h-[140px]", "h-[75px]"];
+
+  const avatarSizes = [
+    "w-[48px] h-[48px] text-[17px]",
+    "w-[60px] h-[60px] text-[22px]",
+    "w-[44px] h-[44px] text-[15px]",
+  ];
+
   return (
-    <div className="min-h-full bg-white flex flex-col pb-10">
+    <div className="min-h-full flex flex-col bg-[#1B9981]">
 
-      {/* Header putih + tosca dengan logo */}
-      <div className="relative px-6 pt-12 pb-8 bg-white shrink-0">
-        <div className="flex items-center justify-between">
+      {/* Header — Sticky 3D Neumorphism (same as other pages) */}
+      <div className="sticky top-0 z-50 px-5 pt-14 pb-6 bg-[#f4f6fc]/95 backdrop-blur-xl border-b border-white shadow-3d rounded-b-[2rem] shrink-0">
+        <div className="flex items-center gap-3">
+          <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#1B9981] to-[#00D4AA] flex items-center justify-center shrink-0 bubble-3d text-white">
+            <Trophy className="w-7 h-7 text-white drop-shadow-md" strokeWidth={2.5} />
+          </div>
+          
+          <div className="flex-1 min-w-0">
+            <p className="text-slate-500 text-[11px] font-semibold uppercase tracking-widest text-3d truncate">
+              Tantangan Hijaiyah
+            </p>
+            <h1 className="text-[22px] font-black text-slate-800 tracking-tight leading-none text-3d truncate">
+              Papan Peringkat
+            </h1>
+          </div>
+
           <Link
-            href="/app/bipintar"
+            href="/app/komunitas"
             aria-label="Kembali"
-            className="w-11 h-11 flex items-center justify-center rounded-full bg-[#00B894]/10 active:scale-95 transition-transform"
+            className="w-11 h-11 flex items-center justify-center rounded-full bg-[#f4f6fc] shadow-[inset_2px_2px_5px_rgba(0,0,0,0.05),_inset_-3px_-3px_7px_rgba(255,255,255,1)] border border-white active:scale-95 transition-transform shrink-0"
           >
-            <ArrowLeft className="w-5 h-5 text-[#00B894]" strokeWidth={2.5} />
+            <ArrowLeft className="w-5 h-5 text-slate-500 drop-shadow-sm" strokeWidth={2.5} />
           </Link>
-          <div className="w-11 h-11" />
-        </div>
-
-        <div className="flex flex-col items-center mt-2">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={LOGO} alt="diBISAlitas" className="w-20 h-20 object-contain mb-3" />
-          <h1 className="text-[22px] font-black text-slate-800 tracking-tight">Papan Peringkat</h1>
-          <p className="text-[12px] font-semibold text-[#00B894] uppercase tracking-widest mt-0.5">
-            Tantangan Isyarat Hijaiyah
-          </p>
         </div>
       </div>
 
-      {loading ? (
-        <div className="px-6 flex flex-col gap-3 mt-4">
-          {[1, 2, 3, 4, 5].map((i) => (
-            <div key={i} className="h-14 bg-slate-50 rounded-2xl animate-pulse border border-slate-100" />
-          ))}
-        </div>
-      ) : entries.length === 0 ? (
-        <div className="flex flex-col items-center justify-center py-16 text-center px-8">
-          <div className="w-20 h-20 rounded-full bg-[#00B894]/10 flex items-center justify-center mb-4">
-            <Trophy className="w-9 h-9 text-[#00B894]" strokeWidth={1.8} />
-          </div>
-          <h3 className="font-bold text-slate-800 text-[16px] mb-1">Belum ada skor</h3>
-          <p className="text-slate-400 text-[13px] max-w-[240px] leading-relaxed">
-            Mainkan Tantangan Isyarat dan jadilah yang pertama masuk papan peringkat!
-          </p>
-          <Link
-            href="/app/bipintar/quiz"
-            className="mt-5 px-6 py-3 rounded-2xl bg-[#00B894] text-white font-bold text-[14px] active:scale-95 transition-transform"
-          >
-            Main Sekarang
-          </Link>
-        </div>
-      ) : (
-        <>
-          {/* Podium Top 3 */}
-          {top3.length > 0 && (
-            <div className="flex items-end justify-center gap-3 px-6 mt-4 mb-6">
-              {podiumOrder.map((entry, i) =>
-                entry ? (
-                  <motion.div
-                    key={entry.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: i * 0.1 }}
-                    className="flex flex-col items-center flex-1 max-w-[110px]"
-                  >
-                    <div className="relative mb-2">
-                      <div
-                        className={`rounded-full flex items-center justify-center overflow-hidden border-[3px] ${
-                          podiumRank[i] === 1 ? "w-16 h-16 border-amber-400" : "w-14 h-14 border-[#00B894]/40"
-                        } bg-[#00B894]/10`}
-                      >
-                        <span className={`font-black text-[#00B894] ${podiumRank[i] === 1 ? "text-2xl" : "text-xl"}`}>
-                          {entry.userName.charAt(0).toUpperCase()}
-                        </span>
-                      </div>
-                      {podiumRank[i] === 1 && (
-                        <Crown className="w-6 h-6 text-amber-400 absolute -top-4 left-1/2 -translate-x-1/2 fill-amber-400" />
-                      )}
-                    </div>
-                    <span className="text-[12px] font-bold text-slate-700 truncate w-full text-center">
-                      {entry.userName}
-                    </span>
-                    <span className="text-[13px] font-black text-[#00B894]">{entry.score}</span>
-                    <div
-                      className={`w-full ${podiumHeights[i]} rounded-t-2xl mt-2 flex items-start justify-center pt-2 ${
-                        podiumRank[i] === 1 ? "bg-amber-400" : "bg-[#00B894]"
-                      }`}
-                    >
-                      <span className="text-white font-black text-[18px]">{podiumRank[i]}</span>
-                    </div>
-                  </motion.div>
-                ) : (
-                  <div key={`empty-${i}`} className="flex-1 max-w-[110px]" />
-                )
-              )}
-            </div>
-          )}
+      {/* ===== GREEN BG — covers everything below header ===== */}
+      <div className="flex-1 relative bg-gradient-to-b from-[#1B9981] via-[#00B894] to-[#00D4AA] overflow-hidden">
 
-          {/* Sisa peringkat */}
-          <div className="px-5 flex flex-col gap-2">
-            {rest.map((entry, i) => {
-              const rank = i + 4;
-              return (
-                <div
+        {/* Decorative circles */}
+        <div className="absolute top-[-40px] left-[-40px] w-[160px] h-[160px] rounded-full bg-white/5" />
+        <div className="absolute top-[60px] right-[-30px] w-[120px] h-[120px] rounded-full bg-white/5" />
+        <div className="absolute top-[200px] left-[25%] w-[70px] h-[70px] rounded-full bg-white/[0.07]" />
+        <div className="absolute bottom-[100px] right-[15%] w-[90px] h-[90px] rounded-full bg-white/[0.04]" />
+
+        {/* Podium Section — takes generous space */}
+        {!loading && top3.length > 0 && (
+          <div className="flex items-end justify-center gap-3 px-6 pt-14 pb-0 relative z-10">
+            {podiumOrder.map((entry, i) =>
+              entry ? (
+                <motion.div
                   key={entry.id}
-                  className="flex items-center gap-3 px-4 py-3 rounded-2xl bg-white border border-slate-100 shadow-[0_2px_10px_-6px_rgba(0,0,0,0.1)]"
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: i * 0.15, type: "spring", stiffness: 200, damping: 20 }}
+                  className="flex flex-col items-center flex-1 max-w-[115px]"
                 >
-                  <span className="w-6 text-center text-[14px] font-bold text-slate-400">{rank}</span>
-                  <div className="w-9 h-9 rounded-full bg-[#00B894]/10 flex items-center justify-center shrink-0">
-                    <span className="text-[13px] font-black text-[#00B894]">
-                      {entry.userName.charAt(0).toUpperCase()}
-                    </span>
+                  {/* Avatar + Crown */}
+                  <div className="relative mb-1.5">
+                    <div
+                      className={`${avatarSizes[i]} rounded-full flex items-center justify-center overflow-hidden border-[3px] ${avatarRings[i]} bg-white shadow-lg`}
+                    >
+                      <span className={`font-black ${podiumRank[i] === 1 ? "text-amber-500" : "text-[#1B9981]"}`}>
+                        {entry.userName.charAt(0).toUpperCase()}
+                      </span>
+                    </div>
+                    {podiumRank[i] === 1 && (
+                      <div className="absolute -top-5 left-1/2 -translate-x-1/2">
+                        <Crown className="w-7 h-7 text-amber-300 fill-amber-300 drop-shadow-lg" />
+                      </div>
+                    )}
                   </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-[14px] font-bold text-slate-700 truncate">{entry.userName}</p>
-                    <p className="text-[11px] text-slate-400 font-medium flex items-center gap-1">
-                      <Flame className="w-3 h-3 text-amber-400" /> streak {entry.bestStreak} · {entry.correctCount} benar
-                    </p>
-                  </div>
-                  <span className="text-[15px] font-black text-[#00B894] shrink-0">{entry.score}</span>
-                </div>
-              );
-            })}
-          </div>
 
-          <div className="px-5 mt-6">
-            <Link
-              href="/app/bipintar/quiz"
-              className="w-full flex items-center justify-center gap-2 py-3.5 rounded-2xl bg-[#00B894] text-white font-bold text-[15px] active:scale-95 transition-transform"
-              style={{ boxShadow: `0 8px 24px -8px ${TOSCA}` }}
-            >
-              <Medal className="w-5 h-5" /> Ikut Tantangan
-            </Link>
+                  {/* Name */}
+                  <span className="text-[11px] font-bold text-white truncate w-full text-center drop-shadow-sm">
+                    {entry.userName}
+                  </span>
+                  
+                  {/* Points badge */}
+                  <span className="inline-block mt-0.5 px-2.5 py-0.5 rounded-full bg-white/20 backdrop-blur-sm text-[10px] font-extrabold text-white">
+                    {entry.score.toLocaleString()} Pt
+                  </span>
+
+                  {/* Podium block */}
+                  <div
+                    className={`w-full ${podiumH[i]} rounded-t-[14px] mt-2 flex items-start justify-center pt-2.5 bg-gradient-to-b ${podiumColors[i]} shadow-[inset_0_2px_4px_rgba(255,255,255,0.3)]`}
+                  >
+                    <span className="text-white/90 font-black text-[20px] drop-shadow-sm">{podiumRank[i]}</span>
+                  </div>
+                </motion.div>
+              ) : (
+                <div key={`empty-${i}`} className="flex-1 max-w-[115px]" />
+              )
+            )}
           </div>
-        </>
-      )}
+        )}
+
+        {/* ===== WHITE CARD AREA — overlays the green bg ===== */}
+        <div className="relative z-20 bg-[#f4f6fc] rounded-t-[28px] pb-10 min-h-[50vh] -mt-5">
+
+          {loading ? (
+            <div className="px-5 pt-6 flex flex-col gap-3">
+              {[1, 2, 3, 4, 5].map((i) => (
+                <div key={i} className="h-[68px] bg-white rounded-[20px] animate-pulse border border-slate-100" />
+              ))}
+            </div>
+          ) : entries.length === 0 ? (
+            <div className="flex flex-col items-center justify-center py-16 text-center px-8">
+              <div className="w-20 h-20 rounded-full shadow-[inset_3px_3px_8px_rgba(0,0,0,0.05),_inset_-4px_-4px_10px_rgba(255,255,255,1)] border border-white flex items-center justify-center mb-4">
+                <Trophy className="w-9 h-9 text-[#1B9981]" strokeWidth={1.8} />
+              </div>
+              <h3 className="font-bold text-slate-800 text-[16px] mb-1 text-3d">Belum ada skor</h3>
+              <p className="text-slate-400 text-[13px] max-w-[240px] leading-relaxed text-3d">
+                Mainkan Tantangan Isyarat dan jadilah yang pertama masuk papan peringkat!
+              </p>
+              <Link
+                href="/app/bipintar/quiz"
+                className="mt-5 px-6 py-3 rounded-2xl bg-[#1B9981] text-white font-bold text-[14px] active:scale-95 transition-transform shadow-[0_8px_16px_rgba(27,153,129,0.3)]"
+              >
+                Main Sekarang
+              </Link>
+            </div>
+          ) : (
+            <>
+              {/* CTA Button */}
+              <div className="px-5 pt-6 pb-5">
+                <Link
+                  href="/app/bipintar/quiz"
+                  className="w-full flex items-center justify-center gap-2.5 py-4 rounded-[20px] bg-gradient-to-r from-[#1B9981] to-[#00D4AA] text-white font-black text-[15px] active:scale-[0.97] transition-all shadow-[0_8px_20px_rgba(27,153,129,0.35)]"
+                >
+                  <Medal className="w-5 h-5 drop-shadow-sm" /> Ikut Tantangan
+                </Link>
+              </div>
+
+              {/* Detail Peringkat */}
+              <div className="px-5">
+                <div className="flex items-center justify-between mb-3 px-1">
+                  <h2 className="text-[15px] font-extrabold text-slate-800 tracking-tight text-3d">Detail Peringkat</h2>
+                  <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">{entries.length} Peserta</span>
+                </div>
+
+                <div className="flex flex-col gap-2.5">
+                  {entries.map((entry, i) => {
+                    const rank = i + 1;
+                    const isTop3 = rank <= 3;
+
+                    const rankBadgeColor = rank === 1
+                      ? "bg-gradient-to-br from-amber-400 to-yellow-300 text-white"
+                      : rank === 2
+                      ? "bg-gradient-to-br from-[#1B9981] to-[#00D4AA] text-white"
+                      : rank === 3
+                      ? "bg-gradient-to-br from-[#7dd3c0] to-[#a7e8d8] text-white"
+                      : "bg-[#f4f6fc] text-slate-400";
+
+                    const rankIcon = rank === 1
+                      ? <Crown className="w-3.5 h-3.5" />
+                      : rank === 2
+                      ? <Star className="w-3.5 h-3.5" />
+                      : rank === 3
+                      ? <Medal className="w-3.5 h-3.5" />
+                      : null;
+
+                    return (
+                      <motion.div
+                        key={entry.id}
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.1 + i * 0.04 }}
+                        className={`flex items-center gap-3 px-4 py-3.5 rounded-[20px] shadow-3d border border-white ${
+                          isTop3 ? "bg-white" : "bg-transparent"
+                        }`}
+                      >
+                        {/* Rank badge */}
+                        <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 font-black text-[13px] shadow-sm ${rankBadgeColor}`}>
+                          {rankIcon || rank}
+                        </div>
+
+                        {/* Avatar */}
+                        <div className={`w-11 h-11 rounded-full flex items-center justify-center shrink-0 border-2 border-white shadow-sm ${
+                          isTop3
+                            ? rank === 1
+                              ? "bg-gradient-to-br from-amber-100 to-amber-50"
+                              : "bg-gradient-to-br from-[#e0f5ef] to-[#d0ede4]"
+                            : "bg-gradient-to-br from-slate-100 to-slate-50"
+                        }`}>
+                          <span className={`text-[15px] font-black ${
+                            rank === 1 ? "text-amber-500" : isTop3 ? "text-[#1B9981]" : "text-slate-400"
+                          }`}>
+                            {entry.userName.charAt(0).toUpperCase()}
+                          </span>
+                        </div>
+
+                        {/* Info */}
+                        <div className="flex-1 min-w-0">
+                          <p className={`text-[14px] font-bold truncate ${isTop3 ? "text-slate-800" : "text-slate-600"}`}>
+                            {entry.userName}
+                          </p>
+                          <div className="flex items-center gap-2 mt-0.5">
+                            <span className="text-[10px] text-slate-400 font-semibold flex items-center gap-1">
+                              <Flame className="w-3 h-3 text-amber-400" />
+                              {entry.bestStreak}
+                            </span>
+                            <span className="w-0.5 h-0.5 rounded-full bg-slate-300" />
+                            <span className="text-[10px] text-slate-400 font-semibold flex items-center gap-1">
+                              <Zap className="w-3 h-3 text-emerald-400" />
+                              {entry.correctCount} benar
+                            </span>
+                          </div>
+                        </div>
+
+                        {/* Score */}
+                        <div className="flex flex-col items-end shrink-0">
+                          <span className={`text-[16px] font-black ${rank === 1 ? "text-amber-500" : "text-[#1B9981]"}`}>
+                            {entry.score.toLocaleString()}
+                          </span>
+                          <span className="text-[9px] font-bold text-slate-400 uppercase tracking-wider">poin</span>
+                        </div>
+                      </motion.div>
+                    );
+                  })}
+                </div>
+              </div>
+            </>
+          )}
+        </div>
+      </div>
     </div>
   );
 }

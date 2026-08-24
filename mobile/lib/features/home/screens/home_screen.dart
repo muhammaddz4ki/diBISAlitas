@@ -8,6 +8,9 @@ import '../../../core/config/constants.dart';
 import '../../../core/services/auth_service.dart';
 import '../../auth/providers/auth_provider.dart';
 import '../widgets/notification_bell.dart';
+import '../../../core/widgets/neu_container.dart';
+import '../../../core/widgets/neu_button.dart';
+import '../../../core/widgets/neu_styles.dart';
 
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
@@ -18,7 +21,7 @@ class HomeScreen extends ConsumerWidget {
     final userName = authState.valueOrNull?.displayName ?? 'Pengguna';
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: const Color(0xFFF4F6FC),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
@@ -33,7 +36,7 @@ class HomeScreen extends ConsumerWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        NeuText(
                           'Halo, $userName',
                           style: const TextStyle(
                             fontSize: 28,
@@ -59,15 +62,12 @@ class HomeScreen extends ConsumerWidget {
                   const SizedBox(width: 10),
                   // Profile / Logout
                   PopupMenuButton<String>(
-                    icon: Container(
+                    icon: NeuContainer(
                       padding: const EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                        color: const Color(0xFF00B894).withOpacity(0.1),
-                        shape: BoxShape.circle,
-                      ),
+                      shape: BoxShape.circle,
                       child: const Icon(
                         Icons.person_rounded,
-                        color: Color(0xFF00B894),
+                        color: Color(0xFF1B9981),
                       ),
                     ),
                     color: Colors.white,
@@ -114,7 +114,7 @@ class HomeScreen extends ConsumerWidget {
               const SizedBox(height: 32),
 
               // ── Feature Cards ──
-              const Text(
+              const NeuText(
                 'Layanan Utama',
                 style: TextStyle(
                   fontSize: 20,
@@ -181,7 +181,7 @@ class HomeScreen extends ConsumerWidget {
               const SizedBox(height: 32),
 
               // ── Quick Actions ──
-              const Text(
+              const NeuText(
                 'Aksi Cepat',
                 style: TextStyle(
                   fontSize: 20,
@@ -222,20 +222,15 @@ class HomeScreen extends ConsumerWidget {
               const SizedBox(height: 32),
 
               // ── Info Banner ──
-              Container(
+              NeuContainer(
                 padding: const EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  color: const Color(0xFFF5F5F7), // Light gray iOS style
-                  borderRadius: BorderRadius.circular(20),
-                ),
+                borderRadius: 24,
                 child: Row(
                   children: [
-                    Container(
+                    NeuContainer(
                       padding: const EdgeInsets.all(12),
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                        shape: BoxShape.circle,
-                      ),
+                      shape: BoxShape.circle,
+                      style: NeuStyle.pressed,
                       child: const Icon(
                         Icons.info_outline_rounded,
                         color: Color(0xFF00B894),
@@ -303,31 +298,18 @@ class _FeatureCard extends StatelessWidget {
     return Semantics(
       button: true,
       label: '$title. $subtitle. $description',
-      child: GestureDetector(
+      child: NeuButton(
         onTap: onTap,
-        child: Container(
-          padding: const EdgeInsets.all(20),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(24),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.04),
-                blurRadius: 20,
-                offset: const Offset(0, 8),
-              ),
-            ],
-          ),
-          child: Row(
-            children: [
-              Container(
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: const Color(0xFF00B894).withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                child: Icon(icon, color: const Color(0xFF00B894), size: 32),
-              ),
+        padding: const EdgeInsets.all(20),
+        borderRadius: 24,
+        child: Row(
+          children: [
+            NeuContainer(
+              padding: const EdgeInsets.all(16),
+              borderRadius: 16,
+              style: NeuStyle.pressed,
+              child: NeuIcon(icon, color: const Color(0xFF1B9981), size: 32),
+            ),
               const SizedBox(width: 16),
               Expanded(
                 child: Column(
@@ -371,7 +353,6 @@ class _FeatureCard extends StatelessWidget {
               ),
             ],
           ),
-        ),
       ),
     ).animate().fadeIn(delay: Duration(milliseconds: delay)).slideY(begin: 0.1);
   }
@@ -396,36 +377,24 @@ class _QuickAction extends StatelessWidget {
     return Semantics(
       button: true,
       label: label,
-      child: GestureDetector(
+      child: NeuButton(
         onTap: onTap,
-        child: Container(
-          padding: const EdgeInsets.symmetric(vertical: 16),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.03),
-                blurRadius: 15,
-                offset: const Offset(0, 5),
+        padding: const EdgeInsets.symmetric(vertical: 16),
+        borderRadius: 20,
+        child: Column(
+          children: [
+            NeuIcon(icon, color: const Color(0xFF1B9981), size: 24),
+            const SizedBox(height: 10),
+            Text(
+              label,
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                fontSize: 13,
+                fontWeight: FontWeight.w600,
+                color: Colors.black87,
               ),
-            ],
-          ),
-          child: Column(
-            children: [
-              Icon(icon, color: const Color(0xFF00B894), size: 24),
-              const SizedBox(height: 10),
-              Text(
-                label,
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                  fontSize: 13,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.black87,
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

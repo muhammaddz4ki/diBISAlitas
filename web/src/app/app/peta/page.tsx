@@ -22,13 +22,13 @@ export default function PetaPage() {
   return (
     <div className="min-h-full bg-[#f4f6fc] selection:bg-[#1B9981]/20 flex flex-col pb-40">
       {/* Header — Sticky 3D Neumorphism */}
-      <div className="sticky top-0 z-50 px-6 pt-14 pb-6 bg-[#f4f6fc]/95 backdrop-blur-xl border-b border-white shadow-3d rounded-b-[2rem] shrink-0">
+      <div className="sticky top-0 z-50 px-6 pt-14 pb-6 bg-[#f4f6fc]/95 backdrop-blur-xl border-b border-white shadow-3d rounded-b-[2rem] shrink-0 mb-4">
         <div className="flex items-center gap-3.5">
-          <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#00B894] to-[#00D4AA] flex items-center justify-center shrink-0 shadow-[0_8px_16px_rgba(0,184,148,0.3)] border-2 border-white icon-3d">
+          <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#00B894] to-[#00D4AA] flex items-center justify-center shrink-0 bubble-3d text-white">
             <MapPin className="w-7 h-7 text-white drop-shadow-md" strokeWidth={2.5} />
           </div>
           <div>
-            <p className="text-slate-500 text-[12px] font-semibold uppercase tracking-widest text-3d">diBISAlitas</p>
+
             <h1 className="text-[24px] font-black text-slate-900 tracking-tight leading-tight text-3d">Peta Komunitas</h1>
             <p className="text-slate-500 text-[13px] font-medium mt-0.5 text-3d">Rintangan &amp; jalur aman dilaporkan bersama</p>
           </div>

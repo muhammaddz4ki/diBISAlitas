@@ -2,7 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
-import { ArrowLeft, Camera, Volume2, Info } from "lucide-react";
+import { ArrowLeft, Camera, Volume2, Info, Navigation } from "lucide-react";
 import dynamic from "next/dynamic";
 import { motion, Variants } from "framer-motion";
 
@@ -31,29 +31,31 @@ const itemVariants: Variants = {
 
 export default function BijalanScreen() {
   return (
-    <div className="min-h-full bg-[#f4f6fc] selection:bg-[#1B9981]/20 flex flex-col pb-12 relative overflow-hidden">
+    <div className="min-h-[100dvh] bg-[#f4f6fc] selection:bg-[#1B9981]/20 flex flex-col pb-12 relative overflow-hidden">
 
-      {/* Header — 3D Neumorphism */}
-      <div className="px-6 pt-12 pb-5 shrink-0">
-        <div className="flex items-center justify-between">
+      {/* Header — Sticky 3D Neumorphism */}
+      <div className="sticky top-0 z-50 px-6 pt-14 pb-6 bg-[#f4f6fc]/95 backdrop-blur-xl border-b border-white shadow-3d rounded-b-[2rem] shrink-0 mb-4">
+        <div className="flex items-start justify-between">
+          <div className="flex items-center gap-3.5">
+            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#1B9981] to-[#00D4AA] flex items-center justify-center shrink-0 bubble-3d text-white">
+              <Navigation className="w-7 h-7 text-white drop-shadow-md" strokeWidth={2.5} />
+            </div>
+            <div>
+
+              <h1 className="text-[24px] font-black text-slate-800 tracking-tight leading-tight text-3d">BiJALAN Indoor</h1>
+              <p className="text-slate-500 text-[13px] leading-snug line-clamp-2 max-w-[240px] mt-0.5 text-3d">
+                Deteksi rintangan jalan secara real-time.
+              </p>
+            </div>
+          </div>
+          
           <Link
             href="/app/dashboard"
-            aria-label="Kembali ke dashboard"
-            className="w-11 h-11 flex items-center justify-center rounded-full bg-[#f4f6fc] shadow-3d shadow-3d-active border border-white active:scale-95 transition-transform"
+            aria-label="Kembali"
+            className="w-10 h-10 flex items-center justify-center rounded-full bg-[#f4f6fc] shadow-[inset_2px_2px_5px_rgba(0,0,0,0.05),_inset_-3px_-3px_7px_rgba(255,255,255,1)] border border-white active:scale-95 transition-transform shrink-0 mt-2"
           >
-            <ArrowLeft className="w-5 h-5 text-[#1B9981] drop-shadow-sm" strokeWidth={2.5} />
+            <ArrowLeft className="w-4 h-4 text-[#1B9981]" strokeWidth={3} />
           </Link>
-
-          <div className="text-center">
-            <h1 className="text-[18px] font-black text-slate-800 tracking-tight text-3d">
-              BiJALAN Indoor
-            </h1>
-            <p className="text-[11px] font-bold text-slate-500 uppercase tracking-widest mt-0.5 text-3d">
-              Deteksi Rintangan
-            </p>
-          </div>
-
-          <div className="w-11 h-11" />
         </div>
       </div>
 

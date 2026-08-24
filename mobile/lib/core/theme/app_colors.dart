@@ -47,9 +47,9 @@ class AppColors {
   // NEUTRAL — Light mode
   // ═══════════════════════════════════════════
   static const Color white = Color(0xFFFFFFFF);
-  static const Color background = Color(0xFFF5F7FA);
-  static const Color surface = Color(0xFFFFFFFF);
-  static const Color surfaceVariant = Color(0xFFEEF2F6);
+  static const Color background = Color(0xFFF4F6FC);
+  static const Color surface = Color(0xFFF4F6FC);
+  static const Color surfaceVariant = Color(0xFFE8EBF2);
   static const Color border = Color(0xFFE2E8F0);
   static const Color textPrimary = Color(0xFF1A202C);   // near-black, kontras tinggi
   static const Color textSecondary = Color(0xFF5A6572); // slate

@@ -18,7 +18,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     <TalkbackProvider>
       <AccessibilityProvider>
       <div className="min-h-screen bg-[#F9FAFB] sm:py-8 flex items-center justify-center font-sans text-slate-800 selection:bg-[#00B894]/20">
-        <div className="w-full max-w-[450px] h-[100dvh] sm:h-[850px] bg-white sm:rounded-[2.5rem] sm:shadow-2xl overflow-hidden relative flex flex-col">
+        <div className="w-full max-w-[450px] h-[100dvh] sm:h-[850px] bg-[#f4f6fc] sm:rounded-[2.5rem] sm:shadow-2xl overflow-hidden relative flex flex-col">
 
           {/* Skip to content — hanya tampil saat di-focus via keyboard */}
           <a
@@ -29,7 +29,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
           </a>
 
           {/* Main Content Area */}
-          <main id="main-content" className={`flex-1 overflow-y-auto relative scroll-smooth [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none'] ${isAuthPage ? "" : "pb-28"}`}>
+          <main id="main-content" className={`flex-1 overflow-y-auto relative scroll-smooth [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none'] ${isAuthPage ? "bg-white" : "bg-[#f4f6fc] pb-28"}`}>
             {children}
           </main>
 

@@ -20,24 +20,27 @@ interface Announcement {
 const categoryConfig = {
   info: {
     label: "Info",
-    icon: <Info className="w-4 h-4" />,
+    icon: <Info className="w-6 h-6 drop-shadow-md" />,
     bg: "bg-sky-50",
+    bgGradient: "bg-gradient-to-br from-sky-400 to-sky-600",
     text: "text-sky-600",
     border: "border-sky-100",
     dot: "bg-sky-400",
   },
   penting: {
     label: "Penting",
-    icon: <AlertTriangle className="w-4 h-4" />,
+    icon: <AlertTriangle className="w-6 h-6 drop-shadow-md" />,
     bg: "bg-amber-50",
+    bgGradient: "bg-gradient-to-br from-amber-400 to-amber-600",
     text: "text-amber-600",
     border: "border-amber-100",
     dot: "bg-amber-400",
   },
   darurat: {
     label: "Darurat",
-    icon: <Siren className="w-4 h-4" />,
+    icon: <Siren className="w-6 h-6 drop-shadow-md" />,
     bg: "bg-rose-50",
+    bgGradient: "bg-gradient-to-br from-rose-400 to-rose-600",
     text: "text-rose-600",
     border: "border-rose-100",
     dot: "bg-rose-500",
@@ -103,13 +106,13 @@ export default function KomunitasPage() {
   return (
     <div className="min-h-full bg-[#f4f6fc] selection:bg-[#1B9981]/20 pb-40">
       {/* Header — Sticky 3D Neumorphism */}
-      <div className="sticky top-0 z-50 px-6 pt-14 pb-6 bg-[#f4f6fc]/95 backdrop-blur-xl border-b border-white shadow-3d rounded-b-[2rem] mb-6">
+      <div className="sticky top-0 z-50 px-6 pt-14 pb-6 bg-[#f4f6fc]/95 backdrop-blur-xl border-b border-white shadow-3d rounded-b-[2rem] shrink-0 mb-4">
         <div className="flex items-center gap-3.5">
-          <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#00B894] to-[#00D4AA] flex items-center justify-center shrink-0 shadow-[0_8px_16px_rgba(0,184,148,0.3)] border-2 border-white icon-3d">
+          <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#00B894] to-[#00D4AA] flex items-center justify-center shrink-0 bubble-3d text-white">
             <Megaphone className="w-7 h-7 text-white drop-shadow-md" strokeWidth={2.5} />
           </div>
           <div>
-            <p className="text-slate-500 text-[13px] font-semibold text-3d tracking-widest uppercase">diBISAlitas</p>
+
             <h1 className="text-[24px] font-black text-slate-900 tracking-tight leading-tight text-3d">Komunitas &amp; Info</h1>
           </div>
         </div>
@@ -212,7 +215,7 @@ export default function KomunitasPage() {
                     className="w-full text-left bg-transparent rounded-[24px] p-4 shadow-3d shadow-3d-hover shadow-3d-active border border-white flex items-start gap-4 transition-all duration-300 ease-out -webkit-tap-highlight-color-transparent group"
                   >
                     {/* Category Icon */}
-                    <div className={`w-14 h-14 rounded-[16px] shrink-0 flex items-center justify-center shadow-[inset_2px_2px_5px_rgba(0,0,0,0.05),_inset_-3px_-3px_7px_rgba(255,255,255,1)] ${cfg.text}`}>
+                    <div className={`w-14 h-14 rounded-[16px] shrink-0 flex items-center justify-center bubble-3d text-white ${cfg.bgGradient}`}>
                       {cfg.icon}
                     </div>
 

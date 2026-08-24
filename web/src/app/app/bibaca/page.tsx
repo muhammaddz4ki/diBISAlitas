@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { motion, AnimatePresence, Variants } from "framer-motion";
 import { useBibaca } from "@/hooks/useBibaca";
+import { useAccessibility } from "@/lib/AccessibilityContext";
 
 const containerVariants: Variants = {
   hidden: { opacity: 0 },
@@ -45,6 +46,14 @@ export default function BibacaScreen() {
     reset,
   } = useBibaca();
 
+  const { colorfulMode } = useAccessibility();
+  const tSelection = "selection:bg-purple-500/20";
+  const tText = "text-purple-600";
+  const tBgIndicator = "bg-purple-400 shadow-[0_0_8px_rgba(192,132,252,0.8)]";
+  const tSpinner = "border-purple-500/30 border-t-purple-500";
+  const tOverlay = "bg-purple-900/60";
+  const tBgBtn = "bg-purple-500";
+
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -62,29 +71,31 @@ export default function BibacaScreen() {
   };
 
   return (
-    <div className="min-h-full bg-[#f4f6fc] selection:bg-purple-500/20 flex flex-col pb-12 relative overflow-hidden">
+    <div className={`min-h-[100dvh] bg-[#f4f6fc] ${tSelection} flex flex-col pb-12 relative overflow-hidden`}>
 
-      {/* Header — 3D Neumorphism */}
-      <div className="px-6 pt-12 pb-5 shrink-0">
-        <div className="flex items-center justify-between">
+      {/* Header — Sticky 3D Neumorphism */}
+      <div className="sticky top-0 z-50 px-6 pt-14 pb-6 bg-[#f4f6fc]/95 backdrop-blur-xl border-b border-white shadow-3d rounded-b-[2rem] shrink-0 mb-4">
+        <div className="flex items-start justify-between">
+          <div className="flex items-center gap-3.5">
+            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-purple-400 to-purple-600 flex items-center justify-center shrink-0 bubble-3d text-white">
+              <Glasses className="w-7 h-7 text-white drop-shadow-md" strokeWidth={2.5} />
+            </div>
+            <div>
+
+              <h1 className="text-[24px] font-black text-slate-800 tracking-tight leading-tight text-3d">BiBACA</h1>
+              <p className="text-slate-500 text-[13px] leading-snug line-clamp-2 max-w-[240px] mt-0.5 text-3d">
+                Pemindai Teks Pintar
+              </p>
+            </div>
+          </div>
+          
           <Link
             href="/app/dashboard"
-            aria-label="Kembali ke dashboard"
-            className="w-11 h-11 flex items-center justify-center rounded-full bg-[#f4f6fc] shadow-3d shadow-3d-active border border-white active:scale-95 transition-transform"
+            aria-label="Kembali"
+            className="w-10 h-10 flex items-center justify-center rounded-full bg-[#f4f6fc] shadow-[inset_2px_2px_5px_rgba(0,0,0,0.05),_inset_-3px_-3px_7px_rgba(255,255,255,1)] border border-white active:scale-95 transition-transform shrink-0 mt-2"
           >
-            <ArrowLeft className="w-5 h-5 text-purple-600 drop-shadow-sm" strokeWidth={2.5} />
+            <ArrowLeft className={`w-4 h-4 ${tText}`} strokeWidth={3} />
           </Link>
-
-          <div className="text-center">
-            <h1 className="text-[18px] font-black text-slate-800 tracking-tight text-3d">
-              BiBACA
-            </h1>
-            <p className="text-[11px] font-bold text-slate-500 uppercase tracking-widest mt-0.5 text-3d">
-              Pemindai Teks
-            </p>
-          </div>
-
-          <div className="w-11 h-11" />
         </div>
       </div>
 
@@ -101,7 +112,7 @@ export default function BibacaScreen() {
             
             <div className="rounded-[24px] overflow-hidden relative w-full min-h-[380px] bg-slate-900 flex flex-col shadow-inner">
               <div className="absolute top-4 left-4 z-30 bg-black/40 backdrop-blur-md border border-white/20 px-3 py-1.5 rounded-full flex items-center gap-2">
-                <span className={`w-2 h-2 rounded-full ${isProcessing ? 'bg-amber-500 animate-pulse shadow-[0_0_8px_rgba(245,158,11,0.8)]' : 'bg-purple-400 shadow-[0_0_8px_rgba(192,132,252,0.8)]'}`}></span>
+                <span className={`w-2 h-2 rounded-full ${isProcessing ? 'bg-amber-500 animate-pulse shadow-[0_0_8px_rgba(245,158,11,0.8)]' : tBgIndicator}`}></span>
                 <span className="text-white text-[10px] font-bold tracking-wider">
                   {isProcessing ? 'MEMINDAI...' : capturedUrl ? 'FOTO SIAP' : 'SIAP'}
                 </span>
@@ -131,7 +142,7 @@ export default function BibacaScreen() {
 
               {!isCameraReady && !error && !capturedUrl && (
                 <div className="absolute inset-0 flex flex-col items-center justify-center bg-slate-900/80 z-20">
-                  <div className="w-10 h-10 border-4 border-purple-500/30 border-t-purple-500 rounded-full animate-spin mb-3"></div>
+                  <div className={`w-10 h-10 border-4 ${tSpinner} rounded-full animate-spin mb-3`}></div>
                   <p className="text-white font-medium text-[13px]">Mengakses Kamera...</p>
                 </div>
               )}
@@ -166,7 +177,7 @@ export default function BibacaScreen() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
-                    className="absolute inset-0 z-40 bg-purple-900/60 backdrop-blur-sm flex flex-col items-center justify-center"
+                    className={`absolute inset-0 z-40 ${tOverlay} backdrop-blur-sm flex flex-col items-center justify-center`}
                   >
                     <div className="w-16 h-16 relative flex items-center justify-center mb-4">
                       <svg className="animate-spin -ml-1 mr-3 h-12 w-12 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -202,7 +213,7 @@ export default function BibacaScreen() {
                   aria-label="Pilih dari galeri"
                   className="w-12 h-12 bg-[#f4f6fc] border border-white rounded-full shadow-[0_4px_16px_rgba(0,0,0,0.5)] flex items-center justify-center active:scale-90 transition-transform disabled:opacity-50"
                 >
-                  <ImageIcon className="w-5 h-5 text-purple-600 drop-shadow-sm" strokeWidth={2.4} />
+                  <ImageIcon className={`w-5 h-5 ${tText} drop-shadow-sm`} strokeWidth={2.4} />
                 </button>
 
                 {capturedUrl && !isProcessing ? (
@@ -212,7 +223,7 @@ export default function BibacaScreen() {
                     aria-label="Pindai ulang"
                     className="w-16 h-16 bg-[#f4f6fc] rounded-full shadow-[0_4px_24px_rgba(0,0,0,0.6)] flex items-center justify-center active:scale-90 transition-transform border-4 border-white"
                   >
-                    <div className="w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center shadow-inner">
+                    <div className={`w-12 h-12 ${tBgBtn} rounded-full flex items-center justify-center shadow-inner`}>
                       <RotateCcw className="w-5 h-5 text-white" />
                     </div>
                   </button>
@@ -224,7 +235,7 @@ export default function BibacaScreen() {
                     aria-label="Ambil foto & pindai teks"
                     className="w-16 h-16 bg-[#f4f6fc] rounded-full shadow-[0_4px_24px_rgba(0,0,0,0.6)] flex items-center justify-center active:scale-90 transition-transform disabled:opacity-50 disabled:scale-100 border-4 border-white"
                   >
-                    <div className="w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center shadow-inner">
+                    <div className={`w-12 h-12 ${tBgBtn} rounded-full flex items-center justify-center shadow-inner`}>
                       <ScanText className="w-5 h-5 text-white" />
                     </div>
                   </button>
@@ -242,13 +253,14 @@ export default function BibacaScreen() {
 
               {scannedText ? (
                 <div className="w-full text-center space-y-3" aria-live="polite" aria-atomic="true">
-                  <button
+                  <motion.button
+                    whileTap={{ scale: 0.8 }} transition={{ type: "spring", stiffness: 400, damping: 17 }}
                     onClick={() => (isSpeaking ? stopSpeaking() : speak(scannedText))}
                     aria-label={isSpeaking ? "Hentikan suara" : "Bacakan teks"}
-                    className="w-14 h-14 bg-[#f4f6fc] shadow-3d shadow-3d-active border border-white rounded-full flex items-center justify-center mx-auto mb-4 active:scale-95 transition-transform"
+                    className={`w-[72px] h-[72px] ${tBgBtn} shadow-lg border-none rounded-full flex items-center justify-center mx-auto mb-4`}
                   >
-                    <Volume2 className={`w-7 h-7 text-purple-600 drop-shadow-sm ${isSpeaking ? "animate-pulse text-rose-500" : ""}`} strokeWidth={2.5} />
-                  </button>
+                    <Volume2 className={`w-9 h-9 text-white drop-shadow-md ${isSpeaking ? "animate-pulse text-white/50" : ""}`} strokeWidth={2.5} />
+                  </motion.button>
                   <h2 className="text-[18px] font-black text-slate-800 tracking-tight flex items-center justify-center gap-2 text-3d">
                     <CheckCircle2 className="w-5 h-5 text-emerald-500 drop-shadow-sm" /> Hasil Bacaan
                   </h2>
@@ -259,7 +271,7 @@ export default function BibacaScreen() {
                   </div>
                   <button
                     onClick={reset}
-                    className="text-[13px] font-black text-purple-600 active:scale-95 transition-transform mt-3 text-3d inline-block px-6 py-2 rounded-full bg-[#f4f6fc] shadow-3d shadow-3d-active border border-white"
+                    className={`text-[13px] font-black ${tText} active:scale-95 transition-transform mt-3 text-3d inline-block px-6 py-2 rounded-full bg-[#f4f6fc] shadow-3d shadow-3d-active border border-white`}
                   >
                     Pindai teks baru
                   </button>
@@ -267,7 +279,7 @@ export default function BibacaScreen() {
               ) : (
                 <>
                   <div className="w-14 h-14 bg-[#f4f6fc] shadow-[inset_2px_2px_5px_rgba(0,0,0,0.05),_inset_-3px_-3px_7px_rgba(255,255,255,1)] border border-white rounded-[16px] flex items-center justify-center mb-4">
-                    <Glasses className="w-7 h-7 text-purple-600 drop-shadow-sm" strokeWidth={2.5} />
+                    <Glasses className={`w-7 h-7 ${tText} drop-shadow-sm`} strokeWidth={2.5} />
                   </div>
 
                   <div className="text-center space-y-2 mb-2">
@@ -289,3 +301,4 @@ export default function BibacaScreen() {
     </div>
   );
 }
+

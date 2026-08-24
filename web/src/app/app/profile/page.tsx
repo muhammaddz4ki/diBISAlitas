@@ -14,7 +14,7 @@ import {
   EmailAuthProvider
 } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
-import { LogOut, Eye, EyeOff, Save, CheckCircle2, AlertCircle, Volume2, VolumeX, ShieldCheck, Type, Contrast, Sparkles } from "lucide-react";
+import { LogOut, Eye, EyeOff, Save, CheckCircle2, AlertCircle, Volume2, VolumeX, ShieldCheck, Type, Contrast, Sparkles, Palette } from "lucide-react";
 import { useTalkbackContext } from "@/lib/TalkbackContext";
 import { useAccessibility, FONT_LABELS } from "@/lib/AccessibilityContext";
 import { motion, AnimatePresence, Variants } from "framer-motion";
@@ -185,7 +185,7 @@ export default function ProfilePage() {
       </AnimatePresence>
 
       {/* Header — Sticky 3D Neumorphism */}
-      <div className="sticky top-0 z-50 px-6 pt-12 pb-6 bg-[#f4f6fc]/95 backdrop-blur-xl border-b border-white shadow-3d rounded-b-[2rem] mb-6 shrink-0">
+      <div className="sticky top-0 z-50 px-6 pt-14 pb-6 bg-[#f4f6fc]/95 backdrop-blur-xl border-b border-white shadow-3d rounded-b-[2rem] shrink-0 mb-4">
         <div className="flex flex-col items-center">
           <div className="relative mb-4 mt-2">
             <div className="w-[88px] h-[88px] rounded-[28px] bg-gradient-to-br from-[#00B894] to-[#00D4AA] flex items-center justify-center shadow-[0_8px_16px_rgba(0,184,148,0.3)] border-2 border-white icon-3d">
@@ -360,6 +360,27 @@ export default function ProfilePage() {
                 </div>
                 <div className={`relative w-[52px] h-[32px] rounded-full transition-all duration-300 shrink-0 border border-white ${a11y.highContrast ? "bg-gradient-to-br from-[#1B9981] to-[#00D4AA] shadow-[inset_2px_2px_5px_rgba(0,0,0,0.2)]" : "bg-[#f4f6fc] shadow-[inset_3px_3px_8px_rgba(0,0,0,0.05),_inset_-4px_-4px_10px_rgba(255,255,255,1)]"}`} aria-hidden="true">
                   <div className={`absolute top-1 w-[22px] h-[22px] rounded-full transition-transform duration-300 ${a11y.highContrast ? "translate-x-6 bg-white shadow-sm" : "translate-x-1 bg-slate-300 shadow-inner"}`} />
+                </div>
+              </button>
+            </div>
+
+            {/* Mode Colorful */}
+            <div className="bg-transparent border border-white rounded-[24px] shadow-3d mb-4">
+              <button
+                type="button"
+                onClick={a11y.toggleColorfulMode}
+                aria-label={a11y.colorfulMode ? "Nonaktifkan mode colorful" : "Aktifkan mode colorful"}
+                className="w-full flex items-center gap-4 p-4 transition-colors outline-none group rounded-[24px] shadow-3d-active"
+              >
+                <div className={`w-14 h-14 rounded-[18px] flex items-center justify-center shrink-0 border border-white transition-all ${a11y.colorfulMode ? "bg-gradient-to-br from-[#1B9981] to-[#00D4AA] shadow-3d icon-3d" : "bg-transparent shadow-[inset_2px_2px_5px_rgba(0,0,0,0.05),_inset_-3px_-3px_7px_rgba(255,255,255,1)]"}`}>
+                  <Palette className={`w-6 h-6 ${a11y.colorfulMode ? "text-white" : "text-slate-400"}`} strokeWidth={2.5} />
+                </div>
+                <div className="flex-1 text-left py-0.5">
+                  <p className="font-bold text-slate-800 text-[16px] tracking-tight mb-0.5 text-3d">Tampilan Penuh Warna</p>
+                  <p className="text-[12px] text-slate-500 leading-snug text-3d">{a11y.colorfulMode ? "Aktif — saturasi warna ditingkatkan" : "Nonaktif — ketuk untuk mencerahkan"}</p>
+                </div>
+                <div className={`relative w-[52px] h-[32px] rounded-full transition-all duration-300 shrink-0 border border-white ${a11y.colorfulMode ? "bg-gradient-to-br from-[#1B9981] to-[#00D4AA] shadow-[inset_2px_2px_5px_rgba(0,0,0,0.2)]" : "bg-[#f4f6fc] shadow-[inset_3px_3px_8px_rgba(0,0,0,0.05),_inset_-4px_-4px_10px_rgba(255,255,255,1)]"}`} aria-hidden="true">
+                  <div className={`absolute top-1 w-[22px] h-[22px] rounded-full transition-transform duration-300 ${a11y.colorfulMode ? "translate-x-6 bg-white shadow-sm" : "translate-x-1 bg-slate-300 shadow-inner"}`} />
                 </div>
               </button>
             </div>

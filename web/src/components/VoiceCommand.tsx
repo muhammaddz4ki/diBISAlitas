@@ -174,19 +174,19 @@ export default function VoiceCommand() {
   return (
     <>
       {listening && caption && (
-        <div className="absolute bottom-[12.5rem] right-6 z-[60] max-w-[220px] bg-slate-900 text-white text-[13px] font-medium px-3.5 py-2 rounded-2xl shadow-xl">
+        <div className="absolute bottom-[13rem] right-6 z-[60] max-w-[220px] bg-slate-800 text-white text-[13px] font-semibold px-4 py-2.5 rounded-[16px] shadow-xl border border-slate-700">
           &ldquo;{caption}&rdquo;
         </div>
       )}
 
-      {/* Tombol panduan */}
+      {/* Tombol panduan — di atas mic, vertikal */}
       <button
         onClick={() => setShowHelp(true)}
         aria-label="Panduan perintah suara"
         title="Panduan perintah suara"
-        className="absolute bottom-[9.5rem] right-[5.5rem] z-[60] w-12 h-12 rounded-full bg-white border-2 border-white shadow-3d shadow-3d-hover shadow-3d-active icon-3d flex items-center justify-center text-slate-500 hover:text-[#00B894]"
+        className="absolute bottom-[199px] right-7 z-[60] w-12 h-12 rounded-full bg-[#f4f6fc] shadow-[inset_2px_2px_5px_rgba(0,0,0,0.06),_inset_-3px_-3px_7px_rgba(255,255,255,1),_3px_3px_8px_rgba(0,0,0,0.08)] border border-white flex items-center justify-center text-slate-400 hover:text-[#1B9981] active:scale-90 transition-all"
       >
-        <HelpCircle className="w-6 h-6" />
+        <HelpCircle className="w-5 h-5" strokeWidth={2.5} />
       </button>
 
       {/* Tombol mikrofon */}
@@ -194,8 +194,8 @@ export default function VoiceCommand() {
         onClick={toggle}
         aria-label={listening ? "Berhenti mendengarkan perintah suara" : "Aktifkan perintah suara"}
         title="Perintah suara"
-        className={`absolute bottom-36 right-6 z-[60] w-14 h-14 rounded-full flex items-center justify-center border-2 border-white shadow-3d shadow-3d-active icon-3d ${
-          listening ? "bg-gradient-to-br from-rose-400 to-rose-600 scale-105 animate-pulse" : "bg-gradient-to-br from-[#00B894] to-[#00D4AA]"
+        className={`absolute bottom-32 right-6 z-[60] w-14 h-14 rounded-full flex items-center justify-center bubble-3d shadow-[0_6px_16px_rgba(0,0,0,0.12)] ${
+          listening ? "bg-gradient-to-b from-rose-400 to-rose-600 scale-105 animate-pulse" : "bg-gradient-to-b from-[#00B894] to-[#1B9981]"
         }`}
       >
         {listening ? <MicOff className="w-6 h-6 text-white drop-shadow-md" /> : <Mic className="w-6 h-6 text-white drop-shadow-md" />}
@@ -204,45 +204,57 @@ export default function VoiceCommand() {
       {/* Panel panduan */}
       {showHelp && (
         <div
-          className="absolute inset-0 z-[70] bg-black/40 flex items-end"
+          className="absolute inset-0 z-[70] bg-black/40 backdrop-blur-sm flex items-end"
           onClick={() => setShowHelp(false)}
           role="dialog"
           aria-label="Panduan perintah suara"
         >
           <div
-            className="w-full bg-white rounded-t-[2rem] p-6 pb-8 max-h-[82%] overflow-y-auto [&::-webkit-scrollbar]:hidden"
+            className="w-full bg-[#f4f6fc] rounded-t-[28px] p-6 pb-8 max-h-[82%] overflow-y-auto [&::-webkit-scrollbar]:hidden shadow-[0_-4px_20px_rgba(0,0,0,0.1)]"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex items-center justify-between mb-1">
-              <h3 className="text-[17px] font-black text-slate-800">Panduan Perintah Suara</h3>
+            {/* Header */}
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-3">
+                <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-[#00B894] to-[#1B9981] flex items-center justify-center bubble-3d text-white shrink-0">
+                  <Mic className="w-5 h-5 text-white drop-shadow-md" strokeWidth={2.5} />
+                </div>
+                <div>
+                  <h3 className="text-[17px] font-black text-slate-800 tracking-tight text-3d">Perintah Suara</h3>
+                  <p className="text-[11px] text-slate-400 font-semibold text-3d">Ketuk mikrofon, lalu ucapkan kata</p>
+                </div>
+              </div>
               <button
                 onClick={() => setShowHelp(false)}
                 aria-label="Tutup"
-                className="w-9 h-9 rounded-full bg-slate-100 flex items-center justify-center"
+                className="w-9 h-9 rounded-full bg-[#f4f6fc] shadow-[inset_2px_2px_5px_rgba(0,0,0,0.05),_inset_-3px_-3px_7px_rgba(255,255,255,1)] border border-white flex items-center justify-center active:scale-90 transition-transform"
               >
-                <X className="w-5 h-5 text-slate-500" />
+                <X className="w-4 h-4 text-slate-400" strokeWidth={2.5} />
               </button>
             </div>
-            <p className="text-[13px] text-slate-500 mb-4">Ketuk mikrofon, tunggu nada, lalu ucapkan satu kata:</p>
 
-            <div className="space-y-2.5">
-              {HELP_ITEMS.map((it) => (
-                <div key={it.w} className="flex items-center gap-3">
-                  <span className="shrink-0 px-3 py-1.5 rounded-xl bg-[#00B894]/10 text-[#00B894] font-bold text-[13px] min-w-[92px] text-center">
-                    &ldquo;{it.w}&rdquo;
-                  </span>
-                  <span className="text-[13px] text-slate-600">{it.d}</span>
-                </div>
-              ))}
+            {/* Command list — satu card besar */}
+            <div className="rounded-[15px] shadow-3d border border-white bg-white/50 p-4">
+              <div className="flex flex-col gap-0 divide-y divide-slate-100">
+                {HELP_ITEMS.map((it) => (
+                  <div key={it.w} className="flex items-center gap-3.5 py-3 first:pt-0 last:pb-0">
+                    <span className="shrink-0 px-3 py-1.5 rounded-xl bg-[#f4f6fc] text-[#1B9981] font-bold text-[12px] min-w-[85px] text-center shadow-[2px_2px_5px_rgba(0,0,0,0.08),_-2px_-2px_5px_rgba(255,255,255,1)] border border-white">
+                      &ldquo;{it.w}&rdquo;
+                    </span>
+                    <span className="text-[13px] text-slate-600 font-medium">{it.d}</span>
+                  </div>
+                ))}
+              </div>
             </div>
 
+            {/* Listen button */}
             <button
               onClick={speakGuide}
-              className="mt-5 w-full py-3.5 rounded-2xl bg-[#00B894] text-white font-bold text-[14px] flex items-center justify-center gap-2 active:scale-95 transition-transform"
+              className="mt-5 w-full py-3.5 rounded-[18px] bg-gradient-to-r from-[#1B9981] to-[#00D4AA] text-white font-black text-[14px] flex items-center justify-center gap-2 active:scale-[0.97] transition-all shadow-[0_6px_16px_rgba(27,153,129,0.3)]"
             >
-              <Volume2 className="w-5 h-5" /> Dengarkan Panduan
+              <Volume2 className="w-5 h-5 drop-shadow-sm" /> Dengarkan Panduan
             </button>
-            <p className="text-[12px] text-slate-400 mt-3 text-center">
+            <p className="text-[11px] text-slate-400 mt-3 text-center font-medium">
               Tips: ucapkan satu kata inti saja, mis. &ldquo;baca&rdquo;. Ucapkan &ldquo;bantuan&rdquo; kapan saja untuk mendengar daftar ini.
             </p>
           </div>

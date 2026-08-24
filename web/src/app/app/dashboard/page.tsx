@@ -4,10 +4,11 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth, db } from "@/lib/firebase";
-import { collection, onSnapshot, query, orderBy, limit } from "firebase/firestore";
+import { collection, onSnapshot, query, orderBy, limit, doc } from "firebase/firestore";
 import Link from "next/link";
-import { ShieldAlert, MessageCircle, BookOpen, Navigation, Bell, ChevronRight, PlayCircle, Clock, Users, Calendar, ArrowRight, Glasses } from "lucide-react";
+import { ShieldAlert, MessageCircle, BookOpen, Navigation, Bell, ChevronRight, PlayCircle, Clock, Users, Calendar, ArrowRight, Glasses, Info, Siren, AlertTriangle } from "lucide-react";
 import { motion, AnimatePresence, Variants } from "framer-motion";
+import { useAccessibility } from "@/lib/AccessibilityContext";
 
 const containerVariants: Variants = {
   hidden: { opacity: 0 },
@@ -27,6 +28,9 @@ const itemVariants: Variants = {
 export default function DashboardPage() {
   const router = useRouter();
   const [userEmail, setUserEmail] = useState<string | null>(null);
+  const [userUid, setUserUid] = useState<string | null>(null);
+  const [myScore, setMyScore] = useState<number>(0);
+  const [topScore, setTopScore] = useState<number>(10000);
   const [isLoading, setIsLoading] = useState(true);
   const [courses, setCourses] = useState<any[]>([]);
   const [announcements, setAnnouncements] = useState<any[]>([]);
@@ -43,6 +47,7 @@ export default function DashboardPage() {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         setUserEmail(user.email);
+        setUserUid(user.uid);
       } else {
         router.push("/app/login");
       }
@@ -53,7 +58,7 @@ export default function DashboardPage() {
   }, [router]);
 
   useEffect(() => {
-    if (!userEmail) return;
+    if (!userEmail || !userUid) return;
 
     const qNotif = query(collection(db, "announcements"), orderBy("createdAt", "desc"), limit(10));
     const unsubNotif = onSnapshot(qNotif, (snap) => {
@@ -82,12 +87,31 @@ export default function DashboardPage() {
       console.error("Announcements fetch error:", error);
     });
 
+    const docRef = doc(db, "quiz_scores", `${userUid}_hijaiyah`);
+    const unsubScore = onSnapshot(docRef, (docSnap) => {
+      if (docSnap.exists()) {
+        setMyScore(docSnap.data().score || 0);
+      } else {
+        setMyScore(0);
+      }
+    });
+
+    const qTopScore = query(collection(db, "quiz_scores"), orderBy("score", "desc"), limit(1));
+    const unsubTopScore = onSnapshot(qTopScore, (snap) => {
+      if (!snap.empty) {
+        const highest = snap.docs[0].data().score;
+        setTopScore(highest > 0 ? highest : 10000);
+      }
+    });
+
     return () => {
       unsubNotif();
       unsubCourses();
       unsubAnnouncements();
+      unsubScore();
+      unsubTopScore();
     };
-  }, [userEmail]);
+  }, [userEmail, userUid]);
 
   const toMillis = (ts: any): number =>
     ts?.toMillis ? ts.toMillis() : ts?.seconds ? ts.seconds * 1000 : 0;
@@ -132,11 +156,11 @@ export default function DashboardPage() {
       className="relative min-h-full bg-[#f4f6fc] selection:bg-[#1B9981]/20 pb-40"
     >
       {/* Header — Sticky 3D Neumorphism */}
-      <div className="sticky top-0 z-50 px-6 pt-12 pb-6 bg-[#f4f6fc]/95 backdrop-blur-xl border-b border-white shadow-3d rounded-b-[2rem] mb-6">
+      <div className="sticky top-0 z-50 px-6 pt-14 pb-6 bg-[#f4f6fc]/95 backdrop-blur-xl border-b border-white shadow-3d rounded-b-[2rem] shrink-0 mb-4">
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-3.5">
             {/* Avatar */}
-            <div className="w-[52px] h-[52px] rounded-2xl bg-gradient-to-br from-[#00B894] to-[#00D4AA] flex items-center justify-center shadow-[0_8px_16px_rgba(0,184,148,0.3)] border-2 border-white icon-3d">
+            <div className="w-[52px] h-[52px] rounded-2xl bg-gradient-to-br from-[#00B894] to-[#00D4AA] flex items-center justify-center bubble-3d text-white">
               <span className="text-[20px] font-black text-white drop-shadow-md">{userEmail ? userEmail.charAt(0).toUpperCase() : "U"}</span>
             </div>
             <div>
@@ -144,6 +168,20 @@ export default function DashboardPage() {
               <h1 className="text-[20px] font-black text-slate-900 tracking-tight leading-tight truncate max-w-[200px] text-3d">
                 {userEmail?.split('@')[0] || "Pengguna"}
               </h1>
+              <div className="mt-3 flex flex-col gap-1.5 relative z-0">
+                <div className="flex items-center justify-between text-[11px] font-extrabold text-slate-500 w-[200px]">
+                  <span className="uppercase tracking-wider">Poin Tantangan</span>
+                  <span className="text-[#1B9981]">{myScore} <span className="text-slate-400">/ {topScore >= 1000 ? (topScore/1000).toFixed(1).replace('.0','') + 'k' : topScore}</span></span>
+                </div>
+                <div className="w-[200px] h-[12px] bg-white rounded-full overflow-visible shadow-[inset_1px_1px_3px_rgba(0,0,0,0.1)] relative border border-slate-100">
+                  <div 
+                    className="absolute top-0 left-0 h-full bg-gradient-to-r from-[#00D4AA] to-[#1B9981] rounded-full shadow-[0_2px_5px_rgba(27,153,129,0.4)] transition-all duration-1000 ease-out min-w-[12px]" 
+                    style={{ width: `${Math.min(100, Math.max(0, (myScore / topScore) * 100))}%` }} 
+                  >
+                    <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[16px] h-[16px] bg-white border-[3px] border-[#1B9981] rounded-full shadow-md transform translate-x-1/2"></div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -320,7 +358,7 @@ export default function DashboardPage() {
                   key={ann.id}
                   title={ann.title}
                   date={ann.createdAt ? new Intl.DateTimeFormat("id-ID", { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" }).format(ann.createdAt.toDate ? ann.createdAt.toDate() : new Date(ann.createdAt)) : "-"}
-                  participants={ann.category === "darurat" ? "Darurat" : ann.category === "penting" ? "Penting" : "Info"}
+                  category={ann.category === "darurat" ? "Darurat" : ann.category === "penting" ? "Penting" : "Info"}
                 />
               ))
             ) : (
@@ -335,6 +373,49 @@ export default function DashboardPage() {
 }
 
 function FeatureCard({ href, title, desc, icon, bg, buttonColor }: { href: string; title: string; desc: string; icon: React.ReactNode; bg: string; buttonColor: string }) {
+  const { colorfulMode } = useAccessibility();
+
+  if (colorfulMode) {
+    return (
+      <motion.div variants={itemVariants}>
+        <Link
+          href={href}
+          className="block group -webkit-tap-highlight-color-transparent"
+        >
+          <div className={`${bg} p-5 rounded-[28px] rounded-tr-[52px] shadow-[0_12px_30px_-10px_rgba(0,0,0,0.3)] flex items-center gap-4 relative overflow-hidden group-hover:shadow-[0_16px_40px_-10px_rgba(0,0,0,0.4)] group-active:scale-[0.98] transition-all duration-300`}>
+
+            {/* Decorative glass shapes */}
+            <div className="absolute top-0 right-0 w-32 h-32 bg-white/20 rounded-full blur-2xl -translate-y-1/2 translate-x-1/3 pointer-events-none"></div>
+            <div className="absolute -bottom-8 -left-8 w-24 h-24 bg-white/10 rounded-full blur-xl pointer-events-none"></div>
+            <div className="absolute top-1/2 left-1/2 w-48 h-48 bg-white/5 rounded-full blur-3xl -translate-y-1/2 -translate-x-1/2 pointer-events-none"></div>
+
+            <div className="w-[54px] h-[54px] bg-white/20 backdrop-blur-md rounded-[20px] flex items-center justify-center shrink-0 border border-white/30 shadow-[inset_0_2px_10px_rgba(255,255,255,0.3)] z-10 relative overflow-hidden">
+               <div className="absolute inset-0 bg-gradient-to-br from-white/40 to-transparent opacity-50"></div>
+              {icon}
+            </div>
+
+            <div className="flex-1 z-10">
+              <h3 className="font-extrabold text-white text-[19px] mb-0.5 tracking-tight drop-shadow-md">
+                {title}
+              </h3>
+              <div className="flex items-center gap-2 opacity-95">
+                <p className="text-white/90 text-[13px] font-medium tracking-wide drop-shadow-sm">
+                  {desc}
+                </p>
+              </div>
+            </div>
+
+            <div className="w-10 h-10 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center transition-transform duration-300 group-hover:translate-x-1 group-active:scale-90 border border-white/30 z-10 shrink-0 shadow-[inset_0_2px_8px_rgba(255,255,255,0.2)] relative overflow-hidden">
+               <div className="absolute inset-0 bg-gradient-to-br from-white/40 to-transparent opacity-50"></div>
+              <ChevronRight className="w-5 h-5 text-white drop-shadow-sm" strokeWidth={2.5} />
+            </div>
+
+          </div>
+        </Link>
+      </motion.div>
+    );
+  }
+
   return (
     <motion.div variants={itemVariants}>
       <Link
@@ -379,9 +460,11 @@ function CourseCard({ title, category, duration, image }: { title: string; categ
           <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
             <PlayCircle className="w-12 h-12 text-white drop-shadow-[0_4px_10px_rgba(0,0,0,0.5)]" />
           </div>
-          <div className="absolute top-2.5 left-2.5 bg-white/20 backdrop-blur-md px-2 py-1 rounded-lg border border-white/40 shadow-sm">
-            <span className="text-[10px] font-bold text-white tracking-wider uppercase drop-shadow-md">{category}</span>
-          </div>
+        </div>
+        <div className="px-1 mb-2">
+          <span className="inline-block px-2 py-0.5 bg-[#f4f6fc] border border-white shadow-[inset_2px_2px_4px_rgba(0,0,0,0.05),_inset_-2px_-2px_4px_rgba(255,255,255,1)] text-[#1B9981] text-[9px] font-extrabold rounded-md uppercase tracking-wider">
+            {category}
+          </span>
         </div>
         <h3 className="font-bold text-slate-800 text-[14px] leading-tight mb-2 line-clamp-2 px-1">{title}</h3>
         <div className="flex items-center gap-1.5 text-slate-500 px-1 pb-1">
@@ -393,25 +476,41 @@ function CourseCard({ title, category, duration, image }: { title: string; categ
   );
 }
 
-function CommunityCard({ title, date, participants }: { title: string; date: string; participants: string }) {
+function CommunityCard({ title, date, category }: { title: string; date: string; category: string }) {
+  let icon = <Info className="w-5 h-5 text-white drop-shadow-md" />;
+  let bgGradient = "bg-gradient-to-br from-sky-400 to-sky-600";
+  
+  if (category === "Darurat") {
+    icon = <Siren className="w-5 h-5 text-white drop-shadow-md" />;
+    bgGradient = "bg-gradient-to-br from-rose-400 to-rose-600";
+  } else if (category === "Penting") {
+    icon = <AlertTriangle className="w-5 h-5 text-white drop-shadow-md" />;
+    bgGradient = "bg-gradient-to-br from-amber-400 to-amber-600";
+  }
+
   return (
     <Link href="/app/komunitas" className="block group -webkit-tap-highlight-color-transparent">
-      <div className="bg-transparent p-4 rounded-[20px] shadow-3d shadow-3d-hover shadow-3d-active flex items-center gap-4">
-        <div className="w-12 h-12 bg-gradient-to-br from-sky-300 to-sky-500 rounded-[14px] flex items-center justify-center shrink-0 icon-3d border-2 border-white">
-          <Users className="w-5 h-5 text-white drop-shadow-md" />
+      <div className="bg-transparent p-4 rounded-[24px] shadow-3d shadow-3d-hover shadow-3d-active border border-white flex items-center gap-4 transition-all">
+        <div className={`w-14 h-14 ${bgGradient} rounded-[16px] flex items-center justify-center shrink-0 bubble-3d border-none text-white`}>
+          {icon}
         </div>
-        <div className="flex-1">
-          <h3 className="font-bold text-slate-800 text-[15px] mb-1.5 leading-tight">{title}</h3>
-          <div className="flex items-center gap-3 text-slate-500">
-            <div className="flex items-center gap-1.5">
-              <Calendar className="w-3.5 h-3.5 text-slate-400" />
-              <span className="text-[11px] font-medium">{date}</span>
-            </div>
-            <span className="w-1 h-1 rounded-full bg-slate-300"></span>
-            <span className="text-[11px] font-medium">{participants}</span>
+        <div className="flex-1 py-0.5 min-w-0">
+          <div className="flex items-center gap-2 mb-1.5">
+            <span className={`text-[10px] font-bold uppercase tracking-wider text-3d ${category === "Darurat" ? "text-rose-500" : category === "Penting" ? "text-amber-500" : "text-sky-500"}`}>
+              {category}
+            </span>
+          </div>
+          <h3 className="font-bold text-slate-800 text-[15px] mb-1.5 leading-tight line-clamp-1 group-active:text-slate-600 transition-colors text-3d">{title}</h3>
+          <div className="flex items-center gap-1.5 text-slate-400 text-[11px] font-semibold text-3d">
+            <Calendar className="w-3.5 h-3.5" />
+            <span>{date}</span>
           </div>
         </div>
-        <ChevronRight className="w-5 h-5 text-slate-300 group-hover:text-[#1B9981] transition-colors" />
+        <div className="flex h-full items-center justify-center">
+          <div className="w-8 h-8 rounded-full shadow-[inset_2px_2px_4px_rgba(0,0,0,0.05),_inset_-2px_-2px_6px_rgba(255,255,255,1)] flex items-center justify-center group-hover:shadow-[2px_2px_5px_rgba(0,0,0,0.05),_-2px_-2px_6px_rgba(255,255,255,1)] transition-all">
+            <ChevronRight className="w-4 h-4 text-slate-400 transition-transform duration-300 group-hover:translate-x-0.5" strokeWidth={2.5} />
+          </div>
+        </div>
       </div>
     </Link>
   );

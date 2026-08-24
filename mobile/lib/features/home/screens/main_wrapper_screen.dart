@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../widgets/voice_command_button.dart';
+import '../../../core/widgets/neu_container.dart';
+import '../../../core/widgets/neu_button.dart';
+import '../../../core/widgets/neu_styles.dart';
 
 const Color _tosca = Color(0xFF00B894);
 
@@ -57,18 +60,9 @@ class MainWrapperScreen extends StatelessWidget {
           ),
         ],
       ),
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          border: Border(top: BorderSide(color: Colors.grey.shade100)),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.04),
-              blurRadius: 20,
-              offset: const Offset(0, -5),
-            ),
-          ],
-        ),
+      bottomNavigationBar: NeuContainer(
+        padding: EdgeInsets.zero,
+        borderRadius: 0,
         child: SafeArea(
           top: false,
           child: SizedBox(
@@ -90,32 +84,23 @@ class MainWrapperScreen extends StatelessWidget {
                 ),
                 // BiSAFE — FAB tengah menonjol (darurat)
                 Expanded(
-                  child: GestureDetector(
+                  child: NeuButton(
                     onTap: () => _onTap(2, context),
-                    behavior: HitTestBehavior.opaque,
+                    padding: EdgeInsets.zero,
+                    shape: BoxShape.circle,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Transform.translate(
-                          offset: const Offset(0, -10),
-                          child: Container(
+                          offset: const Offset(0, -5),
+                          child: NeuContainer(
                             width: 52,
                             height: 52,
-                            decoration: BoxDecoration(
-                              color: current == 2
-                                  ? const Color(0xFFE11D48)
-                                  : const Color(0xFFF43F5E),
-                              shape: BoxShape.circle,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: const Color(0xFFF43F5E)
-                                      .withOpacity(0.4),
-                                  blurRadius: 14,
-                                  offset: const Offset(0, 6),
-                                ),
-                              ],
-                            ),
-                            child: const Icon(Icons.shield_rounded,
+                            shape: BoxShape.circle,
+                            color: current == 2
+                                ? const Color(0xFFE11D48)
+                                : const Color(0xFFF43F5E),
+                            child: const NeuIcon(Icons.shield_rounded,
                                 color: Colors.white, size: 26),
                           ),
                         ),
@@ -169,13 +154,21 @@ class _NavItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = active ? _tosca : Colors.black38;
     return Expanded(
-      child: GestureDetector(
+      child: NeuButton(
         onTap: onTap,
-        behavior: HitTestBehavior.opaque,
+        padding: EdgeInsets.zero,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon, color: color, size: 24),
+            if (active)
+              NeuContainer(
+                padding: const EdgeInsets.all(8),
+                shape: BoxShape.circle,
+                style: NeuStyle.pressed,
+                child: NeuIcon(icon, color: color, size: 22),
+              )
+            else
+              Icon(icon, color: color, size: 24),
             const SizedBox(height: 3),
             Text(label,
                 style: TextStyle(

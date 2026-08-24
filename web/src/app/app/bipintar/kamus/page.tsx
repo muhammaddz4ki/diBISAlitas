@@ -23,7 +23,7 @@ const masteryStyle: Record<Mastery, { dot: string; label: string; text: string }
   none: { dot: "bg-slate-200", label: "Belum dicoba", text: "text-slate-400" },
   weak: { dot: "bg-rose-400", label: "Perlu latihan", text: "text-rose-500" },
   ok: { dot: "bg-amber-400", label: "Cukup", text: "text-amber-500" },
-  master: { dot: "bg-[#00B894]", label: "Mahir", text: "text-[#00B894]" },
+  master: { dot: "bg-purple-500", label: "Mahir", text: "text-purple-600" },
 };
 
 function speak(text: string) {
@@ -62,28 +62,28 @@ export default function KamusPage() {
 
   return (
     <div className="min-h-full bg-[#f4f6fc] flex flex-col pb-10">
-      {/* Header */}
-      <div className="px-6 pt-12 pb-5">
-        <div className="flex items-center justify-between mb-4">
+      {/* Header — Sticky 3D Neumorphism */}
+      <div className="sticky top-0 z-50 px-6 pt-14 pb-6 bg-[#f4f6fc]/95 backdrop-blur-xl border-b border-white shadow-3d rounded-b-[2rem] shrink-0 mb-4">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-purple-400 to-purple-600 flex items-center justify-center shrink-0 bubble-3d text-white">
+              <GraduationCap className="w-7 h-7 drop-shadow-md" strokeWidth={2.5} />
+            </div>
+            <div>
+              <h1 className="text-[24px] font-black text-slate-800 tracking-tight leading-none text-3d">Kamus Hijaiyah</h1>
+              <p className="text-slate-500 text-[12px] font-bold mt-1.5 uppercase tracking-wide text-3d">
+                29 Huruf · {learnedCount} Dikuasai
+              </p>
+            </div>
+          </div>
+          
           <Link
             href="/app/bipintar"
             aria-label="Kembali"
-            className="w-11 h-11 flex items-center justify-center rounded-full bg-[#f4f6fc] shadow-3d shadow-3d-active border border-white active:scale-95 transition-transform"
+            className="w-11 h-11 flex items-center justify-center rounded-full bg-[#f4f6fc] shadow-[inset_2px_2px_5px_rgba(0,0,0,0.05),_inset_-3px_-3px_7px_rgba(255,255,255,1)] border border-white active:scale-95 transition-transform shrink-0"
           >
-            <ArrowLeft className="w-5 h-5 text-[#1B9981] drop-shadow-sm" strokeWidth={2.5} />
+            <ArrowLeft className="w-5 h-5 text-purple-600 drop-shadow-sm" strokeWidth={2.5} />
           </Link>
-          <div className="w-11 h-11" />
-        </div>
-        <div className="flex items-center gap-4 mt-2">
-          <div className="w-14 h-14 rounded-2xl bg-[#f4f6fc] shadow-[inset_2px_2px_5px_rgba(0,0,0,0.05),_inset_-3px_-3px_7px_rgba(255,255,255,1)] border border-white flex items-center justify-center">
-            <GraduationCap className="w-7 h-7 text-[#1B9981]" strokeWidth={2.4} />
-          </div>
-          <div>
-            <h1 className="text-[24px] font-black text-slate-800 tracking-tight leading-none text-3d">Kamus Hijaiyah</h1>
-            <p className="text-slate-500 text-[12px] font-bold mt-1.5 uppercase tracking-wide text-3d">
-              29 Huruf · {learnedCount} Dikuasai
-            </p>
-          </div>
         </div>
       </div>
 
@@ -99,7 +99,7 @@ export default function KamusPage() {
             >
               <span className={`absolute top-3 right-3 w-2.5 h-2.5 rounded-full shadow-inner ${masteryStyle[m].dot}`} />
               <span
-                className="text-[44px] leading-none text-[#1B9981] mb-1 drop-shadow-sm"
+                className="text-[44px] leading-none text-purple-600 mb-1 drop-shadow-sm"
                 style={{ fontFamily: "Arial, sans-serif" }}
               >
                 {l.arabic}
@@ -151,7 +151,7 @@ export default function KamusPage() {
                   </div>
                 ) : (
                   <span
-                    className="text-[110px] leading-none text-[#1B9981] mb-2 drop-shadow-md"
+                    className="text-[110px] leading-none text-purple-600 mb-2 drop-shadow-md"
                     style={{ fontFamily: "Arial, sans-serif" }}
                   >
                     {selected.arabic}
@@ -182,7 +182,7 @@ export default function KamusPage() {
                 <div className="flex gap-3 mt-7 w-full">
                   <button
                     onClick={() => speak(selected.indo)}
-                    className="flex-1 py-4 rounded-[20px] bg-[#f4f6fc] shadow-3d shadow-3d-active border border-white text-[#1B9981] font-bold text-[14px] flex items-center justify-center gap-2 active:scale-95 transition-all"
+                    className="flex-1 py-4 rounded-[20px] bg-[#f4f6fc] shadow-3d shadow-3d-active border border-white text-purple-600 font-bold text-[14px] flex items-center justify-center gap-2 active:scale-95 transition-all"
                   >
                     <Volume2 className="w-5 h-5 drop-shadow-sm" /> Dengar
                   </button>
@@ -199,7 +199,7 @@ export default function KamusPage() {
                 </div>
                 <Link
                   href="/app/bipintar/quiz"
-                  className="mt-4 w-full py-4 rounded-[20px] bg-[#1B9981] shadow-[0_8px_16px_rgba(27,153,129,0.3)] border border-[#1B9981]/50 text-white font-black text-[15px] flex items-center justify-center gap-2 active:scale-95 transition-transform"
+                  className="mt-4 w-full py-4 rounded-[20px] bg-purple-600 shadow-[0_8px_16px_rgba(147,51,234,0.3)] border border-purple-600/50 text-white font-black text-[15px] flex items-center justify-center gap-2 active:scale-95 transition-transform"
                 >
                   <CheckCircle2 className="w-5 h-5 drop-shadow-sm" /> Latih Isyarat
                 </Link>
