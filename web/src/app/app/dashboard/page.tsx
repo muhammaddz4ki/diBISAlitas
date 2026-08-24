@@ -10,20 +10,7 @@ import { ShieldAlert, MessageCircle, BookOpen, Navigation, Bell, ChevronRight, P
 import { motion, AnimatePresence, Variants } from "framer-motion";
 import { useAccessibility } from "@/lib/AccessibilityContext";
 
-const containerVariants: Variants = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1
-    }
-  }
-};
-
-const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 300, damping: 24 } }
-};
+// We will define variants dynamically inside components using the reduceMotion flag
 
 export default function DashboardPage() {
   const router = useRouter();
@@ -37,6 +24,18 @@ export default function DashboardPage() {
   const [notifs, setNotifs] = useState<any[]>([]);
   const [showNotif, setShowNotif] = useState(false);
   const [lastSeen, setLastSeen] = useState<number>(0);
+
+  const { reduceMotion } = useAccessibility();
+
+  const containerVariants: Variants = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: reduceMotion ? 0 : 0.1
+      }
+    }
+  };
 
   useEffect(() => {
     // Baca waktu terakhir notifikasi dibuka (penanda "sudah dibaca")
@@ -318,7 +317,10 @@ export default function DashboardPage() {
             </Link>
           </div>
 
-          <div
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            animate="show"
             className="flex gap-4 overflow-x-auto pb-4 pt-1 snap-x -mx-6 px-6 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none']"
           >
             {courses.length > 0 ? (
@@ -334,7 +336,7 @@ export default function DashboardPage() {
             ) : (
               <p className="text-sm text-slate-500 px-1">Belum ada materi terbaru.</p>
             )}
-          </div>
+          </motion.div>
         </motion.div>
 
         {/* Info Komunitas */}
@@ -351,7 +353,12 @@ export default function DashboardPage() {
             </Link>
           </div>
 
-          <div className="flex flex-col gap-3.5">
+          <motion.div 
+            variants={containerVariants}
+            initial="hidden"
+            animate="show"
+            className="flex flex-col gap-3.5"
+          >
             {announcements.length > 0 ? (
               announcements.map(ann => (
                 <CommunityCard
@@ -364,7 +371,7 @@ export default function DashboardPage() {
             ) : (
               <p className="text-sm text-slate-500 px-1">Belum ada info komunitas.</p>
             )}
-          </div>
+          </motion.div>
         </motion.div>
 
       </div>
@@ -373,6 +380,12 @@ export default function DashboardPage() {
 }
 
 function FeatureCard({ href, title, desc, icon, bg, buttonColor }: { href: string; title: string; desc: string; icon: React.ReactNode; bg: string; buttonColor: string }) {
+  const { reduceMotion } = useAccessibility();
+  const itemVariants: Variants = {
+    hidden: { opacity: 0, y: reduceMotion ? 0 : 20 },
+    show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 300, damping: 24, duration: reduceMotion ? 0 : undefined } }
+  };
+
   const colorfulMode = false;
 
   if (colorfulMode) {
@@ -451,8 +464,15 @@ function FeatureCard({ href, title, desc, icon, bg, buttonColor }: { href: strin
 }
 
 function CourseCard({ title, category, duration, image }: { title: string; category: string; duration: string; image: string }) {
+  const { reduceMotion } = useAccessibility();
+  const itemVariants: Variants = {
+    hidden: { opacity: 0, x: reduceMotion ? 0 : 20 },
+    show: { opacity: 1, x: 0, transition: { type: "spring", stiffness: 300, damping: 24, duration: reduceMotion ? 0 : undefined } }
+  };
+
   return (
-    <Link href="/app/bipintar" className="snap-start shrink-0 w-[200px] block group -webkit-tap-highlight-color-transparent">
+    <motion.div variants={itemVariants}>
+      <Link href="/app/bipintar" className="snap-start shrink-0 w-[200px] block group -webkit-tap-highlight-color-transparent">
       <div className="bg-transparent rounded-[20px] p-2.5 shadow-3d shadow-3d-hover shadow-3d-active">
         <div className="w-full h-[120px] rounded-[14px] mb-3 relative overflow-hidden icon-3d">
           <div className="absolute inset-0 bg-slate-200" style={{ backgroundImage: `url('${image}')`, backgroundSize: 'cover', backgroundPosition: 'center' }}></div>
@@ -473,10 +493,17 @@ function CourseCard({ title, category, duration, image }: { title: string; categ
         </div>
       </div>
     </Link>
+    </motion.div>
   );
 }
 
 function CommunityCard({ title, date, category }: { title: string; date: string; category: string }) {
+  const { reduceMotion } = useAccessibility();
+  const itemVariants: Variants = {
+    hidden: { opacity: 0, y: reduceMotion ? 0 : 20 },
+    show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 300, damping: 24, duration: reduceMotion ? 0 : undefined } }
+  };
+
   let icon = <Info className="w-5 h-5 text-white drop-shadow-md" />;
   let bgGradient = "bg-gradient-to-br from-sky-400 to-sky-600";
   
@@ -489,7 +516,8 @@ function CommunityCard({ title, date, category }: { title: string; date: string;
   }
 
   return (
-    <Link href="/app/komunitas" className="block group -webkit-tap-highlight-color-transparent">
+    <motion.div variants={itemVariants}>
+      <Link href="/app/komunitas" className="block group -webkit-tap-highlight-color-transparent">
       <div className="bg-transparent p-4 rounded-[24px] shadow-3d shadow-3d-hover shadow-3d-active border border-white flex items-center gap-4 transition-all">
         <div className={`w-14 h-14 ${bgGradient} rounded-[16px] flex items-center justify-center shrink-0 bubble-3d border-none text-white`}>
           {icon}
@@ -512,6 +540,7 @@ function CommunityCard({ title, date, category }: { title: string; date: string;
           </div>
         </div>
       </div>
-    </Link>
+      </Link>
+    </motion.div>
   );
 }

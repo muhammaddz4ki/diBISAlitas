@@ -5,10 +5,12 @@ import { collection, query, orderBy, onSnapshot, doc, deleteDoc } from "firebase
 import { db } from "@/lib/firebase";
 import type { EmergencyReport } from "@/lib/types";
 import { History, MapPin, Clock, CheckCircle2, ShieldAlert, Trash2 } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function EmergencyHistoryPage() {
   const [reports, setReports] = useState<EmergencyReport[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [confirmDelete, setConfirmDelete] = useState<string | null>(null);
 
   useEffect(() => {
     const q = query(
@@ -45,7 +47,6 @@ export default function EmergencyHistoryPage() {
   };
 
   const handleDelete = async (id: string) => {
-    if (!window.confirm("Hapus riwayat darurat ini secara permanen?")) return;
     try {
       await deleteDoc(doc(db, "emergency_reports", id));
     } catch (error) {
@@ -163,7 +164,7 @@ export default function EmergencyHistoryPage() {
                           <span className="text-sm text-slate-400 font-medium">Lokasi tidak valid</span>
                         )}
                         <button
-                          onClick={() => handleDelete(report.id)}
+                          onClick={() => setConfirmDelete(report.id)}
                           title="Hapus riwayat"
                           className="w-9 h-9 shrink-0 rounded-xl flex items-center justify-center text-rose-500 border border-rose-200 hover:bg-rose-500 hover:text-white transition-all"
                         >
@@ -178,6 +179,32 @@ export default function EmergencyHistoryPage() {
           </table>
         </div>
       </div>
+
+      {/* Modal Konfirmasi Hapus */}
+      <AnimatePresence>
+        {confirmDelete && (
+          <div className="fixed inset-0 z-[1000] bg-black/40 backdrop-blur-sm flex items-center justify-center p-4" onClick={() => setConfirmDelete(null)}>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 10 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 10 }}
+              transition={{ duration: 0.2 }}
+              className="w-full max-w-sm bg-white rounded-3xl p-6 shadow-2xl border border-slate-100 text-center"
+              onClick={e => e.stopPropagation()}
+            >
+              <div className="w-16 h-16 rounded-full bg-rose-100 flex items-center justify-center mx-auto mb-4">
+                <Trash2 className="w-8 h-8 text-rose-500" strokeWidth={2} />
+              </div>
+              <h3 className="text-xl font-bold text-slate-800 mb-2">Hapus Riwayat?</h3>
+              <p className="text-sm text-slate-500 mb-6 leading-relaxed">Apakah Anda yakin ingin menghapus riwayat laporan darurat ini secara permanen?</p>
+              <div className="flex gap-3">
+                <button onClick={() => setConfirmDelete(null)} className="flex-1 py-3 rounded-2xl text-sm font-bold text-slate-600 bg-slate-100 hover:bg-slate-200 transition-colors">Batal</button>
+                <button onClick={() => { handleDelete(confirmDelete); setConfirmDelete(null); }} className="flex-1 py-3 rounded-2xl text-sm font-bold text-white bg-rose-500 hover:bg-rose-600 transition-colors shadow-lg shadow-rose-500/30">Hapus</button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

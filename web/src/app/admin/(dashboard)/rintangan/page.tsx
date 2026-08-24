@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { collection, query, orderBy, onSnapshot, doc, updateDoc, deleteDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { Camera, MapPin, Activity, CheckCircle2, AlertTriangle, ExternalLink, Trash2 } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface ObstacleReport {
   id: string;
@@ -21,6 +22,7 @@ interface ObstacleReport {
 export default function RintanganDashboard() {
   const [reports, setReports] = useState<ObstacleReport[]>([]);
   const [loading, setLoading] = useState(true);
+  const [confirmDelete, setConfirmDelete] = useState<{ type: 'single', id: string } | { type: 'bulk', count: number } | null>(null);
 
   useEffect(() => {
     const q = query(
@@ -56,7 +58,6 @@ export default function RintanganDashboard() {
   };
 
   const handleDelete = async (id: string) => {
-    if (!window.confirm("Hapus laporan ini secara permanen?")) return;
     try {
       await deleteDoc(doc(db, "obstacle_reports", id));
     } catch (error) {
@@ -71,7 +72,11 @@ export default function RintanganDashboard() {
       alert("Tidak ada laporan selesai untuk dihapus.");
       return;
     }
-    if (!window.confirm(`Hapus ${resolved.length} laporan yang sudah selesai secara permanen?`)) return;
+    setConfirmDelete({ type: 'bulk', count: resolved.length });
+  };
+
+  const executeBulkDelete = async () => {
+    const resolved = reports.filter((r) => r.isResolved);
     try {
       await Promise.all(resolved.map((r) => deleteDoc(doc(db, "obstacle_reports", r.id))));
     } catch (error) {
@@ -200,7 +205,7 @@ export default function RintanganDashboard() {
                             </button>
                           )}
                           <button
-                            onClick={() => handleDelete(report.id)}
+                            onClick={() => setConfirmDelete({ type: 'single', id: report.id })}
                             title="Hapus laporan"
                             className="w-9 h-9 shrink-0 rounded-xl flex items-center justify-center text-rose-500 border border-rose-200 hover:bg-rose-500 hover:text-white transition-all"
                           >
@@ -216,6 +221,47 @@ export default function RintanganDashboard() {
           )}
         </div>
       )}
+
+      {/* Modal Konfirmasi Hapus */}
+      <AnimatePresence>
+        {confirmDelete && (
+          <div className="fixed inset-0 z-[1000] bg-black/40 backdrop-blur-sm flex items-center justify-center p-4" onClick={() => setConfirmDelete(null)}>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 10 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 10 }}
+              transition={{ duration: 0.2 }}
+              className="w-full max-w-sm bg-white rounded-3xl p-6 shadow-2xl border border-slate-100 text-center"
+              onClick={e => e.stopPropagation()}
+            >
+              <div className="w-16 h-16 rounded-full bg-rose-100 flex items-center justify-center mx-auto mb-4">
+                <Trash2 className="w-8 h-8 text-rose-500" strokeWidth={2} />
+              </div>
+              <h3 className="text-xl font-bold text-slate-800 mb-2">
+                {confirmDelete.type === 'bulk' ? `Hapus ${confirmDelete.count} Laporan?` : 'Hapus Laporan?'}
+              </h3>
+              <p className="text-sm text-slate-500 mb-6 leading-relaxed">
+                {confirmDelete.type === 'bulk' 
+                  ? 'Apakah Anda yakin ingin menghapus semua laporan yang sudah selesai secara permanen?' 
+                  : 'Apakah Anda yakin ingin menghapus laporan rintangan ini secara permanen?'}
+              </p>
+              <div className="flex gap-3">
+                <button onClick={() => setConfirmDelete(null)} className="flex-1 py-3 rounded-2xl text-sm font-bold text-slate-600 bg-slate-100 hover:bg-slate-200 transition-colors">Batal</button>
+                <button 
+                  onClick={() => { 
+                    if (confirmDelete.type === 'single') handleDelete(confirmDelete.id); 
+                    else executeBulkDelete();
+                    setConfirmDelete(null); 
+                  }} 
+                  className="flex-1 py-3 rounded-2xl text-sm font-bold text-white bg-rose-500 hover:bg-rose-600 transition-colors shadow-lg shadow-rose-500/30"
+                >
+                  Hapus
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

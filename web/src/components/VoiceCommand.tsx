@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { Mic, MicOff, HelpCircle, Volume2, X } from "lucide-react";
+import { motion, AnimatePresence, PanInfo } from "framer-motion";
+import { useAccessibility } from "@/lib/AccessibilityContext";
 
 /**
  * Perintah suara untuk Tunanetra — buka fitur tanpa melihat layar.
@@ -71,6 +73,26 @@ export default function VoiceCommand() {
   const recRef = useRef<any>(null);
   const supportedRef = useRef(false);
 
+  const { reduceMotion } = useAccessibility();
+  
+  // Z-Axis Push Back Effect
+  useEffect(() => {
+    const wrapper = document.getElementById("app-wrapper");
+    if (wrapper) {
+      if (showHelp && !reduceMotion) {
+        wrapper.style.transform = "scale(0.93) translateY(-8px)";
+        wrapper.style.borderRadius = "32px";
+        wrapper.style.opacity = "0.7";
+        wrapper.style.overflow = "hidden";
+      } else {
+        wrapper.style.transform = "none";
+        wrapper.style.borderRadius = "0px";
+        wrapper.style.opacity = "1";
+        wrapper.style.overflow = "visible";
+      }
+    }
+  }, [showHelp, reduceMotion]);
+
   const speak = (text: string) => {
     if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
     window.speechSynthesis.cancel();
@@ -135,7 +157,7 @@ export default function VoiceCommand() {
 
   const speakGuide = () => speak(GUIDE_SPEECH);
 
-  const toggle = () => {
+  const toggleListening = () => {
     if (!supportedRef.current) {
       speak("Perintah suara tidak didukung di peramban ini.");
       setShowHelp(true);
@@ -190,27 +212,50 @@ export default function VoiceCommand() {
       </button>
 
       {/* Tombol mikrofon */}
-      <button
-        onClick={toggle}
-        aria-label={listening ? "Berhenti mendengarkan perintah suara" : "Aktifkan perintah suara"}
-        title="Perintah suara"
-        className={`absolute bottom-32 right-6 z-[60] w-14 h-14 rounded-full flex items-center justify-center bubble-3d shadow-[0_6px_16px_rgba(0,0,0,0.12)] ${
-          listening ? "bg-gradient-to-b from-rose-400 to-rose-600 scale-105 animate-pulse" : "bg-gradient-to-b from-[#00B894] to-[#1B9981]"
-        }`}
+      <motion.button
+        whileTap={{ scale: reduceMotion ? 1 : 0.95 }}
+        onClick={toggleListening}
+        aria-label={listening ? "Matikan panduan suara" : "Aktifkan panduan suara"}
+        className={`fixed bottom-[104px] sm:bottom-24 right-5 sm:right-6 w-12 h-12 rounded-full shadow-3d shadow-3d-active z-50 flex items-center justify-center transition-all duration-300 border-2
+          ${listening 
+            ? "bg-gradient-to-br from-rose-500 to-rose-700 border-rose-400" 
+            : "bg-gradient-to-br from-[#1B9981] to-[#00D4AA] border-[#00B894] hover:scale-105"}`}
       >
-        {listening ? <MicOff className="w-6 h-6 text-white drop-shadow-md" /> : <Mic className="w-6 h-6 text-white drop-shadow-md" />}
-      </button>
+        {listening && !reduceMotion && (
+          <span className="absolute inset-0 rounded-full bg-rose-400 animate-ping opacity-75" />
+        )}
+        <div className="relative z-10">
+          {listening ? <MicOff className="w-6 h-6 text-white drop-shadow-md" /> : <Mic className="w-6 h-6 text-white drop-shadow-md" />}
+        </div>
+      </motion.button>
 
       {/* Panel panduan */}
+      <AnimatePresence>
       {showHelp && (
-        <div
-          className="absolute inset-0 z-[70] bg-black/40 backdrop-blur-sm flex items-end"
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: reduceMotion ? 0 : 0.3 }}
+          className="fixed inset-0 z-[70] bg-black/40 backdrop-blur-sm flex items-end sm:items-center justify-center sm:p-4"
           onClick={() => setShowHelp(false)}
           role="dialog"
           aria-label="Panduan perintah suara"
         >
-          <div
-            className="w-full bg-[#f4f6fc] rounded-t-[28px] max-h-[82%] flex flex-col shadow-[0_-4px_20px_rgba(0,0,0,0.1)]"
+          <motion.div
+            initial={{ y: reduceMotion ? 0 : "100%" }}
+            animate={{ y: 0 }}
+            exit={{ y: reduceMotion ? 0 : "100%" }}
+            transition={{ type: "spring", bounce: 0, duration: reduceMotion ? 0 : 0.4 }}
+            drag={reduceMotion ? false : "y"}
+            dragConstraints={{ top: 0 }}
+            dragElastic={0.2}
+            onDragEnd={(e: any, info: PanInfo) => {
+              if (info.offset.y > 100 || info.velocity.y > 500) {
+                setShowHelp(false);
+              }
+            }}
+            className="w-full sm:max-w-md bg-[#f4f6fc] rounded-t-[28px] sm:rounded-[28px] max-h-[85vh] flex flex-col shadow-[0_-4px_20px_rgba(0,0,0,0.1)]"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Header */}
@@ -260,9 +305,10 @@ export default function VoiceCommand() {
               Tips: ucapkan satu kata inti saja, mis. &ldquo;baca&rdquo;. Ucapkan &ldquo;bantuan&rdquo; kapan saja untuk mendengar daftar ini.
             </p>
             </div>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       )}
+      </AnimatePresence>
     </>
   );
 }

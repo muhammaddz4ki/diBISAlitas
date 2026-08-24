@@ -106,6 +106,7 @@ function TabButton({ active, onClick, icon, label }: { active: boolean; onClick:
 
 /* ─────────────────────────  DARURAT  ───────────────────────── */
 function DaruratTab() {
+  const { reduceMotion } = useAccessibility();
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [message, setMessage] = useState("");
 
@@ -179,7 +180,7 @@ function DaruratTab() {
 
   return (
     <div className="flex-1 flex flex-col items-center justify-center w-full relative px-6 mt-4 min-h-[440px]">
-      {status === "loading" && (
+      {status === "loading" && !reduceMotion && (
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
           <motion.div
             initial={{ scale: 0.8, opacity: 0.8 }}
@@ -205,7 +206,7 @@ function DaruratTab() {
         />
         
         <motion.button
-          whileTap={{ scale: 0.92 }}
+          whileTap={{ scale: reduceMotion ? 1 : 0.92 }}
           onClick={handlePanic}
           className={`relative z-10 w-56 h-56 sm:w-64 sm:h-64 rounded-full flex flex-col items-center justify-center transition-all duration-500 ease-out outline-none shadow-3d shadow-3d-active
             ${status === "success"
@@ -215,7 +216,7 @@ function DaruratTab() {
         >
           <div className="absolute inset-0 rounded-full bg-white/10" style={{ boxShadow: "inset 0 10px 20px rgba(255,255,255,0.4)" }} />
         {status === "success" ? (
-          <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: "spring", stiffness: 200, damping: 20 }} className="flex flex-col items-center">
+          <motion.div initial={{ scale: reduceMotion ? 1 : 0 }} animate={{ scale: 1 }} transition={{ type: "spring", stiffness: 200, damping: 20, duration: reduceMotion ? 0 : undefined }} className="flex flex-col items-center">
             <CheckCircle2 className="w-24 h-24 text-white mb-2" strokeWidth={2} />
             <span className="text-white font-extrabold tracking-widest text-lg drop-shadow-md">TERKIRIM</span>
           </motion.div>
@@ -243,9 +244,10 @@ function DaruratTab() {
         <AnimatePresence>
           {status !== "idle" && (
             <motion.div
-              initial={{ opacity: 0, y: 20, scale: 0.9 }}
+              initial={{ opacity: 0, y: reduceMotion ? 0 : 20, scale: reduceMotion ? 1 : 0.9 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 10, scale: 0.95 }}
+              exit={{ opacity: 0, y: reduceMotion ? 0 : 10, scale: reduceMotion ? 1 : 0.95 }}
+              transition={{ duration: reduceMotion ? 0 : 0.3 }}
               className={`flex items-center gap-3 px-5 py-3.5 rounded-[20px] font-bold text-[13px] shadow-3d border border-white
                 ${status === "error" ? "bg-rose-50 text-rose-600" : ""}
                 ${status === "loading" ? "bg-[#f4f6fc] text-slate-700" : ""}
@@ -265,6 +267,7 @@ function DaruratTab() {
 
 /* ─────────────────────────  KONTAK  ───────────────────────── */
 function KontakTab({ me }: { me: { uid: string; name: string; email: string } | null }) {
+  const { reduceMotion } = useAccessibility();
   const colorfulMode = false;
   const themeGrad = "from-rose-500 to-rose-700";
   const themeRing = "focus:ring-rose-500/30";
@@ -275,6 +278,16 @@ function KontakTab({ me }: { me: { uid: string; name: string; email: string } | 
   const [phone, setPhone] = useState("");
   const [relation, setRelation] = useState("keluarga");
   const [saving, setSaving] = useState(false);
+  const [confirmDelete, setConfirmDelete] = useState<string | null>(null);
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    show: { opacity: 1, transition: { staggerChildren: reduceMotion ? 0 : 0.1 } }
+  };
+  const itemVariants = {
+    hidden: { opacity: 0, y: reduceMotion ? 0 : 20 },
+    show: { opacity: 1, y: 0, transition: { duration: reduceMotion ? 0 : 0.4 } }
+  };
 
   useEffect(() => {
     if (!me) return;
@@ -312,7 +325,6 @@ function KontakTab({ me }: { me: { uid: string; name: string; email: string } | 
   };
 
   const del = async (id: string) => {
-    if (!window.confirm("Hapus kontak darurat ini?")) return;
     try {
       await deleteDoc(doc(db, "emergency_contacts", id));
     } catch {
@@ -344,9 +356,9 @@ function KontakTab({ me }: { me: { uid: string; name: string; email: string } | 
           <p className="text-[13px] text-slate-500 mt-1 max-w-[240px] text-3d leading-relaxed">Tambahkan kontak yang bisa dihubungi saat darurat.</p>
         </div>
       ) : (
-        <div className="flex flex-col gap-3">
+        <motion.div variants={containerVariants} initial="hidden" animate="show" className="flex flex-col gap-3">
           {contacts.map((c) => (
-            <div key={c.id} className="flex flex-row items-center gap-3 sm:gap-4 bg-transparent border border-white rounded-[24px] p-4 shadow-3d shadow-3d-hover transition-all group">
+            <motion.div variants={itemVariants} key={c.id} className="flex flex-row items-center gap-3 sm:gap-4 bg-transparent border border-white rounded-[24px] p-4 shadow-3d shadow-3d-hover transition-all group">
               <div className="w-12 h-12 rounded-[16px] bg-transparent shadow-[inset_2px_2px_5px_rgba(0,0,0,0.05),_inset_-3px_-3px_7px_rgba(255,255,255,1)] flex items-center justify-center text-[22px] shrink-0 border border-white">
                 {relIcon(c.relation)}
               </div>
@@ -363,12 +375,12 @@ function KontakTab({ me }: { me: { uid: string; name: string; email: string } | 
                   </div>
                 </div>
               </div>
-              <button onClick={() => del(c.id)} aria-label="Hapus kontak" className="w-12 h-12 rounded-[16px] flex items-center justify-center text-rose-500 shadow-[inset_2px_2px_5px_rgba(0,0,0,0.05),_inset_-3px_-3px_7px_rgba(255,255,255,1)] hover:bg-rose-50 border border-white transition-all shrink-0 ml-auto">
+              <button onClick={() => setConfirmDelete(c.id)} aria-label="Hapus kontak" className="w-12 h-12 rounded-[16px] flex items-center justify-center text-rose-500 shadow-[inset_2px_2px_5px_rgba(0,0,0,0.05),_inset_-3px_-3px_7px_rgba(255,255,255,1)] hover:bg-rose-50 border border-white transition-all shrink-0 ml-auto">
                 <Trash2 className="w-5 h-5 shrink-0" strokeWidth={2.5} />
               </button>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       )}
 
       {/* Modal Tambah */}
@@ -376,9 +388,10 @@ function KontakTab({ me }: { me: { uid: string; name: string; email: string } | 
         {showAdd && (
           <div className="fixed inset-0 z-[700] bg-black/40 flex items-end sm:items-center justify-center" onClick={() => setShowAdd(false)}>
             <motion.div
-              initial={{ y: 40, opacity: 0 }}
+              initial={{ y: reduceMotion ? 0 : 40, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
-              exit={{ y: 40, opacity: 0 }}
+              exit={{ y: reduceMotion ? 0 : 40, opacity: 0 }}
+              transition={{ duration: reduceMotion ? 0 : 0.3 }}
               className="w-full sm:w-[360px] bg-[#f4f6fc] rounded-t-[2.5rem] sm:rounded-[2.5rem] p-6 pb-8 shadow-[0_-20px_40px_rgba(0,0,0,0.15)] border-t border-white"
               onClick={(e) => e.stopPropagation()}
             >
@@ -408,15 +421,52 @@ function KontakTab({ me }: { me: { uid: string; name: string; email: string } | 
           </div>
         )}
       </AnimatePresence>
+
+      {/* Modal Konfirmasi Hapus */}
+      <AnimatePresence>
+        {confirmDelete && (
+          <div className="fixed inset-0 z-[800] bg-black/40 backdrop-blur-sm flex items-center justify-center p-4" onClick={() => setConfirmDelete(null)}>
+            <motion.div
+              initial={{ opacity: 0, scale: reduceMotion ? 1 : 0.9, y: reduceMotion ? 0 : 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: reduceMotion ? 1 : 0.9, y: reduceMotion ? 0 : 20 }}
+              transition={{ duration: reduceMotion ? 0 : 0.2 }}
+              className="w-full max-w-[320px] bg-[#f4f6fc] rounded-[28px] p-6 shadow-[0_20px_40px_rgba(0,0,0,0.2)] border border-white text-center"
+              onClick={e => e.stopPropagation()}
+            >
+              <div className="w-16 h-16 rounded-full bg-rose-100 flex items-center justify-center mx-auto mb-4 shadow-[inset_2px_2px_5px_rgba(0,0,0,0.05),_inset_-3px_-3px_7px_rgba(255,255,255,1)]">
+                <Trash2 className="w-8 h-8 text-rose-500" strokeWidth={2} />
+              </div>
+              <h3 className="text-[18px] font-black text-slate-800 mb-2 text-3d">Hapus Kontak?</h3>
+              <p className="text-[13px] text-slate-500 mb-6 leading-relaxed">Apakah Anda yakin ingin menghapus kontak darurat ini? Tindakan ini tidak dapat dibatalkan.</p>
+              <div className="flex gap-3">
+                <button onClick={() => setConfirmDelete(null)} className="flex-1 py-3 rounded-[16px] text-[14px] font-bold text-slate-600 bg-transparent border border-white shadow-[inset_2px_2px_5px_rgba(0,0,0,0.05),_inset_-3px_-3px_7px_rgba(255,255,255,1)] active:scale-95 transition-all">Batal</button>
+                <button onClick={() => { del(confirmDelete); setConfirmDelete(null); }} className="flex-1 py-3 rounded-[16px] text-[14px] font-bold text-white bg-gradient-to-br from-rose-500 to-rose-700 shadow-3d shadow-3d-active active:scale-95 transition-all border border-rose-400">Hapus</button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
 
 /* ─────────────────────────  RIWAYAT  ───────────────────────── */
 function RiwayatTab({ me }: { me: { uid: string; name: string; email: string } | null }) {
+  const { reduceMotion } = useAccessibility();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [reports, setReports] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [confirmDelete, setConfirmDelete] = useState<string | null>(null);
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    show: { opacity: 1, transition: { staggerChildren: reduceMotion ? 0 : 0.1 } }
+  };
+  const itemVariants = {
+    hidden: { opacity: 0, y: reduceMotion ? 0 : 20 },
+    show: { opacity: 1, y: 0, transition: { duration: reduceMotion ? 0 : 0.4 } }
+  };
 
   useEffect(() => {
     if (!me) return;
@@ -442,7 +492,6 @@ function RiwayatTab({ me }: { me: { uid: string; name: string; email: string } |
   };
 
   const del = async (id: string) => {
-    if (!window.confirm("Hapus riwayat laporan ini?")) return;
     try {
       await deleteDoc(doc(db, "emergency_reports", id));
     } catch {
@@ -469,18 +518,18 @@ function RiwayatTab({ me }: { me: { uid: string; name: string; email: string } |
           <p className="font-bold text-slate-700 text-[16px] text-3d">Belum ada riwayat laporan</p>
         </div>
       ) : (
-        <div className="flex flex-col gap-3">
+        <motion.div variants={containerVariants} initial="hidden" animate="show" className="flex flex-col gap-3">
           {reports.map((r) => {
             const st = STATUS_LABEL[r.status] || { label: r.status || "-", cls: "bg-slate-100 text-slate-500 border-slate-200" };
             return (
-              <div key={r.id} className="bg-transparent border border-white rounded-[24px] p-5 shadow-3d shadow-3d-hover transition-all">
+              <motion.div variants={itemVariants} key={r.id} className="bg-transparent border border-white rounded-[24px] p-5 shadow-3d shadow-3d-hover transition-all">
                 <div className="flex flex-wrap items-center justify-between gap-3 mb-4 min-w-0">
                   <span className={`inline-flex items-center px-3 py-1.5 rounded-full text-[10px] font-bold border uppercase tracking-widest shrink-0 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.05),_inset_-2px_-2px_4px_rgba(255,255,255,1)] ${st.cls}`}>{st.label}</span>
                   <div className="flex flex-wrap items-center gap-2 sm:gap-3 min-w-0 ml-auto">
                     <span className="flex items-center gap-1.5 text-[11px] text-slate-500 font-bold text-3d shrink-0">
                       <Clock className="w-3.5 h-3.5 shrink-0" /> <span className="truncate">{fmt(r.createdAt)}</span>
                     </span>
-                    <button onClick={() => del(r.id)} className="w-8 h-8 rounded-full shadow-[inset_1px_1px_3px_rgba(0,0,0,0.05),_inset_-2px_-2px_4px_rgba(255,255,255,1)] flex items-center justify-center text-rose-400 hover:text-rose-600 transition-colors border border-white shrink-0 ml-auto">
+                    <button onClick={() => setConfirmDelete(r.id)} className="w-8 h-8 rounded-full shadow-[inset_1px_1px_3px_rgba(0,0,0,0.05),_inset_-2px_-2px_4px_rgba(255,255,255,1)] flex items-center justify-center text-rose-400 hover:text-rose-600 transition-colors border border-white shrink-0 ml-auto">
                       <Trash2 className="w-3.5 h-3.5 shrink-0" />
                     </button>
                   </div>
@@ -497,11 +546,37 @@ function RiwayatTab({ me }: { me: { uid: string; name: string; email: string } |
                   </div>
                 )}
                 <div className="mt-3 text-[11px] text-slate-400 font-bold tracking-wide uppercase text-3d">Trigger: {r.triggerType || "button"}</div>
-              </div>
+              </motion.div>
             );
           })}
-        </div>
+        </motion.div>
       )}
+
+      {/* Modal Konfirmasi Hapus Riwayat */}
+      <AnimatePresence>
+        {confirmDelete && (
+          <div className="fixed inset-0 z-[800] bg-black/40 backdrop-blur-sm flex items-center justify-center p-4" onClick={() => setConfirmDelete(null)}>
+            <motion.div
+              initial={{ opacity: 0, scale: reduceMotion ? 1 : 0.9, y: reduceMotion ? 0 : 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: reduceMotion ? 1 : 0.9, y: reduceMotion ? 0 : 20 }}
+              transition={{ duration: reduceMotion ? 0 : 0.2 }}
+              className="w-full max-w-[320px] bg-[#f4f6fc] rounded-[28px] p-6 shadow-[0_20px_40px_rgba(0,0,0,0.2)] border border-white text-center"
+              onClick={e => e.stopPropagation()}
+            >
+              <div className="w-16 h-16 rounded-full bg-rose-100 flex items-center justify-center mx-auto mb-4 shadow-[inset_2px_2px_5px_rgba(0,0,0,0.05),_inset_-3px_-3px_7px_rgba(255,255,255,1)]">
+                <History className="w-8 h-8 text-rose-500" strokeWidth={2} />
+              </div>
+              <h3 className="text-[18px] font-black text-slate-800 mb-2 text-3d">Hapus Riwayat?</h3>
+              <p className="text-[13px] text-slate-500 mb-6 leading-relaxed">Apakah Anda yakin ingin menghapus riwayat laporan ini? Data akan hilang permanen.</p>
+              <div className="flex gap-3">
+                <button onClick={() => setConfirmDelete(null)} className="flex-1 py-3 rounded-[16px] text-[14px] font-bold text-slate-600 bg-transparent border border-white shadow-[inset_2px_2px_5px_rgba(0,0,0,0.05),_inset_-3px_-3px_7px_rgba(255,255,255,1)] active:scale-95 transition-all">Batal</button>
+                <button onClick={() => { del(confirmDelete); setConfirmDelete(null); }} className="flex-1 py-3 rounded-[16px] text-[14px] font-bold text-white bg-gradient-to-br from-rose-500 to-rose-700 shadow-3d shadow-3d-active active:scale-95 transition-all border border-rose-400">Hapus</button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
