@@ -11,8 +11,10 @@
 [![TailwindCSS](https://img.shields.io/badge/TailwindCSS-4.x-38B2AC?style=flat&logo=tailwind-css)](https://tailwindcss.com/)
 [![ONNX Runtime Web](https://img.shields.io/badge/ONNX_Runtime-WebAssembly-005CED?style=flat)](https://onnxruntime.ai/)
 [![YOLOv8](https://img.shields.io/badge/YOLOv8-Ultralytics-FF6F00?style=flat)](https://ultralytics.com)
-[![Firebase](https://img.shields.io/badge/Firebase-Auth%20%7C%20Firestore-FFA611?style=flat&logo=firebase)](https://firebase.google.com/)
+[![Firebase Hosting](https://img.shields.io/badge/Firebase-Hosting%20Live-FFA611?style=flat&logo=firebase)](https://dibisalitas-bcbcc.web.app)
 [![PWA](https://img.shields.io/badge/PWA-Serwist%20Ready-5A0FC8?style=flat)](https://serwist.pages.dev/)
+
+**Live Production URL:** [https://dibisalitas-bcbcc.web.app](https://dibisalitas-bcbcc.web.app)
 
 </div>
 
