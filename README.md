@@ -1,6 +1,8 @@
-# diBISAlitas - Platform Aksesibilitas dan Inklusivitas Terintegrasi Berbasis AI
-
 <div align="center">
+
+<img src="web/public/logo/logo.png" alt="diBISAlitas Logo" width="160" />
+
+# diBISAlitas - Platform Aksesibilitas dan Inklusivitas Terintegrasi Berbasis AI
 
 **Empowering Accessibility, Bridging Communication with On-Device Artificial Intelligence**
 
