@@ -1,121 +1,160 @@
-# 🌟 diBISAlitas - Platform Aksesibilitas & Inklusivitas Terintegrasi Berbasis AI
+# diBISAlitas - Platform Aksesibilitas dan Inklusivitas Terintegrasi Berbasis AI
 
 <div align="center">
 
-![diBISAlitas Logo](web/public/logo/logo.png)
-
 **Empowering Accessibility, Bridging Communication with On-Device Artificial Intelligence**
 
-[![Next.js](https://img.shields.io/badge/Next.js-15%2B-black?style=flat&logo=next.js)](https://nextjs.org/)
-[![Flutter](https://img.shields.io/badge/Flutter-3.x-02569B?style=flat&logo=flutter)](https://flutter.dev/)
+[![Next.js](https://img.shields.io/badge/Next.js-16.x-black?style=flat&logo=next.js)](https://nextjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue?style=flat&logo=typescript)](https://www.typescriptlang.org/)
+[![TailwindCSS](https://img.shields.io/badge/TailwindCSS-4.x-38B2AC?style=flat&logo=tailwind-css)](https://tailwindcss.com/)
+[![ONNX Runtime Web](https://img.shields.io/badge/ONNX_Runtime-WebAssembly-005CED?style=flat)](https://onnxruntime.ai/)
 [![YOLOv8](https://img.shields.io/badge/YOLOv8-Ultralytics-FF6F00?style=flat)](https://ultralytics.com)
-[![ONNX Runtime](https://img.shields.io/badge/ONNX_Runtime-WebAssembly-005CED?style=flat)](https://onnxruntime.ai/)
 [![Firebase](https://img.shields.io/badge/Firebase-Auth%20%7C%20Firestore-FFA611?style=flat&logo=firebase)](https://firebase.google.com/)
+[![PWA](https://img.shields.io/badge/PWA-Serwist%20Ready-5A0FC8?style=flat)](https://serwist.pages.dev/)
 
 </div>
 
 ---
 
-## 📌 Tentang diBISAlitas
+## 1. Ringkasan Ekosistem
 
-**diBISAlitas** adalah ekosistem aplikasi inklusif multi-platform (Web & Mobile) yang dirancang untuk mendukung kemandirian, komunikasi, dan keamanan teman tuli, teman netra, serta masyarakat umum. Dengan mengintegrasikan kecerdasan buatan (*On-Device AI Inference*), diBISAlitas menghadirkan solusi aksesibilitas yang cepat, privat, dan tanpa ketergantungan latensi server.
+diBISAlitas adalah platform web progresif (Progressive Web App / PWA) terintegrasi yang dirancang untuk mendukung kemandirian, keselamatan, mobilitas, dan komunikasi bagi penyandang disabilitas (tunanetra, tunarungu, tunadaksa) serta masyarakat luas. 
 
----
-
-## 🚀 Fitur Utama
-
-### 1. 🤟 BiPINTAR (Sign Language Learning & Recognition)
-- **Deteksi Isyarat Real-Time**: Mengenali alfabet BISINDO dan Isyarat Hijaiyah langsung melalui kamera browser/HP menggunakan YOLOv8 (ONNX WebAssembly & TFLite).
-- **Kamus & Visualisasi Interaktif**: Katalog abjad lengkap disertai animasi panduan dan pengucapan suara.
-- **Kuis Isyarat AI**: Uji pemahaman isyarat dengan penilaian dinamis langsung dari gestur pengguna.
-- **Statistik & Peringkat (Leaderboard)**: Gamifikasi pembelajaran dengan sistem poin dan riwayat kemajuan.
-
-### 2. 🚶 BiJALAN (Smart Navigation & Obstacle Detection)
-- **Deteksi Rintangan Dalam Ruangan**: AI pendeteksi halangan indoor (kursi, tangga, pintu, dll.) secara *real-time*.
-- **Panduan Suara Terarah (Voice Guidance)**: Integrasi TalkBack dan Text-to-Speech (TTS) untuk memberi instruksi jarak dan arah halangan secara otomatis.
-- **Pelaporan Rintangan**: Pengguna dapat menandai dan melaporkan rintangan fasilitas umum untuk dipetakan.
-
-### 3. 🛡️ BiSAFE (Emergency & Safety System)
-- **Panic Button & Shake-to-Alert**: Pengiriman sinyal bahaya cepat dengan guncangan perangkat (*Shake Gesture*).
-- **Geolokasi Presisi**: Pelacakan koordinat darurat langsung tersambung ke kontak darurat terdaftar dan layanan terkait.
-
-### 4. 📖 BiBACA (Assistive OCR & Reading)
-- **Ekstraksi Teks Visual**: Membaca dokumen, buku, atau tanda visual menggunakan Optical Character Recognition (OCR).
-- **Audio Reader**: Membacakan teks hasil pemindaian dengan suara natural untuk teman netra.
-
-### 5. 💬 BiSAPA (Inclusive Communication Bridge)
-- **Dua Arah (STT & TTS)**: Mengubah ucapan suara menjadi teks instan untuk teman tuli, dan mengetik teks untuk diubah menjadi suara natural bagi lawan bicara.
-
-### 6. 🗺️ Peta Aksesibilitas & Komunitas
-- **Peta Fasilitas Ramah Disabilitas**: Menemukan lokasi fasilitas publik yang ramah disabilitas.
-- **Forum & Diskusi Komunitas**: Ruang interaksi, berbagi informasi, dan edukasi seputar inklusivitas.
-
-### 7. 📊 Portal Admin & Manajemen
-- **Analitik Hotspot Rintangan**: Dashboard pemantauan laporan rintangan publik.
-- **Manajemen Pengumuman & Pengguna**: Pengelolaan data komunitas dan keamanan sistem.
+Platform ini mengimplementasikan inferensi kecerdasan buatan langsung pada peramban web pengguna (*Client-Side / On-Device AI Inference*) menggunakan WebAssembly (WASM), WebGL, dan ONNX Runtime. Seluruh komputasi visi komputer dijalankan secara lokal di peramban, menjamin privasi visual pengguna secara penuh tanpa latensi pengiriman gambar ke server.
 
 ---
 
-## 🏗️ Arsitektur Teknologi
+## 2. Struktur Repositori
 
 ```
-diBISAlitas Ecosystem
-├── 🌐 Web Application (Next.js 15, React 19, TypeScript, TailwindCSS)
-│   ├── On-Device Inference: ONNX Runtime Web (WASM / SIMD / WebGL)
-│   ├── PWA & Offline Support: Serwist Service Worker
-│   └── Backend Services: Firebase Auth, Firestore, Cloud Storage
+diBISAlitas/
+├── training/                       # Pipeline Pelatihan dan Konversi Model Machine Learning
+│   ├── bisindo/                    # Dataset, skrip pelatihan, & konversi model BISINDO ke ONNX
+│   ├── hijaiyah/                   # Pelatihan model deteksi abjad isyarat Hijaiyah
+│   └── indoor_obstacle/            # Pelatihan model deteksi rintangan navigasi pedestrian
 │
-├── 📱 Mobile Application (Flutter 3.x, Dart)
-│   ├── On-Device Inference: TFLite (TensorFlow Lite Native)
-│   ├── Hardware Integration: Camera, Sensors (Accelerometer for Shake), Geolocation
-│   └── Accessibility Services: Screen Reader TalkBack & Custom Speech Engines
+├── web/                            # Aplikasi Web Utama (Next.js App Router & Progressive Web App)
+│   ├── public/                     # Aset statis, ikon, model ONNX, dan konfigurasi PWA
+│   ├── src/
+│   │   ├── app/                    # Routing halaman (Landing, Fitur, Demo, Admin, Web App)
+│   │   ├── components/             # Komponen antarmuka (Navbar, A11y Engine, Device Mockup)
+│   │   ├── hooks/                  # Custom hooks (Kamera, Web Speech, YOLO Vision Pipeline)
+│   │   └── lib/                    # Firebase client, A11y context, dan Mock demo engine
+│   ├── package.json
+│   └── next.config.ts
 │
-└── 🧠 Machine Learning Pipelines
-    ├── Model BISINDO (YOLOv8 Nano Optimized)
-    ├── Model Hijaiyah (YOLOv8 Nano Optimized)
-    └── Model Indoor Obstacle Detection
+└── README.md                       # Dokumentasi resmi proyek
 ```
 
 ---
 
-## ⚙️ Panduan Menjalankan Proyek
+## 3. Fitur Utama
 
-### 🌐 1. Web Application
+### A. BiPINTAR - Pembelajaran dan Penerjemah Bahasa Isyarat Interaktif
+- **Deteksi Isyarat Real-Time**: Mengenali alfabet BISINDO (Bahasa Isyarat Indonesia) dan Isyarat Huruf Hijaiyah langsung dari kamera peramban menggunakan model YOLOv8n terkompresi via ONNX Runtime Web.
+- **Kamus Isyarat**: Visualisasi referensi gerakan gestur interaktif dengan panduan fonetik.
+- **Kuis Isyarat AI**: Evaluasi interaktif berbasis kecerdasan buatan yang menguji akurasi pembentukan gestur pengguna secara dinamis.
+- **Gamifikasi Pembelajaran**: Sistem leaderboard, poin XP, dan visualisasi statistik progres belajar.
+
+### B. BiJALAN - Navigasi Spasial dan Pemetaan Rintangan
+- **Deteksi Rintangan Berbasis Visi**: Identifikasi halangan trotoar dan ruangan (tiang, tangga, pintu, kursi) secara real-time.
+- **Panduan Suara Terarah**: Integrasi Text-to-Speech (TTS) yang mengumumkan jarak serta posisi rintangan secara berkala.
+- **Pelaporan Rintangan Fasilitas Umum**: Warga dapat memotret dan menandai titik rintangan trotoar untuk disinkronkan ke Command Center.
+
+### C. BiSAFE - Protokol Darurat Terintegrasi
+- **Pemicu Darurat Satu Sentuhan**: Pengiriman sinyal SOS darurat secara instan.
+- **Transmisi Koordinat Presisi**: Memancarkan titik koordinat GPS ke pusat kendali dan kontak darurat terdaftar.
+
+### D. BiBACA - Pembaca Teks dan OCR Aksesibel
+- **Ekstraksi Teks Visual**: Membaca dokumen, papan rambu, atau buku fisik melalui kamera menggunakan engine OCR.
+- **Audio Synthesizer**: Mengonversi teks yang dipindai menjadi ucapan suara yang ramah bagi tunanetra.
+
+### E. BiSAPA - Jembatan Komunikasi Dua Arah
+- **Speech-to-Text (STT)**: Mengonversi ucapan suara lawan bicara menjadi teks waktu-nyata untuk teman tuli.
+- **Text-to-Speech (TTS)**: Mengonversi teks yang diketik menjadi output audio bersuara natural.
+
+### F. BiPANTAU - Command Center Pemantauan Fasilitas Publik
+- **Peta Hotspot GIS**: Pemetaan sebaran laporan rintangan fasilitas kota berbasis Leaflet GIS.
+- **Moderasi Laporan**: Verifikasi dan pembaruan status penyelesaian masalah fasilitas publik secara real-time.
+- **Mode Demo Juri**: Panel simulasi interaktif tanpa autentikasi login untuk pengujian dan evaluasi fungsionalitas secara langsung.
+
+### G. Engine Aksesibilitas Universal (Floating A11y Suite)
+- **Skala Ukuran Teks**: Penyesuaian fleksibel (100%, 115%, 130%).
+- **Kontras Tinggi & Monokrom**: Optimalisasi ketajaman visual untuk pengguna dengan sensitivitas penglihatan.
+- **Mode Ramah Disleksia**: Penataan ruang antar huruf, kata, dan baris yang memudahkan pembacaan teks.
+- **Pembaca Suara Layar Ringkas**: Pembacaan ringkasan konten situs menggunakan Web Speech Synthesis.
+- **Navigasi Keyboard**: Indikator fokus visual yang memenuhi standar WCAG (Web Content Accessibility Guidelines).
+
+---
+
+## 4. Arsitektur Teknologi
+
+```
+                                  [ Pengguna Web / Mobile Browser ]
+                                                  │
+                                                  ▼
+                               [ Next.js 16 + TypeScript Frontend ]
+                                                  │
+                        ┌─────────────────────────┴─────────────────────────┐
+                        ▼                                                   ▼
+         [ On-Device AI Inference ]                              [ Cloud Data Services ]
+         ├── ONNX Runtime WebAssembly                            ├── Firebase Authentication
+         ├── YOLOv8n BISINDO Model                               ├── Firestore Realtime Database
+         ├── YOLOv8n Hijaiyah Model                              └── Firebase Cloud Storage
+         └── Canvas / WebGL Processing
+```
+
+---
+
+## 5. Panduan Instalasi dan Menjalankan Proyek
+
+### Prasyarat
+- Node.js versi 18.x atau yang lebih baru
+- npm, yarn, atau pnpm
+
+### Langkah Menjalankan Web Application
+
+1. Masuk ke direktori web:
+   ```bash
+   cd web
+   ```
+
+2. Instal seluruh dependensi:
+   ```bash
+   npm install
+   ```
+
+3. Jalankan server pengembangan lokal:
+   ```bash
+   npm run dev
+   ```
+
+4. Buka peramban di alamat:
+   ```
+   http://localhost:3000
+   ```
+
+### Langkah Menjalankan Production Build
 
 ```bash
-# Masuk ke direktori web
-cd web
+# Kompilasi bundel produksi teroptimasi
+npm run build
 
-# Instal dependensi
-npm install
-
-# Jalankan development server
-npm run dev
-```
-Akses aplikasi melalui browser di `http://localhost:3000`.
-
-### 📱 2. Mobile Application (Flutter)
-
-```bash
-# Masuk ke direktori mobile
-cd mobile
-
-# Unduh paket dependensi Flutter
-flutter pub get
-
-# Jalankan pada emulator atau perangkat fisik
-flutter run
+# Menjalankan server produksi
+npm run start
 ```
 
 ---
 
-## 🔒 Privasi & Aksesibilitas
-- **Privasi Terjaga**: Pemrosesan video kamera untuk deteksi isyarat dan rintangan berjalan sepenuhnya di sisi klien (*Client-side / On-Device*), frame gambar tidak dikirim atau disimpan di server eksternal.
-- **Standar Aksesibilitas WCAG**: Kontras warna optimal, kompatibilitas navigasi suara, serta tata letak responsif.
+## 6. Privasi dan Keamanan Data
+
+- **Pemrosesan Gambar Lokal**: Seluruh *frame* video kamera yang digunakan untuk deteksi isyarat BiPINTAR dan deteksi rintangan BiJALAN diproses langsung di peramban pengguna. Tidak ada data citra kamera yang ditransmisikan ke server eksternal demi menjaga privasi pengguna secara mutlak.
+- **Kepatuhan Standar Aksesibilitas**: Arsitektur antarmuka dibangun dengan memperhatikan rasio kontras, semantik HTML5, aksesibilitas keyboard (fokus visual), dan dukungan *screen reader*.
 
 ---
 
 <div align="center">
-  <b>diBISAlitas - Mewujudkan Kesetaraan Akses dan Komunikasi Inklusif</b>
+
+**diBISAlitas - Mewujudkan Kesetaraan Akses dan Kemandirian Inklusif Berbasis Kecerdasan Buatan**
+
 </div>

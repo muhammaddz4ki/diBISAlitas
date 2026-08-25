@@ -51,6 +51,22 @@ export default function DashboardPage() {
       setLastSeen(Number(window.localStorage.getItem("dibisalitas_notif_last_seen") || 0));
     }
 
+    const isDemo =
+      typeof window !== "undefined" &&
+      (new URLSearchParams(window.location.search).get("demo") === "true" ||
+        window.sessionStorage.getItem("dibisalitas_demo_mode") === "true");
+
+    if (isDemo) {
+      if (typeof window !== "undefined") {
+        window.sessionStorage.setItem("dibisalitas_demo_mode", "true");
+      }
+      setUserEmail("tamu.demo@dibisalitas.id");
+      setUserUid("demo-guest-uid");
+      setMyScore(2850);
+      setIsLoading(false);
+      return;
+    }
+
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         setUserEmail(user.email);

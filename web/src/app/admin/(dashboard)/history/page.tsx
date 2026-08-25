@@ -7,43 +7,47 @@ import type { EmergencyReport } from "@/lib/types";
 import { History, MapPin, Clock, CheckCircle2, ShieldAlert, Trash2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
+import { INITIAL_DEMO_EMERGENCIES, isAdminDemoMode, safeFormatDate } from "@/lib/adminDemoData";
+
 export default function EmergencyHistoryPage() {
-  const [reports, setReports] = useState<EmergencyReport[]>([]);
+  const [reports, setReports] = useState<EmergencyReport[]>(INITIAL_DEMO_EMERGENCIES as any);
   const [isLoading, setIsLoading] = useState(true);
   const [confirmDelete, setConfirmDelete] = useState<string | null>(null);
 
   useEffect(() => {
+    if (isAdminDemoMode()) {
+      setReports(INITIAL_DEMO_EMERGENCIES as any);
+      setIsLoading(false);
+      return;
+    }
+
     const q = query(
       collection(db, "emergency_reports"),
       orderBy("createdAt", "desc")
     );
 
-    const unsubscribe = onSnapshot(q, (snapshot) => {
-      const data: EmergencyReport[] = [];
-      snapshot.forEach((doc) => {
-        data.push({ id: doc.id, ...doc.data() } as EmergencyReport);
-      });
-      setReports(data);
-      setIsLoading(false);
-    }, (error) => {
-      console.error("Error fetching emergency reports:", error);
-      setIsLoading(false);
-    });
+    const unsubscribe = onSnapshot(
+      q,
+      (snapshot) => {
+        const data: EmergencyReport[] = [];
+        snapshot.forEach((doc) => {
+          data.push({ id: doc.id, ...doc.data() } as EmergencyReport);
+        });
+        setReports(data);
+        setIsLoading(false);
+      },
+      (error) => {
+        console.warn("Using demo dataset for history:", error.message);
+        setReports(INITIAL_DEMO_EMERGENCIES as any);
+        setIsLoading(false);
+      }
+    );
 
     return () => unsubscribe();
   }, []);
 
-  const formatDateTime = (timestamp: EmergencyReport["createdAt"]) => {
-    if (!timestamp) return "-";
-    // Check if it's a Firestore Timestamp
-    const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp as unknown as string);
-    return new Intl.DateTimeFormat("id-ID", {
-      day: "2-digit",
-      month: "long",
-      year: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-    }).format(date);
+  const formatDateTime = (timestamp: any) => {
+    return safeFormatDate(timestamp);
   };
 
   const handleDelete = async (id: string) => {

@@ -6,13 +6,13 @@ import { ReactNode } from "react";
 export default function Template({ children }: { children: ReactNode }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 15, filter: "blur(8px)" }}
-      animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
       transition={{
-        duration: 0.5,
+        duration: 0.35,
         ease: "easeOut",
       }}
-      className="flex flex-col flex-1 w-full"
+      className="flex flex-col flex-1 w-full min-h-screen"
     >
       {children}
     </motion.div>

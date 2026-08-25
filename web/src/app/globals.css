@@ -246,18 +246,36 @@ body {
 }
 
 /* ===== Aksesibilitas ===== */
-/* Kontras tinggi: pertegas warna & border seluruh konten */
-body.a11y-hc {
-  filter: contrast(1.18) saturate(1.12);
+/* Kontras tinggi: pertegas warna & border seluruh konten pada root html */
+html.a11y-hc {
+  filter: contrast(1.22) saturate(1.15) !important;
 }
-/* Colorful mode: disiapkan untuk menu saja (belum diaktifkan efeknya) */
-body.a11y-colorful {
-  /* filter: sepia(0.3) saturate(3.5) contrast(1.15) brightness(1.02) hue-rotate(-5deg) !important; */
+/* Mode Ramah Disleksia */
+html.a11y-dyslexia,
+html.a11y-dyslexia body {
+  letter-spacing: 0.08em !important;
+  word-spacing: 0.16em !important;
+  line-height: 1.8 !important;
 }
-/* Kurangi animasi: matikan animasi & transisi CSS (framer-motion ditangani MotionConfig) */
-body.a11y-reduce *,
-body.a11y-reduce *::before,
-body.a11y-reduce *::after {
+html.a11y-dyslexia * {
+  letter-spacing: inherit !important;
+  word-spacing: inherit !important;
+}
+/* Mode Monokrom / Grayscale pada root html */
+html.a11y-grayscale {
+  filter: grayscale(100%) contrast(1.1) !important;
+}
+/* Sorot Tautan (Highlight Links) */
+html.a11y-highlight-links a {
+  text-decoration: underline !important;
+  text-decoration-thickness: 2px !important;
+  text-decoration-color: #1B9981 !important;
+  text-underline-offset: 4px !important;
+}
+/* Kurangi animasi: matikan animasi & transisi CSS */
+html.a11y-reduce *,
+html.a11y-reduce *::before,
+html.a11y-reduce *::after {
   animation-duration: 0.001ms !important;
   animation-iteration-count: 1 !important;
   transition-duration: 0.001ms !important;
@@ -281,3 +299,4 @@ body.a11y-reduce *::after {
 [class*="rounded-full"]:focus-visible {
   border-radius: 9999px;
 }
+

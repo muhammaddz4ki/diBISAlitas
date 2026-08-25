@@ -23,8 +23,10 @@ const categoryConfig = {
   darurat: { label: "Darurat", icon: <Siren className="w-4 h-4" />, bg: "bg-rose-50", text: "text-rose-600", border: "border-rose-200" },
 };
 
+import { INITIAL_DEMO_ANNOUNCEMENTS, isAdminDemoMode, safeFormatDate } from "@/lib/adminDemoData";
+
 export default function PengumumanPage() {
-  const [announcements, setAnnouncements] = useState<Announcement[]>([]);
+  const [announcements, setAnnouncements] = useState<Announcement[]>(INITIAL_DEMO_ANNOUNCEMENTS as any);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -37,13 +39,27 @@ export default function PengumumanPage() {
   const [authorName, setAuthorName] = useState("Admin");
 
   useEffect(() => {
-    const q = query(collection(db, "announcements"), orderBy("createdAt", "desc"));
-    const unsub = onSnapshot(q, (snap) => {
-      const data: Announcement[] = [];
-      snap.forEach((d) => data.push({ id: d.id, ...d.data() } as Announcement));
-      setAnnouncements(data);
+    if (isAdminDemoMode()) {
+      setAnnouncements(INITIAL_DEMO_ANNOUNCEMENTS as any);
       setLoading(false);
-    });
+      return;
+    }
+
+    const q = query(collection(db, "announcements"), orderBy("createdAt", "desc"));
+    const unsub = onSnapshot(
+      q,
+      (snap) => {
+        const data: Announcement[] = [];
+        snap.forEach((d) => data.push({ id: d.id, ...d.data() } as Announcement));
+        setAnnouncements(data);
+        setLoading(false);
+      },
+      (err) => {
+        console.warn("Using demo announcements dataset:", err.message);
+        setAnnouncements(INITIAL_DEMO_ANNOUNCEMENTS as any);
+        setLoading(false);
+      }
+    );
     return () => unsub();
   }, []);
 
@@ -81,12 +97,10 @@ export default function PengumumanPage() {
   };
 
   const formatDate = (ts: any) => {
-    if (!ts) return "-";
-    const d = ts.toDate ? ts.toDate() : new Date(ts);
-    return new Intl.DateTimeFormat("id-ID", {
+    return safeFormatDate(ts, {
       day: "numeric", month: "long", year: "numeric",
       hour: "2-digit", minute: "2-digit",
-    }).format(d);
+    });
   };
 
   return (

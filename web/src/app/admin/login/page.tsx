@@ -128,6 +128,23 @@ export default function AdminLogin() {
             Masuk Sistem
           </button>
         </form>
+
+        <div className="mt-8 pt-6 border-t border-slate-100 text-center">
+          <p className="text-xs text-slate-400 font-medium mb-3">Untuk pengujian juri &amp; evaluasi kompetisi:</p>
+          <button
+            type="button"
+            onClick={() => {
+              if (typeof window !== "undefined") {
+                window.sessionStorage.setItem("dibisalitas_admin_demo", "true");
+                window.localStorage.setItem("dibisalitas_admin_demo", "true");
+              }
+              router.push("/admin/dashboard?demo=true");
+            }}
+            className="w-full py-3.5 px-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-800 hover:bg-emerald-100 font-bold text-xs transition-all flex items-center justify-center gap-2"
+          >
+            <span>Masuk Mode Demo Juri (Tanpa Login)</span>
+          </button>
+        </div>
       </div>
     </div>
   );

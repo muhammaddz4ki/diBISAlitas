@@ -48,33 +48,24 @@ function deg2rad(deg: number) {
   return deg * (Math.PI / 180);
 }
 
+import { INITIAL_DEMO_OBSTACLES, isAdminDemoMode, safeFormatDate } from "@/lib/adminDemoData";
+
 export default function MapComponent() {
   const [reports, setReports] = useState<ObstacleReport[]>([]);
-  // Polman Bandung / SBM ITB Area Coordinates
-  const mapCenter: [number, number] = [-6.874, 107.619];
+  // Central Jakarta Area Coordinates for demo
+  const mapCenter: [number, number] = [-6.1969, 106.8234];
 
   useEffect(() => {
-    const q = query(collection(db, "obstacle_reports"), orderBy("createdAt", "desc"));
-
-    const unsubscribe = onSnapshot(q, (snapshot) => {
-      const rawData: ObstacleReport[] = [];
-      snapshot.forEach((doc) => {
-        const data = doc.data();
-        if (data.latitude && data.longitude) {
-          rawData.push({ id: doc.id, ...data } as ObstacleReport);
-        }
-      });
-
-      // Calculate Density (O(N^2) for simplicity since data usually < 1000)
-      // Radius of 100 meters (0.1 km) to be considered in the same "cluster"
-      const radiusKm = 0.1;
-      
+    const processData = (rawData: ObstacleReport[]) => {
+      const radiusKm = 0.5;
       const clusteredData = rawData.map((report) => {
         let count = 0;
         rawData.forEach((other) => {
           const dist = getDistanceFromLatLonInKm(
-            report.latitude, report.longitude,
-            other.latitude, other.longitude
+            report.latitude,
+            report.longitude,
+            other.latitude,
+            other.longitude
           );
           if (dist <= radiusKm) {
             count++;
@@ -82,19 +73,43 @@ export default function MapComponent() {
         });
         return { ...report, densityCount: count };
       });
-
       setReports(clusteredData);
-    });
+    };
+
+    if (isAdminDemoMode()) {
+      processData(INITIAL_DEMO_OBSTACLES as any);
+      return;
+    }
+
+    const q = query(collection(db, "obstacle_reports"), orderBy("createdAt", "desc"));
+
+    const unsubscribe = onSnapshot(
+      q,
+      (snapshot) => {
+        const rawData: ObstacleReport[] = [];
+        snapshot.forEach((doc) => {
+          const data = doc.data();
+          if (data.latitude && data.longitude) {
+            rawData.push({ id: doc.id, ...data } as ObstacleReport);
+          }
+        });
+        processData(rawData.length > 0 ? rawData : (INITIAL_DEMO_OBSTACLES as any));
+      },
+      (err) => {
+        console.warn("Using demo dataset for map:", err.message);
+        processData(INITIAL_DEMO_OBSTACLES as any);
+      }
+    );
 
     return () => unsubscribe();
   }, []);
 
   const formatDate = (timestamp: any) => {
-    if (!timestamp) return "-";
-    const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
-    return new Intl.DateTimeFormat("id-ID", {
-      day: "2-digit", month: "short", year: "numeric"
-    }).format(date);
+    return safeFormatDate(timestamp, {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+    });
   };
 
   return (

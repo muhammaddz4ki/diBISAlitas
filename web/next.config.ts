@@ -9,7 +9,15 @@ const withSerwist = withSerwistInit({
 
 const nextConfig: NextConfig = {
   /* config options here */
-  allowedDevOrigins: ['192.168.1.46', 'localhost', '127.0.0.1'],
+  allowedDevOrigins: [
+    'localhost',
+    '127.0.0.1',
+    '192.168.1.46',
+    '*.ngrok-free.dev',
+    '*.ngrok-free.app',
+    '*.ngrok.io',
+    '*.ngrok.app',
+  ],
   turbopack: {},
 };
 

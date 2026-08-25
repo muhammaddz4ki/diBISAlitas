@@ -64,8 +64,8 @@ export function AccessibilityProvider({ children }: { children: ReactNode }) {
     if (typeof document === "undefined") return;
     const scale = FONT_SCALES[fontLevel] ?? 1;
     // `zoom` didukung Chromium/Safari/Firefox modern — memperbesar seluruh konten.
-    (document.body.style as CSSStyleDeclaration & { zoom?: string }).zoom = String(scale);
-    document.body.classList.toggle("a11y-hc", highContrast);
+    document.documentElement.classList.toggle("a11y-hc", highContrast);
+    document.documentElement.classList.toggle("a11y-reduce", reduceMotion);
     document.body.classList.toggle("a11y-reduce", reduceMotion);
   }, [fontLevel, highContrast, reduceMotion]);
 
