@@ -151,11 +151,18 @@ export default function Navbar() {
         <nav className="hidden lg:flex items-center gap-1 xl:gap-2">
           <Link
             href="/"
-            className={`px-3.5 py-2 rounded-xl text-sm font-semibold transition-colors ${
-              pathname === "/" ? "text-[#1B9981] bg-[#1B9981]/5 font-bold" : "text-slate-600 hover:text-[#1B9981]"
+            className={`relative px-3.5 py-2 rounded-xl text-sm font-semibold transition-colors ${
+              pathname === "/" ? "text-[#1B9981] font-bold" : "text-slate-600 hover:text-[#1B9981]"
             }`}
           >
-            Beranda
+            {pathname === "/" && (
+              <motion.span
+                layoutId="navbar-active-pill"
+                className="absolute inset-0 rounded-xl bg-[#1B9981]/10"
+                transition={{ type: "spring", stiffness: 380, damping: 32 }}
+              />
+            )}
+            <span className="relative z-10">Beranda</span>
           </Link>
 
           {/* Fitur Dropdown */}
@@ -166,15 +173,22 @@ export default function Navbar() {
           >
             <Link
               href="/fitur"
-              className={`px-3.5 py-2 rounded-xl text-sm font-semibold transition-colors flex items-center gap-1.5 ${
+              className={`relative px-3.5 py-2 rounded-xl text-sm font-semibold transition-colors flex items-center gap-1.5 ${
                 pathname.startsWith("/fitur")
-                  ? "text-[#1B9981] bg-[#1B9981]/5 font-bold"
+                  ? "text-[#1B9981] font-bold"
                   : "text-slate-600 hover:text-[#1B9981]"
               }`}
             >
-              <span>Fitur</span>
+              {pathname.startsWith("/fitur") && (
+                <motion.span
+                  layoutId="navbar-active-pill"
+                  className="absolute inset-0 rounded-xl bg-[#1B9981]/10"
+                  transition={{ type: "spring", stiffness: 380, damping: 32 }}
+                />
+              )}
+              <span className="relative z-10">Fitur</span>
               <ChevronDown
-                className={`w-4 h-4 transition-transform duration-200 ${
+                className={`relative z-10 w-4 h-4 transition-transform duration-200 ${
                   activeDropdown === "fitur" ? "rotate-180 text-[#1B9981]" : ""
                 }`}
               />
@@ -247,18 +261,25 @@ export default function Navbar() {
           >
             <Link
               href="/demo"
-              className={`px-3.5 py-2 rounded-xl text-sm font-semibold transition-colors flex items-center gap-1.5 ${
+              className={`relative px-3.5 py-2 rounded-xl text-sm font-semibold transition-colors flex items-center gap-1.5 ${
                 pathname === "/demo"
-                  ? "text-[#1B9981] bg-[#1B9981]/5 font-bold"
+                  ? "text-[#1B9981] font-bold"
                   : "text-slate-600 hover:text-[#1B9981]"
               }`}
             >
-              <span className="flex items-center gap-1.5">
+              {pathname === "/demo" && (
+                <motion.span
+                  layoutId="navbar-active-pill"
+                  className="absolute inset-0 rounded-xl bg-[#1B9981]/10"
+                  transition={{ type: "spring", stiffness: 380, damping: 32 }}
+                />
+              )}
+              <span className="relative z-10 flex items-center gap-1.5">
                 <span className="w-2 h-2 rounded-full bg-[#1B9981] animate-pulse" />
                 Demo
               </span>
               <ChevronDown
-                className={`w-4 h-4 transition-transform duration-200 ${
+                className={`relative z-10 w-4 h-4 transition-transform duration-200 ${
                   activeDropdown === "demo" ? "rotate-180 text-[#1B9981]" : ""
                 }`}
               />

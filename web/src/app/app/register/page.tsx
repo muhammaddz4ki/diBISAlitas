@@ -6,19 +6,37 @@ import { useRouter } from "next/navigation";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { doc, setDoc, serverTimestamp } from "firebase/firestore";
 import { auth, db } from "@/lib/firebase";
+import { motion, AnimatePresence, Variants } from "framer-motion";
 import { Lock, Mail, User as UserIcon, UserPlus, Eye, EyeOff, AlertCircle } from "lucide-react";
+
+const fadeUp: Variants = {
+  hidden: { opacity: 0, y: 18 },
+  visible: (i: number = 0) => ({
+    opacity: 1,
+    y: 0,
+    transition: { delay: i * 0.07, duration: 0.5, ease: [0.22, 1, 0.36, 1] },
+  }),
+};
+
+const staggerContainer: Variants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.06, delayChildren: 0.1 },
+  },
+};
 
 export default function RegisterPage() {
   const router = useRouter();
-  
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  
+
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  
+
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
@@ -59,7 +77,6 @@ export default function RegisterPage() {
 
       // 4. Redirect to Dashboard
       router.push("/app/dashboard");
-      
     } catch (err: any) {
       console.error(err);
       let errorMsg = "Gagal mendaftarkan akun. Silakan coba lagi.";
@@ -78,31 +95,50 @@ export default function RegisterPage() {
 
   return (
     <div className="flex flex-col min-h-full bg-white px-8 py-12">
-      <div className="flex-1 flex flex-col justify-center">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
+      <motion.div
+        variants={staggerContainer}
+        initial="hidden"
+        animate="visible"
+        className="flex-1 flex flex-col justify-center"
+      >
+        <motion.img
+          variants={fadeUp}
+          custom={0}
           src="/logo/logo.png"
           alt="diBISAlitas"
           className="w-20 h-20 object-contain mb-6"
         />
-        <h1 className="text-3xl font-extrabold tracking-tight text-slate-900 mb-2">
+        <motion.h1
+          variants={fadeUp}
+          custom={1}
+          className="text-3xl font-extrabold tracking-tight text-slate-900 mb-2"
+        >
           Daftar Akun Baru
-        </h1>
-        <p className="text-slate-500 font-medium mb-8">
+        </motion.h1>
+        <motion.p variants={fadeUp} custom={2} className="text-slate-500 font-medium mb-8">
           Bergabunglah dengan ekosistem inklusif kami untuk kemandirian aksesibilitas.
-        </p>
+        </motion.p>
 
-        {error && (
-          <div className="mb-6 flex items-center gap-3 p-4 bg-red-50 text-red-600 rounded-2xl text-sm font-medium">
-            <AlertCircle className="w-5 h-5 flex-shrink-0" />
-            <p>{error}</p>
-          </div>
-        )}
+        <AnimatePresence mode="wait">
+          {error && (
+            <motion.div
+              key="register-error"
+              role="alert"
+              initial={{ opacity: 0, y: -10, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -10, scale: 0.98 }}
+              transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+              className="mb-6 flex items-center gap-3 p-4 bg-red-50 text-red-600 rounded-2xl text-sm font-medium"
+            >
+              <AlertCircle className="w-5 h-5 flex-shrink-0" />
+              <p>{error}</p>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
-        <form onSubmit={handleRegister} className="space-y-4">
-          
+        <motion.form variants={fadeUp} custom={3} onSubmit={handleRegister} className="space-y-4">
           {/* Full Name */}
-          <div>
+          <motion.div variants={fadeUp} custom={4}>
             <label className="block text-sm font-bold text-slate-700 mb-2">Nama Lengkap</label>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
@@ -117,10 +153,10 @@ export default function RegisterPage() {
                 placeholder="Masukkan nama lengkap"
               />
             </div>
-          </div>
+          </motion.div>
 
           {/* Email */}
-          <div>
+          <motion.div variants={fadeUp} custom={5}>
             <label className="block text-sm font-bold text-slate-700 mb-2">Email</label>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
@@ -135,10 +171,10 @@ export default function RegisterPage() {
                 placeholder="nama@email.com"
               />
             </div>
-          </div>
+          </motion.div>
 
           {/* Password */}
-          <div>
+          <motion.div variants={fadeUp} custom={6}>
             <label className="block text-sm font-bold text-slate-700 mb-2">Kata Sandi</label>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
@@ -160,10 +196,10 @@ export default function RegisterPage() {
                 {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
               </button>
             </div>
-          </div>
+          </motion.div>
 
           {/* Confirm Password */}
-          <div>
+          <motion.div variants={fadeUp} custom={7}>
             <label className="block text-sm font-bold text-slate-700 mb-2">Konfirmasi Sandi</label>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
@@ -185,9 +221,13 @@ export default function RegisterPage() {
                 {showConfirmPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
               </button>
             </div>
-          </div>
+          </motion.div>
 
-          <button
+          <motion.button
+            variants={fadeUp}
+            custom={8}
+            whileHover={{ scale: 1.015 }}
+            whileTap={{ scale: 0.98 }}
             type="submit"
             disabled={isLoading}
             className="w-full py-4 mt-6 bg-[#00B894] hover:bg-[#00a383] disabled:opacity-70 text-white rounded-2xl font-bold text-lg shadow-sm hover:shadow-md transition-all flex items-center justify-center gap-2"
@@ -200,18 +240,23 @@ export default function RegisterPage() {
                 Daftar Akun
               </>
             )}
-          </button>
-        </form>
-      </div>
+          </motion.button>
+        </motion.form>
+      </motion.div>
 
-      <div className="mt-8 text-center pb-6">
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.7, duration: 0.5 }}
+        className="mt-8 text-center pb-6"
+      >
         <p className="text-slate-500 text-sm font-medium">
           Sudah punya akun?{" "}
           <Link href="/app/login" className="text-[#00B894] font-bold cursor-pointer hover:underline">
             Login di sini
           </Link>
         </p>
-      </div>
+      </motion.div>
     </div>
   );
 }

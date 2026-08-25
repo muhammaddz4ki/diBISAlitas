@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import { motion, useInView, AnimatePresence, Variants } from "framer-motion";
+import { motion, useInView, useScroll, useTransform, AnimatePresence, Variants } from "framer-motion";
 import {
   ShieldAlert,
   MessageCircle,
@@ -25,7 +25,6 @@ import {
   Clock,
   Sparkles,
   Layers,
-  ArrowUpRight,
   CheckCircle2,
   Lock,
   Play,
@@ -152,20 +151,34 @@ function HeroSection() {
                 transition={{ delay: 0.7, duration: 0.6 }}
                 className="flex flex-wrap items-center gap-3 pt-2"
               >
-                <Link
-                  href="/demo"
-                  className="px-7 py-3.5 rounded-full bg-white text-[#168C74] font-black text-sm hover:bg-white/95 transition-all shadow-xl hover:shadow-2xl hover:-translate-y-0.5 flex items-center gap-2"
+                <motion.span
+                  whileHover={{ scale: 1.04, y: -2 }}
+                  whileTap={{ scale: 0.96 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 20 }}
+                  className="inline-block"
                 >
-                  <Zap className="w-4 h-4 fill-current text-[#168C74]" />
-                  Coba Demo Gratis
-                  <ArrowRight className="w-4 h-4" />
-                </Link>
-                <Link
-                  href="/fitur"
-                  className="px-7 py-3.5 rounded-full bg-white/15 border border-white/25 text-white font-bold text-sm hover:bg-white/25 transition-all backdrop-blur-md flex items-center gap-2"
+                  <Link
+                    href="/demo"
+                    className="px-7 py-3.5 rounded-full bg-white text-[#168C74] font-black text-sm hover:bg-white/95 transition-colors shadow-xl hover:shadow-2xl flex items-center gap-2"
+                  >
+                    <Zap className="w-4 h-4 fill-current text-[#168C74]" />
+                    Coba Demo Gratis
+                    <ArrowRight className="w-4 h-4" />
+                  </Link>
+                </motion.span>
+                <motion.span
+                  whileHover={{ scale: 1.04, y: -2 }}
+                  whileTap={{ scale: 0.96 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 20 }}
+                  className="inline-block"
                 >
-                  <span>Jelajahi 6 Fitur</span>
-                </Link>
+                  <Link
+                    href="/fitur"
+                    className="px-7 py-3.5 rounded-full bg-white/15 border border-white/25 text-white font-bold text-sm hover:bg-white/25 transition-colors backdrop-blur-md flex items-center gap-2"
+                  >
+                    <span>Jelajahi 6 Fitur</span>
+                  </Link>
+                </motion.span>
               </motion.div>
 
               {/* Beneficiary Tags */}
@@ -214,7 +227,183 @@ function HeroSection() {
 }
 
 /* ============================================
-   BENTO FEATURES SECTION
+   PILLAR DATA (used by the stacked scroll section)
+============================================ */
+type Pillar = {
+  key: string;
+  number: string;
+  title: string;
+  tagline: string;
+  description: string;
+  icon: React.ElementType;
+  target: string;
+  href: string;
+  gradient: string;
+  accent: string;
+};
+
+const pillars: Pillar[] = [
+  {
+    key: "bisafe",
+    number: "01",
+    title: "BiSAFE",
+    tagline: "Panic Button & Geolocation Broadcaster",
+    description:
+      "Satu tombol darurat yang langsung menyiarkan titik koordinat satelit presisi, membunyikan sirene alarm frekuensi tinggi, dan mengirimkan sinyal ke Command Center relawan.",
+    icon: ShieldAlert,
+    target: "Tunadaksa & Tunanetra",
+    href: "/fitur/bisafe",
+    gradient: "from-rose-600 via-rose-500 to-rose-700",
+    accent: "text-rose-100",
+  },
+  {
+    key: "bipantau",
+    number: "02",
+    title: "BiPANTAU",
+    tagline: "Smart City Command Center",
+    description:
+      "Dasbor pemetaan GIS dan moderasi rintangan kota untuk memonitor jalur ramah disabilitas dan merespons insiden secara real-time.",
+    icon: BarChart,
+    target: "Pemda & Relawan",
+    href: "/fitur/bipantau",
+    gradient: "from-[#168C74] via-[#1B9981] to-[#0A6B58]",
+    accent: "text-[#8FEAD4]",
+  },
+  {
+    key: "bisapa",
+    number: "03",
+    title: "BiSAPA",
+    tagline: "Penerjemah Isyarat AI Dua Arah",
+    description:
+      "Penerjemah bahasa isyarat BISINDO AI dua arah secara real-time dari gestur kamera ke teks dan suara.",
+    icon: MessageCircle,
+    target: "Tunarungu & Tunanetra",
+    href: "/fitur/bisapa",
+    gradient: "from-amber-600 via-amber-500 to-amber-700",
+    accent: "text-amber-100",
+  },
+  {
+    key: "bibaca",
+    number: "04",
+    title: "BiBACA",
+    tagline: "Smart OCR ke Audio",
+    description:
+      "Smart OCR yang memindai buku, papan petunjuk, dan dokumen cetak menjadi audio Bahasa Indonesia jernih.",
+    icon: BookOpen,
+    target: "Tunanetra & Disleksia",
+    href: "/fitur/bibaca",
+    gradient: "from-purple-700 via-purple-600 to-purple-800",
+    accent: "text-purple-100",
+  },
+  {
+    key: "bipintar",
+    number: "05",
+    title: "BiPINTAR",
+    tagline: "Gamifikasi Belajar Bahasa Isyarat",
+    description:
+      "Platform gamifikasi belajar bahasa isyarat BISINDO dan Isyarat Hijaiyah dengan kuis dan lencana prestasi.",
+    icon: GraduationCap,
+    target: "Pelajar & Komunitas",
+    href: "/fitur/bipintar",
+    gradient: "from-emerald-700 via-emerald-600 to-emerald-800",
+    accent: "text-emerald-100",
+  },
+  {
+    key: "bijalan",
+    number: "06",
+    title: "BiJALAN",
+    tagline: "Spatial Vision & Haptic Guidance",
+    description:
+      "Mata kedua Tunanetra saat berjalan di trotoar. Mendeteksi tiang, lubang, tangga, dan kendaraan secara visual lalu memberikan umpan balik getaran haptic dan suara terarah.",
+    icon: Navigation,
+    target: "Tunanetra & Pejalan Kaki",
+    href: "/fitur/bijalan",
+    gradient: "from-sky-700 via-sky-600 to-sky-800",
+    accent: "text-sky-100",
+  },
+];
+
+/* ============================================
+   STACK PANEL (sticky scroll-stacking card)
+============================================ */
+function StackPanel({ pillar, index }: { pillar: Pillar; index: number }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start start", "end start"],
+  });
+  const scale = useTransform(scrollYProgress, [0, 1], [1, 0.93]);
+  const Icon = pillar.icon;
+
+  return (
+    <div
+      ref={ref}
+      className="sticky"
+      style={{ top: `${96 + index * 18}px`, zIndex: index + 1 }}
+    >
+      <motion.div
+        style={{ scale }}
+        initial={{ opacity: 0, y: 70 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        className={`bg-gradient-to-br ${pillar.gradient} rounded-[2.5rem] md:rounded-[3rem] overflow-hidden shadow-[0_25px_70px_rgba(0,0,0,0.25)] mb-8`}
+      >
+        <div className="relative grid md:grid-cols-12 gap-8 lg:gap-14 p-8 sm:p-10 md:p-14 items-center min-h-[440px] md:min-h-[520px]">
+          {/* Ambient decoration */}
+          <div className="absolute top-0 right-0 w-[420px] h-[420px] bg-white/10 blur-3xl rounded-full pointer-events-none" />
+
+          {/* Left: Icon visual */}
+          <div className="md:col-span-5 flex items-center justify-center relative z-10">
+            <div className="relative w-full max-w-[280px] aspect-square rounded-[2rem] bg-white/10 border border-white/15 backdrop-blur-sm flex items-center justify-center overflow-hidden">
+              <div
+                className="absolute inset-0 opacity-[0.08]"
+                style={{
+                  backgroundImage: "radial-gradient(circle, white 1.5px, transparent 1.5px)",
+                  backgroundSize: "26px 26px",
+                }}
+              />
+              <Icon className="w-20 h-20 md:w-24 md:h-24 text-white relative z-10" strokeWidth={1.4} />
+            </div>
+          </div>
+
+          {/* Right: Content */}
+          <div className="md:col-span-7 space-y-4 text-white relative z-10">
+            <span className={`text-xs font-bold uppercase tracking-[0.2em] ${pillar.accent}`}>
+              Pilar {pillar.number} / 06
+            </span>
+            <h3 className="text-3xl sm:text-4xl md:text-[2.65rem] font-black leading-tight">
+              {pillar.title}
+            </h3>
+            <p className={`font-bold text-xs sm:text-sm uppercase tracking-wide ${pillar.accent}`}>
+              {pillar.tagline}
+            </p>
+            <p className="text-white/85 text-sm sm:text-base leading-relaxed max-w-lg">
+              {pillar.description}
+            </p>
+
+            <div className="flex flex-wrap gap-2 pt-2">
+              <span className="px-3.5 py-1.5 rounded-full bg-white/15 border border-white/20 text-white text-xs font-semibold">
+                Target: {pillar.target}
+              </span>
+            </div>
+
+            <Link
+              href={pillar.href}
+              className="inline-flex items-center gap-2 pt-4 text-white font-bold text-sm group"
+            >
+              Lihat Detail Fitur
+              <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+            </Link>
+          </div>
+        </div>
+      </motion.div>
+    </div>
+  );
+}
+
+/* ============================================
+   BENTO FEATURES SECTION (scroll-stacked pillars)
 ============================================ */
 function BentoFeaturesSection() {
   return (
@@ -240,181 +429,12 @@ function BentoFeaturesSection() {
           </p>
         </motion.div>
 
-        {/* Bento Grid */}
-        <motion.div
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-60px" }}
-          className="grid grid-cols-1 md:grid-cols-12 gap-5"
-        >
-          {/* 1. BiSAFE (col-7) */}
-          <motion.div
-            variants={fadeUp}
-            className="md:col-span-7 bg-gradient-to-br from-rose-50 to-white rounded-[2.5rem] p-8 sm:p-10 border border-rose-100 hover:border-rose-300 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group relative overflow-hidden"
-          >
-            <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <div className="w-14 h-14 rounded-2xl bg-rose-500 text-white flex items-center justify-center shadow-lg shadow-rose-500/25 group-hover:scale-105 transition-transform">
-                  <ShieldAlert className="w-7 h-7" />
-                </div>
-                <Link
-                  href="/fitur/bisafe"
-                  className="w-10 h-10 rounded-full bg-white border border-rose-100 flex items-center justify-center text-rose-600 hover:bg-rose-50 transition-colors"
-                >
-                  <ArrowUpRight className="w-5 h-5" />
-                </Link>
-              </div>
-
-              <div>
-                <h3 className="text-2xl font-black text-slate-900">BiSAFE</h3>
-                <p className="text-xs font-bold text-rose-600 uppercase tracking-wider mt-0.5">
-                  Panic Button &amp; Geolocation Broadcaster
-                </p>
-              </div>
-
-              <p className="text-slate-600 text-sm leading-relaxed">
-                Satu tombol darurat yang langsung menyiarkan titik koordinat satelit presisi, membunyikan sirene alarm frekuensi tinggi, dan mengirimkan sinyal ke Command Center relawan.
-              </p>
-            </div>
-
-            <div className="pt-6 mt-6 border-t border-rose-100 flex items-center justify-between">
-              <span className="text-xs font-bold text-slate-500">Target: Tunadaksa &amp; Tunanetra</span>
-              <Link href="/fitur/bisafe" className="text-xs font-bold text-rose-600 hover:text-rose-700 flex items-center gap-1">
-                Pelajari Detail <ArrowRight className="w-3.5 h-3.5" />
-              </Link>
-            </div>
-          </motion.div>
-
-          {/* 2. BiPANTAU (col-5) */}
-          <motion.div
-            variants={fadeUp}
-            className="md:col-span-5 bg-gradient-to-br from-[#168C74] to-[#1B9981] text-white rounded-[2.5rem] p-8 sm:p-10 shadow-lg hover:shadow-2xl transition-all duration-300 flex flex-col justify-between group relative overflow-hidden"
-          >
-            <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <div className="w-14 h-14 rounded-2xl bg-white/20 backdrop-blur-md text-white flex items-center justify-center shadow-md group-hover:scale-105 transition-transform">
-                  <BarChart className="w-7 h-7" />
-                </div>
-                <Link
-                  href="/fitur/bipantau"
-                  className="w-10 h-10 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-white hover:bg-white/20 transition-colors"
-                >
-                  <ArrowUpRight className="w-5 h-5" />
-                </Link>
-              </div>
-
-              <div>
-                <h3 className="text-2xl font-black text-white">BiPANTAU</h3>
-                <p className="text-xs font-bold text-[#00D4AA] uppercase tracking-wider mt-0.5">
-                  Smart City Command Center
-                </p>
-              </div>
-
-              <p className="text-white/80 text-sm leading-relaxed">
-                Dasbor pemetaan GIS dan moderasi rintangan kota untuk memonitor jalur ramah disabilitas dan merespons insiden secara real-time.
-              </p>
-            </div>
-
-            <div className="pt-6 mt-6 border-t border-white/15 flex items-center justify-between">
-              <span className="text-xs font-bold text-white/70">Target: Pemda &amp; Relawan</span>
-              <Link href="/fitur/bipantau" className="text-xs font-bold text-white flex items-center gap-1">
-                Pelajari Detail <ArrowRight className="w-3.5 h-3.5" />
-              </Link>
-            </div>
-          </motion.div>
-
-          {/* 3. BiSAPA (col-4) */}
-          <motion.div
-            variants={fadeUp}
-            className="md:col-span-4 bg-white rounded-[2.5rem] p-7 sm:p-8 border border-slate-200/80 hover:border-amber-300 shadow-sm hover:shadow-xl transition-all flex flex-col justify-between group"
-          >
-            <div className="space-y-3">
-              <div className="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center">
-                <MessageCircle className="w-6 h-6" />
-              </div>
-              <h3 className="text-xl font-bold text-slate-900">BiSAPA</h3>
-              <p className="text-slate-600 text-xs leading-relaxed">
-                Penerjemah bahasa isyarat BISINDO AI dua arah secara real-time dari gestur kamera ke teks dan suara.
-              </p>
-            </div>
-            <div className="pt-4 mt-4 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-amber-600">
-              <span>Tunarungu &amp; Tunanetra</span>
-              <Link href="/fitur/bisapa" className="hover:underline flex items-center gap-1">Detail <ArrowRight className="w-3 h-3" /></Link>
-            </div>
-          </motion.div>
-
-          {/* 4. BiBACA (col-4) */}
-          <motion.div
-            variants={fadeUp}
-            className="md:col-span-4 bg-white rounded-[2.5rem] p-7 sm:p-8 border border-slate-200/80 hover:border-purple-300 shadow-sm hover:shadow-xl transition-all flex flex-col justify-between group"
-          >
-            <div className="space-y-3">
-              <div className="w-12 h-12 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center">
-                <BookOpen className="w-6 h-6" />
-              </div>
-              <h3 className="text-xl font-bold text-slate-900">BiBACA</h3>
-              <p className="text-slate-600 text-xs leading-relaxed">
-                Smart OCR yang memindai buku, papan petunjuk, dan dokumen cetak menjadi audio Bahasa Indonesia jernih.
-              </p>
-            </div>
-            <div className="pt-4 mt-4 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-purple-600">
-              <span>Tunanetra &amp; Disleksia</span>
-              <Link href="/fitur/bibaca" className="hover:underline flex items-center gap-1">Detail <ArrowRight className="w-3 h-3" /></Link>
-            </div>
-          </motion.div>
-
-          {/* 5. BiPINTAR (col-4) */}
-          <motion.div
-            variants={fadeUp}
-            className="md:col-span-4 bg-white rounded-[2.5rem] p-7 sm:p-8 border border-slate-200/80 hover:border-emerald-300 shadow-sm hover:shadow-xl transition-all flex flex-col justify-between group"
-          >
-            <div className="space-y-3">
-              <div className="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
-                <GraduationCap className="w-6 h-6" />
-              </div>
-              <h3 className="text-xl font-bold text-slate-900">BiPINTAR</h3>
-              <p className="text-slate-600 text-xs leading-relaxed">
-                Platform gamifikasi belajar bahasa isyarat BISINDO dan Isyarat Hijaiyah dengan kuis dan lencana prestasi.
-              </p>
-            </div>
-            <div className="pt-4 mt-4 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-emerald-600">
-              <span>Pelajar &amp; Komunitas</span>
-              <Link href="/fitur/bipintar" className="hover:underline flex items-center gap-1">Detail <ArrowRight className="w-3 h-3" /></Link>
-            </div>
-          </motion.div>
-
-          {/* 6. BiJALAN (col-12) */}
-          <motion.div
-            variants={fadeUp}
-            className="md:col-span-12 bg-gradient-to-br from-sky-50 to-white rounded-[2.5rem] p-8 sm:p-10 border border-sky-100 hover:border-sky-300 shadow-sm hover:shadow-xl transition-all flex flex-col md:flex-row items-center justify-between gap-8 group"
-          >
-            <div className="space-y-4 max-w-xl">
-              <div className="w-12 h-12 rounded-2xl bg-sky-500 text-white flex items-center justify-center shadow-md">
-                <Navigation className="w-6 h-6" />
-              </div>
-              <div>
-                <h3 className="text-2xl font-black text-slate-900">BiJALAN</h3>
-                <p className="text-xs font-bold text-sky-600 uppercase tracking-wider mt-0.5">
-                  Spatial Vision &amp; Haptic Guidance
-                </p>
-              </div>
-              <p className="text-slate-600 text-sm leading-relaxed">
-                Mata kedua Tunanetra saat berjalan di trotoar. Mendeteksi tiang, lubang, tangga, dan kendaraan secara visual lalu memberikan umpan balik getaran haptic dan suara terarah.
-              </p>
-            </div>
-
-            <div className="flex flex-col items-center sm:items-end gap-3 shrink-0">
-              <Link
-                href="/fitur/bijalan"
-                className="px-6 py-3 rounded-2xl bg-sky-600 text-white font-bold text-xs hover:bg-sky-700 shadow-md transition-all flex items-center gap-2"
-              >
-                <span>Buka Spesifikasi BiJALAN</span>
-                <ArrowRight className="w-4 h-4" />
-              </Link>
-            </div>
-          </motion.div>
-        </motion.div>
+        {/* Scroll-stacked pillar cards */}
+        <div className="relative">
+          {pillars.map((pillar, i) => (
+            <StackPanel key={pillar.key} pillar={pillar} index={i} />
+          ))}
+        </div>
       </div>
     </section>
   );
@@ -435,7 +455,12 @@ function StatsSection() {
   return (
     <section id="statistik" className="py-20 md:py-28 bg-slate-900 text-white relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 relative z-10" ref={ref}>
-        <div className="text-center max-w-2xl mx-auto mb-16 space-y-3">
+        <motion.div
+          variants={fadeUp}
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
+          className="text-center max-w-2xl mx-auto mb-16 space-y-3"
+        >
           <span className="text-xs font-bold uppercase tracking-wider text-[#00D4AA] bg-white/10 px-3.5 py-1.5 rounded-full">
             Dampak Riset &amp; Pengujian
           </span>
@@ -443,25 +468,33 @@ function StatsSection() {
             Kesiapan Teknologi Nyata <br />
             Untuk Indonesia Inklusif
           </h2>
-        </div>
+        </motion.div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+        <motion.div
+          variants={staggerContainer}
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
+          className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6"
+        >
           {[
             { value: `${stat1}+`, unit: "Juta", label: "Penyandang disabilitas di Indonesia yang membutuhkan akses setara" },
             { value: `${stat2}`, unit: "Pilar", label: "Modul AI cerdas terintegrasi dalam satu platform" },
             { value: `${stat3}%`, unit: "Akurasi", label: "Keberhasilan deteksi alfabet BISINDO on-device" },
             { value: `< ${stat4}`, unit: "Detik", label: "Latensi transmisi darurat SOS ke Command Center" },
           ].map((s, i) => (
-            <div
+            <motion.div
               key={i}
+              variants={scaleIn}
+              whileHover={{ y: -4 }}
+              transition={{ type: "spring", stiffness: 300, damping: 22 }}
               className="bg-white/5 border border-white/10 rounded-3xl p-6 sm:p-8 text-center flex flex-col items-center justify-center backdrop-blur-sm"
             >
               <div className="text-3xl sm:text-5xl font-black text-white">{s.value}</div>
               <div className="text-sm font-bold text-[#00D4AA] mt-1">{s.unit}</div>
               <p className="text-xs text-slate-400 mt-2 leading-relaxed">{s.label}</p>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
@@ -474,7 +507,13 @@ function ImpactSection() {
   return (
     <section id="dampak" className="py-20 md:py-28 px-4 sm:px-6">
       <div className="max-w-7xl mx-auto space-y-16">
-        <div className="text-center max-w-2xl mx-auto space-y-3">
+        <motion.div
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-60px" }}
+          className="text-center max-w-2xl mx-auto space-y-3"
+        >
           <span className="text-xs font-bold uppercase text-[#1B9981] bg-[#1B9981]/10 px-3.5 py-1.5 rounded-full">
             Dampak Sosial &amp; Inklusivitas
           </span>
@@ -484,9 +523,15 @@ function ImpactSection() {
           <p className="text-slate-500 text-sm leading-relaxed">
             Kami mengembangkan fitur dengan mendengarkan langsung pengalaman dan tantangan nyata penyandang disabilitas di lapangan.
           </p>
-        </div>
+        </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <motion.div
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-60px" }}
+          className="grid grid-cols-1 md:grid-cols-3 gap-6"
+        >
           {[
             {
               title: "Tunanetra & Low Vision",
@@ -518,8 +563,11 @@ function ImpactSection() {
           ].map((card, i) => {
             const Icon = card.icon;
             return (
-              <div
+              <motion.div
                 key={i}
+                variants={fadeUp}
+                whileHover={{ y: -6 }}
+                transition={{ type: "spring", stiffness: 300, damping: 22 }}
                 className="bg-white rounded-3xl p-8 border border-slate-200/80 shadow-sm hover:shadow-lg transition-all space-y-6"
               >
                 <div className="flex items-center gap-3.5">
@@ -537,10 +585,10 @@ function ImpactSection() {
                     </li>
                   ))}
                 </ul>
-              </div>
+              </motion.div>
             );
           })}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

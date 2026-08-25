@@ -5,7 +5,25 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@/lib/firebase";
+import { motion, AnimatePresence, Variants } from "framer-motion";
 import { Lock, Mail, ChevronRight, AlertCircle, ArrowLeft } from "lucide-react";
+
+const fadeUp: Variants = {
+  hidden: { opacity: 0, y: 18 },
+  visible: (i: number = 0) => ({
+    opacity: 1,
+    y: 0,
+    transition: { delay: i * 0.08, duration: 0.5, ease: [0.22, 1, 0.36, 1] },
+  }),
+};
+
+const staggerContainer: Variants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.07, delayChildren: 0.1 },
+  },
+};
 
 export default function LoginPage() {
   const router = useRouter();
@@ -46,33 +64,63 @@ export default function LoginPage() {
 
   return (
     <div className="flex flex-col h-full bg-white px-8 pt-16 pb-8 relative">
-      <Link href="/" className="absolute top-6 left-6 text-slate-500 hover:text-[#1B9981] transition-colors p-2 rounded-full hover:bg-slate-50">
-        <ArrowLeft className="w-6 h-6" />
-      </Link>
-      
-      <div className="flex-1">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
+      <motion.div
+        initial={{ opacity: 0, x: -10 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+      >
+        <Link
+          href="/"
+          className="absolute top-6 left-6 text-slate-500 hover:text-[#1B9981] transition-colors p-2 rounded-full hover:bg-slate-50"
+        >
+          <ArrowLeft className="w-6 h-6" />
+        </Link>
+      </motion.div>
+
+      <motion.div
+        variants={staggerContainer}
+        initial="hidden"
+        animate="visible"
+        className="flex-1"
+      >
+        <motion.img
+          variants={fadeUp}
+          custom={0}
           src="/logo/logo.png"
           alt="diBISAlitas"
           className="w-20 h-20 object-contain mb-6"
         />
-        <h1 className="text-3xl font-extrabold tracking-tight text-slate-900 mb-2">
+        <motion.h1
+          variants={fadeUp}
+          custom={1}
+          className="text-3xl font-extrabold tracking-tight text-slate-900 mb-2"
+        >
           Selamat Datang Kembali
-        </h1>
-        <p className="text-slate-600 font-medium mb-10">
+        </motion.h1>
+        <motion.p variants={fadeUp} custom={2} className="text-slate-600 font-medium mb-10">
           Masuk untuk mengakses layanan darurat dan fitur inklusif Anda.
-        </p>
+        </motion.p>
 
-        {error && (
-          <div id="login-error" role="alert" className="mb-6 flex items-center gap-3 p-4 bg-red-50 text-red-600 rounded-2xl text-sm font-medium">
-            <AlertCircle className="w-5 h-5 flex-shrink-0" />
-            <p>{error}</p>
-          </div>
-        )}
+        <AnimatePresence mode="wait">
+          {error && (
+            <motion.div
+              key="login-error"
+              id="login-error"
+              role="alert"
+              initial={{ opacity: 0, y: -10, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -10, scale: 0.98 }}
+              transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+              className="mb-6 flex items-center gap-3 p-4 bg-red-50 text-red-600 rounded-2xl text-sm font-medium"
+            >
+              <AlertCircle className="w-5 h-5 flex-shrink-0" />
+              <p>{error}</p>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
-        <form onSubmit={handleLogin} className="space-y-5">
-          <div>
+        <motion.form variants={fadeUp} custom={3} onSubmit={handleLogin} className="space-y-5">
+          <motion.div variants={fadeUp} custom={4}>
             <label className="block text-sm font-bold text-slate-700 mb-2">Email</label>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
@@ -88,9 +136,9 @@ export default function LoginPage() {
                 aria-describedby={error ? "login-error" : undefined}
               />
             </div>
-          </div>
+          </motion.div>
 
-          <div>
+          <motion.div variants={fadeUp} custom={5}>
             <label className="block text-sm font-bold text-slate-700 mb-2">Kata Sandi</label>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
@@ -106,20 +154,29 @@ export default function LoginPage() {
                 aria-describedby={error ? "login-error" : undefined}
               />
             </div>
-          </div>
+          </motion.div>
 
-          <button
+          <motion.button
+            variants={fadeUp}
+            custom={6}
+            whileHover={{ scale: 1.015 }}
+            whileTap={{ scale: 0.98 }}
             type="submit"
             disabled={isLoading}
             className="w-full py-4 mt-4 bg-[#00B894] hover:bg-[#00a383] disabled:opacity-70 text-white rounded-2xl font-bold text-lg shadow-sm hover:shadow-md transition-all flex items-center justify-center gap-2"
           >
             {isLoading ? "Memproses..." : "Masuk"}
             {!isLoading && <ChevronRight className="w-5 h-5" />}
-          </button>
-        </form>
-      </div>
+          </motion.button>
+        </motion.form>
+      </motion.div>
 
-      <div className="mt-8 flex flex-col items-center gap-4 text-center">
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.6, duration: 0.5 }}
+        className="mt-8 flex flex-col items-center gap-4 text-center"
+      >
         <button
           onClick={() => router.push("/app/panduan")}
           className="text-slate-500 hover:text-[#1B9981] text-sm font-semibold transition-colors flex items-center justify-center gap-2 px-4 py-2 rounded-full hover:bg-slate-50"
@@ -133,7 +190,7 @@ export default function LoginPage() {
             Daftar di sini
           </Link>
         </p>
-      </div>
+      </motion.div>
     </div>
   );
 }
