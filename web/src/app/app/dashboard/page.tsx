@@ -419,7 +419,7 @@ export default function DashboardPage() {
 }
 
 function FeatureCard({ href, title, desc, icon, bg, buttonColor }: { href: string; title: string; desc: string; icon: React.ReactNode; bg: string; buttonColor: string }) {
-  const { reduceMotion } = useAccessibility();
+  const { reduceMotion, highContrast } = useAccessibility();
   const itemVariants: Variants = {
     hidden: { opacity: 0, y: reduceMotion ? 0 : 20 },
     show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 300, damping: 24, duration: reduceMotion ? 0 : undefined } }
@@ -474,7 +474,7 @@ function FeatureCard({ href, title, desc, icon, bg, buttonColor }: { href: strin
         href={href}
         className="block group -webkit-tap-highlight-color-transparent"
       >
-        <div className="bg-transparent p-4 rounded-[24px] shadow-3d shadow-3d-hover shadow-3d-active border border-slate-300 flex items-center gap-4 relative overflow-hidden">
+        <div className={`bg-transparent p-4 rounded-[24px] shadow-3d shadow-3d-hover shadow-3d-active flex items-center gap-4 relative overflow-hidden ${highContrast ? 'border border-slate-300' : ''}`}>
 
           <div className={`w-14 h-14 ${bg} rounded-[18px] flex items-center justify-center shrink-0 icon-3d`}>
             {icon}
@@ -503,7 +503,7 @@ function FeatureCard({ href, title, desc, icon, bg, buttonColor }: { href: strin
 }
 
 function CourseCard({ title, category, duration, image }: { title: string; category: string; duration: string; image: string }) {
-  const { reduceMotion } = useAccessibility();
+  const { reduceMotion, highContrast } = useAccessibility();
   const itemVariants: Variants = {
     hidden: { opacity: 0, x: reduceMotion ? 0 : 20 },
     show: { opacity: 1, x: 0, transition: { type: "spring", stiffness: 300, damping: 24, duration: reduceMotion ? 0 : undefined } }
@@ -512,7 +512,7 @@ function CourseCard({ title, category, duration, image }: { title: string; categ
   return (
     <motion.div variants={itemVariants}>
       <Link href="/app/bipintar" className="snap-start shrink-0 w-[200px] block group -webkit-tap-highlight-color-transparent">
-      <div className="bg-transparent rounded-[20px] p-2.5 shadow-3d shadow-3d-hover shadow-3d-active border border-slate-300">
+      <div className={`bg-transparent rounded-[20px] p-2.5 shadow-3d shadow-3d-hover shadow-3d-active ${highContrast ? 'border border-slate-300' : ''}`}>
         <div className="w-full h-[120px] rounded-[14px] mb-3 relative overflow-hidden icon-3d">
           <div className="absolute inset-0 bg-slate-200" style={{ backgroundImage: `url('${image}')`, backgroundSize: 'cover', backgroundPosition: 'center' }}></div>
           <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent mix-blend-multiply"></div>
@@ -537,7 +537,7 @@ function CourseCard({ title, category, duration, image }: { title: string; categ
 }
 
 function CommunityCard({ title, date, category }: { title: string; date: string; category: string }) {
-  const { reduceMotion } = useAccessibility();
+  const { reduceMotion, highContrast } = useAccessibility();
   const itemVariants: Variants = {
     hidden: { opacity: 0, y: reduceMotion ? 0 : 20 },
     show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 300, damping: 24, duration: reduceMotion ? 0 : undefined } }
@@ -557,7 +557,7 @@ function CommunityCard({ title, date, category }: { title: string; date: string;
   return (
     <motion.div variants={itemVariants}>
       <Link href="/app/komunitas" className="block group -webkit-tap-highlight-color-transparent">
-      <div className="bg-transparent p-4 rounded-[24px] shadow-3d shadow-3d-hover shadow-3d-active border border-slate-300 flex items-center gap-4 transition-all">
+      <div className={`bg-transparent p-4 rounded-[24px] shadow-3d shadow-3d-hover shadow-3d-active flex items-center gap-4 transition-all ${highContrast ? 'border border-slate-300' : ''}`}>
         <div className={`w-14 h-14 ${bgGradient} rounded-[16px] flex items-center justify-center shrink-0 bubble-3d border-none text-white`}>
           {icon}
         </div>

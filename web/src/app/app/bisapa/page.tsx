@@ -25,6 +25,8 @@ export default function BiSapaPage() {
   const [topText, setTopText] = useState("");
   const [bottomText, setBottomText] = useState("");
   const [isListening, setIsListening] = useState(false);
+  const [showCustomKeyboard, setShowCustomKeyboard] = useState(false);
+  const [isUpper, setIsUpper] = useState(false);
 
   const recognitionRef = useRef<any>(null);
 
@@ -104,58 +106,145 @@ export default function BiSapaPage() {
     window.speechSynthesis.speak(utterance);
   };
 
+  const handleCustomKey = (key: string) => {
+    if (key === '⌫') {
+      setTopText(prev => prev.slice(0, -1));
+    } else if (key === 'Spasi') {
+      setTopText(prev => prev + ' ');
+    } else if (key === 'Selesai') {
+      setShowCustomKeyboard(false);
+      speakText(topText);
+    } else if (key === '⇧') {
+      setIsUpper(!isUpper);
+    } else if (key === '123') {
+      // Untuk sederhananya, kita abaikan switch ke angka atau bisa implementasi nanti
+    } else {
+      setTopText(prev => prev + (isUpper ? key.toUpperCase() : key.toLowerCase()));
+      if (isUpper) setIsUpper(false); // auto lowercase after 1 char like mobile
+    }
+  };
+
+  const QWERTY = [
+    ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
+    ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l'],
+    ['⇧', 'z', 'x', 'c', 'v', 'b', 'n', 'm', '⌫'],
+    ['123', 'Spasi', 'Selesai']
+  ];
+
   return (
-    <div className={`flex flex-col h-full bg-[#f4f6fc] font-sans ${colorfulMode ? "selection:bg-sky-500/20" : "selection:bg-[#1B9981]/20"}`}>
+    <div 
+      className={`flex flex-col h-full bg-[#f4f6fc] font-sans ${colorfulMode ? "selection:bg-sky-500/20" : "selection:bg-[#1B9981]/20"}`}
+      onClick={() => {
+        if (showCustomKeyboard) setShowCustomKeyboard(false);
+      }}
+    >
       
       {/* ── TOP SECTION (Rotated 180) ── */}
-      <div className={`flex-[0.45] flex flex-col p-6 pt-10 pb-12 bg-gradient-to-br ${themeGrad} rotate-180 rounded-b-[2.5rem] shadow-3d z-20 border-b-2 border-white/40`}>
-        <div className="w-full h-full flex flex-col justify-between max-w-md mx-auto">
-          <div className="text-white/90 font-black tracking-wide text-[12px] uppercase flex items-center justify-center gap-2 drop-shadow-md">
-            <Mic className="w-4 h-4" strokeWidth={2.5} /> Area Suara (Tunanetra)
-          </div>
-          
-          <textarea
-            value={topText}
-            onChange={(e) => setTopText(e.target.value)}
-            placeholder="Ketuk tombol mic untuk bicara..."
-            className="w-full flex-1 my-5 bg-white/10 border-none rounded-[28px] p-6 text-white placeholder-white/60 focus:bg-white/20 focus:outline-none focus:ring-0 resize-none text-[24px] font-bold leading-relaxed text-center shadow-[inset_2px_2px_10px_rgba(0,0,0,0.1)] transition-all"
-            readOnly={isListening}
-          />
-
-          <div className="flex justify-center items-center gap-5">
-            <button
-              onClick={() => speakText(topText)}
-              className="w-14 h-14 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center bubble-3d border-none transition-all backdrop-blur-md active:scale-95"
-            >
-              <Volume2 className="w-6 h-6 text-white drop-shadow-md" strokeWidth={2.5} />
-            </button>
-            
-            {/* Main Action Button with Pulse if listening */}
-            <div className="relative">
-              {isListening && (
-                <span className="absolute inset-0 rounded-full bg-rose-400 animate-ping opacity-75"></span>
-              )}
-              <button
-                onClick={toggleListen}
-                className={`relative w-[72px] h-[72px] rounded-full flex items-center justify-center bubble-3d border-none transition-all active:scale-95 backdrop-blur-md
-                  ${isListening ? "bg-gradient-to-b from-rose-500 to-rose-600 shadow-[0_0_30px_rgba(244,63,94,0.6)]" : "bg-white/20 hover:bg-white/30"}`}
-              >
-                {isListening ? (
-                  <MicOff className="w-9 h-9 text-white drop-shadow-md" strokeWidth={2.5} />
-                ) : (
-                  <Mic className="w-9 h-9 text-white drop-shadow-md" strokeWidth={2.5} />
-                )}
-              </button>
+      <div className={`relative flex-[0.45] flex flex-col bg-gradient-to-br ${themeGrad} rotate-180 rounded-b-[2.5rem] shadow-3d z-20 border-b-2 border-white/40 overflow-hidden`}>
+        
+        {showCustomKeyboard ? (
+          <div className="absolute inset-0 z-50 flex flex-col">
+            {/* Backdrop for closing when clicking outside the keyboard area */}
+            <div className="flex-1 bg-black/40 backdrop-blur-[2px]">
+              {/* Text display area floating above keyboard */}
+              <div className="w-full h-full flex flex-col p-4 pb-2 justify-end">
+                <div 
+                  className="w-full bg-white rounded-2xl p-4 shadow-lg text-slate-800 text-[20px] font-medium break-words leading-snug min-h-[60px] flex items-center justify-center"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  {topText}<span className="animate-pulse font-light ml-0.5 text-slate-400">|</span>
+                </div>
+              </div>
             </div>
 
-            <button
-              onClick={() => setTopText("")}
-              className="w-14 h-14 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center bubble-3d border-none transition-all backdrop-blur-md active:scale-95"
-            >
-              <XCircle className="w-6 h-6 text-white drop-shadow-md" strokeWidth={2.5} />
-            </button>
+            {/* Keyboard Area (iOS Style) */}
+            <div className="bg-[#d1d5db] w-full p-2 pb-4 sm:pb-6 flex flex-col gap-2.5 shadow-[0_-4px_10px_rgba(0,0,0,0.1)] rounded-t-xl" onClick={(e) => e.stopPropagation()}>
+              {QWERTY.map((row, i) => (
+                <div key={i} className={`flex justify-center gap-1.5 px-0.5 ${i === 1 ? 'px-4' : ''}`}>
+                  {row.map(k => {
+                    const isControl = ['⇧', '⌫', '123', 'Selesai'].includes(k);
+                    let btnClass = "h-11 rounded-[6px] font-medium flex items-center justify-center shadow-[0_1.2px_0_rgba(0,0,0,0.3)] text-[19px] active:translate-y-[1px] active:shadow-none transition-all";
+                    
+                    if (isControl) {
+                      btnClass += " bg-[#AEB3BC] text-slate-800";
+                    } else if (k === 'Spasi') {
+                      btnClass += " bg-white text-slate-800";
+                    } else {
+                      btnClass += " bg-white text-black";
+                    }
+
+                    if (k === 'Spasi') btnClass += " flex-[4]";
+                    else if (k === 'Selesai') btnClass += " flex-[1.5] bg-[#007AFF] text-white font-bold text-[15px]";
+                    else if (k === '⇧' || k === '⌫' || k === '123') btnClass += " flex-[1.5] text-[15px]";
+                    else btnClass += " flex-1 max-w-[40px]";
+
+                    const displayKey = isUpper && !isControl ? k.toUpperCase() : k;
+
+                    return (
+                      <button
+                        key={k}
+                        onClick={() => handleCustomKey(k)}
+                        className={btnClass}
+                      >
+                        {displayKey}
+                      </button>
+                    );
+                  })}
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
+        ) : (
+          <div className="w-full h-full flex flex-col justify-between max-w-md mx-auto p-6 pt-10 pb-12">
+            <div className="text-white/90 font-black tracking-wide text-[12px] uppercase flex items-center justify-center gap-2 drop-shadow-md">
+              <Mic className="w-4 h-4" strokeWidth={2.5} /> Area Suara (Tunanetra)
+            </div>
+            
+            <textarea
+              value={topText}
+              readOnly
+              onClick={(e) => { 
+                e.stopPropagation();
+                if (!isListening) setShowCustomKeyboard(true); 
+              }}
+              placeholder="Ketuk di sini untuk mengetik..."
+              className="w-full flex-1 my-5 bg-white/10 border-none rounded-[28px] p-6 text-white placeholder-white/60 focus:bg-white/20 focus:outline-none focus:ring-0 resize-none text-[24px] font-bold leading-relaxed text-center shadow-[inset_2px_2px_10px_rgba(0,0,0,0.1)] transition-all cursor-pointer"
+            />
+
+            <div className="flex justify-center items-center gap-5">
+              <button
+                onClick={() => speakText(topText)}
+                className="w-14 h-14 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center bubble-3d border-none transition-all backdrop-blur-md active:scale-95"
+              >
+                <Volume2 className="w-6 h-6 text-white drop-shadow-md" strokeWidth={2.5} />
+              </button>
+              
+              <div className="relative">
+                {isListening && (
+                  <span className="absolute inset-0 rounded-full bg-rose-400 animate-ping opacity-75"></span>
+                )}
+                <button
+                  onClick={toggleListen}
+                  className={`relative w-[72px] h-[72px] rounded-full flex items-center justify-center bubble-3d border-none transition-all active:scale-95 backdrop-blur-md
+                    ${isListening ? "bg-gradient-to-b from-rose-500 to-rose-600 shadow-[0_0_30px_rgba(244,63,94,0.6)]" : "bg-white/20 hover:bg-white/30"}`}
+                >
+                  {isListening ? (
+                    <MicOff className="w-9 h-9 text-white drop-shadow-md" strokeWidth={2.5} />
+                  ) : (
+                    <Mic className="w-9 h-9 text-white drop-shadow-md" strokeWidth={2.5} />
+                  )}
+                </button>
+              </div>
+
+              <button
+                onClick={() => setTopText("")}
+                className="w-14 h-14 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center bubble-3d border-none transition-all backdrop-blur-md active:scale-95"
+              >
+                <XCircle className="w-6 h-6 text-white drop-shadow-md" strokeWidth={2.5} />
+              </button>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* ── BOTTOM SECTION (Normal) ── */}
