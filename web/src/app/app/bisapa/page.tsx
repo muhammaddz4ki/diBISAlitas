@@ -65,6 +65,23 @@ export default function BiSapaPage() {
         setIsListening(false);
       };
     }
+
+    const handleStartMic = () => {
+      if (recognitionRef.current) {
+        setTopText("");
+        try {
+          recognitionRef.current.start();
+          setIsListening(true);
+        } catch (e) {
+          // ignore if already started
+        }
+      }
+    };
+    
+    window.addEventListener('bisapa:start_mic', handleStartMic);
+    return () => {
+      window.removeEventListener('bisapa:start_mic', handleStartMic);
+    };
   }, []);
 
   const toggleListen = () => {

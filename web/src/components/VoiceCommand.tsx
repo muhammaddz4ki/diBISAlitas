@@ -20,7 +20,7 @@ const COMMANDS: Cmd[] = [
   { keys: ["peta", "lokasi", "rintangan"], path: "/app/peta", label: "Peta Komunitas" },
   { keys: ["profil", "akun", "pengaturan", "setelan"], path: "/app/profile", label: "Profil" },
   { keys: ["darurat", "tolong", "panik", "bahaya", "bisafe"], path: "/app/bisafe", label: "BiSAFE Darurat" },
-  { keys: ["sapa", "bisapa", "ngobrol", "obrol", "percakapan", "komunikasi", "terjemah"], path: "/app/bisapa", label: "BiSAPA" },
+  { keys: ["sapa", "bisapa", "ngobrol", "obrol", "percakapan", "komunikasi", "terjemah", "bicara", "kirim pesan"], path: "/app/bisapa", label: "BiSAPA" },
   { keys: ["baca", "membaca", "bibaca", "pindai", "dokumen", "tulisan", "teks"], path: "/app/bibaca", label: "BiBACA" },
   { keys: ["jalan", "bijalan", "navigasi", "rute"], path: "/app/bijalan", label: "BiJALAN" },
   { keys: ["pintar", "bipintar", "belajar", "kuis", "materi", "isyarat", "latihan"], path: "/app/bipintar", label: "BiPINTAR" },
@@ -102,7 +102,31 @@ export default function VoiceCommand() {
   };
 
   const buzz = (p: number | number[]) => {
-    if (typeof navigator !== "undefined" && "vibrate" in navigator) navigator.vibrate(p);
+    if (typeof navigator !== "undefined" && navigator.vibrate) {
+      navigator.vibrate(p);
+    } else if (typeof window !== "undefined") {
+      try {
+        const AudioContext = window.AudioContext || (window as any).webkitAudioContext;
+        if (AudioContext) {
+          const ctx = new AudioContext();
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          
+          osc.type = "sine";
+          osc.frequency.setValueAtTime(800, ctx.currentTime);
+          
+          const duration = Array.isArray(p) ? p.reduce((a,b)=>a+b, 0) : p;
+          
+          gain.gain.setValueAtTime(0.1, ctx.currentTime);
+          osc.start();
+          osc.stop(ctx.currentTime + (duration / 1000));
+        }
+      } catch (e) {
+        // ignore
+      }
+    }
   };
 
   const handleCommand = (t: string) => {
@@ -119,6 +143,12 @@ export default function VoiceCommand() {
       speak(`Membuka ${match.label}`);
       buzz(40);
       router.push(match.path);
+      
+      if (match.path === "/app/bisapa" && (t.includes("bicara") || t.includes("kirim pesan") || t.includes("ngobrol"))) {
+        setTimeout(() => {
+          window.dispatchEvent(new CustomEvent('bisapa:start_mic'));
+        }, 1500);
+      }
     } else {
       speak("Perintah tidak dikenali. Ucapkan bantuan untuk mendengar daftar perintah.");
       buzz([30, 40, 30]);

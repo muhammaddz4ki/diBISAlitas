@@ -55,6 +55,11 @@ export default function BibacaScreen() {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
+    if (typeof window !== "undefined" && "speechSynthesis" in window) {
+      const u = new SpeechSynthesisUtterance("Kamera sedang disiapkan, mohon tunggu");
+      u.lang = "id-ID";
+      window.speechSynthesis.speak(u);
+    }
     startCamera();
     return () => {
       stopCamera();

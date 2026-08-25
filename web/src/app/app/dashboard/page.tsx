@@ -1,12 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth, db } from "@/lib/firebase";
 import { collection, onSnapshot, query, orderBy, limit, doc } from "firebase/firestore";
 import Link from "next/link";
-import { ShieldAlert, MessageCircle, BookOpen, Navigation, Bell, ChevronRight, PlayCircle, Clock, Users, Calendar, ArrowRight, Glasses, Info, Siren, AlertTriangle } from "lucide-react";
+import { ShieldAlert, MessageCircle, BookOpen, Navigation, Bell, ChevronRight, ChevronLeft, PlayCircle, Clock, Users, Calendar, ArrowRight, Glasses, Info, Siren, AlertTriangle } from "lucide-react";
 import { motion, AnimatePresence, Variants } from "framer-motion";
 import { useAccessibility } from "@/lib/AccessibilityContext";
 
@@ -24,8 +24,16 @@ export default function DashboardPage() {
   const [notifs, setNotifs] = useState<any[]>([]);
   const [showNotif, setShowNotif] = useState(false);
   const [lastSeen, setLastSeen] = useState<number>(0);
+  const carouselRef = useRef<HTMLDivElement>(null);
 
   const { reduceMotion } = useAccessibility();
+
+  const scrollCarousel = (dir: "left" | "right") => {
+    if (carouselRef.current) {
+      const scrollAmount = dir === "left" ? -220 : 220;
+      carouselRef.current.scrollBy({ left: scrollAmount, behavior: "smooth" });
+    }
+  };
 
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
@@ -139,6 +147,15 @@ export default function DashboardPage() {
     }
   };
 
+  useEffect(() => {
+    if (showNotif) {
+      const timer = setTimeout(() => {
+        document.getElementById('notif-panel')?.focus();
+      }, 50);
+      return () => clearTimeout(timer);
+    }
+  }, [showNotif]);
+
   if (isLoading) {
     return (
       <div className="min-h-full bg-white flex items-center justify-center">
@@ -206,12 +223,15 @@ export default function DashboardPage() {
           <>
             <div className="fixed inset-0 z-40" onClick={() => setShowNotif(false)} />
             <motion.div
+              id="notif-panel"
+              tabIndex={-1}
               initial={{ opacity: 0, y: -8, scale: 0.98 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -8, scale: 0.98 }}
               transition={{ duration: 0.15 }}
-              className="absolute right-6 top-[84px] w-[300px] max-h-[380px] overflow-y-auto bg-white rounded-2xl shadow-[0_20px_48px_rgba(0,0,0,0.25)] z-50 text-slate-800 border border-slate-100"
+              className="absolute right-6 top-[84px] w-[300px] max-h-[380px] overflow-y-auto bg-white rounded-2xl shadow-[0_20px_48px_rgba(0,0,0,0.25)] z-50 text-slate-800 border border-slate-100 focus:outline-none"
               role="dialog"
+              aria-modal="true"
               aria-label="Panel notifikasi"
             >
               <div className="px-4 py-3 border-b border-slate-100 flex items-center justify-between sticky top-0 bg-white">
@@ -312,16 +332,35 @@ export default function DashboardPage() {
         >
           <div className="flex items-center justify-between px-1 mb-3">
             <h2 className="text-[17px] font-bold text-slate-800 tracking-tight text-3d">Materi BiPINTAR</h2>
-            <Link href="/app/bipintar" className="text-[13px] font-bold text-[#1B9981] flex items-center gap-1 hover:gap-1.5 transition-all text-3d shadow-3d px-3 py-1 rounded-full">
-              Lihat Semua <ArrowRight className="w-3.5 h-3.5" />
-            </Link>
+            <div className="flex gap-2 items-center">
+              <button 
+                onClick={() => scrollCarousel('left')} 
+                aria-label="Geser ke materi sebelumnya"
+                className="w-7 h-7 flex items-center justify-center rounded-full bg-white shadow-3d hover:scale-105 transition-transform"
+              >
+                <ChevronLeft className="w-4 h-4 text-slate-600" />
+              </button>
+              <button 
+                onClick={() => scrollCarousel('right')} 
+                aria-label="Geser ke materi berikutnya"
+                className="w-7 h-7 flex items-center justify-center rounded-full bg-white shadow-3d hover:scale-105 transition-transform"
+              >
+                <ChevronRight className="w-4 h-4 text-slate-600" />
+              </button>
+              <Link href="/app/bipintar" className="ml-2 text-[13px] font-bold text-[#1B9981] flex items-center gap-1 hover:gap-1.5 transition-all text-3d shadow-3d px-3 py-1 rounded-full">
+                Lihat Semua <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
+            </div>
           </div>
 
           <motion.div
+            ref={carouselRef}
+            role="region"
+            aria-label="Karousel Materi BiPINTAR"
             variants={containerVariants}
             initial="hidden"
             animate="show"
-            className="flex gap-4 overflow-x-auto pb-4 pt-1 snap-x -mx-6 px-6 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none']"
+            className="flex gap-4 overflow-x-auto pb-4 pt-1 snap-x -mx-6 px-6 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none'] scroll-smooth"
           >
             {courses.length > 0 ? (
               courses.map(course => (
@@ -435,7 +474,7 @@ function FeatureCard({ href, title, desc, icon, bg, buttonColor }: { href: strin
         href={href}
         className="block group -webkit-tap-highlight-color-transparent"
       >
-        <div className="bg-transparent p-4 rounded-[24px] shadow-3d shadow-3d-hover shadow-3d-active flex items-center gap-4 relative overflow-hidden">
+        <div className="bg-transparent p-4 rounded-[24px] shadow-3d shadow-3d-hover shadow-3d-active border border-slate-300 flex items-center gap-4 relative overflow-hidden">
 
           <div className={`w-14 h-14 ${bg} rounded-[18px] flex items-center justify-center shrink-0 icon-3d`}>
             {icon}
@@ -473,7 +512,7 @@ function CourseCard({ title, category, duration, image }: { title: string; categ
   return (
     <motion.div variants={itemVariants}>
       <Link href="/app/bipintar" className="snap-start shrink-0 w-[200px] block group -webkit-tap-highlight-color-transparent">
-      <div className="bg-transparent rounded-[20px] p-2.5 shadow-3d shadow-3d-hover shadow-3d-active">
+      <div className="bg-transparent rounded-[20px] p-2.5 shadow-3d shadow-3d-hover shadow-3d-active border border-slate-300">
         <div className="w-full h-[120px] rounded-[14px] mb-3 relative overflow-hidden icon-3d">
           <div className="absolute inset-0 bg-slate-200" style={{ backgroundImage: `url('${image}')`, backgroundSize: 'cover', backgroundPosition: 'center' }}></div>
           <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent mix-blend-multiply"></div>
@@ -518,7 +557,7 @@ function CommunityCard({ title, date, category }: { title: string; date: string;
   return (
     <motion.div variants={itemVariants}>
       <Link href="/app/komunitas" className="block group -webkit-tap-highlight-color-transparent">
-      <div className="bg-transparent p-4 rounded-[24px] shadow-3d shadow-3d-hover shadow-3d-active border border-white flex items-center gap-4 transition-all">
+      <div className="bg-transparent p-4 rounded-[24px] shadow-3d shadow-3d-hover shadow-3d-active border border-slate-300 flex items-center gap-4 transition-all">
         <div className={`w-14 h-14 ${bgGradient} rounded-[16px] flex items-center justify-center shrink-0 bubble-3d border-none text-white`}>
           {icon}
         </div>

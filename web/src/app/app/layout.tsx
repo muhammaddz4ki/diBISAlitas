@@ -134,8 +134,8 @@ function NavItem({ href, icon, label, isActive }: {
         {isActive ? React.cloneElement(icon as React.ReactElement<any>, { className: "w-[22px] h-[22px] text-white drop-shadow-md transition-all duration-300", strokeWidth: 2.5 }) : React.cloneElement(icon as React.ReactElement<any>, { className: "w-6 h-6 transition-all duration-300", strokeWidth: 2 })}
       </div>
       <span className={`
-        text-[10px] tracking-tight z-20 mt-0.5
-        ${isActive ? "font-bold text-[#1B9981]" : "font-medium text-slate-500"}
+        text-[12px] tracking-tight z-20 mt-0.5 whitespace-nowrap
+        ${isActive ? "font-bold text-[#1B9981] opacity-100 translate-y-0" : "font-medium text-slate-500 opacity-0 translate-y-2 pointer-events-none"}
       `} style={{
         transition: isActive 
           ? 'all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) 0.15s' 

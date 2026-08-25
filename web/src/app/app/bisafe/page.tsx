@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { auth, db } from "@/lib/firebase";
 import {
   collection,
@@ -109,6 +109,29 @@ function DaruratTab() {
   const { reduceMotion } = useAccessibility();
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [message, setMessage] = useState("");
+  const [pressProgress, setPressProgress] = useState(0);
+  const pressTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const pressIntervalRef = useRef<NodeJS.Timeout | null>(null);
+
+  const startPress = () => {
+    if (status === "loading" || status === "success") return;
+    setPressProgress(0);
+    const startTime = Date.now();
+    pressIntervalRef.current = setInterval(() => {
+      const elapsed = Date.now() - startTime;
+      setPressProgress(Math.min(100, (elapsed / 1500) * 100));
+    }, 50);
+    pressTimerRef.current = setTimeout(() => {
+      cancelPress();
+      handlePanic();
+    }, 1500);
+  };
+
+  const cancelPress = () => {
+    if (pressTimerRef.current) clearTimeout(pressTimerRef.current);
+    if (pressIntervalRef.current) clearInterval(pressIntervalRef.current);
+    setPressProgress(0);
+  };
 
   const handlePanic = () => {
     if (status === "loading") return;
@@ -207,13 +230,24 @@ function DaruratTab() {
         
         <motion.button
           whileTap={{ scale: reduceMotion ? 1 : 0.92 }}
-          onClick={handlePanic}
-          className={`relative z-10 w-56 h-56 sm:w-64 sm:h-64 rounded-full flex flex-col items-center justify-center transition-all duration-500 ease-out outline-none shadow-3d shadow-3d-active
+          onMouseDown={startPress}
+          onMouseUp={cancelPress}
+          onMouseLeave={cancelPress}
+          onTouchStart={startPress}
+          onTouchEnd={cancelPress}
+          className={`relative z-10 w-56 h-56 sm:w-64 sm:h-64 rounded-full flex flex-col items-center justify-center transition-all duration-500 ease-out outline-none shadow-3d shadow-3d-active overflow-hidden
             ${status === "success"
               ? "bg-gradient-to-br from-[#1B9981] to-[#00D4AA]"
               : "bg-gradient-to-br from-rose-500 to-rose-700"
             }`}
         >
+          {/* Progress fill */}
+          {pressProgress > 0 && status !== "success" && status !== "loading" && (
+            <div 
+              className="absolute bottom-0 left-0 right-0 bg-black/20 transition-all duration-75 ease-linear pointer-events-none" 
+              style={{ height: `${pressProgress}%` }}
+            />
+          )}
           <div className="absolute inset-0 rounded-full bg-white/10" style={{ boxShadow: "inset 0 10px 20px rgba(255,255,255,0.4)" }} />
         {status === "success" ? (
           <motion.div initial={{ scale: reduceMotion ? 1 : 0 }} animate={{ scale: 1 }} transition={{ type: "spring", stiffness: 200, damping: 20, duration: reduceMotion ? 0 : undefined }} className="flex flex-col items-center">
@@ -237,7 +271,7 @@ function DaruratTab() {
 
 
       <p className="text-slate-500 font-semibold text-[13px] mt-12 text-center max-w-[280px] text-3d leading-relaxed">
-        Tekan tombol untuk mengirimkan koordinat lokasi Anda saat ini ke pusat kendali.
+        Tekan dan tahan tombol selama 1.5 detik untuk mengirimkan koordinat lokasi Anda saat ini ke pusat kendali.
       </p>
 
       <div className="absolute bottom-6 left-0 w-full flex items-center justify-center pointer-events-none px-6 z-50" aria-live="assertive" role="alert">
