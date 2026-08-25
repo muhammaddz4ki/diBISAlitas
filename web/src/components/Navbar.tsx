@@ -20,6 +20,7 @@ import {
   Sparkles,
   Zap,
 } from "lucide-react";
+import ThemeToggle from "@/components/ThemeToggle";
 
 export const FEATURES_LIST = [
   {
@@ -124,7 +125,7 @@ export default function Navbar() {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
-          ? "bg-white/90 backdrop-blur-xl shadow-[0_4px_30px_rgba(0,0,0,0.06)] border-b border-slate-100 py-3"
+          ? "bg-white/90 dark:bg-[#090e17]/90 backdrop-blur-xl shadow-[0_4px_30px_rgba(0,0,0,0.06)] dark:shadow-[0_4px_30px_rgba(0,0,0,0.4)] border-b border-slate-100 dark:border-slate-800/80 py-3"
           : "bg-transparent py-4"
       }`}
     >
@@ -138,10 +139,10 @@ export default function Navbar() {
             className="w-9 h-9 object-contain group-hover:scale-105 transition-transform duration-300"
           />
           <div className="flex flex-col">
-            <span className="text-xl font-extrabold tracking-tight text-slate-900 leading-none">
+            <span className="text-xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-none">
               di<span className="text-[#1B9981]">BISA</span>litas
             </span>
-            <span className="text-[10px] font-semibold text-slate-400 tracking-wider">
+            <span className="text-[10px] font-semibold text-slate-400 dark:text-slate-500 tracking-wider">
               AI INCLUSIVITY PLATFORM
             </span>
           </div>
@@ -152,13 +153,15 @@ export default function Navbar() {
           <Link
             href="/"
             className={`relative px-3.5 py-2 rounded-xl text-sm font-semibold transition-colors ${
-              pathname === "/" ? "text-[#1B9981] font-bold" : "text-slate-600 hover:text-[#1B9981]"
+              pathname === "/"
+                ? "text-[#1B9981] font-bold"
+                : "text-slate-600 dark:text-slate-300 hover:text-[#1B9981] dark:hover:text-[#00D4AA]"
             }`}
           >
             {pathname === "/" && (
               <motion.span
                 layoutId="navbar-active-pill"
-                className="absolute inset-0 rounded-xl bg-[#1B9981]/10"
+                className="absolute inset-0 rounded-xl bg-[#1B9981]/10 dark:bg-[#1B9981]/20"
                 transition={{ type: "spring", stiffness: 380, damping: 32 }}
               />
             )}
@@ -176,13 +179,13 @@ export default function Navbar() {
               className={`relative px-3.5 py-2 rounded-xl text-sm font-semibold transition-colors flex items-center gap-1.5 ${
                 pathname.startsWith("/fitur")
                   ? "text-[#1B9981] font-bold"
-                  : "text-slate-600 hover:text-[#1B9981]"
+                  : "text-slate-600 dark:text-slate-300 hover:text-[#1B9981] dark:hover:text-[#00D4AA]"
               }`}
             >
               {pathname.startsWith("/fitur") && (
                 <motion.span
                   layoutId="navbar-active-pill"
-                  className="absolute inset-0 rounded-xl bg-[#1B9981]/10"
+                  className="absolute inset-0 rounded-xl bg-[#1B9981]/10 dark:bg-[#1B9981]/20"
                   transition={{ type: "spring", stiffness: 380, damping: 32 }}
                 />
               )}
@@ -202,17 +205,17 @@ export default function Navbar() {
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: 10, scale: 0.98 }}
                   transition={{ duration: 0.18, ease: "easeOut" }}
-                  className="absolute top-full left-1/2 -translate-x-1/2 mt-1 w-[680px] bg-white rounded-3xl p-5 shadow-[0_20px_60px_rgba(0,0,0,0.14)] border border-slate-100 grid grid-cols-2 gap-2.5 z-50"
+                  className="absolute top-full left-1/2 -translate-x-1/2 mt-1 w-[680px] bg-white dark:bg-[#0F172A] rounded-3xl p-5 shadow-[0_20px_60px_rgba(0,0,0,0.14)] dark:shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-slate-100 dark:border-slate-800 grid grid-cols-2 gap-2.5 z-50"
                 >
-                  <div className="col-span-2 pb-2 mb-1 border-b border-slate-100 flex items-center justify-between">
+                  <div className="col-span-2 pb-2 mb-1 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
                     <div>
-                      <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400">
+                      <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
                         6 Pilar Ekosistem Cerdas
                       </h4>
                     </div>
                     <Link
                       href="/fitur"
-                      className="text-xs font-bold text-[#1B9981] hover:text-[#168C74] flex items-center gap-1"
+                      className="text-xs font-bold text-[#1B9981] dark:text-[#00D4AA] hover:text-[#168C74] flex items-center gap-1"
                     >
                       <span>Lihat Ringkasan Fitur</span>
                       <ArrowRight className="w-3.5 h-3.5" />
@@ -225,7 +228,7 @@ export default function Navbar() {
                       <Link
                         key={f.slug}
                         href={f.href}
-                        className={`p-3 rounded-2xl border border-transparent transition-all flex items-start gap-3.5 ${f.hoverBg} hover:border-slate-200/80 group`}
+                        className={`p-3 rounded-2xl border border-transparent transition-all flex items-start gap-3.5 ${f.hoverBg} dark:hover:bg-slate-800/80 hover:border-slate-200/80 dark:hover:border-slate-700/80 group`}
                       >
                         <div
                           className={`w-11 h-11 rounded-2xl flex items-center justify-center shrink-0 border ${f.color} shadow-sm group-hover:scale-105 transition-transform`}
@@ -234,14 +237,14 @@ export default function Navbar() {
                         </div>
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-2 mb-0.5">
-                            <span className="font-bold text-sm text-slate-900 group-hover:text-[#1B9981] transition-colors">
+                            <span className="font-bold text-sm text-slate-900 dark:text-white group-hover:text-[#1B9981] dark:group-hover:text-[#00D4AA] transition-colors">
                               {f.name}
                             </span>
-                            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-100 text-slate-600">
+                            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
                               {f.badge}
                             </span>
                           </div>
-                          <p className="text-xs text-slate-500 line-clamp-2 leading-relaxed">
+                          <p className="text-xs text-slate-500 dark:text-slate-400 line-clamp-2 leading-relaxed">
                             {f.desc}
                           </p>
                         </div>
@@ -264,13 +267,13 @@ export default function Navbar() {
               className={`relative px-3.5 py-2 rounded-xl text-sm font-semibold transition-colors flex items-center gap-1.5 ${
                 pathname === "/demo"
                   ? "text-[#1B9981] font-bold"
-                  : "text-slate-600 hover:text-[#1B9981]"
+                  : "text-slate-600 dark:text-slate-300 hover:text-[#1B9981] dark:hover:text-[#00D4AA]"
               }`}
             >
               {pathname === "/demo" && (
                 <motion.span
                   layoutId="navbar-active-pill"
-                  className="absolute inset-0 rounded-xl bg-[#1B9981]/10"
+                  className="absolute inset-0 rounded-xl bg-[#1B9981]/10 dark:bg-[#1B9981]/20"
                   transition={{ type: "spring", stiffness: 380, damping: 32 }}
                 />
               )}
@@ -293,15 +296,15 @@ export default function Navbar() {
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: 10, scale: 0.98 }}
                   transition={{ duration: 0.18, ease: "easeOut" }}
-                  className="absolute top-full left-1/2 -translate-x-1/2 mt-1 w-[400px] bg-white rounded-3xl p-4 shadow-[0_20px_60px_rgba(0,0,0,0.14)] border border-slate-100 flex flex-col gap-2 z-50"
+                  className="absolute top-full left-1/2 -translate-x-1/2 mt-1 w-[400px] bg-white dark:bg-[#0F172A] rounded-3xl p-4 shadow-[0_20px_60px_rgba(0,0,0,0.14)] dark:shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-slate-100 dark:border-slate-800 flex flex-col gap-2 z-50"
                 >
-                  <div className="pb-2 border-b border-slate-100 flex items-center justify-between">
-                    <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400">
+                  <div className="pb-2 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                    <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
                       Pusat Akses Demo
                     </h4>
                     <Link
                       href="/demo"
-                      className="text-xs font-bold text-[#1B9981] flex items-center gap-1"
+                      className="text-xs font-bold text-[#1B9981] dark:text-[#00D4AA] flex items-center gap-1"
                     >
                       Buka Demo Hub <ArrowRight className="w-3 h-3" />
                     </Link>
@@ -313,7 +316,7 @@ export default function Navbar() {
                       <Link
                         key={i}
                         href={d.href}
-                        className="p-3 rounded-2xl hover:bg-slate-50 transition-all flex items-start gap-3 group border border-transparent hover:border-slate-200"
+                        className="p-3 rounded-2xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-all flex items-start gap-3 group border border-transparent hover:border-slate-200 dark:hover:border-slate-700"
                       >
                         <div
                           className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${d.color}`}
@@ -322,11 +325,11 @@ export default function Navbar() {
                         </div>
                         <div>
                           <div className="flex items-center gap-2">
-                            <span className="font-bold text-sm text-slate-900 group-hover:text-[#1B9981] transition-colors">
+                            <span className="font-bold text-sm text-slate-900 dark:text-white group-hover:text-[#1B9981] dark:group-hover:text-[#00D4AA] transition-colors">
                               {d.title}
                             </span>
                           </div>
-                          <p className="text-xs text-slate-500 mt-0.5 leading-relaxed">
+                          <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5 leading-relaxed">
                             {d.desc}
                           </p>
                         </div>
@@ -340,23 +343,24 @@ export default function Navbar() {
 
           <Link
             href="/#statistik"
-            className="px-3.5 py-2 rounded-xl text-sm font-semibold text-slate-600 hover:text-[#1B9981] transition-colors"
+            className="px-3.5 py-2 rounded-xl text-sm font-semibold text-slate-600 dark:text-slate-300 hover:text-[#1B9981] dark:hover:text-[#00D4AA] transition-colors"
           >
             Statistik
           </Link>
           <Link
             href="/#dampak"
-            className="px-3.5 py-2 rounded-xl text-sm font-semibold text-slate-600 hover:text-[#1B9981] transition-colors"
+            className="px-3.5 py-2 rounded-xl text-sm font-semibold text-slate-600 dark:text-slate-300 hover:text-[#1B9981] dark:hover:text-[#00D4AA] transition-colors"
           >
             Dampak
           </Link>
         </nav>
 
-        {/* CTA Actions */}
+        {/* CTA Actions & Theme Toggle */}
         <div className="hidden lg:flex items-center gap-3">
+          <ThemeToggle />
           <Link
             href="/demo"
-            className="px-4 py-2.5 rounded-full text-xs font-bold text-[#1B9981] bg-[#1B9981]/10 hover:bg-[#1B9981]/20 transition-all border border-[#1B9981]/20 flex items-center gap-1.5"
+            className="px-4 py-2.5 rounded-full text-xs font-bold text-[#1B9981] dark:text-[#00D4AA] bg-[#1B9981]/10 hover:bg-[#1B9981]/20 transition-all border border-[#1B9981]/20 flex items-center gap-1.5"
           >
             <Zap className="w-3.5 h-3.5 fill-current" />
             Coba Demo Gratis
@@ -370,14 +374,17 @@ export default function Navbar() {
           </Link>
         </div>
 
-        {/* Mobile Hamburger Button */}
-        <button
-          onClick={() => setMobileOpen(!mobileOpen)}
-          aria-label="Menu Navigasi Mobile"
-          className="lg:hidden w-11 h-11 rounded-2xl bg-slate-100 text-slate-700 flex items-center justify-center hover:bg-slate-200 transition-colors"
-        >
-          {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-        </button>
+        {/* Mobile Hamburger Button & Theme Toggle */}
+        <div className="lg:hidden flex items-center gap-2">
+          <ThemeToggle />
+          <button
+            onClick={() => setMobileOpen(!mobileOpen)}
+            aria-label="Menu Navigasi Mobile"
+            className="w-11 h-11 rounded-2xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 flex items-center justify-center hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
+          >
+            {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile Drawer Navigation */}
@@ -387,23 +394,23 @@ export default function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="lg:hidden bg-white border-b border-slate-200 shadow-2xl overflow-hidden"
+            className="lg:hidden bg-white dark:bg-[#090e17] border-b border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden"
           >
             <div className="px-6 py-6 space-y-4 max-h-[80vh] overflow-y-auto">
               <Link
                 href="/"
-                className="block py-2 text-base font-bold text-slate-800 hover:text-[#1B9981]"
+                className="block py-2 text-base font-bold text-slate-800 dark:text-slate-100 hover:text-[#1B9981] dark:hover:text-[#00D4AA]"
               >
                 Beranda
               </Link>
 
               {/* Fitur Accordion */}
-              <div className="border-t border-slate-100 pt-3">
-                <div className="flex items-center justify-between py-2 text-base font-bold text-slate-800">
+              <div className="border-t border-slate-100 dark:border-slate-800 pt-3">
+                <div className="flex items-center justify-between py-2 text-base font-bold text-slate-800 dark:text-slate-100">
                   <span>Pilihan Fitur Unggulan</span>
                   <Link
                     href="/fitur"
-                    className="text-xs font-semibold text-[#1B9981]"
+                    className="text-xs font-semibold text-[#1B9981] dark:text-[#00D4AA]"
                   >
                     Lihat Semua
                   </Link>
@@ -415,7 +422,7 @@ export default function Navbar() {
                       <Link
                         key={f.slug}
                         href={f.href}
-                        className="p-3 rounded-xl bg-slate-50 hover:bg-slate-100 flex items-center gap-3"
+                        className="p-3 rounded-xl bg-slate-50 dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center gap-3 border border-transparent dark:border-slate-800"
                       >
                         <div
                           className={`w-9 h-9 rounded-xl flex items-center justify-center ${f.color}`}
@@ -423,10 +430,10 @@ export default function Navbar() {
                           <Icon className="w-4 h-4" />
                         </div>
                         <div>
-                          <div className="font-bold text-xs text-slate-900">
+                          <div className="font-bold text-xs text-slate-900 dark:text-white">
                             {f.name}
                           </div>
-                          <div className="text-[10px] text-slate-500">
+                          <div className="text-[10px] text-slate-500 dark:text-slate-400">
                             {f.badge}
                           </div>
                         </div>
@@ -437,19 +444,19 @@ export default function Navbar() {
               </div>
 
               {/* Demo Section Mobile */}
-              <div className="border-t border-slate-100 pt-3 space-y-2">
-                <div className="text-base font-bold text-slate-800">Akses Demo</div>
+              <div className="border-t border-slate-100 dark:border-slate-800 pt-3 space-y-2">
+                <div className="text-base font-bold text-slate-800 dark:text-slate-100">Akses Demo</div>
                 <div className="grid grid-cols-1 gap-2">
                   <Link
                     href="/demo#app-demo"
-                    className="p-3 rounded-xl bg-[#1B9981]/10 text-[#1B9981] font-bold text-xs flex items-center justify-between"
+                    className="p-3 rounded-xl bg-[#1B9981]/10 text-[#1B9981] dark:text-[#00D4AA] font-bold text-xs flex items-center justify-between border border-[#1B9981]/20"
                   >
                     <span>Demo Aplikasi (Tanpa Login)</span>
                     <ArrowRight className="w-4 h-4" />
                   </Link>
                   <Link
                     href="/demo#pantau-demo"
-                    className="p-3 rounded-xl bg-blue-50 text-blue-700 font-bold text-xs flex items-center justify-between"
+                    className="p-3 rounded-xl bg-blue-50 dark:bg-blue-950/40 text-blue-700 dark:text-blue-300 font-bold text-xs flex items-center justify-between border border-blue-100 dark:border-blue-900"
                   >
                     <span>Demo Dashboard BiPANTAU</span>
                     <ArrowRight className="w-4 h-4" />
@@ -457,16 +464,16 @@ export default function Navbar() {
                 </div>
               </div>
 
-              <div className="border-t border-slate-100 pt-3 space-y-2">
+              <div className="border-t border-slate-100 dark:border-slate-800 pt-3 space-y-2">
                 <Link
                   href="/#statistik"
-                  className="block py-2 text-sm font-semibold text-slate-600 hover:text-[#1B9981]"
+                  className="block py-2 text-sm font-semibold text-slate-600 dark:text-slate-300 hover:text-[#1B9981] dark:hover:text-[#00D4AA]"
                 >
                   Statistik Riset
                 </Link>
                 <Link
                   href="/#dampak"
-                  className="block py-2 text-sm font-semibold text-slate-600 hover:text-[#1B9981]"
+                  className="block py-2 text-sm font-semibold text-slate-600 dark:text-slate-300 hover:text-[#1B9981] dark:hover:text-[#00D4AA]"
                 >
                   Dampak Komunitas
                 </Link>

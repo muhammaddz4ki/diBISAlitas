@@ -417,14 +417,14 @@ function BentoFeaturesSection() {
           viewport={{ once: true, margin: "-60px" }}
           className="text-center max-w-2xl mx-auto space-y-3"
         >
-          <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-[#1B9981]/10 text-[#1B9981] font-bold text-xs uppercase tracking-wider">
+          <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-[#1B9981]/10 text-[#1B9981] dark:text-[#00D4AA] font-bold text-xs uppercase tracking-wider">
             <Layers className="w-3.5 h-3.5" /> 6 Pilar Ekosistem Cerdas
           </span>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-slate-900 tracking-tight">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-slate-900 dark:text-white tracking-tight">
             Solusi Menyeluruh untuk <br />
-            <span className="text-[#1B9981]">Setiap Tantangan Disabilitas</span>
+            <span className="text-[#1B9981] dark:text-[#00D4AA]">Setiap Tantangan Disabilitas</span>
           </h2>
-          <p className="text-slate-500 text-sm sm:text-base leading-relaxed">
+          <p className="text-slate-500 dark:text-slate-400 text-sm sm:text-base leading-relaxed">
             Ditenagai oleh Computer Vision, Natural Language Processing, dan Cloud Data Sync yang bekerja secara harmonis.
           </p>
         </motion.div>
@@ -514,13 +514,13 @@ function ImpactSection() {
           viewport={{ once: true, margin: "-60px" }}
           className="text-center max-w-2xl mx-auto space-y-3"
         >
-          <span className="text-xs font-bold uppercase text-[#1B9981] bg-[#1B9981]/10 px-3.5 py-1.5 rounded-full">
+          <span className="text-xs font-bold uppercase text-[#1B9981] dark:text-[#00D4AA] bg-[#1B9981]/10 dark:bg-[#1B9981]/20 px-3.5 py-1.5 rounded-full">
             Dampak Sosial &amp; Inklusivitas
           </span>
-          <h2 className="text-3xl sm:text-4xl font-black text-slate-900">
+          <h2 className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white">
             Didesain Khusus Bersama Komunitas
           </h2>
-          <p className="text-slate-500 text-sm leading-relaxed">
+          <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">
             Kami mengembangkan fitur dengan mendengarkan langsung pengalaman dan tantangan nyata penyandang disabilitas di lapangan.
           </p>
         </motion.div>
@@ -536,7 +536,7 @@ function ImpactSection() {
             {
               title: "Tunanetra & Low Vision",
               icon: Eye,
-              color: "text-sky-600 bg-sky-50",
+              color: "text-sky-600 dark:text-sky-400 bg-sky-50 dark:bg-sky-950/60",
               items: [
                 "Navigasi trotoar aman dengan radar deteksi rintangan spasial BiJALAN",
                 "Akses baca dokumen cetak dan surat kabar mandiri lewat suara BiBACA",
@@ -545,7 +545,7 @@ function ImpactSection() {
             {
               title: "Tunarungu & Wicara",
               icon: Ear,
-              color: "text-amber-600 bg-amber-50",
+              color: "text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/60",
               items: [
                 "Percakapan dua arah langsung dengan penerjemah suara-ke-teks BiSAPA",
                 "Edukasi bahasa isyarat BISINDO interaktif bersama BiPINTAR",
@@ -554,7 +554,7 @@ function ImpactSection() {
             {
               title: "Tunadaksa & Pengguna Kursi Roda",
               icon: Accessibility,
-              color: "text-rose-600 bg-rose-50",
+              color: "text-rose-600 dark:text-rose-400 bg-rose-50 dark:bg-rose-950/60",
               items: [
                 "Perlindungan darurat satu sentuhan dengan pemancar lokasi GPS BiSAFE",
                 "Pemetaan jalur ramah kursi roda dan rintangan fasilitas di BiPANTAU",
@@ -568,19 +568,19 @@ function ImpactSection() {
                 variants={fadeUp}
                 whileHover={{ y: -6 }}
                 transition={{ type: "spring", stiffness: 300, damping: 22 }}
-                className="bg-white rounded-3xl p-8 border border-slate-200/80 shadow-sm hover:shadow-lg transition-all space-y-6"
+                className="bg-white dark:bg-[#0F172A] rounded-3xl p-8 border border-slate-200/80 dark:border-slate-800 shadow-sm hover:shadow-lg dark:hover:border-slate-700 transition-all space-y-6"
               >
                 <div className="flex items-center gap-3.5">
-                  <div className={`w-12 h-12 rounded-2xl ${card.color} flex items-center justify-center`}>
+                  <div className={`w-12 h-12 rounded-2xl ${card.color} flex items-center justify-center border border-transparent dark:border-white/5`}>
                     <Icon className="w-6 h-6" />
                   </div>
-                  <h3 className="text-lg font-bold text-slate-900">{card.title}</h3>
+                  <h3 className="text-lg font-bold text-slate-900 dark:text-white">{card.title}</h3>
                 </div>
 
                 <ul className="space-y-3">
                   {card.items.map((it, idx) => (
-                    <li key={idx} className="flex items-start gap-2.5 text-xs text-slate-600 leading-relaxed">
-                      <CheckCircle2 className="w-4 h-4 text-[#1B9981] shrink-0 mt-0.5" />
+                    <li key={idx} className="flex items-start gap-2.5 text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                      <CheckCircle2 className="w-4 h-4 text-[#1B9981] dark:text-[#00D4AA] shrink-0 mt-0.5" />
                       <span>{it}</span>
                     </li>
                   ))}
@@ -775,7 +775,7 @@ export default function LandingPage() {
         {showSplash && <SplashScreen onComplete={() => setShowSplash(false)} />}
       </AnimatePresence>
 
-      <div className="min-h-screen bg-[#FDFEFE] text-slate-800 selection:bg-[#1B9981]/20">
+      <div className="min-h-screen bg-[#FDFEFE] dark:bg-[#090e17] text-slate-800 dark:text-slate-100 selection:bg-[#1B9981]/20 transition-colors duration-300">
         <Navbar />
         <HeroSection />
         <BentoFeaturesSection />

@@ -16,9 +16,13 @@ import {
   Check,
   Eye,
   SlidersHorizontal,
+  Sun,
+  Moon,
 } from "lucide-react";
+import { useTheme } from "@/lib/ThemeContext";
 
 export default function FloatingAccessibility() {
+  const { theme, setTheme } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
   const [fontSizeIndex, setFontSizeIndex] = useState(0); // 0: Normal, 1: Besar (115%), 2: Sangat Besar (130%)
   const [highContrast, setHighContrast] = useState(false);
@@ -315,7 +319,7 @@ export default function FloatingAccessibility() {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
             transition={{ type: "spring", damping: 25, stiffness: 350 }}
-            className="absolute bottom-16 right-0 w-[340px] sm:w-[380px] bg-white rounded-3xl shadow-[0_20px_70px_rgba(0,0,0,0.22)] border border-slate-100 overflow-hidden"
+            className="absolute bottom-16 right-0 w-[340px] sm:w-[380px] bg-white dark:bg-[#0F172A] text-slate-800 dark:text-slate-100 rounded-3xl shadow-[0_20px_70px_rgba(0,0,0,0.3)] border border-slate-100 dark:border-slate-800 overflow-hidden"
           >
             {/* Header */}
             <div className="bg-gradient-to-r from-[#1B9981] to-[#00D4AA] p-5 text-white flex items-center justify-between">
@@ -340,9 +344,41 @@ export default function FloatingAccessibility() {
 
             {/* Content Options */}
             <div className="p-5 space-y-4 max-h-[440px] overflow-y-auto">
+              {/* Mode Tema Tampilan */}
+              <div className="space-y-2">
+                <label className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
+                  <Sun className="w-3.5 h-3.5 text-[#1B9981]" />
+                  Tema Tampilan
+                </label>
+                <div className="grid grid-cols-2 gap-2">
+                  <button
+                    onClick={() => setTheme("light")}
+                    className={`p-2.5 rounded-xl border text-center transition-all flex items-center justify-center gap-2 ${
+                      theme === "light"
+                        ? "bg-[#1B9981]/10 border-[#1B9981] text-[#1B9981] font-bold shadow-sm"
+                        : "bg-slate-50 dark:bg-slate-850 border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 font-medium"
+                    }`}
+                  >
+                    <Sun className="w-4 h-4 text-amber-500" />
+                    <span className="text-xs">Terang</span>
+                  </button>
+                  <button
+                    onClick={() => setTheme("dark")}
+                    className={`p-2.5 rounded-xl border text-center transition-all flex items-center justify-center gap-2 ${
+                      theme === "dark"
+                        ? "bg-[#1B9981]/10 border-[#1B9981] text-[#1B9981] font-bold shadow-sm"
+                        : "bg-slate-50 dark:bg-slate-850 border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 font-medium"
+                    }`}
+                  >
+                    <Moon className="w-4 h-4 text-amber-400" />
+                    <span className="text-xs">Gelap</span>
+                  </button>
+                </div>
+              </div>
+
               {/* Ukuran Teks */}
               <div className="space-y-2">
-                <label className="text-xs font-bold uppercase tracking-wider text-slate-500 flex items-center gap-1.5">
+                <label className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
                   <Type className="w-3.5 h-3.5 text-[#1B9981]" />
                   Ukuran Teks
                 </label>
@@ -358,7 +394,7 @@ export default function FloatingAccessibility() {
                       className={`p-2.5 rounded-xl border text-center transition-all ${
                         fontSizeIndex === idx
                           ? "bg-[#1B9981]/10 border-[#1B9981] text-[#1B9981] font-bold shadow-sm"
-                          : "bg-slate-50 border-slate-200 text-slate-600 hover:bg-slate-100 font-medium"
+                          : "bg-slate-50 dark:bg-slate-850 border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 font-medium"
                       }`}
                     >
                       <div className="text-sm">{lvl.label}</div>
@@ -370,9 +406,9 @@ export default function FloatingAccessibility() {
 
               {/* Grid Toggle Features */}
               <div className="space-y-2">
-                <label className="text-xs font-bold uppercase tracking-wider text-slate-500 flex items-center gap-1.5">
+                <label className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
                   <Eye className="w-3.5 h-3.5 text-[#1B9981]" />
-                  Tampilan & Visual
+                  Tampilan &amp; Visual
                 </label>
                 <div className="grid grid-cols-2 gap-2.5">
                   {/* High Contrast */}
@@ -380,12 +416,12 @@ export default function FloatingAccessibility() {
                     onClick={toggleHighContrast}
                     className={`p-3 rounded-2xl border text-left transition-all flex flex-col justify-between h-[84px] ${
                       highContrast
-                        ? "bg-slate-900 border-slate-900 text-white shadow-md"
-                        : "bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100"
+                        ? "bg-slate-900 border-slate-900 dark:bg-slate-100 dark:border-slate-100 text-white dark:text-slate-900 shadow-md"
+                        : "bg-slate-50 dark:bg-slate-850 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
                     }`}
                   >
                     <div className="flex items-center justify-between w-full">
-                      <Contrast className={`w-4 h-4 ${highContrast ? "text-[#00D4AA]" : "text-slate-500"}`} />
+                      <Contrast className={`w-4 h-4 ${highContrast ? "text-[#00D4AA]" : "text-slate-500 dark:text-slate-400"}`} />
                       {highContrast && <Check className="w-3.5 h-3.5 text-[#00D4AA]" />}
                     </div>
                     <div>
@@ -400,11 +436,11 @@ export default function FloatingAccessibility() {
                     className={`p-3 rounded-2xl border text-left transition-all flex flex-col justify-between h-[84px] ${
                       reduceMotion
                         ? "bg-[#1B9981] border-[#1B9981] text-white shadow-md"
-                        : "bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100"
+                        : "bg-slate-50 dark:bg-slate-850 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
                     }`}
                   >
                     <div className="flex items-center justify-between w-full">
-                      <ZapOff className={`w-4 h-4 ${reduceMotion ? "text-white" : "text-slate-500"}`} />
+                      <ZapOff className={`w-4 h-4 ${reduceMotion ? "text-white" : "text-slate-500 dark:text-slate-400"}`} />
                       {reduceMotion && <Check className="w-3.5 h-3.5 text-white" />}
                     </div>
                     <div>
@@ -419,16 +455,16 @@ export default function FloatingAccessibility() {
                     className={`p-3 rounded-2xl border text-left transition-all flex flex-col justify-between h-[84px] ${
                       dyslexiaMode
                         ? "bg-amber-600 border-amber-600 text-white shadow-md"
-                        : "bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100"
+                        : "bg-slate-50 dark:bg-slate-850 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
                     }`}
                   >
                     <div className="flex items-center justify-between w-full">
-                      <BookOpen className={`w-4 h-4 ${dyslexiaMode ? "text-amber-200" : "text-slate-500"}`} />
+                      <BookOpen className={`w-4 h-4 ${dyslexiaMode ? "text-amber-200" : "text-slate-500 dark:text-slate-400"}`} />
                       {dyslexiaMode && <Check className="w-3.5 h-3.5 text-amber-200" />}
                     </div>
                     <div>
                       <div className="text-xs font-bold">Mode Disleksia</div>
-                      <div className="text-[10px] opacity-70">Spasi & huruf lebar</div>
+                      <div className="text-[10px] opacity-70">Spasi &amp; huruf lebar</div>
                     </div>
                   </button>
 
@@ -438,11 +474,11 @@ export default function FloatingAccessibility() {
                     className={`p-3 rounded-2xl border text-left transition-all flex flex-col justify-between h-[84px] ${
                       grayscaleMode
                         ? "bg-slate-700 border-slate-700 text-white shadow-md"
-                        : "bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100"
+                        : "bg-slate-50 dark:bg-slate-850 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
                     }`}
                   >
                     <div className="flex items-center justify-between w-full">
-                      <Sparkles className={`w-4 h-4 ${grayscaleMode ? "text-slate-300" : "text-slate-500"}`} />
+                      <Sparkles className={`w-4 h-4 ${grayscaleMode ? "text-slate-300" : "text-slate-500 dark:text-slate-400"}`} />
                       {grayscaleMode && <Check className="w-3.5 h-3.5 text-slate-300" />}
                     </div>
                     <div>
@@ -454,13 +490,13 @@ export default function FloatingAccessibility() {
               </div>
 
               {/* Text to Speech & Highlight Links */}
-              <div className="space-y-2 pt-1 border-t border-slate-100">
+              <div className="space-y-2 pt-1 border-t border-slate-100 dark:border-slate-800">
                 <button
                   onClick={toggleSpeechReader}
                   className={`w-full p-3 rounded-2xl border flex items-center justify-between transition-all ${
                     isSpeaking
                       ? "bg-rose-500 border-rose-500 text-white shadow-lg animate-pulse"
-                      : "bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100"
+                      : "bg-slate-50 dark:bg-slate-850 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
                   }`}
                 >
                   <div className="flex items-center gap-3">
@@ -488,13 +524,13 @@ export default function FloatingAccessibility() {
                   className={`w-full p-2.5 rounded-xl border flex items-center justify-between transition-all text-xs font-semibold ${
                     highlightLinks
                       ? "bg-[#1B9981]/15 border-[#1B9981] text-[#1B9981]"
-                      : "bg-slate-50 border-slate-200 text-slate-600 hover:bg-slate-100"
+                      : "bg-slate-50 dark:bg-slate-850 border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
                   }`}
                 >
                   <span>Garis Bawahi &amp; Sorot Tautan</span>
                   <div
                     className={`w-4 h-4 rounded flex items-center justify-center ${
-                      highlightLinks ? "bg-[#1B9981] text-white" : "border border-slate-300"
+                      highlightLinks ? "bg-[#1B9981] text-white" : "border border-slate-300 dark:border-slate-600"
                     }`}
                   >
                     {highlightLinks && <Check className="w-3 h-3" />}
@@ -504,8 +540,8 @@ export default function FloatingAccessibility() {
             </div>
 
             {/* Footer info */}
-            <div className="bg-slate-50 px-5 py-3 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500">
-              <span>Shortcut: <kbd className="px-1.5 py-0.5 bg-white border border-slate-200 rounded font-mono text-[10px] text-slate-700">Alt + A</kbd></span>
+            <div className="bg-slate-50 dark:bg-slate-900/80 px-5 py-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-[11px] text-slate-500 dark:text-slate-400">
+              <span>Shortcut: <kbd className="px-1.5 py-0.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded font-mono text-[10px] text-slate-700 dark:text-slate-300">Alt + A</kbd></span>
               <span className="text-[#1B9981] font-semibold">diBISAlitas A11y Engine</span>
             </div>
           </motion.div>

@@ -163,7 +163,7 @@ export default function FiturOverviewPage() {
     DETAILED_FEATURES.find((f) => f.key === selectedFeature) || DETAILED_FEATURES[0];
 
   return (
-    <div className="min-h-screen bg-[#FDFEFE] text-slate-800 selection:bg-[#1B9981]/20">
+    <div className="min-h-screen bg-[#FDFEFE] dark:bg-[#090e17] text-slate-800 dark:text-slate-100 selection:bg-[#1B9981]/20 transition-colors duration-300">
       <Navbar />
 
       {/* Hero Header */}
@@ -176,7 +176,7 @@ export default function FiturOverviewPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#1B9981]/10 border border-[#1B9981]/20 text-[#1B9981] text-xs font-bold uppercase tracking-wider mb-6"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#1B9981]/10 dark:bg-[#1B9981]/20 border border-[#1B9981]/20 text-[#1B9981] dark:text-[#00D4AA] text-xs font-bold uppercase tracking-wider mb-6"
           >
             <Sparkles className="w-3.5 h-3.5" />
             Teknologi Aksesibilitas Terintegrasi
@@ -186,17 +186,17 @@ export default function FiturOverviewPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-slate-900 leading-[1.15]"
+            className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.15]"
           >
             6 Pilar Ekosistem Cerdas <br />
-            <span className="text-[#1B9981]">diBISAlitas AI</span>
+            <span className="text-[#1B9981] dark:text-[#00D4AA]">diBISAlitas AI</span>
           </motion.h1>
 
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-slate-500 text-base sm:text-lg max-w-2xl mx-auto mt-5 leading-relaxed"
+            className="text-slate-500 dark:text-slate-400 text-base sm:text-lg max-w-2xl mx-auto mt-5 leading-relaxed"
           >
             Setiap pilar dirancang khusus dengan perpaduan Artificial Intelligence, Computer Vision,
             dan Cloud Sync untuk mengatasi hambatan aksesibilitas sehari-hari secara menyeluruh.
@@ -217,8 +217,8 @@ export default function FiturOverviewPage() {
                   onClick={() => setSelectedFeature(item.key)}
                   className={`px-5 py-3 rounded-2xl font-bold text-xs sm:text-sm whitespace-nowrap transition-all flex items-center gap-2 border ${
                     isActive
-                      ? "bg-slate-900 text-white border-slate-900 shadow-lg scale-105"
-                      : "bg-white text-slate-600 border-slate-200 hover:bg-slate-50"
+                      ? "bg-slate-900 dark:bg-white text-white dark:text-slate-950 border-slate-900 dark:border-white shadow-lg scale-105"
+                      : "bg-white dark:bg-[#0F172A] text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/60"
                   }`}
                 >
                   <span
@@ -243,7 +243,7 @@ export default function FiturOverviewPage() {
           </div>
 
           {/* Dynamic Interactive Stage */}
-          <div className="bg-white rounded-[2.5rem] border border-slate-200/80 shadow-[0_20px_70px_rgba(0,0,0,0.06)] p-6 sm:p-10 lg:p-14 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+          <div className="bg-white dark:bg-[#0F172A] rounded-[2.5rem] border border-slate-200/80 dark:border-slate-800 shadow-[0_20px_70px_rgba(0,0,0,0.06)] dark:shadow-[0_20px_70px_rgba(0,0,0,0.5)] p-6 sm:p-10 lg:p-14 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
             {/* Left: Interactive Details */}
             <div className="lg:col-span-7 space-y-6">
               <AnimatePresence mode="wait">
@@ -256,30 +256,30 @@ export default function FiturOverviewPage() {
                   className="space-y-6"
                 >
                   <div className="space-y-2">
-                    <span className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-slate-100 text-slate-700">
+                    <span className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">
                       {currentFeatureData.badge}
                     </span>
-                    <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900">
+                    <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white">
                       {currentFeatureData.title} – {currentFeatureData.tagline}
                     </h2>
-                    <p className="text-slate-600 text-base leading-relaxed pt-2">
+                    <p className="text-slate-600 dark:text-slate-300 text-base leading-relaxed pt-2">
                       {currentFeatureData.description}
                     </p>
                   </div>
 
                   {/* Highlights checklist */}
                   <div className="space-y-3 pt-2">
-                    <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400">
+                    <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
                       Fitur Utama &amp; Keunggulan
                     </h4>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                       {currentFeatureData.highlights.map((h, i) => (
                         <div
                           key={i}
-                          className="flex items-start gap-2.5 p-3 rounded-2xl bg-slate-50 border border-slate-100"
+                          className="flex items-start gap-2.5 p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-100 dark:border-slate-700/60"
                         >
-                          <CheckCircle2 className="w-4 h-4 text-[#1B9981] mt-0.5 shrink-0" />
-                          <span className="text-xs font-semibold text-slate-700 leading-snug">
+                          <CheckCircle2 className="w-4 h-4 text-[#1B9981] dark:text-[#00D4AA] mt-0.5 shrink-0" />
+                          <span className="text-xs font-semibold text-slate-700 dark:text-slate-300 leading-snug">
                             {h}
                           </span>
                         </div>
@@ -289,16 +289,16 @@ export default function FiturOverviewPage() {
 
                   {/* Tech stack pills */}
                   <div className="space-y-2 pt-2">
-                    <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400">
+                    <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
                       Teknologi yang Digunakan
                     </h4>
                     <div className="flex flex-wrap gap-2">
                       {currentFeatureData.techStack.map((tech, i) => (
                         <span
                           key={i}
-                          className="px-3 py-1.5 rounded-xl bg-slate-100 text-slate-700 font-mono text-[11px] font-semibold flex items-center gap-1.5"
+                          className="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-mono text-[11px] font-semibold flex items-center gap-1.5"
                         >
-                          <Cpu className="w-3.5 h-3.5 text-slate-500" />
+                          <Cpu className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
                           {tech}
                         </span>
                       ))}
@@ -309,14 +309,14 @@ export default function FiturOverviewPage() {
                   <div className="pt-4 flex flex-wrap items-center gap-3">
                     <Link
                       href={currentFeatureData.href}
-                      className="px-6 py-3.5 rounded-2xl bg-slate-900 text-white font-bold text-sm hover:bg-slate-800 transition-all shadow-md flex items-center gap-2"
+                      className="px-6 py-3.5 rounded-2xl bg-slate-900 dark:bg-[#1B9981] text-white font-bold text-sm hover:bg-slate-800 dark:hover:bg-[#168C74] transition-all shadow-md flex items-center gap-2"
                     >
                       <span>Pelajari Detail {currentFeatureData.title}</span>
                       <ArrowRight className="w-4 h-4" />
                     </Link>
                     <Link
                       href="/demo"
-                      className="px-6 py-3.5 rounded-2xl bg-[#1B9981]/10 text-[#1B9981] border border-[#1B9981]/30 font-bold text-sm hover:bg-[#1B9981]/20 transition-all flex items-center gap-2"
+                      className="px-6 py-3.5 rounded-2xl bg-[#1B9981]/10 text-[#1B9981] dark:text-[#00D4AA] border border-[#1B9981]/30 font-bold text-sm hover:bg-[#1B9981]/20 transition-all flex items-center gap-2"
                     >
                       <span>Coba Demo Langsung</span>
                       <Zap className="w-4 h-4 fill-current" />
@@ -339,16 +339,16 @@ export default function FiturOverviewPage() {
       </section>
 
       {/* Grid of All 6 Features Deep-Dive Cards */}
-      <section className="py-20 px-4 sm:px-6 bg-slate-50/60 border-t border-slate-200/60">
+      <section className="py-20 px-4 sm:px-6 bg-slate-50/60 dark:bg-[#070b12] border-t border-slate-200/60 dark:border-slate-800">
         <div className="max-w-7xl mx-auto">
           <div className="text-center max-w-2xl mx-auto mb-16">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#1B9981] bg-[#1B9981]/10 px-3.5 py-1.5 rounded-full">
+            <span className="text-xs font-bold uppercase tracking-wider text-[#1B9981] dark:text-[#00D4AA] bg-[#1B9981]/10 dark:bg-[#1B9981]/20 px-3.5 py-1.5 rounded-full">
               Eksplorasi Lengkap
             </span>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 mt-4">
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white mt-4">
               Pilih Fitur untuk Membaca Panduan Lengkap
             </h2>
-            <p className="text-slate-500 text-sm mt-2">
+            <p className="text-slate-500 dark:text-slate-400 text-sm mt-2">
               Klik kartu di bawah untuk membuka halaman dokumentasi detail, arsitektur AI, dan live preview.
             </p>
           </div>
@@ -358,33 +358,33 @@ export default function FiturOverviewPage() {
               <Link
                 key={item.slug}
                 href={item.href}
-                className="bg-white rounded-3xl p-7 border border-slate-200/80 hover:border-[#1B9981]/50 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group hover:-translate-y-1"
+                className="bg-white dark:bg-[#0F172A] rounded-3xl p-7 border border-slate-200/80 dark:border-slate-800 hover:border-[#1B9981]/50 dark:hover:border-[#00D4AA]/50 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group hover:-translate-y-1"
               >
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
-                    <span className="text-xs font-bold px-3 py-1 rounded-xl bg-slate-100 text-slate-700">
+                    <span className="text-xs font-bold px-3 py-1 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">
                       {item.badge}
                     </span>
-                    <div className="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 group-hover:bg-[#1B9981] group-hover:text-white transition-colors">
+                    <div className="w-8 h-8 rounded-full bg-slate-50 dark:bg-slate-800 flex items-center justify-center text-slate-400 group-hover:bg-[#1B9981] group-hover:text-white transition-colors">
                       <ArrowUpRight className="w-4 h-4" />
                     </div>
                   </div>
 
                   <div>
-                    <h3 className="text-2xl font-black text-slate-900 group-hover:text-[#1B9981] transition-colors">
+                    <h3 className="text-2xl font-black text-slate-900 dark:text-white group-hover:text-[#1B9981] dark:group-hover:text-[#00D4AA] transition-colors">
                       {item.title}
                     </h3>
-                    <p className="text-xs font-bold text-slate-400 mt-0.5">
+                    <p className="text-xs font-bold text-slate-400 dark:text-slate-500 mt-0.5">
                       {item.tagline}
                     </p>
                   </div>
 
-                  <p className="text-slate-600 text-xs leading-relaxed line-clamp-3">
+                  <p className="text-slate-600 dark:text-slate-300 text-xs leading-relaxed line-clamp-3">
                     {item.description}
                   </p>
                 </div>
 
-                <div className="pt-6 mt-6 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-[#1B9981]">
+                <div className="pt-6 mt-6 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs font-bold text-[#1B9981] dark:text-[#00D4AA]">
                   <span>Buka Halaman Spesifikasi</span>
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </div>
@@ -396,7 +396,7 @@ export default function FiturOverviewPage() {
 
       {/* Ecosystem Synergy Section */}
       <section className="py-20 px-4 sm:px-6">
-        <div className="max-w-7xl mx-auto bg-slate-900 rounded-[2.5rem] p-8 sm:p-14 text-white relative overflow-hidden">
+        <div className="max-w-7xl mx-auto bg-slate-900 dark:bg-[#0F172A] rounded-[2.5rem] p-8 sm:p-14 text-white relative overflow-hidden border border-transparent dark:border-slate-800">
           <div className="absolute top-0 right-0 w-96 h-96 bg-[#1B9981]/20 rounded-full blur-3xl pointer-events-none" />
 
           <div className="relative z-10 max-w-3xl space-y-6">

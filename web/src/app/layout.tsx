@@ -35,6 +35,8 @@ export const metadata: Metadata = {
   },
 };
 
+import { ThemeProvider } from "@/lib/ThemeContext";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -43,9 +45,12 @@ export default function RootLayout({
   return (
     <html
       lang="id"
+      suppressHydrationWarning
       className={`${jakarta.variable} ${geistMono.variable} ${playfair.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col bg-[#ffffff] dark:bg-[#090e17] text-slate-800 dark:text-slate-100 transition-colors duration-300">
+        <ThemeProvider>{children}</ThemeProvider>
+      </body>
     </html>
   );
 }
