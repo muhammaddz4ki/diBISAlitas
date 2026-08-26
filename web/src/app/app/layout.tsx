@@ -34,7 +34,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
           {/* Wrapper for Z-Axis Push Back Animation */}
           <div id="app-wrapper" className="w-full h-full flex flex-col relative transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] origin-top bg-inherit">
             {/* Main Content Area */}
-            <main id="main-content" className={`flex-1 overflow-y-auto relative scroll-smooth [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none'] ${isAuthPage ? "bg-white" : "bg-[#f4f6fc] pb-28"}`}>
+            <main id="main-content" className={`flex-1 flex flex-col overflow-y-auto relative scroll-smooth [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none'] ${isAuthPage ? "bg-[#E8F4F1]" : "bg-[#f4f6fc] pb-28"}`}>
               {children}
             </main>
 
@@ -134,8 +134,8 @@ function NavItem({ href, icon, label, isActive }: {
         {isActive ? React.cloneElement(icon as React.ReactElement<any>, { className: "w-[22px] h-[22px] text-white drop-shadow-md transition-all duration-300", strokeWidth: 2.5 }) : React.cloneElement(icon as React.ReactElement<any>, { className: "w-6 h-6 transition-all duration-300", strokeWidth: 2 })}
       </div>
       <span className={`
-        text-[12px] tracking-tight z-20 mt-0.5 whitespace-nowrap
-        ${isActive ? "font-bold text-[#1B9981] opacity-100 translate-y-0" : "font-medium text-slate-500 opacity-0 translate-y-2 pointer-events-none"}
+        tracking-tight z-20 mt-0.5 whitespace-nowrap
+        ${isActive ? "text-[12px] font-bold text-[#1B9981] translate-y-0" : "text-[10px] font-medium text-slate-500 translate-y-0"}
       `} style={{
         transition: isActive 
           ? 'all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) 0.15s' 

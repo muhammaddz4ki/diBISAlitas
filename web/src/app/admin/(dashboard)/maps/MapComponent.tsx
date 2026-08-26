@@ -161,11 +161,11 @@ export default function MapComponent() {
               <Popup className="ios-popup">
                 <div className="w-64 p-1">
                   {report.photoUrl && (
-                    <div className="w-full h-32 mb-3 rounded-xl overflow-hidden bg-slate-100">
+                    <div className="w-full h-32 mb-3 rounded-xl overflow-hidden neo-pressed p-1">
                       <img 
                         src={report.photoUrl} 
                         alt="Rintangan" 
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-cover rounded-lg"
                       />
                     </div>
                   )}
@@ -207,20 +207,20 @@ export default function MapComponent() {
       </MapContainer>
 
       {/* Legend Keterangan */}
-      <div className="absolute bottom-6 left-6 z-[1000] bg-white/95 backdrop-blur-sm p-4 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-slate-100/50">
-        <h4 className="text-[11px] font-bold text-slate-800 uppercase tracking-wider mb-3">Tingkat Kepadatan Laporan</h4>
-        <div className="flex flex-col gap-3">
+      <div className="absolute bottom-6 left-6 z-[1000] neo-flat p-5 border-none">
+        <h4 className="text-[11px] font-extrabold text-slate-800 uppercase tracking-wider mb-4">Tingkat Kepadatan</h4>
+        <div className="flex flex-col gap-3.5">
           <div className="flex items-center gap-3">
-            <span className="w-3.5 h-3.5 rounded-full bg-[#EF4444] opacity-70 border-2 border-[#EF4444]"></span>
-            <span className="text-xs font-semibold text-slate-600">Tinggi (≥ 3 laporan berdekatan)</span>
+            <span className="w-4 h-4 rounded-full bg-[#EF4444] opacity-70 border-[3px] border-white shadow-sm"></span>
+            <span className="text-xs font-bold text-slate-600">Tinggi (≥ 3 laporan berdekatan)</span>
           </div>
           <div className="flex items-center gap-3">
-            <span className="w-3.5 h-3.5 rounded-full bg-[#F59E0B] opacity-70 border-2 border-[#F59E0B]"></span>
-            <span className="text-xs font-semibold text-slate-600">Sedang (2 laporan berdekatan)</span>
+            <span className="w-4 h-4 rounded-full bg-[#F59E0B] opacity-70 border-[3px] border-white shadow-sm"></span>
+            <span className="text-xs font-bold text-slate-600">Sedang (2 laporan)</span>
           </div>
           <div className="flex items-center gap-3">
-            <span className="w-3.5 h-3.5 rounded-full bg-[#00B894] opacity-70 border-2 border-[#00B894]"></span>
-            <span className="text-xs font-semibold text-slate-600">Rendah (1 laporan)</span>
+            <span className="w-4 h-4 rounded-full bg-[#00B894] opacity-70 border-[3px] border-white shadow-sm"></span>
+            <span className="text-xs font-bold text-slate-600">Rendah (1 laporan)</span>
           </div>
         </div>
       </div>
@@ -228,16 +228,18 @@ export default function MapComponent() {
       {/* Global CSS injected for Popup styling */}
       <style dangerouslySetInnerHTML={{__html: `
         .leaflet-popup-content-wrapper {
-          border-radius: 16px !important;
-          box-shadow: 0 10px 40px rgba(0,0,0,0.12) !important;
-          padding: 4px !important;
-          border: 1px solid #f1f5f9 !important;
+          border-radius: 20px !important;
+          background: #F4FBF9 !important;
+          box-shadow: 6px 6px 16px rgba(163, 177, 198, 0.4), -6px -6px 16px rgba(255, 255, 255, 0.9) !important;
+          padding: 6px !important;
+          border: none !important;
         }
         .leaflet-popup-content {
           margin: 12px !important;
         }
         .leaflet-popup-tip {
-          box-shadow: 0 10px 40px rgba(0,0,0,0.12) !important;
+          background: #F4FBF9 !important;
+          box-shadow: 4px 4px 10px rgba(163, 177, 198, 0.3) !important;
         }
         .leaflet-container {
           font-family: inherit !important;
