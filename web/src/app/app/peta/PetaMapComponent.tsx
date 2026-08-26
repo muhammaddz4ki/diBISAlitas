@@ -18,6 +18,7 @@ import {
 import { onAuthStateChanged } from "firebase/auth";
 import { db, auth } from "@/lib/firebase";
 import { MapPin, User, Calendar, Plus, X, ThumbsUp, CheckCircle2, Camera } from "lucide-react";
+import ModalPortal from "@/components/ModalPortal";
 
 // Fix Leaflet default icon in Next.js
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -303,8 +304,9 @@ export default function PetaMapComponent() {
 
       {/* Modal Lapor */}
       {showReport && (
-        <div className="fixed inset-0 z-[9999] bg-slate-900/40 backdrop-blur-sm flex items-end sm:items-center justify-center p-4 sm:p-0 transition-opacity animate-in fade-in duration-200" onClick={() => { setShowReport(false); setPhoto(null); setPhotoPreview(null); }}>
-          <div className="w-full sm:w-[420px] max-h-[90vh] flex flex-col bg-white rounded-[2rem] shadow-2xl overflow-hidden animate-in zoom-in-95 duration-200" onClick={(e) => e.stopPropagation()}>
+        <ModalPortal>
+        <div className="absolute inset-0 z-[9999] bg-slate-900/40 backdrop-blur-sm flex items-end sm:items-center justify-center p-6 sm:p-0 transition-opacity animate-in fade-in duration-200" onClick={() => { setShowReport(false); setPhoto(null); setPhotoPreview(null); }}>
+          <div className="w-full sm:w-[420px] max-h-[85vh] flex flex-col bg-white rounded-[2.5rem] shadow-2xl overflow-hidden animate-in zoom-in-95 duration-200" onClick={(e) => e.stopPropagation()}>
             <div className="p-6 pb-4 border-b border-slate-100 flex items-center justify-between bg-white/50 sticky top-0 z-10 backdrop-blur-md">
               <div>
                 <h3 className="text-xl font-extrabold text-slate-800 tracking-tight">Lapor Rintangan</h3>
@@ -399,6 +401,7 @@ export default function PetaMapComponent() {
             </div>
           </div>
         </div>
+        </ModalPortal>
       )}
 
       <style dangerouslySetInnerHTML={{

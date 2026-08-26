@@ -248,7 +248,7 @@ export default function BiSapaPage() {
       </div>
 
       {/* ── BOTTOM SECTION (Normal) ── */}
-      <div className="flex-[0.55] flex flex-col p-6 bg-[#f4f6fc] rounded-t-[2.5rem] z-10 -mt-8 pt-14">
+      <div className="flex-[0.55] flex flex-col p-6 bg-[#f4f6fc] rounded-t-[2.5rem] z-10 -mt-8 pt-5">
         <div className="w-full h-full flex flex-col justify-between max-w-md mx-auto">
           <div className="text-slate-800 font-black tracking-wide text-[12px] uppercase flex items-center justify-center gap-2 text-3d drop-shadow-sm">
             <Type className="w-4 h-4" strokeWidth={2.5} /> Area Ketik (Tunarungu)

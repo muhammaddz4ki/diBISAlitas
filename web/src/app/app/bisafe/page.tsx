@@ -27,9 +27,11 @@ import {
   Phone,
   MapPin,
   Clock,
+  VolumeX,
 } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, Variants } from "framer-motion";
 import { useAccessibility } from "@/lib/AccessibilityContext";
+import ModalPortal from "@/components/ModalPortal";
 
 type Tab = "darurat" | "kontak" | "riwayat";
 
@@ -59,9 +61,9 @@ export default function BiSafePage() {
   }, []);
 
   return (
-    <div className={`min-h-full bg-[#f4f6fc] ${colorfulMode ? "selection:bg-rose-500/20" : "selection:bg-[#1B9981]/20"} flex flex-col pb-24`}>
+    <div className={`min-h-full bg-[#f4f6fc] ${colorfulMode ? "selection:bg-rose-500/20" : "selection:bg-[#1B9981]/20"} flex flex-col`}>
       {/* Header — Sticky 3D Neumorphism */}
-      <div className="sticky top-0 z-50 px-6 pt-14 pb-6 bg-[#f4f6fc]/95 backdrop-blur-xl border-b border-white shadow-3d rounded-b-[2rem] shrink-0 mb-4">
+      <div className="sticky top-0 z-50 px-6 pt-5 pb-5 bg-[#f4f6fc]/95 backdrop-blur-xl border-b border-white shadow-3d rounded-b-[2rem] shrink-0 mb-4">
         <div className="flex items-center gap-3.5">
           <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-rose-500 to-rose-700 flex items-center justify-center shrink-0 bubble-3d text-white">
             <ShieldAlert className="w-7 h-7 text-white drop-shadow-md" strokeWidth={2.5} />
@@ -420,13 +422,14 @@ function KontakTab({ me }: { me: { uid: string; name: string; email: string } | 
       {/* Modal Tambah */}
       <AnimatePresence>
         {showAdd && (
-          <div className="fixed inset-0 z-[700] bg-black/40 flex items-end sm:items-center justify-center" onClick={() => setShowAdd(false)}>
+          <ModalPortal>
+          <div className="absolute inset-0 z-[700] bg-black/40 flex items-end sm:items-center justify-center p-6 sm:p-0" onClick={() => setShowAdd(false)}>
             <motion.div
               initial={{ y: reduceMotion ? 0 : 40, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: reduceMotion ? 0 : 40, opacity: 0 }}
               transition={{ duration: reduceMotion ? 0 : 0.3 }}
-              className="w-full sm:w-[360px] bg-[#f4f6fc] rounded-t-[2.5rem] sm:rounded-[2.5rem] p-6 pb-8 shadow-[0_-20px_40px_rgba(0,0,0,0.15)] border-t border-white"
+              className="w-full sm:w-[360px] bg-[#f4f6fc] rounded-[2.5rem] p-6 pb-8 shadow-2xl border-t border-white mb-6"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex items-center justify-between mb-5">
@@ -453,13 +456,15 @@ function KontakTab({ me }: { me: { uid: string; name: string; email: string } | 
               </button>
             </motion.div>
           </div>
+          </ModalPortal>
         )}
       </AnimatePresence>
 
       {/* Modal Konfirmasi Hapus */}
       <AnimatePresence>
         {confirmDelete && (
-          <div className="fixed inset-0 z-[800] bg-black/40 backdrop-blur-sm flex items-center justify-center p-4" onClick={() => setConfirmDelete(null)}>
+          <ModalPortal>
+          <div className="absolute inset-0 z-[800] bg-black/40 backdrop-blur-sm flex items-center justify-center p-6 sm:p-4" onClick={() => setConfirmDelete(null)}>
             <motion.div
               initial={{ opacity: 0, scale: reduceMotion ? 1 : 0.9, y: reduceMotion ? 0 : 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -479,6 +484,7 @@ function KontakTab({ me }: { me: { uid: string; name: string; email: string } | 
               </div>
             </motion.div>
           </div>
+          </ModalPortal>
         )}
       </AnimatePresence>
     </div>
@@ -589,7 +595,8 @@ function RiwayatTab({ me }: { me: { uid: string; name: string; email: string } |
       {/* Modal Konfirmasi Hapus Riwayat */}
       <AnimatePresence>
         {confirmDelete && (
-          <div className="fixed inset-0 z-[800] bg-black/40 backdrop-blur-sm flex items-center justify-center p-4" onClick={() => setConfirmDelete(null)}>
+          <ModalPortal>
+          <div className="absolute inset-0 z-[800] bg-black/40 backdrop-blur-sm flex items-center justify-center p-6 sm:p-4" onClick={() => setConfirmDelete(null)}>
             <motion.div
               initial={{ opacity: 0, scale: reduceMotion ? 1 : 0.9, y: reduceMotion ? 0 : 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -609,6 +616,7 @@ function RiwayatTab({ me }: { me: { uid: string; name: string; email: string } |
               </div>
             </motion.div>
           </div>
+          </ModalPortal>
         )}
       </AnimatePresence>
     </div>

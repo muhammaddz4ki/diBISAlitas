@@ -34,7 +34,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
           {/* Wrapper for Z-Axis Push Back Animation */}
           <div id="app-wrapper" className="w-full h-full flex flex-col relative transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] origin-top bg-inherit">
             {/* Main Content Area */}
-            <main id="main-content" className={`flex-1 flex flex-col overflow-y-auto relative scroll-smooth [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none'] ${isAuthPage ? "bg-[#E8F4F1]" : "bg-[#f4f6fc] pb-28"}`}>
+            <main id="main-content" className={`flex-1 flex flex-col overflow-y-auto relative scroll-smooth [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none'] ${isAuthPage ? "bg-[#E8F4F1]" : "bg-[#f4f6fc] pb-36"}`}>
               {children}
             </main>
 
@@ -54,7 +54,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
             const visualIndex = activeIndex === -1 ? 2 : activeIndex;
 
             return (
-              <nav className="absolute bottom-0 w-full pt-3 pb-7 sm:pb-4 z-50 shadow-[0_-10px_40px_rgba(0,0,0,0.08)]" role="navigation" aria-label="Menu utama">
+              <nav className="relative shrink-0 w-full pt-3 pb-7 sm:pb-4 z-50 shadow-[0_-10px_40px_rgba(0,0,0,0.08)]" role="navigation" aria-label="Menu utama">
                 
                 {/* Latar Putih Navbar & Lubang Transparan Asli (The flawless geometry trick) */}
                 <div className="absolute inset-0 overflow-hidden z-[-1] pointer-events-none rounded-t-[0px]">

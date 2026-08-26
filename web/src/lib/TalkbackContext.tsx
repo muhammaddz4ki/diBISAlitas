@@ -96,6 +96,79 @@ export function TalkbackProvider({ children }: { children: ReactNode }) {
     };
   }, [talkback]);
 
+  // Global click listener for Double-Click to Activate (TalkBack behavior)
+  const lastClickedRef = useRef<HTMLElement | null>(null);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const handleClick = (e: MouseEvent) => {
+      if (!isEnabledRef.current) {
+        // Clear focus if talkback disabled
+        if (lastClickedRef.current) {
+          lastClickedRef.current.classList.remove("talkback-focus");
+          lastClickedRef.current = null;
+        }
+        return;
+      }
+
+      const target = e.target as HTMLElement;
+      if (!target) return;
+
+      const interactiveEl = target.closest(
+        'button, a, input, select, textarea, [role="button"], [role="link"], [tabindex]'
+      ) as HTMLElement;
+
+      if (!interactiveEl) {
+        // Clicked outside interactive element
+        if (lastClickedRef.current) {
+          lastClickedRef.current.classList.remove("talkback-focus");
+          lastClickedRef.current = null;
+        }
+        return;
+      }
+
+      if (lastClickedRef.current !== interactiveEl) {
+        // FIRST CLICK
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+
+        if (lastClickedRef.current) {
+          lastClickedRef.current.classList.remove("talkback-focus");
+        }
+
+        interactiveEl.classList.add("talkback-focus");
+        lastClickedRef.current = interactiveEl;
+
+        let textToRead = interactiveEl.getAttribute("aria-label") || 
+                         interactiveEl.getAttribute("title") || 
+                         (interactiveEl as HTMLImageElement).alt || 
+                         "";
+                         
+        if (!textToRead) {
+          if (interactiveEl.tagName === "INPUT") {
+            textToRead = (interactiveEl as HTMLInputElement).placeholder || "Input";
+          } else {
+            textToRead = interactiveEl.textContent?.trim() || "Tombol";
+          }
+        }
+
+        talkback.speak(textToRead);
+      } else {
+        // SECOND CLICK
+        // Let it pass through. We will reset the ref so they have to double click again next time,
+        // but we'll leave the focus class on it until they click something else.
+        lastClickedRef.current = null;
+      }
+    };
+
+    document.addEventListener("click", handleClick, { capture: true });
+    return () => {
+      document.removeEventListener("click", handleClick, { capture: true });
+    };
+  }, [talkback]);
+
   return (
     <TalkbackContext.Provider value={talkback}>
       {/* TalkBack Active Indicator Banner */}

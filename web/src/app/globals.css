@@ -404,3 +404,26 @@ body.a11y-reduce *::after {
 .neo-icon-btn:active {
   box-shadow: inset 2px 2px 5px var(--neo-shadow-dark), inset -2px -2px 5px var(--neo-shadow-light);
 }
+
+/* TalkBack Focus Indicator */
+.talkback-focus {
+  outline: 4px solid #00B894 !important;
+  outline-offset: 2px !important;
+  border-radius: 8px;
+  position: relative;
+  z-index: 50;
+}
+
+/* Safe Area for notch/home indicator devices — adds extra bottom space */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  nav[role="navigation"] {
+    padding-bottom: calc(1.75rem + env(safe-area-inset-bottom));
+  }
+}
+
+/* Responsive header titles — scales down on small screens (<375px) */
+@media (max-width: 374px) {
+  h1.text-3d {
+    font-size: 20px !important;
+  }
+}

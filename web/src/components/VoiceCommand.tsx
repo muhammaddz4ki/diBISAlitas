@@ -228,7 +228,7 @@ export default function VoiceCommand() {
   return (
     <>
       {listening && caption && (
-        <div className="absolute bottom-[13rem] right-6 z-[60] max-w-[220px] bg-slate-800 text-white text-[13px] font-semibold px-4 py-2.5 rounded-[16px] shadow-xl border border-slate-700">
+        <div className="absolute bottom-[220px] right-6 z-[60] max-w-[220px] bg-slate-800 text-white text-[13px] font-semibold px-4 py-2.5 rounded-[16px] shadow-xl border border-slate-700">
           &ldquo;{caption}&rdquo;
         </div>
       )}
@@ -238,7 +238,7 @@ export default function VoiceCommand() {
         onClick={() => setShowHelp(true)}
         aria-label="Panduan perintah suara"
         title="Panduan perintah suara"
-        className="absolute bottom-[170px] sm:bottom-[160px] right-6 sm:right-7 z-[100] w-10 h-10 rounded-full bg-gradient-to-br from-[#1B9981] to-[#00D4AA] shadow-[0_4px_12px_rgba(27,153,129,0.3)] flex items-center justify-center text-white hover:scale-105 active:scale-90 transition-all border-2 border-white/20"
+        className="absolute bottom-[168px] right-6 z-[100] w-10 h-10 rounded-full bg-gradient-to-br from-[#1B9981] to-[#00D4AA] shadow-[0_4px_12px_rgba(27,153,129,0.3)] flex items-center justify-center text-white hover:scale-105 active:scale-90 transition-all border-2 border-white/20"
       >
         <HelpCircle className="w-5 h-5" strokeWidth={2.5} />
       </button>
@@ -248,7 +248,7 @@ export default function VoiceCommand() {
         whileTap={{ scale: reduceMotion ? 1 : 0.95 }}
         onClick={toggleListening}
         aria-label={listening ? "Matikan panduan suara" : "Aktifkan panduan suara"}
-        className={`absolute bottom-[104px] sm:bottom-24 right-5 sm:right-6 w-12 h-12 rounded-full shadow-3d shadow-3d-active z-[100] flex items-center justify-center transition-all duration-300 border-2
+        className={`absolute bottom-[110px] right-6 w-12 h-12 rounded-full shadow-3d shadow-3d-active z-[100] flex items-center justify-center transition-all duration-300 border-2
           ${listening 
             ? "bg-gradient-to-br from-rose-500 to-rose-700 border-rose-400" 
             : "bg-gradient-to-br from-[#1B9981] to-[#00D4AA] border-[#00B894] hover:scale-105"}`}

@@ -185,10 +185,10 @@ export default function DashboardPage() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="relative min-h-full bg-[#f4f6fc] selection:bg-[#1B9981]/20 pb-24"
+      className="relative min-h-full bg-[#f4f6fc] selection:bg-[#1B9981]/20"
     >
       {/* Header — Sticky 3D Neumorphism */}
-      <div className="sticky top-0 z-50 px-6 pt-14 pb-6 bg-[#f4f6fc]/95 backdrop-blur-xl border-b border-white shadow-3d rounded-b-[2rem] shrink-0 mb-4">
+      <div className="sticky top-0 z-50 px-6 pt-5 pb-5 bg-[#f4f6fc]/95 backdrop-blur-xl border-b border-white shadow-3d rounded-b-[2rem] shrink-0 mb-4">
         <div className="flex justify-between items-center gap-3">
           <div className="flex items-center gap-3.5 min-w-0 flex-1">
             {/* Avatar */}

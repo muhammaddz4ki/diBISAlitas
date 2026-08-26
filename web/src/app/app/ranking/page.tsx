@@ -52,7 +52,7 @@ export default function RankingPage() {
     <div className="min-h-full flex flex-col bg-[#1B9981]">
 
       {/* Header — Sticky 3D Neumorphism (same as other pages) */}
-      <div className="sticky top-0 z-50 px-5 pt-14 pb-6 bg-[#f4f6fc]/95 backdrop-blur-xl border-b border-white shadow-3d rounded-b-[2rem] shrink-0">
+      <div className="sticky top-0 z-50 px-5 pt-5 pb-5 bg-[#f4f6fc]/95 backdrop-blur-xl border-b border-white shadow-3d rounded-b-[2rem] shrink-0">
         <div className="flex items-center gap-3">
           <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#1B9981] to-[#00D4AA] flex items-center justify-center shrink-0 bubble-3d text-white">
             <Trophy className="w-7 h-7 text-white drop-shadow-md" strokeWidth={2.5} />
@@ -88,7 +88,7 @@ export default function RankingPage() {
 
         {/* Podium Section — takes generous space */}
         {!loading && top3.length > 0 && (
-          <div className="flex items-end justify-center gap-3 px-6 pt-14 pb-0 relative z-10">
+          <div className="flex items-end justify-center gap-3 px-6 pt-5 pb-0 relative z-10">
             {podiumOrder.map((entry, i) =>
               entry ? (
                 <motion.div

@@ -8,6 +8,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "@/lib/firebase";
 import { UMUM_LABELS, SignLabel } from "@/constants/signLabels";
 import { subscribeLearningStats, LearningStats, LetterStat } from "@/lib/learningStats";
+import ModalPortal from "@/components/ModalPortal";
 
 type Mastery = "none" | "weak" | "ok" | "master";
 
@@ -91,7 +92,7 @@ export default function KamusBisindoPage() {
   return (
     <div className="min-h-full bg-[#f4f6fc] flex flex-col pb-10">
       {/* Header — Sticky 3D Neumorphism */}
-      <div className="sticky top-0 z-50 px-6 pt-14 pb-6 bg-[#f4f6fc]/95 backdrop-blur-xl border-b border-white shadow-3d rounded-b-[2rem] shrink-0 mb-4">
+      <div className="sticky top-0 z-50 px-6 pt-5 pb-5 bg-[#f4f6fc]/95 backdrop-blur-xl border-b border-white shadow-3d rounded-b-[2rem] shrink-0 mb-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
             <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-indigo-400 to-indigo-600 flex items-center justify-center shrink-0 bubble-3d text-white">
@@ -148,11 +149,12 @@ export default function KamusBisindoPage() {
       {/* Detail modal */}
       <AnimatePresence>
         {selected && (
+          <ModalPortal>
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[60] bg-black/40 backdrop-blur-[2px] flex items-end sm:items-center sm:justify-center"
+            className="absolute inset-0 z-[60] bg-black/40 backdrop-blur-[2px] flex items-end sm:items-center sm:justify-center p-6 sm:p-0"
             onClick={() => { setSelected(null); setShowDemonstration(false); }}
           >
             <motion.div
@@ -161,7 +163,7 @@ export default function KamusBisindoPage() {
               exit={{ y: "100%" }}
               transition={{ type: "spring", stiffness: 380, damping: 32 }}
               onClick={(e) => e.stopPropagation()}
-              className="w-full sm:w-[400px] bg-[#f4f6fc] rounded-t-[32px] sm:rounded-[32px] p-7 pb-10 shadow-[0_-10px_40px_rgba(0,0,0,0.1)] border-t border-white"
+              className="w-full sm:w-[400px] bg-[#f4f6fc] rounded-[32px] p-7 pb-7 shadow-2xl border-t border-white mb-6"
             >
               <div className="flex justify-between items-start mb-3">
                 <div className="w-10" />
@@ -257,6 +259,7 @@ export default function KamusBisindoPage() {
               </div>
             </motion.div>
           </motion.div>
+          </ModalPortal>
         )}
       </AnimatePresence>
     </div>

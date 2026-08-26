@@ -34,7 +34,7 @@ export default function BijalanScreen() {
     <div className="min-h-[100dvh] bg-[#f4f6fc] selection:bg-[#1B9981]/20 flex flex-col pb-4 relative overflow-x-hidden">
 
       {/* Header — Sticky 3D Neumorphism */}
-      <div className="sticky top-0 z-50 px-6 pt-14 pb-6 bg-[#f4f6fc]/95 backdrop-blur-xl border-b border-white shadow-3d rounded-b-[2rem] shrink-0 mb-4">
+      <div className="sticky top-0 z-50 px-6 pt-5 pb-5 bg-[#f4f6fc]/95 backdrop-blur-xl border-b border-white shadow-3d rounded-b-[2rem] shrink-0 mb-4">
         <div className="flex items-start justify-between">
           <div className="flex items-center gap-3.5">
             <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#1B9981] to-[#00D4AA] flex items-center justify-center shrink-0 bubble-3d text-white">

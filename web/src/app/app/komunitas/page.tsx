@@ -7,6 +7,7 @@ import { Megaphone, Info, AlertTriangle, Siren, Clock, ChevronRight, Trophy, Cro
 import { motion, AnimatePresence, Variants } from "framer-motion";
 import Link from "next/link";
 import { subscribeLeaderboard, QuizScoreEntry } from "@/lib/quizService";
+import ModalPortal from "@/components/ModalPortal";
 
 interface Announcement {
   id: string;
@@ -104,9 +105,9 @@ export default function KomunitasPage() {
   };
 
   return (
-    <div className="min-h-full bg-[#f4f6fc] selection:bg-[#1B9981]/20 pb-24">
+    <div className="min-h-full bg-[#f4f6fc] selection:bg-[#1B9981]/20">
       {/* Header — Sticky 3D Neumorphism */}
-      <div className="sticky top-0 z-50 px-6 pt-14 pb-6 bg-[#f4f6fc]/95 backdrop-blur-xl border-b border-white shadow-3d rounded-b-[2rem] shrink-0 mb-4">
+      <div className="sticky top-0 z-50 px-6 pt-5 pb-5 bg-[#f4f6fc]/95 backdrop-blur-xl border-b border-white shadow-3d rounded-b-[2rem] shrink-0 mb-4">
         <div className="flex items-center gap-3.5">
           <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#00B894] to-[#00D4AA] flex items-center justify-center shrink-0 bubble-3d text-white">
             <Megaphone className="w-7 h-7 text-white drop-shadow-md" strokeWidth={2.5} />
@@ -252,11 +253,12 @@ export default function KomunitasPage() {
       {/* Detail Modal (Bottom Sheet dengan animasi keluar) */}
       <AnimatePresence>
         {selected && (
+          <ModalPortal>
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[60] bg-black/40 backdrop-blur-[2px] flex items-end sm:items-center sm:justify-center"
+            className="absolute inset-0 z-[60] bg-black/40 backdrop-blur-[2px] flex items-end sm:items-center sm:justify-center p-6 sm:p-0"
             onClick={() => setSelected(null)}
           >
             <motion.div
@@ -265,7 +267,7 @@ export default function KomunitasPage() {
               exit={{ y: "100%" }}
               transition={{ type: "spring", stiffness: 400, damping: 32 }}
               onClick={(e) => e.stopPropagation()}
-              className="w-full sm:w-[400px] bg-[#f4f6fc] rounded-t-[2.5rem] sm:rounded-[2.5rem] p-6 pb-12 sm:pb-6 max-h-[85vh] overflow-y-auto shadow-[0_-20px_40px_rgba(0,0,0,0.15)] border-t border-white"
+              className="w-full sm:w-[400px] bg-[#f4f6fc] rounded-[2.5rem] p-6 pb-6 max-h-[85vh] overflow-y-auto shadow-2xl border-t border-white mb-6"
             >
               {/* iOS style handle */}
               <div className="w-16 h-1.5 rounded-full shadow-[inset_1px_1px_3px_rgba(0,0,0,0.1)] mx-auto mb-7 sm:hidden" />
@@ -298,6 +300,7 @@ export default function KomunitasPage() {
               })()}
             </motion.div>
           </motion.div>
+          </ModalPortal>
         )}
       </AnimatePresence>
     </div>

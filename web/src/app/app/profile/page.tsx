@@ -159,7 +159,7 @@ export default function ProfilePage() {
   const initial = (user?.displayName || "Pengguna").charAt(0).toUpperCase() || "P";
 
   return (
-    <div className="min-h-full bg-[#f4f6fc] selection:bg-[#1B9981]/20 flex flex-col pb-24 relative overflow-hidden">
+    <div className="min-h-full bg-[#f4f6fc] selection:bg-[#1B9981]/20 flex flex-col relative">
 
       {/* Minimalist iOS-like Toast */}
       <AnimatePresence>
@@ -185,18 +185,20 @@ export default function ProfilePage() {
       </AnimatePresence>
 
       {/* Header — Sticky 3D Neumorphism */}
-      <div className="sticky top-0 z-50 px-6 pt-14 pb-6 bg-[#f4f6fc]/95 backdrop-blur-xl border-b border-white shadow-3d rounded-b-[2rem] shrink-0 mb-4">
-        <div className="flex flex-col items-center">
-          <div className="relative mb-4 mt-2">
-            <div className="w-[88px] h-[88px] rounded-[28px] bg-gradient-to-br from-[#00B894] to-[#00D4AA] flex items-center justify-center shadow-[0_8px_16px_rgba(0,184,148,0.3)] border-2 border-white icon-3d">
-              <span className="text-[32px] font-black text-white drop-shadow-md">{initial}</span>
+      <div className="sticky top-0 z-50 px-6 pt-5 pb-5 bg-[#f4f6fc]/95 backdrop-blur-xl border-b border-white shadow-3d rounded-b-[2rem] shrink-0 mb-4">
+        <div className="flex items-center gap-3.5">
+          <div className="relative shrink-0">
+            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#00B894] to-[#00D4AA] flex items-center justify-center shadow-[0_4px_8px_rgba(0,184,148,0.3)] border border-white bubble-3d">
+              <span className="text-[22px] font-black text-white drop-shadow-md">{initial}</span>
             </div>
-            <div className="absolute -bottom-2 -right-2 w-[34px] h-[34px] bg-gradient-to-br from-[#1B9981] to-[#00D4AA] rounded-[12px] shadow-3d border-2 border-white flex items-center justify-center">
-              <ShieldCheck className="w-4 h-4 text-white drop-shadow-md" strokeWidth={3} />
+            <div className="absolute -bottom-1.5 -right-1.5 w-6 h-6 bg-gradient-to-br from-[#1B9981] to-[#00D4AA] rounded-lg shadow-sm border-[1.5px] border-white flex items-center justify-center">
+              <ShieldCheck className="w-3 h-3 text-white drop-shadow-md" strokeWidth={3} />
             </div>
           </div>
-          <h1 className="text-[24px] font-black text-slate-900 tracking-tight text-3d">{user?.displayName || "Pengguna"}</h1>
-          <p className="text-slate-500 text-[13px] font-medium mt-0.5 text-3d">{user?.email}</p>
+          <div className="min-w-0">
+            <h1 className="text-[24px] font-black text-slate-900 tracking-tight leading-tight text-3d truncate">{user?.displayName || "Pengguna"}</h1>
+            <p className="text-slate-500 text-[13px] font-medium mt-0.5 text-3d truncate">{user?.email}</p>
+          </div>
         </div>
       </div>
 

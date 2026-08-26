@@ -8,6 +8,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { motion, Variants } from "framer-motion";
 import { useAccessibility } from "@/lib/AccessibilityContext";
+import ModalPortal from "@/components/ModalPortal";
 
 interface Course {
   id: string;
@@ -56,10 +57,10 @@ export default function BiPintarPage() {
   }, []);
 
   return (
-    <div className={`min-h-[100dvh] bg-[#f4f6fc] ${themeSelection} flex flex-col pb-24`}>
+    <div className={`min-h-[100dvh] bg-[#f4f6fc] ${themeSelection} flex flex-col`}>
 
       {/* Header — Sticky 3D Neumorphism */}
-      <div className="sticky top-0 z-50 px-6 pt-14 pb-6 bg-[#f4f6fc]/95 backdrop-blur-xl border-b border-white shadow-3d rounded-b-[2rem] shrink-0 mb-4">
+      <div className="sticky top-0 z-50 px-6 pt-5 pb-5 bg-[#f4f6fc]/95 backdrop-blur-xl border-b border-white shadow-3d rounded-b-[2rem] shrink-0 mb-4">
         <div className="flex items-center gap-3.5">
           <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${themeGrad} flex items-center justify-center shrink-0 bubble-3d text-white`}>
             <BookOpen className="w-7 h-7 text-white drop-shadow-md" strokeWidth={2.5} />
@@ -342,11 +343,12 @@ function SelectionModal({ isOpen, onClose, title, desc, options }: { isOpen: boo
   if (!isOpen) return null;
   
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm" onClick={onClose}>
+    <ModalPortal>
+    <div className="absolute inset-0 z-[100] flex items-center justify-center p-6 bg-slate-900/40 backdrop-blur-sm" onClick={onClose}>
       <motion.div 
         initial={{ scale: 0.9, opacity: 0, y: 20 }}
         animate={{ scale: 1, opacity: 1, y: 0 }}
-        className="bg-[#f4f6fc] rounded-[2.5rem] p-6 w-full max-w-sm flex flex-col gap-4 shadow-[0_20px_40px_rgba(0,0,0,0.2)] border-t border-white" 
+        className="bg-[#f4f6fc] rounded-[2.5rem] p-6 w-full max-w-sm flex flex-col gap-4 shadow-2xl border-t border-white" 
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between mb-2">
@@ -369,13 +371,14 @@ function SelectionModal({ isOpen, onClose, title, desc, options }: { isOpen: boo
                 <div className={`w-[46px] h-[46px] rounded-[14px] flex items-center justify-center bubble-3d border-none text-white ${opt.bgGradient}`}>
                   {opt.iconNode}
                 </div>
-                <span className="text-[16px]">{opt.label}</span>
+                <span className="text-[15px]">{opt.label}</span>
               </div>
-              <ChevronRight className={`w-6 h-6 ${opt.color} group-hover:translate-x-1 transition-all drop-shadow-sm`} strokeWidth={2.5} />
+              <ChevronRight className="w-5 h-5 text-slate-300 group-hover:translate-x-1 group-hover:text-slate-500 transition-all" strokeWidth={2.5} />
             </button>
           ))}
         </div>
       </motion.div>
     </div>
+    </ModalPortal>
   );
 }
