@@ -34,7 +34,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
           {/* Wrapper for Z-Axis Push Back Animation */}
           <div id="app-wrapper" className="w-full h-full flex flex-col relative transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] origin-top bg-inherit">
             {/* Main Content Area */}
-            <main id="main-content" className={`flex-1 overflow-y-auto relative scroll-smooth [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none'] ${isAuthPage ? "bg-white" : "bg-[#f4f6fc] pb-28"}`}>
+            <main id="main-content" className={`flex-1 flex flex-col overflow-y-auto relative scroll-smooth [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none'] ${isAuthPage ? "bg-[#E8F4F1]" : "bg-[#f4f6fc] pb-28"}`}>
               {children}
             </main>
 
