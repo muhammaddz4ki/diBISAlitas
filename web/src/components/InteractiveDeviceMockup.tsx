@@ -126,38 +126,18 @@ export default function InteractiveDeviceMockup({
 
   return (
     <div className="relative mx-auto flex items-center justify-center">
-      {/* Dynamic Ambient Background Glow */}
-      <div
-        className={`absolute -inset-10 rounded-[4rem] blur-3xl opacity-30 transition-all duration-700 pointer-events-none ${
-          activeFeature === "bisafe"
-            ? "bg-rose-500"
-            : activeFeature === "bipantau"
-            ? "bg-[#1B9981]"
-            : activeFeature === "bisapa"
-            ? "bg-sky-500"
-            : activeFeature === "bibaca"
-            ? "bg-purple-500"
-            : activeFeature === "bipintar"
-            ? "bg-emerald-500"
-            : "bg-teal-500"
-        }`}
-      />
-
-      {/* Realistic Smartphone Titanium Chassis */}
-      <div className="relative w-[300px] sm:w-[325px] h-[615px] rounded-[3.25rem] bg-gradient-to-b from-slate-700 via-slate-900 to-slate-800 p-3 shadow-[0_30px_90px_rgba(0,0,0,0.45)] border border-slate-600/60 ring-1 ring-black/40">
+      {/* Realistic Smartphone Clean Matte Chassis */}
+      <div className="relative w-[300px] sm:w-[325px] h-[615px] rounded-[3.25rem] bg-[#0f172a] p-3 shadow-[0_20px_60px_rgba(0,0,0,0.2)] border-2 border-slate-700/80">
         {/* Dynamic Island Pill with camera lens */}
-        <div className="absolute top-5 left-1/2 -translate-x-1/2 w-28 h-5 bg-black rounded-full z-40 flex items-center justify-between px-3 shadow-md border border-white/5">
-          <span className="w-2.5 h-2.5 rounded-full bg-slate-900 border border-slate-800" />
-          <span className="w-2 h-2 rounded-full bg-[#1B9981] animate-pulse" />
+        <div className="absolute top-5 left-1/2 -translate-x-1/2 w-28 h-5 bg-black rounded-full z-40 flex items-center justify-between px-3 shadow-sm border border-white/10">
+          <span className="w-2 h-2 rounded-full bg-slate-800" />
+          <span className="w-1.5 h-1.5 rounded-full bg-[#1B9981]" />
         </div>
 
         {/* Screen Display Container */}
-        <div className="w-full h-full bg-[#0F172A] rounded-[2.5rem] overflow-hidden flex flex-col relative text-slate-100 font-sans select-none border border-white/10 shadow-inner">
-          {/* Glass Specular Angle Sheen */}
-          <div className="absolute inset-0 pointer-events-none z-30 bg-gradient-to-tr from-transparent via-white/[0.03] to-white/[0.08] rounded-[2.5rem]" />
-
+        <div className="w-full h-full bg-[#0F172A] rounded-[2.5rem] overflow-hidden flex flex-col relative text-slate-100 font-sans select-none border border-slate-800">
           {/* Status Bar */}
-          <div className="h-10 pt-2 px-6 flex items-center justify-between text-[11px] font-bold text-slate-400 z-30 bg-slate-900/60 backdrop-blur-md">
+          <div className="h-10 pt-2 px-6 flex items-center justify-between text-[11px] font-bold text-slate-400 z-30 bg-slate-900 border-b border-slate-800/80">
             <span>09:41</span>
             <div className="flex items-center gap-1.5 text-[10px]">
               <span>5G</span>
