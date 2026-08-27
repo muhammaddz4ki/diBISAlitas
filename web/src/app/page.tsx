@@ -304,10 +304,10 @@ function StackPanel({ pillar, index }: { pillar: Pillar; index: number }) {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
         transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
-        className="liquid-glass-card rounded-[2.5rem] md:rounded-[3rem] p-8 sm:p-10 md:p-14 mb-8 overflow-hidden"
+        className="bg-white dark:bg-[#131317] rounded-[2.5rem] md:rounded-[3rem] p-8 sm:p-10 md:p-14 mb-8 overflow-hidden border border-slate-200/95 dark:border-zinc-800/95 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.08)] dark:shadow-[0_25px_60px_-15px_rgba(0,0,0,0.65)] relative"
       >
         {/* Specular Inner Rim */}
-        <div className="absolute inset-0 pointer-events-none rounded-[inherit] shadow-[inset_0_1px_1px_rgba(255,255,255,0.7)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.12)]" />
+        <div className="absolute inset-0 pointer-events-none rounded-[inherit] shadow-[inset_0_1px_1px_rgba(255,255,255,0.9)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.08)]" />
 
         <div className="grid md:grid-cols-12 gap-8 lg:gap-12 items-center relative z-10">
           {/* Left: Giant Bold Clean Number */}
