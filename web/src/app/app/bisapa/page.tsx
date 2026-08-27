@@ -133,7 +133,7 @@ export default function BiSapaPage() {
 
   return (
     <div 
-      className={`flex flex-col h-full bg-[#f4f6fc] font-sans ${colorfulMode ? "selection:bg-sky-500/20" : "selection:bg-[#1B9981]/20"}`}
+      className={`flex flex-col flex-1 w-full h-full bg-[#f4f6fc] font-sans ${colorfulMode ? "selection:bg-sky-500/20" : "selection:bg-[#1B9981]/20"}`}
       onClick={() => {
         if (showCustomKeyboard) setShowCustomKeyboard(false);
       }}
@@ -277,7 +277,7 @@ export default function BiSapaPage() {
             className="w-full flex-1 my-4 bg-[#f4f6fc] border-none rounded-[28px] py-6 pl-6 pr-20 text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-0 resize-none text-[24px] font-bold leading-relaxed text-center shadow-[inset_4px_4px_10px_rgba(0,0,0,0.06),_inset_-4px_-4px_12px_rgba(255,255,255,1)] transition-all"
           />
 
-          <div className="flex justify-center items-center gap-5 mt-2">
+          <div className="flex justify-center items-center gap-5 mt-2 mb-8 sm:mb-4">
             <button
               onClick={() => speakText(bottomText)}
               className={`w-[72px] h-[72px] bg-gradient-to-b ${themeGrad} rounded-full flex items-center justify-center bubble-3d border-none transition-all active:scale-95`}
