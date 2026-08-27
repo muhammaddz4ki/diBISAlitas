@@ -14,7 +14,7 @@ import {
   EmailAuthProvider
 } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
-import { LogOut, Eye, EyeOff, Save, CheckCircle2, AlertCircle, Volume2, VolumeX, ShieldCheck, Type, Contrast, Sparkles, Palette } from "lucide-react";
+import { LogOut, Eye, EyeOff, Save, CheckCircle2, AlertCircle, Volume2, VolumeX, ShieldCheck, Type, Contrast, Sparkles, Palette, Activity } from "lucide-react";
 import { useTalkbackContext } from "@/lib/TalkbackContext";
 import { useAccessibility, FONT_LABELS } from "@/lib/AccessibilityContext";
 import { motion, AnimatePresence, Variants } from "framer-motion";
@@ -383,6 +383,27 @@ export default function ProfilePage() {
                 </div>
                 <div className={`relative w-[52px] h-[32px] rounded-full transition-all duration-300 shrink-0 border border-white ${a11y.reduceMotion ? "bg-gradient-to-br from-[#1B9981] to-[#00D4AA] shadow-[inset_2px_2px_5px_rgba(0,0,0,0.2)]" : "bg-[#f4f6fc] shadow-[inset_3px_3px_8px_rgba(0,0,0,0.05),_inset_-4px_-4px_10px_rgba(255,255,255,1)]"}`} aria-hidden="true">
                   <div className={`absolute top-1 w-[22px] h-[22px] rounded-full transition-transform duration-300 ${a11y.reduceMotion ? "translate-x-6 bg-white shadow-sm" : "translate-x-1 bg-slate-300 shadow-inner"}`} />
+                </div>
+              </button>
+            </div>
+
+            {/* Getar (Haptic Feedback) */}
+            <div className="bg-transparent border border-white rounded-[24px] shadow-3d mb-4">
+              <button
+                type="button"
+                onClick={a11y.toggleHapticFeedback}
+                aria-label={a11y.hapticFeedback ? "Nonaktifkan getaran" : "Aktifkan getaran"}
+                className="w-full flex items-center gap-4 p-4 transition-colors outline-none group rounded-[24px] shadow-3d-active"
+              >
+                <div className={`w-14 h-14 rounded-[18px] flex items-center justify-center shrink-0 border border-white transition-all ${a11y.hapticFeedback ? "bg-gradient-to-br from-[#1B9981] to-[#00D4AA] shadow-3d icon-3d" : "bg-transparent shadow-[inset_2px_2px_5px_rgba(0,0,0,0.05),_inset_-3px_-3px_7px_rgba(255,255,255,1)]"}`}>
+                  <Activity className={`w-6 h-6 ${a11y.hapticFeedback ? "text-white" : "text-slate-400"}`} strokeWidth={2.5} />
+                </div>
+                <div className="flex-1 text-left py-0.5">
+                  <p className="font-bold text-slate-800 text-[16px] tracking-tight mb-0.5 text-3d">Umpan Balik Haptic</p>
+                  <p className="text-[12px] text-slate-500 leading-snug text-3d">{a11y.hapticFeedback ? "Aktif — bergetar saat disentuh" : "Nonaktif — ketuk untuk mengaktifkan getaran"}</p>
+                </div>
+                <div className={`relative w-[52px] h-[32px] rounded-full transition-all duration-300 shrink-0 border border-white ${a11y.hapticFeedback ? "bg-gradient-to-br from-[#1B9981] to-[#00D4AA] shadow-[inset_2px_2px_5px_rgba(0,0,0,0.2)]" : "bg-[#f4f6fc] shadow-[inset_3px_3px_8px_rgba(0,0,0,0.05),_inset_-4px_-4px_10px_rgba(255,255,255,1)]"}`} aria-hidden="true">
+                  <div className={`absolute top-1 w-[22px] h-[22px] rounded-full transition-transform duration-300 ${a11y.hapticFeedback ? "translate-x-6 bg-white shadow-sm" : "translate-x-1 bg-slate-300 shadow-inner"}`} />
                 </div>
               </button>
             </div>

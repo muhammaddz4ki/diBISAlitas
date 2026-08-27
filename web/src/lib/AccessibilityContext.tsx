@@ -14,6 +14,9 @@ interface AccessibilityValue {
   toggleHighContrast: () => void;
   reduceMotion: boolean;
   toggleReduceMotion: () => void;
+  hapticFeedback: boolean;
+  toggleHapticFeedback: () => void;
+  vibrate: (pattern?: number | number[]) => void;
 }
 
 const Ctx = createContext<AccessibilityValue | null>(null);
@@ -38,6 +41,7 @@ export function AccessibilityProvider({ children }: { children: ReactNode }) {
   const [fontLevel, setFontLevelState] = useState<number>(readFontLevel);
   const [highContrast, setHighContrast] = useState<boolean>(() => readFlag("a11y_hc"));
   const [reduceMotion, setReduceMotion] = useState<boolean>(() => readFlag("a11y_rm"));
+  const [hapticFeedback, setHapticFeedback] = useState<boolean>(() => readFlag("a11y_haptic"));
 
   // Auto-detect OS preference: prefers-reduced-motion
   useEffect(() => {
@@ -68,6 +72,24 @@ export function AccessibilityProvider({ children }: { children: ReactNode }) {
     document.documentElement.classList.toggle("a11y-reduce", reduceMotion);
     document.body.classList.toggle("a11y-reduce", reduceMotion);
   }, [fontLevel, highContrast, reduceMotion]);
+
+  // Global click listener for haptic feedback
+  useEffect(() => {
+    if (typeof window === "undefined" || !hapticFeedback) return;
+    const handleClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      if (!target) return;
+      const interactiveEl = target.closest(
+        'button, a, input, select, textarea, [role="button"], [role="link"], [tabindex]'
+      );
+      if (interactiveEl && navigator.vibrate) {
+        navigator.vibrate(50);
+      }
+    };
+    // Use capture phase so it fires before React synthetic events (like Talkback's stopPropagation)
+    document.addEventListener("click", handleClick, { capture: true });
+    return () => document.removeEventListener("click", handleClick, { capture: true });
+  }, [hapticFeedback]);
 
   const setFontLevel = (n: number) => {
     const clamped = Math.min(2, Math.max(0, n));
@@ -101,6 +123,26 @@ export function AccessibilityProvider({ children }: { children: ReactNode }) {
       return nv;
     });
 
+  const toggleHapticFeedback = () =>
+    setHapticFeedback((v) => {
+      const nv = !v;
+      try {
+        window.localStorage.setItem("a11y_haptic", nv ? "1" : "0");
+      } catch {
+        /* abaikan */
+      }
+      if (nv && navigator.vibrate) {
+        navigator.vibrate(50);
+      }
+      return nv;
+    });
+
+  const vibrate = (pattern: number | number[] = 50) => {
+    if (hapticFeedback && typeof navigator !== "undefined" && navigator.vibrate) {
+      navigator.vibrate(pattern);
+    }
+  };
+
   return (
     <Ctx.Provider
       value={{
@@ -110,6 +152,9 @@ export function AccessibilityProvider({ children }: { children: ReactNode }) {
         toggleHighContrast,
         reduceMotion,
         toggleReduceMotion,
+        hapticFeedback,
+        toggleHapticFeedback,
+        vibrate,
       }}
     >
       <MotionConfig reducedMotion={reduceMotion ? "always" : "never"}>{children}</MotionConfig>

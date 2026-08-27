@@ -18,6 +18,7 @@ import {
   SlidersHorizontal,
   Sun,
   Moon,
+  Activity,
 } from "lucide-react";
 import { useTheme } from "@/lib/ThemeContext";
 
@@ -32,6 +33,7 @@ export default function FloatingAccessibility() {
   const [highlightLinks, setHighlightLinks] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [tooltipVisible, setTooltipVisible] = useState(false);
+  const [hapticFeedback, setHapticFeedback] = useState(false);
 
   const panelRef = useRef<HTMLDivElement>(null);
 
@@ -55,6 +57,7 @@ export default function FloatingAccessibility() {
     setDyslexiaMode(savedDyslexia);
     setGrayscaleMode(savedGray);
     setHighlightLinks(savedLinks);
+    setHapticFeedback(localStorage.getItem("a11y_haptic") === "1");
 
     // Apply to DOM
     applyDomClasses({
@@ -194,6 +197,13 @@ export default function FloatingAccessibility() {
     });
   };
 
+  const toggleHapticFeedback = () => {
+    const next = !hapticFeedback;
+    setHapticFeedback(next);
+    localStorage.setItem("a11y_haptic", next ? "1" : "0");
+    if (next && navigator.vibrate) navigator.vibrate(50);
+  };
+
   const handleReset = () => {
     setFontSizeIndex(0);
     setHighContrast(false);
@@ -201,6 +211,7 @@ export default function FloatingAccessibility() {
     setDyslexiaMode(false);
     setGrayscaleMode(false);
     setHighlightLinks(false);
+    setHapticFeedback(false);
     if (typeof window !== "undefined") {
       localStorage.removeItem("a11y_font");
       localStorage.removeItem("a11y_hc");
@@ -208,6 +219,7 @@ export default function FloatingAccessibility() {
       localStorage.removeItem("a11y_dyslexia");
       localStorage.removeItem("a11y_gray");
       localStorage.removeItem("a11y_links");
+      localStorage.removeItem("a11y_haptic");
       if ("speechSynthesis" in window) {
         window.speechSynthesis.cancel();
       }
@@ -258,7 +270,8 @@ export default function FloatingAccessibility() {
     (reduceMotion ? 1 : 0) +
     (dyslexiaMode ? 1 : 0) +
     (grayscaleMode ? 1 : 0) +
-    (highlightLinks ? 1 : 0);
+    (highlightLinks ? 1 : 0) +
+    (hapticFeedback ? 1 : 0);
 
   return (
     <div className="fixed bottom-6 right-6 z-[9999] font-sans">
@@ -484,6 +497,25 @@ export default function FloatingAccessibility() {
                     <div>
                       <div className="text-xs font-bold">Monokrom</div>
                       <div className="text-[10px] opacity-70">Hitam putih</div>
+                    </div>
+                  </button>
+
+                  {/* Haptic Feedback */}
+                  <button
+                    onClick={toggleHapticFeedback}
+                    className={`p-3 rounded-2xl border text-left transition-all flex flex-col justify-between h-[84px] ${
+                      hapticFeedback
+                        ? "bg-[#1B9981] border-[#1B9981] text-white shadow-md"
+                        : "bg-slate-50 dark:bg-slate-850 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
+                    }`}
+                  >
+                    <div className="flex items-center justify-between w-full">
+                      <Activity className={`w-4 h-4 ${hapticFeedback ? "text-white" : "text-slate-500 dark:text-slate-400"}`} />
+                      {hapticFeedback && <Check className="w-3.5 h-3.5 text-white" />}
+                    </div>
+                    <div>
+                      <div className="text-xs font-bold">Getar (Haptic)</div>
+                      <div className="text-[10px] opacity-70">Umpan balik raba</div>
                     </div>
                   </button>
                 </div>
