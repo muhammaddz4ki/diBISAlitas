@@ -469,7 +469,262 @@ function StatsSection() {
 }
 
 /* ============================================
-   IMPACT SECTION (Liquid Bento Glass Grid)
+   VIDEO DEMO SHOWCASE SECTION (Apple Studio Theater)
+============================================ */
+type VideoDemoItem = {
+  id: string;
+  title: string;
+  subtitle: string;
+  category: string;
+  videoSrc: string;
+  description: string;
+  tech: string[];
+  href: string;
+};
+
+const videoDemos: VideoDemoItem[] = [
+  {
+    id: "bisafe",
+    title: "BiSAFE Darurat",
+    subtitle: "Pemancar SOS & Geolokasi Presisi",
+    category: "Tunadaksa & Tunanetra",
+    videoSrc: "/video/bisafe.mp4",
+    description: "Satu klik tombol darurat yang menyiarkan koordinat GPS langsung ke Command Center relawan terdekat dengan sirene desibel tinggi.",
+    tech: ["GPS Satelit", "Web Audio API", "Cloud Realtime Broadcast"],
+    href: "/fitur/bisafe",
+  },
+  {
+    id: "bipantau",
+    title: "BiPANTAU (Peta GIS)",
+    subtitle: "Pemetaan Fasilitas & Jalur Aksesibel",
+    category: "Pemda & Relawan",
+    videoSrc: "/video/peta.mp4",
+    description: "Peta interaktif berbasis GIS untuk pelaporan rintangan trotoar, verifikasi fasilitas ramah disabilitas, dan visualisasi rute aman.",
+    tech: ["GIS Mapbox / Leaflet", "GeoJSON Routing", "Community Moderation"],
+    href: "/fitur/bipantau",
+  },
+  {
+    id: "bisapa",
+    title: "BiSAPA Isyarat AI",
+    subtitle: "Penerjemah Bahasa Isyarat Dua Arah",
+    category: "Tunarungu & Tunanetra",
+    videoSrc: "/video/bisapa.mp4",
+    description: "Penerjemah real-time dari gestur tangan kamera ke teks dan suara, serta suara lawan bicara menjadi teks subtitle jernih.",
+    tech: ["MediaPipe Hands", "ONNX BISINDO Classifier", "Web Speech API"],
+    href: "/fitur/bisapa",
+  },
+  {
+    id: "bibaca",
+    title: "BiBACA Smart OCR",
+    subtitle: "Pemindai Dokumen Cetak ke Audio",
+    category: "Tunanetra & Disleksia",
+    videoSrc: "/video/bibaca.mp4",
+    description: "Memindai buku pelajaran, surat kabar, dan papan informasi menjadi bacaan suara Bahasa Indonesia berartikulasi natural.",
+    tech: ["Optical Character Recognition", "Speech Synthesis", "Image Binarization"],
+    href: "/fitur/bibaca",
+  },
+  {
+    id: "bipintar",
+    title: "BiPINTAR Edukasi",
+    subtitle: "Gamifikasi Belajar BISINDO & Hijaiyah",
+    category: "Pelajar & Komunitas",
+    videoSrc: "/video/bipintar.mp4",
+    description: "Platform kuis interaktif dengan umpan balik kamera langsung untuk melatih ketepatan gestur huruf BISINDO dan Isyarat Hijaiyah.",
+    tech: ["Real-time Gesture Scoring", "Gamification Engine", "Level & Badge XP"],
+    href: "/fitur/bipintar",
+  },
+  {
+    id: "bijalan",
+    title: "BiJALAN Radar",
+    subtitle: "Deteksi Rintangan Spasial & Haptic",
+    category: "Tunanetra & Pejalan Kaki",
+    videoSrc: "/video/bijalan.mp4",
+    description: "Radar visual pendeteksi tiang, lubang, tangga, dan kendaraan trotoar dengan peringatan getaran haptic dan audio terarah.",
+    tech: ["YOLOv8 Edge Vision", "Haptic Vibration Engine", "Spatial Depth Audio"],
+    href: "/fitur/bijalan",
+  },
+  {
+    id: "komunitas",
+    title: "Komunitas Inklusif",
+    subtitle: "Ruang Kolaborasi & Berbagi Cerita",
+    category: "Seluruh Komunitas",
+    videoSrc: "/video/komunitas.mp4",
+    description: "Forum diskusi inklusif dan papan informasi kegiatan untuk saling mendukung kemandirian penyandang disabilitas di seluruh Indonesia.",
+    tech: ["Realtime Feed", "Accessibility Reader", "Thread Engagement"],
+    href: "/app/komunitas",
+  },
+];
+
+function VideoShowcaseSection() {
+  const [selectedVideo, setSelectedVideo] = useState<VideoDemoItem>(videoDemos[0]);
+  const [isPlaying, setIsPlaying] = useState(true);
+  const [isMuted, setIsMuted] = useState(true);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  const togglePlay = () => {
+    if (!videoRef.current) return;
+    if (videoRef.current.paused) {
+      videoRef.current.play();
+      setIsPlaying(true);
+    } else {
+      videoRef.current.pause();
+      setIsPlaying(false);
+    }
+  };
+
+  const toggleMute = () => {
+    if (!videoRef.current) return;
+    videoRef.current.muted = !videoRef.current.muted;
+    setIsMuted(videoRef.current.muted);
+  };
+
+  return (
+    <section id="video-demo" className="py-24 md:py-32 px-4 sm:px-6 relative">
+      <div className="max-w-7xl mx-auto space-y-12">
+        {/* Section Header */}
+        <motion.div
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-60px" }}
+          className="text-center max-w-2xl mx-auto space-y-3"
+        >
+          <span className="inline-flex items-center px-3.5 py-1.5 rounded-full liquid-pill text-[#1B9981] dark:text-[#00D4AA] font-bold text-xs uppercase tracking-wider shadow-xs">
+            Live Web App Showcase
+          </span>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-slate-900 dark:text-white tracking-tight">
+            Lihat diBISAlitas Bekerja Nyata
+          </h2>
+          <p className="text-slate-500 dark:text-slate-400 text-sm sm:text-base leading-relaxed">
+            Rekaman demonstrasi langsung dari fitur-fitur web app yang siap digunakan.
+          </p>
+        </motion.div>
+
+        {/* Tab Pills */}
+        <div className="flex items-center justify-start md:justify-center gap-2 overflow-x-auto pb-3 pt-1 scrollbar-none">
+          {videoDemos.map((item) => (
+            <button
+              key={item.id}
+              type="button"
+              onClick={() => {
+                setSelectedVideo(item);
+                setIsPlaying(true);
+              }}
+              className={`px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap transition-all flex items-center gap-2 border ${
+                selectedVideo.id === item.id
+                  ? "bg-[#1B9981] text-white border-[#1B9981] shadow-sm"
+                  : "bg-white dark:bg-[#121216] text-slate-600 dark:text-slate-300 border-slate-200 dark:border-zinc-800 hover:border-slate-300 dark:hover:border-zinc-700"
+              }`}
+            >
+              <span>{item.title}</span>
+            </button>
+          ))}
+        </div>
+
+        {/* Studio Video Display Container */}
+        <motion.div
+          key={selectedVideo.id}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+          className="bg-white dark:bg-[#111115] rounded-[2.5rem] md:rounded-[3rem] border border-slate-200/90 dark:border-zinc-800 p-6 sm:p-10 shadow-sm"
+        >
+          <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+            {/* Left: Video Player Studio Frame */}
+            <div className="lg:col-span-7 relative group">
+              <div className="relative aspect-video rounded-[2rem] overflow-hidden bg-black border-2 border-slate-800 shadow-xl">
+                <video
+                  ref={videoRef}
+                  src={selectedVideo.videoSrc}
+                  autoPlay
+                  loop
+                  muted={isMuted}
+                  playsInline
+                  onPlay={() => setIsPlaying(true)}
+                  onPause={() => setIsPlaying(false)}
+                  className="w-full h-full object-cover"
+                />
+
+                {/* Video Controls Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-between p-4">
+                  <div className="flex items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={togglePlay}
+                      className="px-3 py-1.5 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-md text-white text-xs font-bold flex items-center gap-1.5 transition-colors"
+                    >
+                      {isPlaying ? "Jeda" : "Putar"}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={toggleMute}
+                      className="px-3 py-1.5 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-md text-white text-xs font-bold transition-colors"
+                    >
+                      {isMuted ? "Suara Aktif" : "Bisukan"}
+                    </button>
+                  </div>
+                  <span className="text-white text-xs font-semibold px-2.5 py-1 rounded-full bg-black/40 backdrop-blur-md">
+                    1080p HD
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Right: Spec Sheet & Details */}
+            <div className="lg:col-span-5 space-y-5">
+              <div className="space-y-1">
+                <span className="px-3 py-1 rounded-full text-xs font-bold bg-[#1B9981]/10 text-[#1B9981] dark:text-[#00D4AA] border border-[#1B9981]/20">
+                  {selectedVideo.category}
+                </span>
+                <h3 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight pt-2">
+                  {selectedVideo.title}
+                </h3>
+                <p className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                  {selectedVideo.subtitle}
+                </p>
+              </div>
+
+              <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-normal">
+                {selectedVideo.description}
+              </p>
+
+              {/* Technology Chips */}
+              <div className="space-y-2 pt-1">
+                <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">
+                  Teknologi yang Digunakan:
+                </span>
+                <div className="flex flex-wrap gap-2">
+                  {selectedVideo.tech.map((t, idx) => (
+                    <span
+                      key={idx}
+                      className="px-3 py-1 rounded-full bg-slate-100 dark:bg-zinc-800 text-slate-700 dark:text-slate-300 text-xs font-medium border border-slate-200/80 dark:border-zinc-700/80"
+                    >
+                      {t}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {/* Direct Action Link */}
+              <div className="pt-3">
+                <Link
+                  href={selectedVideo.href}
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#1B9981] hover:bg-[#168C74] text-white font-bold text-xs transition-colors shadow-sm"
+                >
+                  <span>Buka Fitur {selectedVideo.title.split(" ")[0]}</span>
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+
+/* ============================================
+   IMPACT SECTION (Clean Bento Grid)
 ============================================ */
 function ImpactSection() {
   return (
@@ -695,6 +950,7 @@ export default function LandingPage() {
         <Navbar />
         <HeroSection />
         <BentoFeaturesSection />
+        <VideoShowcaseSection />
         <StatsSection />
         <ImpactSection />
         <Footer />

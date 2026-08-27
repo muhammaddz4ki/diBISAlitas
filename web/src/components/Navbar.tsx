@@ -342,6 +342,12 @@ export default function Navbar() {
           </div>
 
           <Link
+            href="/#video-demo"
+            className="px-3.5 py-2 rounded-xl text-sm font-semibold text-slate-600 dark:text-slate-300 hover:text-[#1B9981] dark:hover:text-[#00D4AA] transition-colors"
+          >
+            Video Demo
+          </Link>
+          <Link
             href="/#statistik"
             className="px-3.5 py-2 rounded-xl text-sm font-semibold text-slate-600 dark:text-slate-300 hover:text-[#1B9981] dark:hover:text-[#00D4AA] transition-colors"
           >
@@ -466,13 +472,22 @@ export default function Navbar() {
 
               <div className="border-t border-slate-100 dark:border-slate-800 pt-3 space-y-2">
                 <Link
+                  href="/#video-demo"
+                  onClick={() => setMobileOpen(false)}
+                  className="block py-2 text-sm font-semibold text-slate-600 dark:text-slate-300 hover:text-[#1B9981] dark:hover:text-[#00D4AA]"
+                >
+                  Video Demo Aplikasi
+                </Link>
+                <Link
                   href="/#statistik"
+                  onClick={() => setMobileOpen(false)}
                   className="block py-2 text-sm font-semibold text-slate-600 dark:text-slate-300 hover:text-[#1B9981] dark:hover:text-[#00D4AA]"
                 >
                   Statistik Riset
                 </Link>
                 <Link
                   href="/#dampak"
+                  onClick={() => setMobileOpen(false)}
                   className="block py-2 text-sm font-semibold text-slate-600 dark:text-slate-300 hover:text-[#1B9981] dark:hover:text-[#00D4AA]"
                 >
                   Dampak Komunitas

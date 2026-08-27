@@ -124,8 +124,47 @@ export default function InteractiveDeviceMockup({
     return () => clearInterval(interval);
   }, []);
 
+  const [playMode, setPlayMode] = useState<"video" | "interactive">("video");
+
+  const videoMap: Record<FeatureKey, string> = {
+    bisafe: "/video/bisafe.mp4",
+    bipantau: "/video/peta.mp4",
+    bisapa: "/video/bisapa.mp4",
+    bibaca: "/video/bibaca.mp4",
+    bipintar: "/video/bipintar.mp4",
+    bijalan: "/video/bijalan.mp4",
+  };
+
   return (
-    <div className="relative mx-auto flex items-center justify-center">
+    <div className="relative mx-auto flex flex-col items-center justify-center gap-3">
+      {/* Mode Switcher Pill */}
+      <div className="flex items-center gap-1.5 p-1 rounded-full bg-slate-200/80 dark:bg-zinc-800/80 border border-slate-300/80 dark:border-zinc-700 text-[11px] font-bold text-slate-700 dark:text-slate-200 shadow-xs">
+        <button
+          type="button"
+          onClick={() => setPlayMode("video")}
+          className={`px-3 py-1 rounded-full transition-all flex items-center gap-1.5 ${
+            playMode === "video"
+              ? "bg-white dark:bg-[#1B9981] text-slate-900 dark:text-white shadow-xs"
+              : "text-slate-500 hover:text-slate-900 dark:hover:text-white"
+          }`}
+        >
+          <Play className="w-3 h-3 fill-current" />
+          <span>Video Demo</span>
+        </button>
+        <button
+          type="button"
+          onClick={() => setPlayMode("interactive")}
+          className={`px-3 py-1 rounded-full transition-all flex items-center gap-1.5 ${
+            playMode === "interactive"
+              ? "bg-white dark:bg-[#1B9981] text-slate-900 dark:text-white shadow-xs"
+              : "text-slate-500 hover:text-slate-900 dark:hover:text-white"
+          }`}
+        >
+          <Sliders className="w-3 h-3" />
+          <span>Simulasi</span>
+        </button>
+      </div>
+
       {/* Realistic Smartphone Clean Matte Chassis */}
       <div className="relative w-[300px] sm:w-[325px] h-[615px] rounded-[3.25rem] bg-[#0f172a] p-3 shadow-[0_20px_60px_rgba(0,0,0,0.2)] border-2 border-slate-700/80">
         {/* Dynamic Island Pill with camera lens */}
@@ -147,9 +186,28 @@ export default function InteractiveDeviceMockup({
             </div>
           </div>
 
-          {/* Dynamic App Screens */}
-          <div className="flex-1 relative overflow-hidden flex flex-col bg-[#F8FAFC]">
-            <AnimatePresence mode="wait">
+          {/* Dynamic App Screens / Video Player */}
+          <div className="flex-1 relative overflow-hidden flex flex-col bg-[#0a0f1d]">
+            {playMode === "video" ? (
+              <div className="relative w-full h-full flex items-center justify-center bg-black">
+                <video
+                  key={activeFeature}
+                  src={videoMap[activeFeature]}
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute bottom-3 left-3 right-3 bg-slate-900/80 backdrop-blur-md rounded-xl p-2 border border-white/10 flex items-center justify-between">
+                  <div className="text-[10px] font-bold text-white uppercase tracking-wider">
+                    {activeFeature === "bipantau" ? "Peta GIS" : activeFeature} Live
+                  </div>
+                  <span className="w-2 h-2 rounded-full bg-[#1B9981] animate-pulse" />
+                </div>
+              </div>
+            ) : (
+              <AnimatePresence mode="wait">
               {/* 1. BiSAFE SCREEN */}
               {activeFeature === "bisafe" && (
                 <motion.div
@@ -614,6 +672,7 @@ export default function InteractiveDeviceMockup({
                 </motion.div>
               )}
             </AnimatePresence>
+            )}
           </div>
 
           {/* Realistic Bottom Navigation Dock */}
