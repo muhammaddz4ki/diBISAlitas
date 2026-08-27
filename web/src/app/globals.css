@@ -407,9 +407,9 @@ body.a11y-reduce *::after {
 
 /* TalkBack Focus Indicator */
 .talkback-focus {
-  outline: 4px solid #00B894 !important;
+  outline: 3px solid #1B9981 !important;
   outline-offset: 2px !important;
-  border-radius: 8px;
+  border-radius: inherit !important;
   position: relative;
   z-index: 50;
 }

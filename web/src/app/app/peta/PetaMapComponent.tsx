@@ -6,18 +6,12 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import {
   collection,
-  onSnapshot,
-  query,
-  orderBy,
   addDoc,
-  doc,
-  updateDoc,
   serverTimestamp,
-  increment,
 } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 import { db, auth } from "@/lib/firebase";
-import { MapPin, User, Calendar, Plus, X, ThumbsUp, CheckCircle2, Camera } from "lucide-react";
+import { MapPin, User, Calendar, Plus, X, Camera, ChevronRight } from "lucide-react";
 import ModalPortal from "@/components/ModalPortal";
 
 // Fix Leaflet default icon in Next.js
@@ -29,7 +23,7 @@ L.Icon.Default.mergeOptions({
   shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
 });
 
-interface ObstacleReport {
+export interface ObstacleReport {
   id: string;
   latitude: number;
   longitude: number;
@@ -68,8 +62,12 @@ function Recenter({ pos }: { pos: [number, number] | null }) {
   return null;
 }
 
-export default function PetaMapComponent() {
-  const [reports, setReports] = useState<ObstacleReport[]>([]);
+export interface PetaMapProps {
+  reports: ObstacleReport[];
+  onDetailClick: (id: string) => void;
+}
+
+export default function PetaMapComponent({ reports, onDetailClick }: PetaMapProps) {
   const [userPos, setUserPos] = useState<[number, number] | null>(null);
   const [me, setMe] = useState<{ uid: string; name: string } | null>(null);
   const [showReport, setShowReport] = useState(false);
@@ -77,30 +75,9 @@ export default function PetaMapComponent() {
   const [desc, setDesc] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
-  const [confirmedIds, setConfirmedIds] = useState<Record<string, boolean>>({});
   const [photo, setPhoto] = useState<File | null>(null);
   const [photoPreview, setPhotoPreview] = useState<string | null>(null);
   const mapCenter: [number, number] = [-6.874, 107.619];
-
-  useEffect(() => {
-    const q = query(collection(db, "obstacle_reports"), orderBy("createdAt", "desc"));
-    const unsub = onSnapshot(q, (snap) => {
-      const raw: ObstacleReport[] = [];
-      snap.forEach((d) => {
-        const data = d.data();
-        if (data.latitude && data.longitude) raw.push({ id: d.id, ...data } as ObstacleReport);
-      });
-      const clustered = raw.map((r) => {
-        let count = 0;
-        raw.forEach((o) => {
-          if (getDistanceKm(r.latitude, r.longitude, o.latitude, o.longitude) <= 0.1) count++;
-        });
-        return { ...r, densityCount: count };
-      });
-      setReports(clustered);
-    });
-    return () => unsub();
-  }, []);
 
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, (u) => {
@@ -186,22 +163,12 @@ export default function PetaMapComponent() {
     }
   };
 
-  const confirmObstacle = async (id: string) => {
-    if (confirmedIds[id]) return;
-    setConfirmedIds((c) => ({ ...c, [id]: true }));
-    try {
-      await updateDoc(doc(db, "obstacle_reports", id), { upvoteCount: increment(1) });
-    } catch {
-      /* abaikan */
-    }
-  };
-
   return (
     <div className="w-full h-full min-h-[400px] relative z-0 rounded-[24px] overflow-hidden">
       <MapContainer center={mapCenter} zoom={14} zoomControl={false} className="w-full h-full min-h-[400px]" style={{ background: "#f8fafc" }}>
         <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-          url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         <ZoomControl position="bottomright" />
         <Recenter pos={userPos} />
@@ -232,43 +199,32 @@ export default function PetaMapComponent() {
               pathOptions={{ color, fillColor: color, fillOpacity, weight: density >= 3 ? 0 : 2 }}
             >
               <Popup>
-                <div className="w-[240px] p-1">
-                  <div className="flex flex-col gap-3">
-                    {r.photoUrl && (
-                      <div className="w-full h-36 rounded-[14px] overflow-hidden bg-slate-100 shadow-inner">
+                <div className="w-[200px] p-1 flex flex-col gap-2">
+                  <div className="flex items-center gap-3">
+                    {r.photoUrl ? (
+                      <div className="w-10 h-10 rounded-full overflow-hidden bg-slate-100 shadow-inner shrink-0">
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img src={r.photoUrl} alt="Rintangan" className="w-full h-full object-cover" />
                       </div>
+                    ) : (
+                      <div className="w-10 h-10 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center shrink-0">
+                        <MapPin className="w-5 h-5 text-slate-400" />
+                      </div>
                     )}
-                    <div>
-                      <h4 className="font-extrabold text-slate-800 text-[15px] tracking-tight">{r.obstacleType || "Rintangan"}</h4>
-                      <p className="text-[13px] text-slate-500 mt-1 leading-relaxed">{r.description || "Tidak ada deskripsi."}</p>
+                    <div className="min-w-0 flex-1">
+                      <h4 className="font-extrabold text-slate-800 text-[13px] tracking-tight truncate">{r.obstacleType || "Rintangan"}</h4>
+                      <p className="text-[10px] text-slate-500 truncate mt-0.5">{r.reporterName || "Anonim"}</p>
                     </div>
-                    <div className="h-[1px] w-full bg-slate-100" />
-                    <div className="flex flex-col gap-2">
-                      <div className="flex items-center gap-2 text-[12px] text-slate-600">
-                        <User className="w-3.5 h-3.5 text-slate-400" />
-                        <span className="font-medium">{r.reporterName || "Anonim"}</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-[12px] text-slate-600">
-                        <Calendar className="w-3.5 h-3.5 text-slate-400" />
-                        <span className="font-medium">{formatDate(r.createdAt)}</span>
-                      </div>
-                      {typeof r.upvoteCount === "number" && r.upvoteCount > 0 && (
-                        <div className="flex items-center gap-2 text-[12px] text-[#00B894] font-semibold">
-                          <CheckCircle2 className="w-3.5 h-3.5" />
-                          <span>Dikonfirmasi {r.upvoteCount}x oleh komunitas</span>
-                        </div>
-                      )}
+                  </div>
+                  <div className="flex items-center justify-between mt-1 pt-2 border-t border-slate-100">
+                    <div className="bg-[#1B9981]/10 text-[#1B9981] px-2 py-0.5 rounded-md text-[10px] font-bold">
+                      {formatDate(r.createdAt)}
                     </div>
                     <button
-                      onClick={() => confirmObstacle(r.id)}
-                      disabled={!!confirmedIds[r.id]}
-                      className={`mt-1 w-full py-2 rounded-xl text-[13px] font-bold flex items-center justify-center gap-2 transition-all ${
-                        confirmedIds[r.id] ? "bg-slate-100 text-slate-400" : "bg-[#00B894]/10 text-[#00B894] active:scale-95"
-                      }`}
+                      onClick={() => onDetailClick(r.id)}
+                      className="bg-[#1B9981] hover:bg-[#00D4AA] text-white text-[10px] font-bold px-3 py-1.5 rounded-lg flex items-center gap-1 shadow-sm active:scale-95 transition-all"
                     >
-                      <ThumbsUp className="w-4 h-4" /> {confirmedIds[r.id] ? "Terima kasih!" : "Masih ada di sini"}
+                      Detail <ChevronRight className="w-3 h-3" />
                     </button>
                   </div>
                 </div>
@@ -406,9 +362,9 @@ export default function PetaMapComponent() {
 
       <style dangerouslySetInnerHTML={{
         __html: `
-        .leaflet-popup-content-wrapper { border-radius: 20px !important; box-shadow: 0 10px 40px -10px rgba(0,0,0,0.15) !important; padding: 4px !important; border: 1px solid #f1f5f9 !important; }
-        .leaflet-popup-content { margin: 12px 14px !important; }
-        .leaflet-popup-tip { box-shadow: 0 10px 40px -10px rgba(0,0,0,0.15) !important; }
+        .leaflet-popup-content-wrapper { border-radius: 24px !important; box-shadow: 8px 8px 16px #cedcd8, -8px -8px 16px #ffffff !important; padding: 4px !important; border: 1px solid rgba(255, 255, 255, 0.4) !important; background-color: #E8F4F1 !important; }
+        .leaflet-popup-content { margin: 8px 10px !important; }
+        .leaflet-popup-tip { background-color: #E8F4F1 !important; box-shadow: 4px 4px 8px #cedcd8 !important; }
         .leaflet-container { font-family: inherit !important; }
       `}} />
     </div>

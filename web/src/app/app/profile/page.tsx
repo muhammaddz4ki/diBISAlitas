@@ -399,7 +399,7 @@ export default function ProfilePage() {
                   <Activity className={`w-6 h-6 ${a11y.hapticFeedback ? "text-white" : "text-slate-400"}`} strokeWidth={2.5} />
                 </div>
                 <div className="flex-1 text-left py-0.5">
-                  <p className="font-bold text-slate-800 text-[16px] tracking-tight mb-0.5 text-3d">Umpan Balik Haptic</p>
+                  <p className="font-bold text-slate-800 text-[16px] tracking-tight mb-0.5 text-3d">Efek Getar (Haptic)</p>
                   <p className="text-[12px] text-slate-500 leading-snug text-3d">{a11y.hapticFeedback ? "Aktif — bergetar saat disentuh" : "Nonaktif — ketuk untuk mengaktifkan getaran"}</p>
                 </div>
                 <div className={`relative w-[52px] h-[32px] rounded-full transition-all duration-300 shrink-0 border border-white ${a11y.hapticFeedback ? "bg-gradient-to-br from-[#1B9981] to-[#00D4AA] shadow-[inset_2px_2px_5px_rgba(0,0,0,0.2)]" : "bg-[#f4f6fc] shadow-[inset_3px_3px_8px_rgba(0,0,0,0.05),_inset_-4px_-4px_10px_rgba(255,255,255,1)]"}`} aria-hidden="true">

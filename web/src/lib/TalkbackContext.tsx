@@ -157,9 +157,8 @@ export function TalkbackProvider({ children }: { children: ReactNode }) {
         talkback.speak(textToRead);
       } else {
         // SECOND CLICK
-        // Let it pass through. We will reset the ref so they have to double click again next time,
-        // but we'll leave the focus class on it until they click something else.
-        lastClickedRef.current = null;
+        // Let it pass through. We keep the ref so they don't lose the green outline 
+        // until they click something else. If they click it again, it will activate again.
       }
     };
 
