@@ -1,11 +1,25 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
   --background: #ffffff;
   --foreground: #0f172a;
+  --card-bg: #ffffff;
+  --card-border: #f1f5f9;
   --accent: #1B9981;
   --accent-light: #00D4AA;
   --accent-glow: rgba(27, 153, 129, 0.15);
+}
+
+html.dark {
+  --background: #090e17;
+  --foreground: #f8fafc;
+  --card-bg: #0f172a;
+  --card-border: #1e293b;
+  --accent: #1B9981;
+  --accent-light: #00D4AA;
+  --accent-glow: rgba(0, 212, 170, 0.22);
 }
 
 @theme inline {
@@ -15,15 +29,13 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #ffffff;
-    --foreground: #0f172a;
-  }
-}
-
 html {
   scroll-behavior: smooth;
+  color-scheme: light;
+}
+
+html.dark {
+  color-scheme: dark;
 }
 
 body {
@@ -31,6 +43,7 @@ body {
   color: var(--foreground);
   font-family: var(--font-jakarta), system-ui, sans-serif;
   overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 button {
