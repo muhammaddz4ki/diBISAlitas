@@ -28,20 +28,23 @@ import {
   CheckCircle2,
   Lock,
   Play,
+  Compass,
+  Scan,
+  Volume2,
 } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import FloatingAccessibility from "@/components/FloatingAccessibility";
 import InteractiveDeviceMockup, { FeatureKey } from "@/components/InteractiveDeviceMockup";
 
 /* ============================================
-   ANIMATION VARIANTS
+   ANIMATION VARIANTS (Apple Fluid Spring)
 ============================================ */
 const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 35 },
+  hidden: { opacity: 0, y: 30 },
   visible: (i: number = 0) => ({
     opacity: 1,
     y: 0,
-    transition: { delay: i * 0.1, duration: 0.65, ease: [0.22, 1, 0.36, 1] },
+    transition: { delay: i * 0.1, duration: 0.7, ease: [0.16, 1, 0.3, 1] },
   }),
 };
 
@@ -49,16 +52,16 @@ const staggerContainer: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { staggerChildren: 0.08, delayChildren: 0.1 },
+    transition: { staggerChildren: 0.1, delayChildren: 0.15 },
   },
 };
 
 const scaleIn: Variants = {
-  hidden: { opacity: 0, scale: 0.92 },
+  hidden: { opacity: 0, scale: 0.94 },
   visible: {
     opacity: 1,
     scale: 1,
-    transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] },
+    transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] },
   },
 };
 
@@ -86,118 +89,128 @@ function useCounter(end: number, duration: number = 2000, startCounting: boolean
 }
 
 /* ============================================
-   HERO SECTION
+   HERO SECTION (Apple Liquid Crystal Style)
 ============================================ */
 function HeroSection() {
   const [activeHeroTab, setActiveHeroTab] = useState<FeatureKey>("bisafe");
 
   return (
-    <section className="pt-28 md:pt-32 pb-8 px-4 sm:px-6">
+    <section className="pt-32 md:pt-36 pb-12 px-4 sm:px-6 relative overflow-hidden">
+      {/* Background Liquid Mesh Gradient Orbs */}
+      <div className="absolute top-12 left-1/2 -translate-x-1/2 w-[850px] h-[450px] bg-gradient-to-tr from-[#1B9981]/20 via-[#00D4AA]/15 to-sky-400/10 blur-[110px] rounded-full pointer-events-none -z-10" />
+      <div className="absolute top-64 -left-32 w-[420px] h-[420px] bg-gradient-to-br from-[#00D4AA]/15 to-transparent blur-[90px] rounded-full pointer-events-none -z-10" />
+      <div className="absolute top-80 -right-32 w-[420px] h-[420px] bg-gradient-to-bl from-teal-400/15 to-transparent blur-[90px] rounded-full pointer-events-none -z-10" />
+
       <div className="max-w-7xl mx-auto">
+        {/* Main Liquid Crystal Card Container */}
         <motion.div
-          initial={{ opacity: 0, y: 25 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          className="relative bg-gradient-to-br from-[#168C74] via-[#1B9981] to-[#0A6B58] rounded-[2.5rem] md:rounded-[3rem] overflow-hidden shadow-[0_30px_90px_rgba(27,153,129,0.25)] text-white"
+          initial={{ opacity: 0, y: 30, scale: 0.98 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
+          className="relative liquid-glass rounded-[2.75rem] md:rounded-[3.25rem] overflow-hidden p-6 sm:p-10 lg:p-14"
         >
-          {/* Decorative Ambient Light */}
-          <div className="absolute top-0 right-0 w-[550px] h-[550px] bg-gradient-to-bl from-white/15 via-[#00D4AA]/20 to-transparent blur-3xl pointer-events-none rounded-full" />
+          {/* Internal Specular Highlight Ring */}
+          <div className="absolute inset-0 pointer-events-none rounded-[inherit] border border-white/40 dark:border-white/10" />
+
+          {/* Dot matrix texture */}
           <div
-            className="absolute inset-0 pointer-events-none opacity-[0.05]"
+            className="absolute inset-0 pointer-events-none opacity-[0.03] dark:opacity-[0.05]"
             style={{
-              backgroundImage: "radial-gradient(circle, white 1.5px, transparent 1.5px)",
+              backgroundImage: "radial-gradient(circle, currentColor 1.5px, transparent 1.5px)",
               backgroundSize: "28px 28px",
             }}
           />
 
-          <div className="relative z-10 grid md:grid-cols-12 gap-10 lg:gap-14 px-6 sm:px-10 lg:px-16 py-12 md:py-16 items-center">
+          <div className="relative z-10 grid md:grid-cols-12 gap-10 lg:gap-14 items-center">
             {/* Left Content */}
-            <div className="md:col-span-7 space-y-6">
+            <div className="md:col-span-7 space-y-7">
+              {/* Dynamic Island Inspired Pill Badge */}
               <motion.div
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.25, duration: 0.5 }}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/20 text-white text-xs font-bold uppercase tracking-wider backdrop-blur-md"
+                transition={{ delay: 0.2, duration: 0.5 }}
+                className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full liquid-pill text-slate-800 dark:text-slate-200 text-xs font-bold tracking-wide shadow-xs"
               >
-                <Sparkles className="w-3.5 h-3.5 text-[#00D4AA]" />
-                Platform Aksesibilitas AI Terintegrasi
+                <span className="w-2 h-2 rounded-full bg-[#1B9981] dark:bg-[#00D4AA] animate-pulse" />
+                <span className="text-[#1B9981] dark:text-[#00D4AA] font-extrabold uppercase tracking-wider text-[11px]">
+                  diBISAlitas AI
+                </span>
+                <span className="text-slate-300 dark:text-slate-600 font-light">|</span>
+                <span>Ekosistem Cerdas Terintegrasi</span>
               </motion.div>
 
-              <motion.h1
+              {/* Main Apple Headline */}
+              <motion.div
                 initial={{ opacity: 0, y: 25 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-                className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.6rem] font-black leading-[1.12] tracking-tight"
+                transition={{ delay: 0.35, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+                className="space-y-3"
               >
-                Aksesibilitas Cerdas, <br />
-                <span className="font-display italic text-[#00D4AA] font-normal">
-                  Kemandirian Tanpa Batas.
-                </span>
-              </motion.h1>
+                <h1 className="text-4xl sm:text-5xl lg:text-[3.75rem] font-black leading-[1.1] tracking-tight text-slate-900 dark:text-white">
+                  Aksesibilitas Cerdas, <br />
+                  <span className="bg-gradient-to-r from-[#1B9981] via-[#00D4AA] to-sky-500 bg-clip-text text-transparent">
+                    Kemandirian Tanpa Batas.
+                  </span>
+                </h1>
+                <p className="text-slate-600 dark:text-slate-300 text-base sm:text-lg leading-relaxed max-w-xl font-normal pt-1">
+                  Satu ekosistem berbasis kecerdasan buatan on-device dan integrasi Cloud untuk menghadirkan kemandirian penuh bagi Tunanetra, Tunarungu, dan Tunadaksa di Indonesia.
+                </p>
+              </motion.div>
 
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.55, duration: 0.6 }}
-                className="text-white/80 text-sm sm:text-base leading-relaxed max-w-xl"
-              >
-                Satu ekosistem berbasis kecerdasan buatan on-device dan integrasi Cloud untuk menghadirkan kemandirian penuh bagi Tunanetra, Tunarungu, dan Tunadaksa di Indonesia.
-              </motion.p>
-
-              {/* Action Buttons */}
+              {/* Liquid Action Buttons */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.7, duration: 0.6 }}
-                className="flex flex-wrap items-center gap-3 pt-2"
+                transition={{ delay: 0.5, duration: 0.6 }}
+                className="flex flex-wrap items-center gap-3.5 pt-1"
               >
-                <motion.span
-                  whileHover={{ scale: 1.04, y: -2 }}
-                  whileTap={{ scale: 0.96 }}
-                  transition={{ type: "spring", stiffness: 400, damping: 20 }}
-                  className="inline-block"
+                <motion.div
+                  whileHover={{ scale: 1.03, y: -2 }}
+                  whileTap={{ scale: 0.97 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 25 }}
                 >
                   <Link
                     href="/demo"
-                    className="px-7 py-3.5 rounded-full bg-white text-[#168C74] font-black text-sm hover:bg-white/95 transition-colors shadow-xl hover:shadow-2xl flex items-center gap-2"
+                    className="px-7 py-4 rounded-full bg-gradient-to-r from-[#1B9981] to-[#00D4AA] text-white font-extrabold text-sm shadow-[0_10px_30px_rgba(27,153,129,0.35)] hover:shadow-[0_15px_40px_rgba(27,153,129,0.45)] transition-all flex items-center gap-2.5"
                   >
-                    <Zap className="w-4 h-4 fill-current text-[#168C74]" />
-                    Coba Demo Gratis
+                    <Zap className="w-4 h-4 fill-current" />
+                    <span>Coba Demo Gratis</span>
                     <ArrowRight className="w-4 h-4" />
                   </Link>
-                </motion.span>
-                <motion.span
-                  whileHover={{ scale: 1.04, y: -2 }}
-                  whileTap={{ scale: 0.96 }}
-                  transition={{ type: "spring", stiffness: 400, damping: 20 }}
-                  className="inline-block"
+                </motion.div>
+
+                <motion.div
+                  whileHover={{ scale: 1.03, y: -2 }}
+                  whileTap={{ scale: 0.97 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 25 }}
                 >
                   <Link
                     href="/fitur"
-                    className="px-7 py-3.5 rounded-full bg-white/15 border border-white/25 text-white font-bold text-sm hover:bg-white/25 transition-colors backdrop-blur-md flex items-center gap-2"
+                    className="px-7 py-4 rounded-full liquid-pill text-slate-800 dark:text-slate-100 font-bold text-sm hover:bg-white/90 dark:hover:bg-white/10 transition-all flex items-center gap-2"
                   >
+                    <Layers className="w-4 h-4 text-[#1B9981] dark:text-[#00D4AA]" />
                     <span>Jelajahi 6 Fitur</span>
                   </Link>
-                </motion.span>
+                </motion.div>
               </motion.div>
 
-              {/* Beneficiary Tags */}
+              {/* Beneficiary Liquid Chips */}
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ delay: 0.85, duration: 0.8 }}
+                transition={{ delay: 0.65, duration: 0.8 }}
                 className="flex flex-wrap gap-2 pt-2"
               >
                 {[
-                  { label: "Tunanetra", icon: <Eye className="w-3.5 h-3.5" /> },
-                  { label: "Tunarungu", icon: <Ear className="w-3.5 h-3.5" /> },
-                  { label: "Tunadaksa", icon: <Accessibility className="w-3.5 h-3.5" /> },
-                  { label: "ONNX / YOLO Vision", icon: <Brain className="w-3.5 h-3.5" /> },
-                  { label: "Cloud Sync", icon: <Wifi className="w-3.5 h-3.5" /> },
+                  { label: "Tunanetra", icon: <Eye className="w-3.5 h-3.5 text-sky-500" /> },
+                  { label: "Tunarungu", icon: <Ear className="w-3.5 h-3.5 text-amber-500" /> },
+                  { label: "Tunadaksa", icon: <Accessibility className="w-3.5 h-3.5 text-rose-500" /> },
+                  { label: "ONNX / YOLO Vision", icon: <Brain className="w-3.5 h-3.5 text-emerald-500" /> },
+                  { label: "Cloud Sync", icon: <Wifi className="w-3.5 h-3.5 text-[#1B9981]" /> },
                 ].map((item, idx) => (
                   <span
                     key={idx}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/10 border border-white/15 text-white/90 text-xs font-semibold backdrop-blur-sm"
+                    className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full liquid-pill text-slate-700 dark:text-slate-200 text-xs font-semibold"
                   >
                     {item.icon}
                     {item.label}
@@ -206,11 +219,11 @@ function HeroSection() {
               </motion.div>
             </div>
 
-            {/* Right: Live Interactive Mockup */}
+            {/* Right: Realistic iPhone Pro Device Mockup */}
             <motion.div
               initial={{ opacity: 0, scale: 0.94, y: 30 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
-              transition={{ delay: 0.45, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ delay: 0.35, duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
               className="md:col-span-5 flex justify-center"
             >
               <InteractiveDeviceMockup
@@ -227,7 +240,7 @@ function HeroSection() {
 }
 
 /* ============================================
-   PILLAR DATA (used by the stacked scroll section)
+   PILLAR DATA (Liquid Crystal Stacked Scroll)
 ============================================ */
 type Pillar = {
   key: string;
@@ -240,6 +253,9 @@ type Pillar = {
   href: string;
   gradient: string;
   accent: string;
+  badgeBg: string;
+  badgeText: string;
+  glowColor: string;
 };
 
 const pillars: Pillar[] = [
@@ -249,12 +265,15 @@ const pillars: Pillar[] = [
     title: "BiSAFE",
     tagline: "Panic Button & Geolocation Broadcaster",
     description:
-      "Satu tombol darurat yang langsung menyiarkan titik koordinat satelit presisi, membunyikan sirene alarm frekuensi tinggi, dan mengirimkan sinyal ke Command Center relawan.",
+      "Satu sentuhan darurat yang langsung menyiarkan titik koordinat satelit presisi, membunyikan sirene alarm frekuensi tinggi, dan mengirimkan sinyal ke Command Center relawan.",
     icon: ShieldAlert,
     target: "Tunadaksa & Tunanetra",
     href: "/fitur/bisafe",
     gradient: "from-rose-600 via-rose-500 to-rose-700",
     accent: "text-rose-100",
+    badgeBg: "bg-rose-500/20 border-rose-400/30",
+    badgeText: "text-rose-200",
+    glowColor: "rgba(244, 63, 94, 0.35)",
   },
   {
     key: "bipantau",
@@ -268,6 +287,9 @@ const pillars: Pillar[] = [
     href: "/fitur/bipantau",
     gradient: "from-[#168C74] via-[#1B9981] to-[#0A6B58]",
     accent: "text-[#8FEAD4]",
+    badgeBg: "bg-[#00D4AA]/20 border-[#00D4AA]/30",
+    badgeText: "text-[#00D4AA]",
+    glowColor: "rgba(0, 212, 170, 0.35)",
   },
   {
     key: "bisapa",
@@ -281,6 +303,9 @@ const pillars: Pillar[] = [
     href: "/fitur/bisapa",
     gradient: "from-amber-600 via-amber-500 to-amber-700",
     accent: "text-amber-100",
+    badgeBg: "bg-amber-500/20 border-amber-400/30",
+    badgeText: "text-amber-200",
+    glowColor: "rgba(245, 158, 11, 0.35)",
   },
   {
     key: "bibaca",
@@ -294,6 +319,9 @@ const pillars: Pillar[] = [
     href: "/fitur/bibaca",
     gradient: "from-purple-700 via-purple-600 to-purple-800",
     accent: "text-purple-100",
+    badgeBg: "bg-purple-500/20 border-purple-400/30",
+    badgeText: "text-purple-200",
+    glowColor: "rgba(168, 85, 247, 0.35)",
   },
   {
     key: "bipintar",
@@ -307,6 +335,9 @@ const pillars: Pillar[] = [
     href: "/fitur/bipintar",
     gradient: "from-emerald-700 via-emerald-600 to-emerald-800",
     accent: "text-emerald-100",
+    badgeBg: "bg-emerald-500/20 border-emerald-400/30",
+    badgeText: "text-emerald-200",
+    glowColor: "rgba(16, 185, 129, 0.35)",
   },
   {
     key: "bijalan",
@@ -320,11 +351,14 @@ const pillars: Pillar[] = [
     href: "/fitur/bijalan",
     gradient: "from-sky-700 via-sky-600 to-sky-800",
     accent: "text-sky-100",
+    badgeBg: "bg-sky-500/20 border-sky-400/30",
+    badgeText: "text-sky-200",
+    glowColor: "rgba(14, 165, 233, 0.35)",
   },
 ];
 
 /* ============================================
-   STACK PANEL (sticky scroll-stacking card)
+   STACK PANEL (Liquid Glass Apple Card)
 ============================================ */
 function StackPanel({ pillar, index }: { pillar: Pillar; index: number }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -332,30 +366,36 @@ function StackPanel({ pillar, index }: { pillar: Pillar; index: number }) {
     target: ref,
     offset: ["start start", "end start"],
   });
-  const scale = useTransform(scrollYProgress, [0, 1], [1, 0.93]);
+  const scale = useTransform(scrollYProgress, [0, 1], [1, 0.94]);
   const Icon = pillar.icon;
 
   return (
     <div
       ref={ref}
       className="sticky"
-      style={{ top: `${96 + index * 18}px`, zIndex: index + 1 }}
+      style={{ top: `${96 + index * 16}px`, zIndex: index + 1 }}
     >
       <motion.div
         style={{ scale }}
-        initial={{ opacity: 0, y: 70 }}
+        initial={{ opacity: 0, y: 60 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        className={`bg-gradient-to-br ${pillar.gradient} rounded-[2.5rem] md:rounded-[3rem] overflow-hidden shadow-[0_25px_70px_rgba(0,0,0,0.25)] mb-8`}
+        transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+        className={`relative bg-gradient-to-br ${pillar.gradient} rounded-[2.5rem] md:rounded-[3rem] overflow-hidden shadow-[0_30px_90px_rgba(0,0,0,0.28)] mb-8 border border-white/25`}
       >
-        <div className="relative grid md:grid-cols-12 gap-8 lg:gap-14 p-8 sm:p-10 md:p-14 items-center min-h-[440px] md:min-h-[520px]">
-          {/* Ambient decoration */}
-          <div className="absolute top-0 right-0 w-[420px] h-[420px] bg-white/10 blur-3xl rounded-full pointer-events-none" />
+        {/* Specular Top Border Glow */}
+        <div className="absolute inset-0 pointer-events-none rounded-[inherit] shadow-[inset_0_1px_1px_rgba(255,255,255,0.7)]" />
 
-          {/* Left: Icon visual */}
+        <div className="relative grid md:grid-cols-12 gap-8 lg:gap-14 p-8 sm:p-10 md:p-14 items-center min-h-[440px] md:min-h-[500px]">
+          {/* Ambient Liquid Glow */}
+          <div className="absolute top-0 right-0 w-[450px] h-[450px] bg-white/10 blur-3xl rounded-full pointer-events-none" />
+
+          {/* Left: Liquid Glass Icon Chamber */}
           <div className="md:col-span-5 flex items-center justify-center relative z-10">
-            <div className="relative w-full max-w-[280px] aspect-square rounded-[2rem] bg-white/10 border border-white/15 backdrop-blur-sm flex items-center justify-center overflow-hidden">
+            <div className="relative w-full max-w-[280px] aspect-square rounded-[2.25rem] bg-white/15 border border-white/30 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.15)] flex items-center justify-center overflow-hidden">
+              {/* Inner Specular Highlight */}
+              <div className="absolute inset-0 pointer-events-none rounded-[inherit] shadow-[inset_0_1px_2px_rgba(255,255,255,0.8)]" />
+
               <div
                 className="absolute inset-0 opacity-[0.08]"
                 style={{
@@ -363,38 +403,40 @@ function StackPanel({ pillar, index }: { pillar: Pillar; index: number }) {
                   backgroundSize: "26px 26px",
                 }}
               />
-              <Icon className="w-20 h-20 md:w-24 md:h-24 text-white relative z-10" strokeWidth={1.4} />
+              <Icon className="w-20 h-20 md:w-24 md:h-24 text-white relative z-10 drop-shadow-md" strokeWidth={1.4} />
             </div>
           </div>
 
           {/* Right: Content */}
           <div className="md:col-span-7 space-y-4 text-white relative z-10">
-            <span className={`text-xs font-bold uppercase tracking-[0.2em] ${pillar.accent}`}>
-              Pilar {pillar.number} / 06
-            </span>
-            <h3 className="text-3xl sm:text-4xl md:text-[2.65rem] font-black leading-tight">
-              {pillar.title}
-            </h3>
-            <p className={`font-bold text-xs sm:text-sm uppercase tracking-wide ${pillar.accent}`}>
-              {pillar.tagline}
-            </p>
-            <p className="text-white/85 text-sm sm:text-base leading-relaxed max-w-lg">
-              {pillar.description}
-            </p>
-
-            <div className="flex flex-wrap gap-2 pt-2">
-              <span className="px-3.5 py-1.5 rounded-full bg-white/15 border border-white/20 text-white text-xs font-semibold">
-                Target: {pillar.target}
+            <div className="flex items-center gap-2.5">
+              <span className={`px-3 py-1 rounded-full text-xs font-black uppercase tracking-[0.2em] ${pillar.badgeBg} border ${pillar.badgeText}`}>
+                Pilar {pillar.number} / 06
+              </span>
+              <span className="px-3 py-1 rounded-full text-xs font-semibold bg-white/15 border border-white/20 text-white">
+                {pillar.target}
               </span>
             </div>
 
-            <Link
-              href={pillar.href}
-              className="inline-flex items-center gap-2 pt-4 text-white font-bold text-sm group"
-            >
-              Lihat Detail Fitur
-              <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-            </Link>
+            <h3 className="text-3xl sm:text-4xl md:text-[2.65rem] font-black leading-tight tracking-tight">
+              {pillar.title}
+            </h3>
+            <p className={`font-bold text-xs sm:text-sm uppercase tracking-wider ${pillar.accent}`}>
+              {pillar.tagline}
+            </p>
+            <p className="text-white/85 text-sm sm:text-base leading-relaxed max-w-lg font-normal">
+              {pillar.description}
+            </p>
+
+            <div className="pt-2">
+              <Link
+                href={pillar.href}
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/20 hover:bg-white/30 border border-white/30 text-white font-bold text-xs transition-all shadow-sm group backdrop-blur-md"
+              >
+                <span>Buka Detail Fitur</span>
+                <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
+              </Link>
+            </div>
           </div>
         </div>
       </motion.div>
@@ -403,7 +445,7 @@ function StackPanel({ pillar, index }: { pillar: Pillar; index: number }) {
 }
 
 /* ============================================
-   BENTO FEATURES SECTION (scroll-stacked pillars)
+   BENTO FEATURES SECTION (Scroll-Stacked Pillars)
 ============================================ */
 function BentoFeaturesSection() {
   return (
@@ -417,12 +459,14 @@ function BentoFeaturesSection() {
           viewport={{ once: true, margin: "-60px" }}
           className="text-center max-w-2xl mx-auto space-y-3"
         >
-          <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-[#1B9981]/10 text-[#1B9981] dark:text-[#00D4AA] font-bold text-xs uppercase tracking-wider">
+          <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full liquid-pill text-[#1B9981] dark:text-[#00D4AA] font-extrabold text-xs uppercase tracking-wider shadow-xs">
             <Layers className="w-3.5 h-3.5" /> 6 Pilar Ekosistem Cerdas
           </span>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-slate-900 dark:text-white tracking-tight">
             Solusi Menyeluruh untuk <br />
-            <span className="text-[#1B9981] dark:text-[#00D4AA]">Setiap Tantangan Disabilitas</span>
+            <span className="bg-gradient-to-r from-[#1B9981] via-[#00D4AA] to-sky-500 bg-clip-text text-transparent">
+              Setiap Tantangan Disabilitas
+            </span>
           </h2>
           <p className="text-slate-500 dark:text-slate-400 text-sm sm:text-base leading-relaxed">
             Ditenagai oleh Computer Vision, Natural Language Processing, dan Cloud Data Sync yang bekerja secara harmonis.
@@ -441,7 +485,7 @@ function BentoFeaturesSection() {
 }
 
 /* ============================================
-   STATS SECTION
+   STATS SECTION (Apple Liquid Glass Monoliths)
 ============================================ */
 function StatsSection() {
   const ref = useRef(null);
@@ -453,7 +497,10 @@ function StatsSection() {
   const stat4 = useCounter(2, 1500, isInView);
 
   return (
-    <section id="statistik" className="py-20 md:py-28 bg-slate-900 text-white relative overflow-hidden">
+    <section id="statistik" className="py-24 md:py-32 bg-slate-950 text-white relative overflow-hidden">
+      {/* Background Liquid Ambient Mesh */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[750px] h-[350px] bg-gradient-to-tr from-[#1B9981]/25 via-[#00D4AA]/20 to-transparent blur-[120px] rounded-full pointer-events-none" />
+
       <div className="max-w-7xl mx-auto px-6 relative z-10" ref={ref}>
         <motion.div
           variants={fadeUp}
@@ -461,10 +508,10 @@ function StatsSection() {
           animate={isInView ? "visible" : "hidden"}
           className="text-center max-w-2xl mx-auto mb-16 space-y-3"
         >
-          <span className="text-xs font-bold uppercase tracking-wider text-[#00D4AA] bg-white/10 px-3.5 py-1.5 rounded-full">
+          <span className="text-xs font-extrabold uppercase tracking-wider text-[#00D4AA] bg-white/10 border border-white/15 px-4 py-1.5 rounded-full backdrop-blur-md">
             Dampak Riset &amp; Pengujian
           </span>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight">
             Kesiapan Teknologi Nyata <br />
             Untuk Indonesia Inklusif
           </h2>
@@ -485,13 +532,20 @@ function StatsSection() {
             <motion.div
               key={i}
               variants={scaleIn}
-              whileHover={{ y: -4 }}
-              transition={{ type: "spring", stiffness: 300, damping: 22 }}
-              className="bg-white/5 border border-white/10 rounded-3xl p-6 sm:p-8 text-center flex flex-col items-center justify-center backdrop-blur-sm"
+              whileHover={{ y: -6, scale: 1.02 }}
+              transition={{ type: "spring", stiffness: 350, damping: 25 }}
+              className="relative bg-white/5 border border-white/10 rounded-[2rem] p-6 sm:p-8 text-center flex flex-col items-center justify-center backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.3)] group overflow-hidden"
             >
-              <div className="text-3xl sm:text-5xl font-black text-white">{s.value}</div>
-              <div className="text-sm font-bold text-[#00D4AA] mt-1">{s.unit}</div>
-              <p className="text-xs text-slate-400 mt-2 leading-relaxed">{s.label}</p>
+              {/* Internal Specular Rim */}
+              <div className="absolute inset-0 pointer-events-none rounded-[inherit] shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)]" />
+
+              <div className="text-4xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight group-hover:scale-105 transition-transform duration-300">
+                {s.value}
+              </div>
+              <div className="text-xs sm:text-sm font-extrabold text-[#00D4AA] mt-1.5 uppercase tracking-wider">
+                {s.unit}
+              </div>
+              <p className="text-xs text-slate-400 mt-2.5 leading-relaxed font-normal">{s.label}</p>
             </motion.div>
           ))}
         </motion.div>
@@ -501,11 +555,11 @@ function StatsSection() {
 }
 
 /* ============================================
-   IMPACT SECTION
+   IMPACT SECTION (Apple Bento Glass Grid)
 ============================================ */
 function ImpactSection() {
   return (
-    <section id="dampak" className="py-20 md:py-28 px-4 sm:px-6">
+    <section id="dampak" className="py-24 md:py-32 px-4 sm:px-6 relative">
       <div className="max-w-7xl mx-auto space-y-16">
         <motion.div
           variants={fadeUp}
@@ -514,13 +568,13 @@ function ImpactSection() {
           viewport={{ once: true, margin: "-60px" }}
           className="text-center max-w-2xl mx-auto space-y-3"
         >
-          <span className="text-xs font-bold uppercase text-[#1B9981] dark:text-[#00D4AA] bg-[#1B9981]/10 dark:bg-[#1B9981]/20 px-3.5 py-1.5 rounded-full">
+          <span className="text-xs font-extrabold uppercase text-[#1B9981] dark:text-[#00D4AA] liquid-pill px-4 py-1.5 rounded-full shadow-xs">
             Dampak Sosial &amp; Inklusivitas
           </span>
-          <h2 className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-slate-900 dark:text-white tracking-tight">
             Didesain Khusus Bersama Komunitas
           </h2>
-          <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">
+          <p className="text-slate-500 dark:text-slate-400 text-sm sm:text-base leading-relaxed">
             Kami mengembangkan fitur dengan mendengarkan langsung pengalaman dan tantangan nyata penyandang disabilitas di lapangan.
           </p>
         </motion.div>
@@ -536,7 +590,7 @@ function ImpactSection() {
             {
               title: "Tunanetra & Low Vision",
               icon: Eye,
-              color: "text-sky-600 dark:text-sky-400 bg-sky-50 dark:bg-sky-950/60",
+              color: "text-sky-600 dark:text-sky-400 bg-sky-500/10 border-sky-500/20",
               items: [
                 "Navigasi trotoar aman dengan radar deteksi rintangan spasial BiJALAN",
                 "Akses baca dokumen cetak dan surat kabar mandiri lewat suara BiBACA",
@@ -545,7 +599,7 @@ function ImpactSection() {
             {
               title: "Tunarungu & Wicara",
               icon: Ear,
-              color: "text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/60",
+              color: "text-amber-600 dark:text-amber-400 bg-amber-500/10 border-amber-500/20",
               items: [
                 "Percakapan dua arah langsung dengan penerjemah suara-ke-teks BiSAPA",
                 "Edukasi bahasa isyarat BISINDO interaktif bersama BiPINTAR",
@@ -554,7 +608,7 @@ function ImpactSection() {
             {
               title: "Tunadaksa & Pengguna Kursi Roda",
               icon: Accessibility,
-              color: "text-rose-600 dark:text-rose-400 bg-rose-50 dark:bg-rose-950/60",
+              color: "text-rose-600 dark:text-rose-400 bg-rose-500/10 border-rose-500/20",
               items: [
                 "Perlindungan darurat satu sentuhan dengan pemancar lokasi GPS BiSAFE",
                 "Pemetaan jalur ramah kursi roda dan rintangan fasilitas di BiPANTAU",
@@ -566,25 +620,29 @@ function ImpactSection() {
               <motion.div
                 key={i}
                 variants={fadeUp}
-                whileHover={{ y: -6 }}
-                transition={{ type: "spring", stiffness: 300, damping: 22 }}
-                className="bg-white dark:bg-[#0F172A] rounded-3xl p-8 border border-slate-200/80 dark:border-slate-800 shadow-sm hover:shadow-lg dark:hover:border-slate-700 transition-all space-y-6"
+                whileHover={{ y: -6, scale: 1.01 }}
+                transition={{ type: "spring", stiffness: 350, damping: 25 }}
+                className="liquid-glass-card rounded-[2.25rem] p-8 space-y-6 flex flex-col justify-between"
               >
-                <div className="flex items-center gap-3.5">
-                  <div className={`w-12 h-12 rounded-2xl ${card.color} flex items-center justify-center border border-transparent dark:border-white/5`}>
-                    <Icon className="w-6 h-6" />
+                <div className="space-y-4">
+                  <div className="flex items-center gap-3.5">
+                    <div className={`w-12 h-12 rounded-2xl ${card.color} border flex items-center justify-center shadow-xs`}>
+                      <Icon className="w-6 h-6" />
+                    </div>
+                    <h3 className="text-lg font-extrabold text-slate-900 dark:text-white tracking-tight">
+                      {card.title}
+                    </h3>
                   </div>
-                  <h3 className="text-lg font-bold text-slate-900 dark:text-white">{card.title}</h3>
-                </div>
 
-                <ul className="space-y-3">
-                  {card.items.map((it, idx) => (
-                    <li key={idx} className="flex items-start gap-2.5 text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
-                      <CheckCircle2 className="w-4 h-4 text-[#1B9981] dark:text-[#00D4AA] shrink-0 mt-0.5" />
-                      <span>{it}</span>
-                    </li>
-                  ))}
-                </ul>
+                  <ul className="space-y-3 pt-2">
+                    {card.items.map((it, idx) => (
+                      <li key={idx} className="flex items-start gap-2.5 text-xs text-slate-600 dark:text-slate-300 leading-relaxed font-normal">
+                        <CheckCircle2 className="w-4 h-4 text-[#1B9981] dark:text-[#00D4AA] shrink-0 mt-0.5" />
+                        <span>{it}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </motion.div>
             );
           })}
@@ -595,45 +653,45 @@ function ImpactSection() {
 }
 
 /* ============================================
-   FOOTER
+   FOOTER (Apple Minimalist Liquid Footer)
 ============================================ */
 function Footer() {
   return (
-    <footer className="bg-slate-950 text-slate-400 py-16 border-t border-slate-900 px-6">
+    <footer className="bg-slate-950 text-slate-400 py-16 border-t border-slate-900/80 px-6 relative overflow-hidden">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-10">
         <div className="space-y-3 md:col-span-2">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2.5">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/logo/logo.png" alt="diBISAlitas" className="w-8 h-8 object-contain" />
-            <span className="text-lg font-black text-white">
-              di<span className="text-[#1B9981]">BISA</span>litas
+            <span className="text-lg font-black text-white tracking-tight">
+              di<span className="text-[#1B9981] dark:text-[#00D4AA]">BISA</span>litas
             </span>
           </div>
-          <p className="text-xs text-slate-500 leading-relaxed max-w-sm">
+          <p className="text-xs text-slate-500 leading-relaxed max-w-sm font-normal">
             Ekosistem Aksesibilitas Cerdas Berbasis AI untuk Kesetaraan dan Kemandirian Disabilitas di Indonesia.
           </p>
         </div>
 
         <div className="space-y-2 text-xs">
           <div className="font-bold text-white uppercase tracking-wider mb-2">Fitur Unggulan</div>
-          <div><Link href="/fitur/bisafe" className="hover:text-white">BiSAFE (Darurat SOS)</Link></div>
-          <div><Link href="/fitur/bipantau" className="hover:text-white">BiPANTAU (Command Center)</Link></div>
-          <div><Link href="/fitur/bisapa" className="hover:text-white">BiSAPA (Isyarat AI)</Link></div>
-          <div><Link href="/fitur/bibaca" className="hover:text-white">BiBACA (Smart OCR)</Link></div>
-          <div><Link href="/fitur/bipintar" className="hover:text-white">BiPINTAR (E-Learning)</Link></div>
-          <div><Link href="/fitur/bijalan" className="hover:text-white">BiJALAN (Navigasi Spasial)</Link></div>
+          <div><Link href="/fitur/bisafe" className="hover:text-white transition-colors">BiSAFE (Darurat SOS)</Link></div>
+          <div><Link href="/fitur/bipantau" className="hover:text-white transition-colors">BiPANTAU (Command Center)</Link></div>
+          <div><Link href="/fitur/bisapa" className="hover:text-white transition-colors">BiSAPA (Isyarat AI)</Link></div>
+          <div><Link href="/fitur/bibaca" className="hover:text-white transition-colors">BiBACA (Smart OCR)</Link></div>
+          <div><Link href="/fitur/bipintar" className="hover:text-white transition-colors">BiPINTAR (E-Learning)</Link></div>
+          <div><Link href="/fitur/bijalan" className="hover:text-white transition-colors">BiJALAN (Navigasi Spasial)</Link></div>
         </div>
 
         <div className="space-y-2 text-xs">
           <div className="font-bold text-white uppercase tracking-wider mb-2">Akses Cepat</div>
-          <div><Link href="/demo" className="hover:text-white">Demo Aplikasi (Tanpa Login)</Link></div>
-          <div><Link href="/admin/rintangan" className="hover:text-white">Dashboard BiPANTAU</Link></div>
-          <div><Link href="/fitur" className="hover:text-white">Pusat Fitur</Link></div>
-          <div><Link href="/app/login" className="hover:text-white">Masuk / Daftar Akun</Link></div>
+          <div><Link href="/demo" className="hover:text-white transition-colors">Demo Aplikasi (Tanpa Login)</Link></div>
+          <div><Link href="/admin/rintangan" className="hover:text-white transition-colors">Dashboard BiPANTAU</Link></div>
+          <div><Link href="/fitur" className="hover:text-white transition-colors">Pusat Fitur</Link></div>
+          <div><Link href="/app/login" className="hover:text-white transition-colors">Masuk / Daftar Akun</Link></div>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto pt-10 mt-10 border-t border-slate-900 text-center text-xs text-slate-600">
+      <div className="max-w-7xl mx-auto pt-10 mt-10 border-t border-slate-900 text-center text-xs text-slate-600 font-normal">
         Hak Cipta &copy; {new Date().getFullYear()} diBISAlitas Platform. Seluruh Hak Dilindungi.
       </div>
     </footer>
@@ -641,7 +699,7 @@ function Footer() {
 }
 
 /* ============================================
-   SPLASH SCREEN (INTRO ANIMATION)
+   SPLASH SCREEN (Intro Animation)
 ============================================ */
 function SplashScreen({ onComplete }: { onComplete: () => void }) {
   const onCompleteRef = useRef(onComplete);
@@ -650,7 +708,7 @@ function SplashScreen({ onComplete }: { onComplete: () => void }) {
   useEffect(() => {
     const timer = setTimeout(() => {
       onCompleteRef.current();
-    }, 2800);
+    }, 2400);
     return () => clearTimeout(timer);
   }, []);
 
@@ -658,11 +716,11 @@ function SplashScreen({ onComplete }: { onComplete: () => void }) {
     <motion.div
       initial={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
       onClick={() => onCompleteRef.current()}
-      className="fixed inset-0 z-[99999] bg-[#0a0f1a] flex items-center justify-center overflow-hidden cursor-pointer select-none"
+      className="fixed inset-0 z-[99999] bg-[#050811] flex items-center justify-center overflow-hidden cursor-pointer select-none"
     >
-      {/* Ambient glow */}
+      {/* Ambient Liquid Glow */}
       <div
         className="absolute w-[600px] h-[600px] rounded-full pointer-events-none opacity-30"
         style={{
@@ -686,7 +744,7 @@ function SplashScreen({ onComplete }: { onComplete: () => void }) {
           <motion.span
             initial={{ opacity: 0, x: -15 }}
             animate={{ opacity: 0.7, x: 0 }}
-            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
             className="text-white"
           >
             di
@@ -719,7 +777,7 @@ function SplashScreen({ onComplete }: { onComplete: () => void }) {
           <motion.span
             initial={{ opacity: 0, x: 15 }}
             animate={{ opacity: 0.7, x: 0 }}
-            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
             className="text-white"
           >
             litas
@@ -741,7 +799,7 @@ function SplashScreen({ onComplete }: { onComplete: () => void }) {
           <motion.div
             initial={{ width: "0%" }}
             animate={{ width: "100%" }}
-            transition={{ duration: 2.5, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 2.2, ease: [0.16, 1, 0.3, 1] }}
             className="h-full rounded-full"
             style={{
               background: "linear-gradient(90deg, #1B9981, #00D4AA, #38BDF8)",
@@ -775,7 +833,7 @@ export default function LandingPage() {
         {showSplash && <SplashScreen onComplete={() => setShowSplash(false)} />}
       </AnimatePresence>
 
-      <div className="min-h-screen bg-[#FDFEFE] dark:bg-[#090e17] text-slate-800 dark:text-slate-100 selection:bg-[#1B9981]/20 transition-colors duration-300">
+      <div className="min-h-screen bg-[#F8FAFC] dark:bg-[#050811] text-slate-800 dark:text-slate-100 selection:bg-[#1B9981]/20 transition-colors duration-300 relative">
         <Navbar />
         <HeroSection />
         <BentoFeaturesSection />
@@ -786,4 +844,4 @@ export default function LandingPage() {
       </div>
     </>
   );
-}
+}

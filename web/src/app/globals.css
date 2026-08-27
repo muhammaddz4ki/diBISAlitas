@@ -181,6 +181,76 @@ button:active {
   width: 100%;
 }
 
+/* Liquid Crystal & Apple Glass Utilities */
+.liquid-glass {
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.05), inset 0 1px 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+html.dark .liquid-glass {
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4), inset 0 1px 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.liquid-glass-card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow: 0 10px 35px -5px rgba(0, 0, 0, 0.04), inset 0 1px 0 0 rgba(255, 255, 255, 0.95);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+html.dark .liquid-glass-card {
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 15px 40px -5px rgba(0, 0, 0, 0.4), inset 0 1px 0 0 rgba(255, 255, 255, 0.12);
+}
+
+.liquid-glass-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(27, 153, 129, 0.35);
+  box-shadow: 0 20px 45px -10px rgba(27, 153, 129, 0.12), inset 0 1px 0 0 rgba(255, 255, 255, 1);
+}
+
+html.dark .liquid-glass-card:hover {
+  border-color: rgba(0, 212, 170, 0.3);
+  box-shadow: 0 25px 50px -10px rgba(0, 0, 0, 0.6), inset 0 1px 0 0 rgba(255, 255, 255, 0.2);
+}
+
+.liquid-pill {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03), inset 0 1px 0.5px rgba(255, 255, 255, 0.9);
+}
+
+html.dark .liquid-pill {
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3), inset 0 1px 0.5px rgba(255, 255, 255, 0.15);
+}
+
+.liquid-crystal-glow {
+  background: radial-gradient(circle at 50% 0%, rgba(27, 153, 129, 0.18), transparent 70%);
+}
+
+html.dark .liquid-crystal-glow {
+  background: radial-gradient(circle at 50% 0%, rgba(0, 212, 170, 0.22), transparent 70%);
+}
+
 /* Feature card hover glow */
 .feature-card {
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
