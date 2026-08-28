@@ -90,7 +90,7 @@ function useCounter(end: number, duration: number = 2000, startCounting: boolean
 ============================================ */
 function HeroSection() {
   return (
-    <section className="relative min-h-screen pt-32 flex flex-col items-center justify-start md:justify-center overflow-hidden bg-[#FDFEFE] dark:bg-[#050505] text-slate-900 dark:text-white transition-colors duration-300">
+    <section className="relative min-h-screen pt-32 flex flex-col items-center justify-start md:justify-center overflow-hidden text-slate-900 dark:text-white transition-colors duration-300">
       {/* Background Glow Elements */}
       <div className="absolute top-[50%] md:top-[55%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] md:w-[900px] md:h-[900px] bg-[#1B9981]/20 dark:bg-[#1B9981]/30 blur-[120px] md:blur-[180px] rounded-full pointer-events-none" />
       <div className="absolute top-[50%] md:top-[55%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] md:w-[600px] md:h-[600px] bg-[#00D4AA]/30 dark:bg-[#00D4AA]/40 blur-[90px] md:blur-[140px] rounded-full pointer-events-none" />
