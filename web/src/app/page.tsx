@@ -434,12 +434,54 @@ function StackPanel({ pillar, index }: { pillar: Pillar; index: number }) {
 }
 
 /* ============================================
-   BENTO FEATURES SECTION (scroll-stacked pillars)
+   BENTO FEATURES SECTION (single-page showcase)
 ============================================ */
 function BentoFeaturesSection() {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const desktopTrackRef = useRef<HTMLDivElement>(null);
+  const mobileTrackRef = useRef<HTMLDivElement>(null);
+  const activePillar = pillars[activeIndex];
+  const ActiveIcon = activePillar.icon;
+
+  // Bulletproof step sizes based on Tailwind classes
+  // Desktop: button w-[130px] + gap-3 (12px) = 142px step
+  const desktopStep = 142;
+  // Mobile: button min-h-[100px] + gap-2 (8px) = 108px step
+  const mobileStep = 108;
+
+  // Calculate centered targets based on average container sizes
+  // Desktop avg container width ~600px -> center offset ~229px
+  const targetX = -activeIndex * desktopStep + 229;
+  const clampedX = Math.min(0, targetX);
+
+  // Mobile avg container height ~300px -> center offset ~96px
+  const targetY = -activeIndex * mobileStep + 96;
+  const clampedY = Math.min(0, targetY);
+
+  // Framer motion drag end handlers for manual swiping
+  const handleDragEndDesktop = (e: any, info: any) => {
+    if (info.offset.x < -50 || info.velocity.x < -500) {
+      setActiveIndex(Math.min(activeIndex + 1, pillars.length - 1));
+    } else if (info.offset.x > 50 || info.velocity.x > 500) {
+      setActiveIndex(Math.max(activeIndex - 1, 0));
+    }
+  };
+
+  const handleDragEndMobile = (e: any, info: any) => {
+    if (info.offset.y < -50 || info.velocity.y < -500) {
+      setActiveIndex(Math.min(activeIndex + 1, pillars.length - 1));
+    } else if (info.offset.y > 50 || info.velocity.y > 500) {
+      setActiveIndex(Math.max(activeIndex - 1, 0));
+    }
+  };
+
+  // Get 2 "info" pillars for the glass cards (next 2 after active)
+  const glass1 = pillars[(activeIndex + 1) % pillars.length];
+  const glass2 = pillars[(activeIndex + 2) % pillars.length];
+
   return (
     <section id="fitur" className="py-20 md:py-28 px-4 sm:px-6">
-      <div className="max-w-7xl mx-auto space-y-16">
+      <div className="max-w-7xl mx-auto space-y-14">
         {/* Header */}
         <motion.div
           variants={fadeUp}
@@ -451,21 +493,230 @@ function BentoFeaturesSection() {
           <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-[#1B9981]/10 text-[#1B9981] dark:text-[#00D4AA] font-bold text-xs uppercase tracking-wider">
             <Layers className="w-3.5 h-3.5" /> 6 Pilar Ekosistem Cerdas
           </span>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-slate-900 dark:text-white tracking-tight">
-            Solusi Menyeluruh untuk <br />
-            <span className="text-[#1B9981] dark:text-[#00D4AA]">Setiap Tantangan Disabilitas</span>
-          </h2>
-          <p className="text-slate-500 dark:text-slate-400 text-sm sm:text-base leading-relaxed">
-            Ditenagai oleh Computer Vision, Natural Language Processing, dan Cloud Data Sync yang bekerja secara harmonis.
-          </p>
         </motion.div>
 
-        {/* Scroll-stacked pillar cards */}
-        <div className="relative">
-          {pillars.map((pillar, i) => (
-            <StackPanel key={pillar.key} pillar={pillar} index={i} />
-          ))}
+        {/* === MAIN BENTO GRID === */}
+        <LayoutGroup>
+        <div className="flex flex-col lg:grid lg:grid-cols-2 gap-4 md:gap-8 lg:gap-10">
+
+          {/* ──── MOBILE TOP ROW: Big Card + Vertical Selector ──── */}
+          <div className="flex flex-row gap-2 sm:gap-4 w-full h-[280px] sm:h-[340px] lg:h-auto">
+            
+            {/* ──── LEFT: Large Gradient Card ──── */}
+            <div className="relative flex-1 rounded-[1.5rem] md:rounded-[2rem] overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.25)] h-full lg:min-h-[480px]">
+            {/* Shared layout gradient background — slides from small card */}
+            <motion.div
+              layoutId="pillarGradient"
+              className={`absolute inset-0 bg-gradient-to-br ${activePillar.gradient}`}
+              transition={{ type: "spring", stiffness: 200, damping: 28, mass: 0.8 }}
+            />
+
+            {/* Ambient glow */}
+            <div className="absolute top-0 right-0 w-[350px] h-[350px] bg-white/10 blur-3xl rounded-full pointer-events-none" />
+
+            {/* Label top-left */}
+            <div className="absolute top-5 left-5 md:top-7 md:left-7 z-20">
+              <span className={`text-[10px] md:text-xs font-bold uppercase tracking-[0.15em] ${activePillar.accent}`}>
+                Pilar {activePillar.number} / 06
+              </span>
+            </div>
+
+            {/* 3D Phone and Glass Cards Container */}
+            <div className="absolute inset-0 z-10 flex flex-row items-center justify-between gap-2 sm:gap-6 px-3 pr-4 sm:px-8 md:px-12">
+              
+              {/* 3D Tilted Phone Video Mockup */}
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activePillar.key + "-video"}
+                  initial={{ opacity: 0, x: -30, rotateY: 25, rotateX: 10, scale: 0.9 }}
+                  animate={{ opacity: 1, x: 0, rotateY: 12, rotateX: 4, scale: 1 }}
+                  exit={{ opacity: 0, x: -20, rotateY: -10, rotateX: 15, scale: 0.95 }}
+                  transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
+                  className="relative shrink-0 w-[135px] h-[310px] sm:w-[200px] sm:h-[450px] md:w-[250px] md:h-[520px] lg:w-[240px] lg:h-[490px] rounded-[1rem] sm:rounded-[1.75rem] bg-black border-[4px] md:border-[10px] border-[#1f2022] shadow-[25px_25px_50px_rgba(0,0,0,0.5),-10px_-10px_30px_rgba(255,255,255,0.1)_inset,0_0_0_1px_rgba(255,255,255,0.15)] overflow-hidden ring-1 ring-black/50 translate-y-16 sm:translate-y-32 md:translate-y-36 lg:translate-y-32 -translate-x-1 sm:translate-x-0"
+                  style={{ transformPerspective: 1200 }}
+                >
+                  {/* Screen Glare Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/[0.05] to-white/[0.25] pointer-events-none z-30 mix-blend-overlay" />
+
+                  {/* iPhone Notch */}
+                  <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[40%] h-[12px] md:h-[24px] bg-[#1f2022] rounded-b-xl md:rounded-b-[18px] z-20 flex justify-center items-center">
+                    <div className="w-[30%] h-[2px] md:h-[4px] bg-black/50 rounded-full mt-1" />
+                  </div>
+                  
+                  <video
+                    key={activePillar.video}
+                    src={`/video/${activePillar.video}`}
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    className="w-full h-full object-cover rounded-[1.2rem] md:rounded-[2rem]"
+                  />
+                  
+                  {/* Floating active icon on top of the phone */}
+                  <motion.div
+                    initial={{ scale: 0, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    transition={{ delay: 0.4, type: "spring" }}
+                    className="absolute -right-2 sm:-right-3 md:-right-6 bottom-4 md:bottom-10 w-8 h-8 sm:w-10 sm:h-10 md:w-16 md:h-16 rounded-xl md:rounded-2xl bg-white/20 backdrop-blur-md border border-white/30 shadow-xl flex items-center justify-center z-30"
+                  >
+                    <ActiveIcon className="w-4 h-4 md:w-8 md:h-8 text-white" strokeWidth={1.5} />
+                  </motion.div>
+                </motion.div>
+              </AnimatePresence>
+
+              {/* 2 Glass Cards stacked */}
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activePillar.key + "-glass"}
+                  initial={{ opacity: 0, x: 30 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  transition={{ duration: 0.45, delay: 0.1 }}
+                  className="relative flex-1 flex flex-col gap-1.5 sm:gap-4 max-w-[110px] sm:max-w-[220px] md:max-w-[280px] lg:max-w-[260px]"
+                >
+                  {/* Glass card 1 */}
+                  <div className="w-full bg-white/10 backdrop-blur-xl border border-white/20 rounded-xl md:rounded-2xl p-2.5 sm:p-3 md:p-6 flex flex-col justify-center">
+                    <h4 className="text-white font-black text-[10px] sm:text-[13px] md:text-xl lg:text-2xl leading-tight line-clamp-2">{activePillar.glass1Title}</h4>
+                    <p className="text-white/70 text-[8px] sm:text-[9px] md:text-[13px] leading-relaxed mt-1 md:mt-2 line-clamp-3 md:line-clamp-4">
+                      {activePillar.glass1Subtitle}
+                    </p>
+                  </div>
+
+                  {/* Glass card 2 */}
+                  <div className="w-full bg-white/10 backdrop-blur-xl border border-white/20 rounded-xl md:rounded-2xl p-2.5 sm:p-3 md:p-6 flex flex-col justify-center">
+                    <h4 className="text-white font-black text-[10px] sm:text-[13px] md:text-xl lg:text-2xl leading-tight line-clamp-2">{activePillar.glass2Title}</h4>
+                    <p className="text-white/70 text-[8px] sm:text-[9px] md:text-[13px] leading-relaxed mt-1 md:mt-2 line-clamp-3 md:line-clamp-4">
+                      {activePillar.glass2Subtitle}
+                    </p>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+            </div>
+          </div>
+
+          {/* ──── MOBILE VERTICAL SELECTOR (< LG) ──── */}
+          <div className="flex lg:hidden flex-col w-[110px] sm:w-[130px] shrink-0 overflow-hidden pb-4 relative">
+            <motion.div 
+              ref={mobileTrackRef}
+              className="flex flex-col gap-2 cursor-grab active:cursor-grabbing w-full"
+              drag="y"
+              dragConstraints={{ top: -mobileStep * pillars.length, bottom: 0 }}
+              onDragEnd={handleDragEndMobile}
+              animate={{ y: clampedY }}
+              transition={{ type: "spring", stiffness: 300, damping: 30 }}
+            >
+              {pillars.map((p, i) => {
+                const PIcon = p.icon;
+                const isActive = i === activeIndex;
+                return (
+                  <button
+                    key={p.key + "-mobile"}
+                    onClick={() => setActiveIndex(i)}
+                    className={`relative flex-shrink-0 min-h-[90px] sm:min-h-[100px] w-full rounded-xl transition-all duration-300 cursor-pointer group overflow-hidden flex flex-col items-center justify-center gap-2 ${
+                      isActive
+                        ? `bg-gradient-to-br ${p.gradient} shadow-lg scale-[1.02] z-10 ring-1 ring-white/30`
+                        : `bg-slate-100 dark:bg-white/[0.04] border border-slate-200/80 dark:border-white/[0.08] ${p.hoverBorder}`
+                    }`}
+                  >
+                    <PIcon
+                      className={`w-7 h-7 sm:w-8 sm:h-8 transition-colors ${isActive ? "text-white" : `text-slate-400 dark:text-white/40 ${p.hoverText}`}`}
+                      strokeWidth={1.5}
+                    />
+                    <span className={`text-[10px] sm:text-xs font-bold uppercase tracking-wide leading-tight ${isActive ? "text-white/90" : "text-slate-500 dark:text-white/40"} text-center px-2 w-full break-words`}>
+                      {p.title}
+                    </span>
+                  </button>
+                );
+              })}
+            </motion.div>
+          </div>
         </div>
+
+        {/* ──── RIGHT COLUMN ──── */}
+          <div className="flex flex-col gap-4 md:gap-5 h-full">
+
+            {/* RIGHT TOP: Title + Description */}
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activePillar.key + "-desc"}
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                className="space-y-4 md:space-y-6 pt-1"
+              >
+                <h3 className="text-3xl sm:text-4xl md:text-[2.8rem] font-black leading-[1.1] tracking-tight text-slate-900 dark:text-white line-clamp-3">
+                  {activePillar.title}
+                  <br />
+                  <em className={`font-black italic bg-clip-text text-transparent bg-gradient-to-r ${activePillar.gradient}`}>
+                    {activePillar.tagline}
+                  </em>
+                </h3>
+
+                <p className="text-slate-500 dark:text-white/60 text-xs md:text-sm leading-relaxed max-w-sm line-clamp-3">
+                  {activePillar.description}
+                </p>
+
+                <Link
+                  href={activePillar.href}
+                  className="inline-flex items-center gap-2 text-slate-900 dark:text-white font-bold text-sm group hover:text-[#1B9981] dark:hover:text-[#00D4AA] transition-colors"
+                >
+                  Lihat Detail
+                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1.5" />
+                </Link>
+              </motion.div>
+            </AnimatePresence>
+
+            {/* RIGHT BOTTOM: DESKTOP HORIZONTAL SELECTOR (>= LG) */}
+            <div className="hidden lg:flex relative overflow-hidden mt-auto pb-4 -mx-4 px-4 sm:mx-0 sm:px-0">
+              <motion.div 
+                ref={desktopTrackRef}
+                className="flex gap-2 md:gap-3 min-w-max cursor-grab active:cursor-grabbing"
+                drag="x"
+                dragConstraints={{ right: 0, left: -desktopStep * pillars.length }}
+                onDragEnd={handleDragEndDesktop}
+                animate={{ x: clampedX }}
+                transition={{ type: "spring", stiffness: 300, damping: 30 }}
+              >
+                {pillars.map((p, i) => {
+                  const PIcon = p.icon;
+                  const isActive = i === activeIndex;
+                  return (
+                    <button
+                      key={p.key}
+                      onClick={() => setActiveIndex(i)}
+                      className={`relative flex-shrink-0 w-[110px] md:w-[130px] aspect-square rounded-xl md:rounded-2xl transition-all duration-300 cursor-pointer group overflow-hidden flex flex-col items-center justify-center gap-1.5 ${
+                        isActive
+                          ? `bg-gradient-to-br ${p.gradient} shadow-lg scale-105`
+                          : `bg-slate-100 dark:bg-white/[0.04] border border-slate-200/80 dark:border-white/[0.08] ${p.hoverBorder}`
+                      }`}
+                    >
+                      <PIcon
+                        className={`w-6 h-6 md:w-8 md:h-8 transition-colors ${isActive ? "text-white" : `text-slate-400 dark:text-white/40 ${p.hoverText}`}`}
+                        strokeWidth={1.5}
+                      />
+                      <span className={`text-xs md:text-sm font-bold uppercase tracking-wider mt-1 ${isActive ? "text-white/90" : "text-slate-500 dark:text-white/40"}`}>
+                        {p.title}
+                      </span>
+                      
+                      {/* Active indicator dot */}
+                      {isActive && (
+                        <motion.div
+                          layoutId="activeIndicator"
+                          className="absolute bottom-2 w-1.5 h-1.5 rounded-full bg-white shadow-[0_0_8px_rgba(255,255,255,0.8)]"
+                          transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                        />
+                      )}
+                    </button>
+                  );
+                })}
+              </motion.div>
+            </div>
+
+          </div>
+        </div>
+        </LayoutGroup>
       </div>
     </section>
   );
