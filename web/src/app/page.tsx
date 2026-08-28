@@ -1,8 +1,9 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
+import { useTheme } from "@/lib/ThemeContext";
 import Link from "next/link";
-import { motion, useInView, useScroll, useTransform, AnimatePresence, Variants } from "framer-motion";
+import { motion, useInView, useScroll, useTransform, AnimatePresence, Variants, LayoutGroup } from "framer-motion";
 import {
   ShieldAlert,
   MessageCircle,
@@ -185,49 +186,75 @@ function HeroSection() {
    ABOUT PROJECT SECTION (NEW)
 ============================================ */
 function AboutProjectSection() {
+  const { theme } = useTheme();
   return (
-    <section className="relative min-h-screen py-24 flex items-center overflow-hidden bg-[#FDFEFE] dark:bg-[#050505] text-slate-900 dark:text-white transition-colors duration-300">
+    <section className="relative py-0 overflow-visible bg-transparent text-slate-900 dark:text-white transition-colors duration-300 -mt-10 md:-mt-16 lg:-mt-20 z-40">
+      
+      {/* Tall soft gradient to seamlessly blend hero into this section */}
+      <div className="absolute top-[-6rem] md:top-[-10rem] left-0 w-full h-40 md:h-56 lg:h-72 bg-gradient-to-b from-transparent via-[#FDFEFE]/60 dark:via-[#050505]/60 to-[#FDFEFE] dark:to-[#050505] z-0 pointer-events-none transition-colors duration-300" />
       
       {/* Container */}
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-8 items-center">
+      <div className="relative z-10 w-full max-w-[90rem] mx-auto px-6 md:px-12 lg:px-16 grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-8 lg:gap-4 items-center min-h-[80vh]">
         
         {/* Left: 3D Laptop Mockup */}
         <motion.div 
-          initial={{ opacity: 0, x: -50 }}
+          initial={{ opacity: 0, x: -60 }}
           whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-          className="relative w-full h-[400px] md:h-[600px] flex items-center justify-center lg:justify-start perspective-[1200px]"
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+          className="relative flex items-center justify-center lg:justify-start"
+          style={{ perspective: "1200px" }}
         >
           {/* Faint Glow Behind Laptop */}
-          <div className="absolute w-[80%] h-[80%] bg-[#1B9981]/15 dark:bg-[#00D4AA]/20 blur-[80px] rounded-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
+          <div className="absolute w-[90%] h-[90%] bg-[#1B9981]/10 dark:bg-[#00D4AA]/15 blur-[100px] rounded-full top-1/2 left-[40%] -translate-x-1/2 -translate-y-1/2" />
           
-          {/* The 3D Mockup Container */}
+          {/* The 3D Laptop Frame */}
           <div 
-            className="relative w-full max-w-[650px] aspect-video bg-black rounded-xl md:rounded-2xl border-[6px] md:border-[12px] border-[#111] shadow-2xl overflow-hidden"
+            className="relative w-full max-w-[720px]"
             style={{
-              transform: "rotateY(25deg) rotateX(10deg) rotateZ(-2deg)",
+              transform: "rotateY(18deg) rotateX(5deg) rotateZ(-2deg)",
               transformStyle: "preserve-3d",
-              boxShadow: "-40px 50px 80px rgba(0,0,0,0.6), inset 0 0 20px rgba(255,255,255,0.05)",
-              // Mask image to fade out the edges (bottom and right) seamlessly into background
-              WebkitMaskImage: "linear-gradient(135deg, rgba(0,0,0,1) 30%, rgba(0,0,0,0.8) 60%, rgba(0,0,0,0) 95%)",
-              maskImage: "linear-gradient(135deg, rgba(0,0,0,1) 30%, rgba(0,0,0,0.8) 60%, rgba(0,0,0,0) 95%)",
             }}
           >
-            {/* Placeholder Image (User will insert image URL here) */}
-            <img 
-              src="/images/laptop-screen.png" 
-              alt="Dashboard Preview" 
-              className="w-full h-full object-cover"
-              onError={(e) => {
-                e.currentTarget.style.display = 'none';
-                if (e.currentTarget.parentElement) {
-                  e.currentTarget.parentElement.style.background = 'linear-gradient(135deg, #090e17, #1B9981, #00D4AA)';
-                }
+            {/* Laptop Body */}
+            <div 
+              className="relative w-full aspect-[16/10] rounded-xl md:rounded-2xl overflow-hidden border-[5px] md:border-[10px] border-slate-300 dark:border-[#1a1a1a] bg-slate-200 dark:bg-[#0a0a0a] transition-colors duration-300"
+              style={{
+                boxShadow: theme === 'dark'
+                  ? "-30px 40px 80px rgba(0,0,0,0.7), -10px 15px 30px rgba(0,0,0,0.5), inset 0 0 15px rgba(255,255,255,0.03)"
+                  : "-20px 30px 60px rgba(0,0,0,0.15), -8px 12px 25px rgba(0,0,0,0.08)",
+                WebkitMaskImage: "linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 60%, rgba(0,0,0,0.6) 85%, rgba(0,0,0,0) 100%), linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 70%, rgba(0,0,0,0.4) 90%, rgba(0,0,0,0) 100%)",
+                WebkitMaskComposite: "destination-in",
+                maskImage: "linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 60%, rgba(0,0,0,0.6) 85%, rgba(0,0,0,0) 100%), linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 70%, rgba(0,0,0,0.4) 90%, rgba(0,0,0,0) 100%)",
+                maskComposite: "intersect",
               }}
-            />
-            {/* Shine effect across screen */}
-            <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-transparent pointer-events-none" />
+            >
+              {/* Screen Image - Dark version */}
+              <img 
+                src="/images/laptop-screen-dark.png" 
+                alt="Dashboard Preview" 
+                className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ${theme === 'dark' ? 'opacity-100' : 'opacity-0'}`}
+                onError={(e) => {
+                  e.currentTarget.style.display = 'none';
+                }}
+              />
+              {/* Screen Image - Light version */}
+              <img 
+                src="/images/laptop-screen-light.png" 
+                alt="Dashboard Preview" 
+                className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ${theme === 'light' ? 'opacity-100' : 'opacity-0'}`}
+                onError={(e) => {
+                  e.currentTarget.style.display = 'none';
+                }}
+              />
+              {/* Fallback gradient when no images */}
+              <div className="absolute inset-0 bg-gradient-to-br from-slate-100 via-slate-200 to-[#1B9981]/20 dark:from-[#0a0e17] dark:via-[#111827] dark:to-[#1B9981]/30 -z-10" />
+              {/* Subtle shine across screen */}
+              <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent pointer-events-none" />
+            </div>
+
+            {/* Laptop Bottom Bar (keyboard hint) */}
+            <div className="w-[60%] mx-auto h-[4px] md:h-[6px] bg-slate-300 dark:bg-[#1a1a1a] rounded-b-xl transition-colors duration-300" />
           </div>
         </motion.div>
 
@@ -235,20 +262,23 @@ function AboutProjectSection() {
         <motion.div 
           initial={{ opacity: 0, x: 50 }}
           whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
-          className="flex flex-col space-y-6 max-w-2xl"
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
+          className="flex flex-col space-y-5 lg:pl-4 justify-center"
         >
-          <span className="text-sm md:text-base font-semibold tracking-wider text-slate-500 dark:text-white/50">
+          <span className="text-sm md:text-base font-light tracking-normal text-slate-400 dark:text-white/40">
             Tentang proyek:
           </span>
           
-          <h2 className="text-4xl sm:text-5xl md:text-[4rem] font-normal leading-[1.05] tracking-tight">
-            <strong>diBISAlitas</strong> adalah ekosistem aksesibilitas berbasis AI yang <strong className="text-[#1B9981] dark:text-[#00D4AA]">membantu penyandang disabilitas meraih kemandirian tanpa batas.</strong>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.5rem] font-black leading-[1.05] tracking-tight">
+            diBISAlitas adalah platform AI{" "}
+            <em className="font-black italic text-[#1B9981] dark:text-[#00D4AA]">
+              yang mengubah hidup penyandang disabilitas.
+            </em>
           </h2>
           
-          <p className="text-slate-600 dark:text-white/50 text-base md:text-lg leading-relaxed mt-6">
-            Tugas kami adalah merancang platform inklusif yang kuat dan terfokus pada konversi—sebuah wadah yang merefleksikan energi, memenuhi standar teknologi masa kini, dan membuktikan dampaknya secara nyata.
+          <p className="text-slate-400 dark:text-white/70 text-sm md:text-[15px] leading-relaxed max-w-md font-light">
+            Tugas kami adalah merancang platform inklusif yang kuat dan terfokus pada konversi&mdash;sebuah wadah yang merefleksikan energi, memenuhi standar teknologi masa kini, dan membuktikan dampaknya secara nyata.
           </p>
         </motion.div>
 
@@ -271,6 +301,13 @@ type Pillar = {
   href: string;
   gradient: string;
   accent: string;
+  video: string;
+  hoverBorder: string;
+  hoverText: string;
+  glass1Title: string;
+  glass1Subtitle: string;
+  glass2Title: string;
+  glass2Subtitle: string;
 };
 
 const pillars: Pillar[] = [
@@ -284,8 +321,15 @@ const pillars: Pillar[] = [
     icon: ShieldAlert,
     target: "Tunadaksa & Tunanetra",
     href: "/fitur/bisafe",
-    gradient: "from-rose-600 via-rose-500 to-rose-700",
+    gradient: "from-rose-600 via-rose-500 to-rose-700 dark:from-rose-900 dark:via-rose-800 dark:to-[rgb(60,10,20)]",
     accent: "text-rose-100",
+    video: "bisafe.mp4",
+    hoverBorder: "hover:border-rose-500/50 dark:hover:border-rose-400/50",
+    hoverText: "group-hover:text-rose-600 dark:group-hover:text-rose-400",
+    glass1Title: "Respons Secepat Kilat",
+    glass1Subtitle: "Satu klik untuk siarkan sinyal darurat dan lokasi presisi ke relawan terdekat.",
+    glass2Title: "Ketenangan Pikiran 24/7",
+    glass2Subtitle: "Proteksi penuh di setiap langkah untuk kemandirian yang jauh lebih aman.",
   },
   {
     key: "bipantau",
@@ -297,8 +341,15 @@ const pillars: Pillar[] = [
     icon: BarChart,
     target: "Pemda & Relawan",
     href: "/fitur/bipantau",
-    gradient: "from-[#168C74] via-[#1B9981] to-[#0A6B58]",
+    gradient: "from-[#168C74] via-[#1B9981] to-[#0A6B58] dark:from-[#0B4A3D] dark:via-[#0F6352] dark:to-[#05261F]",
     accent: "text-[#8FEAD4]",
+    video: "peta.mp4",
+    hoverBorder: "hover:border-[#1B9981]/50 dark:hover:border-[#00D4AA]/50",
+    hoverText: "group-hover:text-[#1B9981] dark:group-hover:text-[#00D4AA]",
+    glass1Title: "Pantauan Real-time",
+    glass1Subtitle: "Kendali penuh atas insiden kota dalam satu dasbor visual yang sangat cerdas.",
+    glass2Title: "Kolaborasi Ekstra Cepat",
+    glass2Subtitle: "Hubungkan laporan warga langsung dengan relawan dan pemerintah daerah.",
   },
   {
     key: "bisapa",
@@ -310,8 +361,15 @@ const pillars: Pillar[] = [
     icon: MessageCircle,
     target: "Tunarungu & Tunanetra",
     href: "/fitur/bisapa",
-    gradient: "from-amber-600 via-amber-500 to-amber-700",
-    accent: "text-amber-100",
+    gradient: "from-blue-600 via-blue-500 to-blue-700 dark:from-blue-900 dark:via-blue-800 dark:to-blue-950",
+    accent: "text-blue-100",
+    video: "bisapa.mp4",
+    hoverBorder: "hover:border-blue-500/50 dark:hover:border-blue-400/50",
+    hoverText: "group-hover:text-blue-600 dark:group-hover:text-blue-400",
+    glass1Title: "Komunikasi Tanpa Batas",
+    glass1Subtitle: "Terjemahkan bahasa isyarat ke teks dan suara secara instan lewat AI canggih.",
+    glass2Title: "Pahami & Dipahami",
+    glass2Subtitle: "Jembatani interaksi antara teman Tuli dan masyarakat umum dengan sangat mulus.",
   },
   {
     key: "bibaca",
@@ -323,8 +381,15 @@ const pillars: Pillar[] = [
     icon: BookOpen,
     target: "Tunanetra & Disleksia",
     href: "/fitur/bibaca",
-    gradient: "from-purple-700 via-purple-600 to-purple-800",
+    gradient: "from-purple-700 via-purple-600 to-purple-800 dark:from-purple-900 dark:via-purple-800 dark:to-[rgb(35,10,50)]",
     accent: "text-purple-100",
+    video: "bibaca.mp4",
+    hoverBorder: "hover:border-purple-500/50 dark:hover:border-purple-400/50",
+    hoverText: "group-hover:text-purple-600 dark:group-hover:text-purple-400",
+    glass1Title: "Dunia dalam Suara",
+    glass1Subtitle: "Ubah buku, dokumen, dan papan teks jalanan menjadi audio jernih seketika.",
+    glass2Title: "Akses Informasi Bebas",
+    glass2Subtitle: "Teknologi OCR brilian yang membuka lebar jendela literasi untuk Tunanetra.",
   },
   {
     key: "bipintar",
@@ -336,8 +401,15 @@ const pillars: Pillar[] = [
     icon: GraduationCap,
     target: "Pelajar & Komunitas",
     href: "/fitur/bipintar",
-    gradient: "from-emerald-700 via-emerald-600 to-emerald-800",
-    accent: "text-emerald-100",
+    gradient: "from-amber-500 via-orange-500 to-orange-600 dark:from-amber-700 dark:via-orange-700 dark:to-orange-950",
+    accent: "text-orange-100",
+    video: "bipintar.mp4",
+    hoverBorder: "hover:border-orange-500/50 dark:hover:border-orange-400/50",
+    hoverText: "group-hover:text-orange-600 dark:group-hover:text-orange-400",
+    glass1Title: "Belajar Sambil Bermain",
+    glass1Subtitle: "Kuasai bahasa isyarat lewat gamifikasi level dan kuis yang sangat interaktif.",
+    glass2Title: "Raih Prestasimu",
+    glass2Subtitle: "Kumpulkan lencana dan pamerkan kemajuan belajarmu dari pemula hingga mahir.",
   },
   {
     key: "bijalan",
@@ -349,89 +421,17 @@ const pillars: Pillar[] = [
     icon: Navigation,
     target: "Tunanetra & Pejalan Kaki",
     href: "/fitur/bijalan",
-    gradient: "from-sky-700 via-sky-600 to-sky-800",
+    gradient: "from-sky-700 via-sky-600 to-sky-800 dark:from-sky-900 dark:via-sky-800 dark:to-[#081e36]",
     accent: "text-sky-100",
+    video: "bijalan.mp4",
+    hoverBorder: "hover:border-sky-500/50 dark:hover:border-sky-400/50",
+    hoverText: "group-hover:text-sky-600 dark:group-hover:text-sky-400",
+    glass1Title: "Navigasi Lebih Cerdas",
+    glass1Subtitle: "Deteksi rintangan di depanmu dengan asisten AI dan panduan suara akurat.",
+    glass2Title: "Langkah Lebih Mantap",
+    glass2Subtitle: "Jelajahi rute pejalan kaki dengan pemetaan jalan yang ramah dan aman.",
   },
 ];
-
-/* ============================================
-   STACK PANEL (sticky scroll-stacking card)
-============================================ */
-function StackPanel({ pillar, index }: { pillar: Pillar; index: number }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start start", "end start"],
-  });
-  const scale = useTransform(scrollYProgress, [0, 1], [1, 0.93]);
-  const Icon = pillar.icon;
-
-  return (
-    <div
-      ref={ref}
-      className="sticky"
-      style={{ top: `${96 + index * 18}px`, zIndex: index + 1 }}
-    >
-      <motion.div
-        style={{ scale }}
-        initial={{ opacity: 0, y: 70 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        className={`bg-gradient-to-br ${pillar.gradient} rounded-[2.5rem] md:rounded-[3rem] overflow-hidden shadow-[0_25px_70px_rgba(0,0,0,0.25)] mb-8`}
-      >
-        <div className="relative grid md:grid-cols-12 gap-8 lg:gap-14 p-8 sm:p-10 md:p-14 items-center min-h-[440px] md:min-h-[520px]">
-          {/* Ambient decoration */}
-          <div className="absolute top-0 right-0 w-[420px] h-[420px] bg-white/10 blur-3xl rounded-full pointer-events-none" />
-
-          {/* Left: Icon visual */}
-          <div className="md:col-span-5 flex items-center justify-center relative z-10">
-            <div className="relative w-full max-w-[280px] aspect-square rounded-[2rem] bg-white/10 border border-white/15 backdrop-blur-sm flex items-center justify-center overflow-hidden">
-              <div
-                className="absolute inset-0 opacity-[0.08]"
-                style={{
-                  backgroundImage: "radial-gradient(circle, white 1.5px, transparent 1.5px)",
-                  backgroundSize: "26px 26px",
-                }}
-              />
-              <Icon className="w-20 h-20 md:w-24 md:h-24 text-white relative z-10" strokeWidth={1.4} />
-            </div>
-          </div>
-
-          {/* Right: Content */}
-          <div className="md:col-span-7 space-y-4 text-white relative z-10">
-            <span className={`text-xs font-bold uppercase tracking-[0.2em] ${pillar.accent}`}>
-              Pilar {pillar.number} / 06
-            </span>
-            <h3 className="text-3xl sm:text-4xl md:text-[2.65rem] font-black leading-tight">
-              {pillar.title}
-            </h3>
-            <p className={`font-bold text-xs sm:text-sm uppercase tracking-wide ${pillar.accent}`}>
-              {pillar.tagline}
-            </p>
-            <p className="text-white/85 text-sm sm:text-base leading-relaxed max-w-lg">
-              {pillar.description}
-            </p>
-
-            <div className="flex flex-wrap gap-2 pt-2">
-              <span className="px-3.5 py-1.5 rounded-full bg-white/15 border border-white/20 text-white text-xs font-semibold">
-                Target: {pillar.target}
-              </span>
-            </div>
-
-            <Link
-              href={pillar.href}
-              className="inline-flex items-center gap-2 pt-4 text-white font-bold text-sm group"
-            >
-              Lihat Detail Fitur
-              <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-            </Link>
-          </div>
-        </div>
-      </motion.div>
-    </div>
-  );
-}
 
 /* ============================================
    BENTO FEATURES SECTION (single-page showcase)
@@ -722,7 +722,7 @@ function BentoFeaturesSection() {
   );
 }
 
- ============================================
+/* ============================================
    CTA / ROTATING TEXT SECTION
 ============================================ */
 function CTASection() {
@@ -789,11 +789,204 @@ function CTASection() {
   );
 }
 
-
-
 /* ============================================
    STATS SECTION (Asymmetrical Bento)
 ============================================ */
+/* ============================================
+   STATS SECTION (Asymmetrical Bento)
+============================================ */
+function StatsSection() {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-80px" });
+
+  const stat1 = useCounter(22, 2000, isInView);
+  const stat2 = useCounter(6, 1500, isInView);
+  const stat3 = useCounter(99, 2000, isInView);
+  const stat4 = useCounter(2, 1500, isInView);
+  const stat5 = useCounter(24, 2000, isInView);
+  const stat6 = useCounter(100, 2000, isInView);
+
+  return (
+    <section id="dampak" className="py-24 md:py-40 bg-[#050505] text-white relative overflow-hidden z-20">
+      
+      {/* Subtle background glow behind the grid */}
+      <div className="absolute top-[20%] right-[10%] w-[600px] h-[600px] bg-[#1B9981]/10 blur-[150px] rounded-full pointer-events-none" />
+      <div className="absolute bottom-[10%] left-[10%] w-[500px] h-[500px] bg-[#00D4AA]/5 blur-[120px] rounded-full pointer-events-none" />
+
+      <div className="w-full max-w-6xl mx-auto px-6 relative z-10" ref={ref}>
+        
+        {/* HEADER */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-20 md:mb-32 relative">
+          {/* Top Left Logo */}
+          <div className="absolute -top-10 left-0 md:-top-16 md:left-0 text-xs font-black tracking-widest uppercase text-white/50">
+            di<span className="text-[#00D4AA]">BISA</span>litas
+          </div>
+
+          <motion.div
+            variants={fadeUp}
+            initial="hidden"
+            animate={isInView ? "visible" : "hidden"}
+            className="flex-1"
+          >
+            <h2 className="text-5xl sm:text-6xl md:text-7xl font-bold tracking-tighter leading-[0.9]">
+              dampak<br />nyata
+            </h2>
+          </motion.div>
+
+          <motion.div
+            variants={fadeUp}
+            initial="hidden"
+            animate={isInView ? "visible" : "hidden"}
+            className="flex-1 md:text-right mt-6 md:mt-0"
+          >
+            <p className="text-lg md:text-2xl font-medium leading-tight max-w-xs md:ml-auto text-white/80">
+              <span className="text-[#00D4AA] font-light mr-1">/</span>kesiapan teknologi nyata untuk indonesia inklusif
+            </p>
+          </motion.div>
+        </div>
+
+        {/* 6-CARD ASYMMETRICAL GRID */}
+        {/* MOBILE: CSS Grid (Flattened via 'contents') | DESKTOP: Staggered Flex Columns */}
+        <div className="grid grid-cols-2 gap-4 md:flex md:flex-row justify-center items-start md:gap-[24px] w-full relative">
+          
+          {/* COLUMN 1 */}
+          <div className="contents md:flex md:flex-col w-full md:w-1/3 md:pt-[calc(50%+12px)] relative z-20">
+             {/* Card 03: Square Gradient */}
+             <div className="relative w-full pb-[100%] group order-2 md:order-none">
+               <motion.div 
+                 variants={fadeUp}
+                 initial="hidden"
+                 animate={isInView ? "visible" : "hidden"}
+                 custom={2}
+                 className="absolute inset-0 bg-gradient-to-br from-[#1B9981] via-[#168C74] to-[#0A6B58] rounded-[2rem] p-5 sm:p-6 md:p-8 flex flex-col justify-between overflow-hidden shadow-[0_0_50px_-12px_rgba(27,153,129,0.5)]"
+               >
+                  <div className="absolute inset-0 bg-black/10 mix-blend-overlay pointer-events-none" />
+                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150%] h-[150%] bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-white/20 via-transparent to-transparent opacity-50 mix-blend-overlay pointer-events-none" />
+                  
+                  <h3 className="text-[3rem] sm:text-[3.5rem] md:text-[4.5rem] lg:text-[5rem] font-light leading-none tracking-tight text-white relative z-10">{stat3}%</h3>
+                  <div className="relative z-10 w-full">
+                    <h4 className="text-lg sm:text-xl md:text-2xl lg:text-[1.75rem] font-bold leading-[1.1] text-white">
+                      Akurasi Deteksi BISINDO
+                    </h4>
+                  </div>
+               </motion.div>
+             </div>
+          </div>
+
+          {/* COLUMN 2 */}
+          <div className="contents md:flex md:flex-col md:gap-[24px] w-full md:w-1/3 relative z-30">
+             {/* Card 01: Square White */}
+             <div className="relative w-full pb-[100%] order-1 md:order-none">
+               <motion.div 
+                 variants={fadeUp}
+                 initial="hidden"
+                 animate={isInView ? "visible" : "hidden"}
+                 custom={0}
+                 className="absolute inset-0 bg-white rounded-[2rem] p-5 sm:p-6 md:p-8 flex flex-col justify-between shadow-2xl"
+               >
+                  <h3 className="text-[3rem] sm:text-[3.5rem] md:text-[4.5rem] lg:text-[5rem] font-light leading-none tracking-tight text-[#1B9981]">{stat1}+</h3>
+                  <div className="relative z-10 w-full">
+                    <h4 className="text-lg sm:text-xl md:text-2xl lg:text-[1.75rem] font-bold leading-[1.1] text-black">
+                      Juta Penyandang Disabilitas
+                    </h4>
+                  </div>
+               </motion.div>
+             </div>
+
+             {/* Card 04: Square Black Outline */}
+             <div className="relative w-full pb-[100%] order-4 md:order-none">
+               <motion.div 
+                 variants={fadeUp}
+                 initial="hidden"
+                 animate={isInView ? "visible" : "hidden"}
+                 custom={3}
+                 className="absolute inset-0 bg-[#050505] border border-[#1B9981]/50 rounded-[2rem] p-5 sm:p-6 md:p-8 flex flex-col justify-between shadow-xl"
+               >
+                  <h3 className="text-[3rem] sm:text-[3.5rem] md:text-[4.5rem] lg:text-[5rem] font-light leading-none tracking-tight text-[#1B9981]">&lt;{stat4}s</h3>
+                  <div className="relative z-10 w-full">
+                    <h4 className="text-lg sm:text-xl md:text-2xl lg:text-[1.75rem] font-bold leading-[1.1] text-white">
+                      Latensi Darurat SOS
+                    </h4>
+                  </div>
+               </motion.div>
+             </div>
+
+             {/* Card 05: Square White */}
+             <div className="relative w-full pb-[100%] order-5 md:order-none">
+               <motion.div 
+                 variants={fadeUp}
+                 initial="hidden"
+                 animate={isInView ? "visible" : "hidden"}
+                 custom={4}
+                 className="absolute inset-0 bg-white rounded-[2rem] p-5 sm:p-6 md:p-8 flex flex-col justify-between shadow-2xl"
+               >
+                  <h3 className="text-[3rem] sm:text-[3.5rem] md:text-[4.5rem] lg:text-[5rem] font-light leading-none tracking-tight text-[#1B9981]">{stat5}/7</h3>
+                  <div className="relative z-10 w-full">
+                    <h4 className="text-lg sm:text-xl md:text-2xl lg:text-[1.75rem] font-bold leading-[1.1] text-black">
+                      Pantauan Relawan Siaga
+                    </h4>
+                  </div>
+               </motion.div>
+             </div>
+          </div>
+
+          {/* COLUMN 3 */}
+          <div className="contents md:flex md:flex-col w-full md:w-1/3 relative z-10">
+             
+             {/* Card 02: Wide Gradient */}
+             {/* Mobile: col-span-2 and pb-[50%] creates a wide rectangle spanning both grid columns */}
+             {/* Desktop: pb-[100%] forces square height, but absolute w-[145%] creates the right overflow */}
+             <div className="relative w-full pb-[50%] md:pb-[100%] col-span-2 md:col-span-1 order-3 md:order-none">
+               <motion.div 
+                 variants={fadeUp}
+                 initial="hidden"
+                 animate={isInView ? "visible" : "hidden"}
+                 custom={1}
+                 className="absolute top-0 left-0 w-full md:w-[145%] h-full bg-gradient-to-br from-[#1B9981] via-[#168C74] to-[#0A6B58] rounded-[2rem] p-5 sm:p-6 md:p-8 flex flex-col justify-between overflow-hidden shadow-[0_0_50px_-12px_rgba(27,153,129,0.5)] z-20"
+               >
+                  <div className="absolute inset-0 bg-black/10 mix-blend-overlay pointer-events-none" />
+                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150%] h-[150%] bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-white/20 via-transparent to-transparent opacity-50 mix-blend-overlay pointer-events-none" />
+                  
+                  <h3 className="text-[3rem] sm:text-[3.5rem] md:text-[4.5rem] lg:text-[5rem] font-light leading-none tracking-tight text-white relative z-10">{stat2}</h3>
+                  
+                  <div className="relative z-10 w-full h-full flex flex-col justify-end">
+                    {/* Paragraph positioned Top-Right */}
+                    <p className="absolute top-0 right-0 max-w-[55%] md:max-w-[45%] text-[10px] sm:text-xs lg:text-sm text-right font-medium leading-relaxed opacity-90 text-white mt-1">
+                      Menghadirkan solusi hulu ke hilir untuk penyandang disabilitas Tunanetra, Tunarungu, dan Tunadaksa di Indonesia.
+                    </p>
+                    <h4 className="text-lg sm:text-xl md:text-2xl lg:text-[1.75rem] font-bold leading-[1.1] text-white md:max-w-[80%]">
+                      Pilar Cerdas Terintegrasi
+                    </h4>
+                  </div>
+               </motion.div>
+             </div>
+
+             {/* Card 06: Square Dark */}
+             {/* Mobile: no margin-top. Desktop: mt-[calc(50%+12px)] pushes it down perfectly */}
+             <div className="relative w-full pb-[100%] mt-0 md:mt-[calc(50%+12px)] order-6 md:order-none">
+               <motion.div 
+                 variants={fadeUp}
+                 initial="hidden"
+                 animate={isInView ? "visible" : "hidden"}
+                 custom={5}
+                 className="absolute inset-0 bg-[#0a0a0a] border border-white/5 rounded-[2rem] p-5 sm:p-6 md:p-8 flex flex-col justify-between shadow-xl"
+               >
+                  <h3 className="text-[3rem] sm:text-[3.5rem] md:text-[4.5rem] lg:text-[5rem] font-light leading-none tracking-tight text-[#1B9981]">{stat6}%</h3>
+                  <div className="relative z-10 w-full">
+                    <h4 className="text-lg sm:text-xl md:text-2xl lg:text-[1.75rem] font-bold leading-[1.1] text-white">
+                      Kemandirian Tanpa Batas
+                    </h4>
+                  </div>
+               </motion.div>
+             </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  );
+}
+
 /* ============================================
    IMPACT SECTION
 ============================================ */
@@ -1065,15 +1258,16 @@ export default function LandingPage() {
 
   return (
     <>
-      <AnimatePresence>
+    <AnimatePresence>
         {showSplash && <SplashScreen onComplete={() => setShowSplash(false)} />}
       </AnimatePresence>
 
-      <div className="min-h-screen bg-[#FDFEFE] dark:bg-[#090e17] text-slate-800 dark:text-slate-100 selection:bg-[#1B9981]/20 transition-colors duration-300">
+      <div className="min-h-screen bg-[#FDFEFE] dark:bg-[#050505] text-slate-800 dark:text-slate-100 selection:bg-[#1B9981]/20 transition-colors duration-300">
         <Navbar />
         <HeroSection />
         <AboutProjectSection />
         <BentoFeaturesSection />
+        <CTASection />
         <StatsSection />
         <ImpactSection />
         <Footer />

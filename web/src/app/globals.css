@@ -104,6 +104,15 @@ button:active {
   background: #94a3b8;
 }
 
+/* Hide scrollbar for elements with no-scrollbar */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
 /* Aksen teks (flat) */
 .gradient-text {
   color: #00B894;
@@ -179,6 +188,10 @@ button:active {
 @keyframes shimmer {
   0% { background-position: -200% 0; }
   100% { background-position: 200% 0; }
+}
+@keyframes shimmerSlide {
+  0% { left: -100%; }
+  100% { left: 200%; }
 }
 .shimmer {
   background: linear-gradient(90deg, #E8F4F1 25%, rgba(255,255,255,0.7) 50%, #E8F4F1 75%);
