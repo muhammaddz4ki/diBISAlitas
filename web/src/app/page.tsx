@@ -722,6 +722,75 @@ function BentoFeaturesSection() {
   );
 }
 
+ ============================================
+   CTA / ROTATING TEXT SECTION
+============================================ */
+function CTASection() {
+  const text = "riset pengujian • riset pengujian • ";
+  const characters = text.split("");
+
+  return (
+    <section className="relative w-full min-h-[70vh] md:min-h-screen bg-black overflow-hidden flex items-center justify-center py-20 z-40">
+      
+      {/* Background Gradients */}
+      <div className="absolute top-0 left-0 w-[400px] md:w-[700px] h-[400px] md:h-[700px] bg-[#1B9981]/20 blur-[100px] md:blur-[150px] rounded-full -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
+      <div className="absolute bottom-0 right-0 w-[400px] md:w-[700px] h-[400px] md:h-[700px] bg-[#00D4AA]/20 blur-[100px] md:blur-[150px] rounded-full translate-x-1/2 translate-y-1/2 pointer-events-none" />
+
+      {/* 3D Scene */}
+      <div 
+        className="relative w-full max-w-4xl aspect-[4/3] md:aspect-square flex items-center justify-center z-10"
+        style={{ perspective: "1000px", transformStyle: "preserve-3d" }}
+      >
+        {/* Central Object (Static, facing front) */}
+        <div 
+          className="absolute inset-0 flex items-center justify-center pointer-events-none"
+          style={{ transform: "translateZ(0)", transformStyle: "preserve-3d" }}
+        >
+           {/* Fallback glow if image is missing */}
+           <div className="absolute w-40 h-40 md:w-80 md:h-80 bg-[#00D4AA]/10 blur-3xl rounded-full" />
+           <img 
+             src="/images/placeholder-hand.png" 
+             alt="Hand Placeholder" 
+             className="w-56 sm:w-72 md:w-96 h-auto object-contain drop-shadow-[0_0_40px_rgba(0,212,170,0.3)]"
+             onError={(e) => {
+               e.currentTarget.style.display = 'none';
+             }}
+           />
+        </div>
+
+        {/* Tilted Wrapper for the Ring */}
+        <div 
+          className="absolute inset-0 flex items-center justify-center pointer-events-none"
+          style={{ transform: "rotateZ(-15deg) rotateX(15deg)", transformStyle: "preserve-3d" }}
+        >
+          {/* Rotating 3D Text Ring */}
+          <motion.div
+            animate={{ rotateY: 360 }}
+            transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
+            className="relative w-full h-full flex items-center justify-center"
+            style={{ transformStyle: "preserve-3d" }}
+          >
+            {characters.map((char, i) => (
+              <span
+                key={i}
+                className="absolute text-5xl sm:text-6xl md:text-[5.5rem] font-black text-white lowercase select-none tracking-tight"
+                style={{
+                  transform: `rotateY(${i * (360 / characters.length)}deg) translateZ(clamp(160px, 35vw, 350px))`,
+                  textShadow: "0 0 15px rgba(0, 212, 170, 0.9), 0 0 40px rgba(0, 212, 170, 0.4)",
+                }}
+              >
+                {char === " " ? "\u00A0" : char}
+              </span>
+            ))}
+          </motion.div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+
+
 /* ============================================
    STATS SECTION
 ============================================ */
