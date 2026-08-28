@@ -730,7 +730,7 @@ function CTASection() {
   const characters = text.split("");
 
   return (
-    <section className="relative w-full min-h-[70vh] md:min-h-screen bg-black overflow-hidden flex items-center justify-center py-20 z-40">
+    <section className="relative w-full min-h-[70vh] md:min-h-screen bg-[#FDFEFE] dark:bg-black overflow-hidden flex items-center justify-center py-20 z-40 transition-colors duration-300">
       
       {/* Background Gradients */}
       <div className="absolute top-0 left-0 w-[400px] md:w-[700px] h-[400px] md:h-[700px] bg-[#1B9981]/20 blur-[100px] md:blur-[150px] rounded-full -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
@@ -748,18 +748,16 @@ function CTASection() {
         >
            {/* Fallback glow if image is missing */}
            <div className="absolute w-40 h-40 md:w-80 md:h-80 bg-[#00D4AA]/10 blur-3xl rounded-full" />
-           <img 
-             src="/images/placeholder-hand.png" 
-             alt="Hand Placeholder" 
-             className="w-56 sm:w-72 md:w-[28rem] h-auto object-contain drop-shadow-[0_0_40px_rgba(0,212,170,0.3)] -translate-y-4 md:-translate-y-10"
-             style={{
-               WebkitMaskImage: 'linear-gradient(to top, transparent 0%, black 20%)',
-               maskImage: 'linear-gradient(to top, transparent 0%, black 20%)'
-             }}
-             onError={(e) => {
-               e.currentTarget.style.display = 'none';
-             }}
-           />
+           <div className="relative -translate-y-16 md:-translate-y-32 flex flex-col justify-end">
+             <img 
+               src="/images/placeholder-hand.png" 
+               alt="Hand Placeholder" 
+               className="w-56 sm:w-72 md:w-[28rem] h-auto object-contain drop-shadow-[0_0_40px_rgba(0,212,170,0.3)] block relative"
+               onError={(e) => {
+                 e.currentTarget.style.display = 'none';
+               }}
+             />
+           </div>
         </div>
 
         {/* Tilted Wrapper for the Ring */}
@@ -777,7 +775,7 @@ function CTASection() {
             {characters.map((char, i) => (
               <span
                 key={i}
-                className="absolute text-5xl sm:text-6xl md:text-[5.5rem] font-black text-white lowercase select-none tracking-tight"
+                className="absolute text-5xl sm:text-6xl md:text-[5.5rem] font-black text-black dark:text-white lowercase select-none tracking-tight transition-colors duration-300"
                 style={{
                   transform: `rotateY(${i * (360 / characters.length)}deg) translateZ(clamp(160px, 35vw, 350px))`,
                   textShadow: "0 0 15px rgba(0, 212, 170, 0.9), 0 0 40px rgba(0, 212, 170, 0.4)",
@@ -789,6 +787,12 @@ function CTASection() {
           </motion.div>
         </div>
       </div>
+
+      {/* Global Bottom Gradient to fade EVERYTHING into black seamlessly (like Hero Section) */}
+      <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-[#FDFEFE] via-[#FDFEFE]/80 dark:from-black dark:via-black/80 to-transparent pointer-events-none z-50 transition-colors duration-300" />
+      
+      {/* Global Top Gradient to perfectly hide the top cut-off of the image */}
+      <div className="absolute top-0 left-0 w-full h-1/3 md:h-[40%] bg-gradient-to-b from-[#FDFEFE] via-[#FDFEFE]/90 dark:from-black dark:via-black/90 to-transparent pointer-events-none z-50 transition-colors duration-300" />
     </section>
   );
 }
