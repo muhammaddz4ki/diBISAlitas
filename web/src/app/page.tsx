@@ -792,65 +792,8 @@ function CTASection() {
 
 
 /* ============================================
-   STATS SECTION
+   STATS SECTION (Asymmetrical Bento)
 ============================================ */
-function StatsSection() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-80px" });
-
-  const stat1 = useCounter(22, 2000, isInView);
-  const stat2 = useCounter(6, 1500, isInView);
-  const stat3 = useCounter(99, 2000, isInView);
-  const stat4 = useCounter(2, 1500, isInView);
-
-  return (
-    <section id="statistik" className="py-20 md:py-28 bg-slate-900 text-white relative overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6 relative z-10" ref={ref}>
-        <motion.div
-          variants={fadeUp}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-          className="text-center max-w-2xl mx-auto mb-16 space-y-3"
-        >
-          <span className="text-xs font-bold uppercase tracking-wider text-[#00D4AA] bg-white/10 px-3.5 py-1.5 rounded-full">
-            Dampak Riset &amp; Pengujian
-          </span>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black">
-            Kesiapan Teknologi Nyata <br />
-            Untuk Indonesia Inklusif
-          </h2>
-        </motion.div>
-
-        <motion.div
-          variants={staggerContainer}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-          className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6"
-        >
-          {[
-            { value: `${stat1}+`, unit: "Juta", label: "Penyandang disabilitas di Indonesia yang membutuhkan akses setara" },
-            { value: `${stat2}`, unit: "Pilar", label: "Modul AI cerdas terintegrasi dalam satu platform" },
-            { value: `${stat3}%`, unit: "Akurasi", label: "Keberhasilan deteksi alfabet BISINDO on-device" },
-            { value: `< ${stat4}`, unit: "Detik", label: "Latensi transmisi darurat SOS ke Command Center" },
-          ].map((s, i) => (
-            <motion.div
-              key={i}
-              variants={scaleIn}
-              whileHover={{ y: -4 }}
-              transition={{ type: "spring", stiffness: 300, damping: 22 }}
-              className="bg-white/5 border border-white/10 rounded-3xl p-6 sm:p-8 text-center flex flex-col items-center justify-center backdrop-blur-sm"
-            >
-              <div className="text-3xl sm:text-5xl font-black text-white">{s.value}</div>
-              <div className="text-sm font-bold text-[#00D4AA] mt-1">{s.unit}</div>
-              <p className="text-xs text-slate-400 mt-2 leading-relaxed">{s.label}</p>
-            </motion.div>
-          ))}
-        </motion.div>
-      </div>
-    </section>
-  );
-}
-
 /* ============================================
    IMPACT SECTION
 ============================================ */
