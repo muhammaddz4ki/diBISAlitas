@@ -31,7 +31,7 @@ import {
 } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import FloatingAccessibility from "@/components/FloatingAccessibility";
-import InteractiveDeviceMockup, { FeatureKey } from "@/components/InteractiveDeviceMockup";
+
 
 /* ============================================
    ANIMATION VARIANTS
@@ -89,138 +89,169 @@ function useCounter(end: number, duration: number = 2000, startCounting: boolean
    HERO SECTION
 ============================================ */
 function HeroSection() {
-  const [activeHeroTab, setActiveHeroTab] = useState<FeatureKey>("bisafe");
-
   return (
-    <section className="pt-28 md:pt-32 pb-8 px-4 sm:px-6">
-      <div className="max-w-7xl mx-auto">
+    <section className="relative min-h-screen pt-32 flex flex-col items-center justify-start md:justify-center overflow-hidden bg-[#FDFEFE] dark:bg-[#050505] text-slate-900 dark:text-white transition-colors duration-300">
+      {/* Background Glow Elements */}
+      <div className="absolute top-[50%] md:top-[55%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] md:w-[900px] md:h-[900px] bg-[#1B9981]/20 dark:bg-[#1B9981]/30 blur-[120px] md:blur-[180px] rounded-full pointer-events-none" />
+      <div className="absolute top-[50%] md:top-[55%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] md:w-[600px] md:h-[600px] bg-[#00D4AA]/30 dark:bg-[#00D4AA]/40 blur-[90px] md:blur-[140px] rounded-full pointer-events-none" />
+      
+      {/* Giant faint background text */}
+      <div className="absolute top-[40%] md:top-[45%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-full text-center pointer-events-none opacity-[0.03] dark:opacity-[0.05] flex flex-col justify-center items-center z-0">
+         <span className="text-[12rem] md:text-[22rem] font-black leading-none tracking-tighter text-[#1B9981] dark:text-[#00D4AA]">diBISA</span>
+         <span className="text-[12rem] md:text-[22rem] font-black leading-none tracking-tighter text-[#1B9981] dark:text-[#00D4AA]">litas</span>
+      </div>
+
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 flex flex-col items-center text-center mt-12 md:mt-0">
+        {/* Top Logo / Label */}
         <motion.div
-          initial={{ opacity: 0, y: 25 }}
+          initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          className="relative bg-gradient-to-br from-[#168C74] via-[#1B9981] to-[#0A6B58] rounded-[2.5rem] md:rounded-[3rem] overflow-hidden shadow-[0_30px_90px_rgba(27,153,129,0.25)] text-white"
+          transition={{ duration: 0.6 }}
+          className="mb-6 flex items-center justify-center font-bold tracking-[0.3em] text-xs sm:text-sm text-slate-500 dark:text-white/80 uppercase"
         >
-          {/* Decorative Ambient Light */}
-          <div className="absolute top-0 right-0 w-[550px] h-[550px] bg-gradient-to-bl from-white/15 via-[#00D4AA]/20 to-transparent blur-3xl pointer-events-none rounded-full" />
-          <div
-            className="absolute inset-0 pointer-events-none opacity-[0.05]"
-            style={{
-              backgroundImage: "radial-gradient(circle, white 1.5px, transparent 1.5px)",
-              backgroundSize: "28px 28px",
-            }}
+          di<span className="text-[#1B9981] dark:text-[#00D4AA] mx-1">BISA</span>litas
+        </motion.div>
+
+        {/* Title */}
+        <motion.h1
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="text-4xl sm:text-5xl md:text-6xl lg:text-[4.5rem] font-extrabold leading-[1.1] tracking-tight max-w-5xl mx-auto mb-6"
+        >
+          Aksesibilitas <span className="text-[#1B9981] dark:text-[#00D4AA]">Cerdas</span>, Kemandirian Tanpa Batas.
+        </motion.h1>
+
+        {/* Subtitle */}
+        <motion.p
+           initial={{ opacity: 0, y: 20 }}
+           animate={{ opacity: 1, y: 0 }}
+           transition={{ duration: 0.8, delay: 0.4 }}
+           className="text-slate-600 dark:text-white/60 text-sm sm:text-base md:text-lg max-w-3xl mx-auto mb-8 leading-relaxed font-normal"
+        >
+          Satu ekosistem berbasis kecerdasan buatan on-device dan integrasi Cloud untuk menghadirkan kemandirian penuh bagi Tunanetra, Tunarungu, dan Tunadaksa di Indonesia.
+        </motion.p>
+
+        {/* Action Buttons */}
+        <motion.div
+           initial={{ opacity: 0, y: 20 }}
+           animate={{ opacity: 1, y: 0 }}
+           transition={{ delay: 0.6, duration: 0.6 }}
+           className="flex flex-wrap items-center justify-center gap-4 mb-4 md:mb-8 relative z-20 pointer-events-auto"
+        >
+           <Link
+             href="/demo"
+             className="px-8 py-4 rounded-full bg-[#1B9981] text-white font-bold text-sm hover:bg-[#168C74] transition-colors shadow-[0_0_20px_rgba(27,153,129,0.3)] hover:shadow-[0_0_30px_rgba(27,153,129,0.5)] flex items-center gap-2"
+           >
+             <Zap className="w-4 h-4 fill-current text-white" />
+             Coba Demo Gratis
+           </Link>
+           <Link
+             href="#fitur"
+             className="px-8 py-4 rounded-full bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-slate-700 dark:text-white font-bold text-sm hover:bg-slate-200 dark:hover:bg-white/10 transition-colors backdrop-blur-md flex items-center gap-2"
+           >
+             Jelajahi Fitur
+           </Link>
+        </motion.div>
+
+        {/* Hero Image Group */}
+        <motion.div
+           initial={{ opacity: 0, y: 40 }}
+           animate={{ opacity: 1, y: 0 }}
+           transition={{ duration: 1, delay: 0.8, ease: [0.22, 1, 0.36, 1] }}
+           className="relative w-full max-w-7xl mx-auto flex justify-center mt-[-3rem] md:mt-[-5rem] lg:mt-[-8rem] z-30 pointer-events-none px-2 sm:px-6"
+        >
+          {/* Faux Fabric effects behind image */}
+          <div className="absolute top-[20%] left-[10%] w-[400px] h-[400px] bg-gradient-to-r from-[#1B9981] to-[#00D4AA] blur-[80px] opacity-10 dark:opacity-20 transform -rotate-12 rounded-[100%]" />
+          <div className="absolute top-[30%] right-[10%] w-[400px] h-[400px] bg-gradient-to-l from-[#1B9981] to-[#00D4AA] blur-[80px] opacity-10 dark:opacity-20 transform rotate-12 rounded-[100%]" />
+          
+          <motion.img 
+            animate={{ y: [0, -12, 0] }}
+            transition={{ repeat: Infinity, duration: 5, ease: "easeInOut" }}
+            src="/images/hero-transparent.png" 
+            alt="diBISAlitas Users" 
+            className="w-full h-auto object-contain max-h-[65vh] md:max-h-[80vh] lg:max-h-[90vh] xl:max-h-none xl:max-w-[115%] drop-shadow-[0_30px_60px_rgba(27,153,129,0.2)] dark:drop-shadow-[0_30px_60px_rgba(27,153,129,0.3)] relative z-10"
           />
+        </motion.div>
+      </div>
+      
+      {/* Overlay gradient at bottom to fade into next section and hide image crop */}
+      <div className="absolute bottom-[-2px] left-0 w-full h-48 md:h-72 lg:h-[24rem] bg-gradient-to-t from-[#FDFEFE] via-[#FDFEFE]/90 dark:from-[#090e17] dark:via-[#090e17]/90 to-transparent z-30 pointer-events-none transition-colors duration-300" />
+    </section>
+  );
+}
 
-          <div className="relative z-10 grid md:grid-cols-12 gap-10 lg:gap-14 px-6 sm:px-10 lg:px-16 py-12 md:py-16 items-center">
-            {/* Left Content */}
-            <div className="md:col-span-7 space-y-6">
-              <motion.div
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.25, duration: 0.5 }}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/20 text-white text-xs font-bold uppercase tracking-wider backdrop-blur-md"
-              >
-                <Sparkles className="w-3.5 h-3.5 text-[#00D4AA]" />
-                Platform Aksesibilitas AI Terintegrasi
-              </motion.div>
-
-              <motion.h1
-                initial={{ opacity: 0, y: 25 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-                className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.6rem] font-black leading-[1.12] tracking-tight"
-              >
-                Aksesibilitas Cerdas, <br />
-                <span className="font-display italic text-[#00D4AA] font-normal">
-                  Kemandirian Tanpa Batas.
-                </span>
-              </motion.h1>
-
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.55, duration: 0.6 }}
-                className="text-white/80 text-sm sm:text-base leading-relaxed max-w-xl"
-              >
-                Satu ekosistem berbasis kecerdasan buatan on-device dan integrasi Cloud untuk menghadirkan kemandirian penuh bagi Tunanetra, Tunarungu, dan Tunadaksa di Indonesia.
-              </motion.p>
-
-              {/* Action Buttons */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.7, duration: 0.6 }}
-                className="flex flex-wrap items-center gap-3 pt-2"
-              >
-                <motion.span
-                  whileHover={{ scale: 1.04, y: -2 }}
-                  whileTap={{ scale: 0.96 }}
-                  transition={{ type: "spring", stiffness: 400, damping: 20 }}
-                  className="inline-block"
-                >
-                  <Link
-                    href="/demo"
-                    className="px-7 py-3.5 rounded-full bg-white text-[#168C74] font-black text-sm hover:bg-white/95 transition-colors shadow-xl hover:shadow-2xl flex items-center gap-2"
-                  >
-                    <Zap className="w-4 h-4 fill-current text-[#168C74]" />
-                    Coba Demo Gratis
-                    <ArrowRight className="w-4 h-4" />
-                  </Link>
-                </motion.span>
-                <motion.span
-                  whileHover={{ scale: 1.04, y: -2 }}
-                  whileTap={{ scale: 0.96 }}
-                  transition={{ type: "spring", stiffness: 400, damping: 20 }}
-                  className="inline-block"
-                >
-                  <Link
-                    href="/fitur"
-                    className="px-7 py-3.5 rounded-full bg-white/15 border border-white/25 text-white font-bold text-sm hover:bg-white/25 transition-colors backdrop-blur-md flex items-center gap-2"
-                  >
-                    <span>Jelajahi 6 Fitur</span>
-                  </Link>
-                </motion.span>
-              </motion.div>
-
-              {/* Beneficiary Tags */}
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.85, duration: 0.8 }}
-                className="flex flex-wrap gap-2 pt-2"
-              >
-                {[
-                  { label: "Tunanetra", icon: <Eye className="w-3.5 h-3.5" /> },
-                  { label: "Tunarungu", icon: <Ear className="w-3.5 h-3.5" /> },
-                  { label: "Tunadaksa", icon: <Accessibility className="w-3.5 h-3.5" /> },
-                  { label: "ONNX / YOLO Vision", icon: <Brain className="w-3.5 h-3.5" /> },
-                  { label: "Cloud Sync", icon: <Wifi className="w-3.5 h-3.5" /> },
-                ].map((item, idx) => (
-                  <span
-                    key={idx}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/10 border border-white/15 text-white/90 text-xs font-semibold backdrop-blur-sm"
-                  >
-                    {item.icon}
-                    {item.label}
-                  </span>
-                ))}
-              </motion.div>
-            </div>
-
-            {/* Right: Live Interactive Mockup */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.94, y: 30 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              transition={{ delay: 0.45, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-              className="md:col-span-5 flex justify-center"
-            >
-              <InteractiveDeviceMockup
-                activeFeature={activeHeroTab}
-                onSelectFeature={(k) => setActiveHeroTab(k)}
-                interactive={true}
-              />
-            </motion.div>
+/* ============================================
+   ABOUT PROJECT SECTION (NEW)
+============================================ */
+function AboutProjectSection() {
+  return (
+    <section className="relative min-h-screen py-24 flex items-center overflow-hidden bg-[#FDFEFE] dark:bg-[#050505] text-slate-900 dark:text-white transition-colors duration-300">
+      
+      {/* Container */}
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-8 items-center">
+        
+        {/* Left: 3D Laptop Mockup */}
+        <motion.div 
+          initial={{ opacity: 0, x: -50 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+          className="relative w-full h-[400px] md:h-[600px] flex items-center justify-center lg:justify-start perspective-[1200px]"
+        >
+          {/* Faint Glow Behind Laptop */}
+          <div className="absolute w-[80%] h-[80%] bg-[#1B9981]/15 dark:bg-[#00D4AA]/20 blur-[80px] rounded-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
+          
+          {/* The 3D Mockup Container */}
+          <div 
+            className="relative w-full max-w-[650px] aspect-video bg-black rounded-xl md:rounded-2xl border-[6px] md:border-[12px] border-[#111] shadow-2xl overflow-hidden"
+            style={{
+              transform: "rotateY(25deg) rotateX(10deg) rotateZ(-2deg)",
+              transformStyle: "preserve-3d",
+              boxShadow: "-40px 50px 80px rgba(0,0,0,0.6), inset 0 0 20px rgba(255,255,255,0.05)",
+              // Mask image to fade out the edges (bottom and right) seamlessly into background
+              WebkitMaskImage: "linear-gradient(135deg, rgba(0,0,0,1) 30%, rgba(0,0,0,0.8) 60%, rgba(0,0,0,0) 95%)",
+              maskImage: "linear-gradient(135deg, rgba(0,0,0,1) 30%, rgba(0,0,0,0.8) 60%, rgba(0,0,0,0) 95%)",
+            }}
+          >
+            {/* Placeholder Image (User will insert image URL here) */}
+            <img 
+              src="/images/laptop-screen.png" 
+              alt="Dashboard Preview" 
+              className="w-full h-full object-cover"
+              onError={(e) => {
+                e.currentTarget.style.display = 'none';
+                if (e.currentTarget.parentElement) {
+                  e.currentTarget.parentElement.style.background = 'linear-gradient(135deg, #090e17, #1B9981, #00D4AA)';
+                }
+              }}
+            />
+            {/* Shine effect across screen */}
+            <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-transparent pointer-events-none" />
           </div>
         </motion.div>
+
+        {/* Right: Typography */}
+        <motion.div 
+          initial={{ opacity: 0, x: 50 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
+          className="flex flex-col space-y-6 max-w-2xl"
+        >
+          <span className="text-sm md:text-base font-semibold tracking-wider text-slate-500 dark:text-white/50">
+            Tentang proyek:
+          </span>
+          
+          <h2 className="text-4xl sm:text-5xl md:text-[4rem] font-normal leading-[1.05] tracking-tight">
+            <strong>diBISAlitas</strong> adalah ekosistem aksesibilitas berbasis AI yang <strong className="text-[#1B9981] dark:text-[#00D4AA]">membantu penyandang disabilitas meraih kemandirian tanpa batas.</strong>
+          </h2>
+          
+          <p className="text-slate-600 dark:text-white/50 text-base md:text-lg leading-relaxed mt-6">
+            Tugas kami adalah merancang platform inklusif yang kuat dan terfokus pada konversi—sebuah wadah yang merefleksikan energi, memenuhi standar teknologi masa kini, dan membuktikan dampaknya secara nyata.
+          </p>
+        </motion.div>
+
       </div>
     </section>
   );
@@ -778,6 +809,7 @@ export default function LandingPage() {
       <div className="min-h-screen bg-[#FDFEFE] dark:bg-[#090e17] text-slate-800 dark:text-slate-100 selection:bg-[#1B9981]/20 transition-colors duration-300">
         <Navbar />
         <HeroSection />
+        <AboutProjectSection />
         <BentoFeaturesSection />
         <StatsSection />
         <ImpactSection />
