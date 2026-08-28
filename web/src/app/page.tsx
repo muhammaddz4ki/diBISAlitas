@@ -751,7 +751,11 @@ function CTASection() {
            <img 
              src="/images/placeholder-hand.png" 
              alt="Hand Placeholder" 
-             className="w-56 sm:w-72 md:w-96 h-auto object-contain drop-shadow-[0_0_40px_rgba(0,212,170,0.3)]"
+             className="w-56 sm:w-72 md:w-[28rem] h-auto object-contain drop-shadow-[0_0_40px_rgba(0,212,170,0.3)] -translate-y-4 md:-translate-y-10"
+             style={{
+               WebkitMaskImage: 'linear-gradient(to top, transparent 0%, black 20%)',
+               maskImage: 'linear-gradient(to top, transparent 0%, black 20%)'
+             }}
              onError={(e) => {
                e.currentTarget.style.display = 'none';
              }}
