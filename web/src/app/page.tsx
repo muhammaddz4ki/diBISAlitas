@@ -775,10 +775,11 @@ function CTASection() {
             {characters.map((char, i) => (
               <span
                 key={i}
-                className="absolute text-5xl sm:text-6xl md:text-[5.5rem] font-black text-black dark:text-white lowercase select-none tracking-tight transition-colors duration-300"
+                className="absolute text-5xl sm:text-6xl md:text-[5.5rem] font-black text-white lowercase select-none tracking-tight transition-colors duration-300"
                 style={{
                   transform: `rotateY(${i * (360 / characters.length)}deg) translateZ(clamp(160px, 35vw, 350px))`,
                   textShadow: "0 0 15px rgba(0, 212, 170, 0.9), 0 0 40px rgba(0, 212, 170, 0.4)",
+                  WebkitTextStroke: "1.5px #1B9981"
                 }}
               >
                 {char === " " ? "\u00A0" : char}
