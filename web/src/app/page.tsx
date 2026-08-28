@@ -748,7 +748,7 @@ function CTASection() {
         >
            {/* Fallback glow if image is missing */}
            <div className="absolute w-40 h-40 md:w-80 md:h-80 bg-[#00D4AA]/10 blur-3xl rounded-full" />
-           <div className="relative -translate-y-16 md:-translate-y-32 flex flex-col justify-end">
+           <div className="relative -translate-y-12 md:-translate-y-24 flex flex-col justify-end">
              <img 
                src="/images/placeholder-hand.png" 
                alt="Hand Placeholder" 
@@ -792,16 +792,13 @@ function CTASection() {
       <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-[#FDFEFE] via-[#FDFEFE]/80 dark:from-black dark:via-black/80 to-transparent pointer-events-none z-50 transition-colors duration-300" />
       
       {/* Global Top Gradient to perfectly hide the top cut-off of the image */}
-      <div className="absolute top-0 left-0 w-full h-1/3 md:h-[40%] bg-gradient-to-b from-[#FDFEFE] via-[#FDFEFE]/90 dark:from-black dark:via-black/90 to-transparent pointer-events-none z-50 transition-colors duration-300" />
+      <div className="absolute top-0 left-0 w-full h-[30%] md:h-[40%] bg-gradient-to-b from-[#FDFEFE] from-15% via-[#FDFEFE]/85 via-50% dark:from-black dark:via-black/85 to-transparent pointer-events-none z-50 transition-colors duration-300" />
     </section>
   );
 }
 
 /* ============================================
-   STATS SECTION (Asymmetrical Bento)
-============================================ */
-/* ============================================
-   STATS SECTION (Asymmetrical Bento)
+   STATS SECTION (Original 4-Card Layout)
 ============================================ */
 function StatsSection() {
   const ref = useRef(null);
@@ -811,184 +808,90 @@ function StatsSection() {
   const stat2 = useCounter(6, 1500, isInView);
   const stat3 = useCounter(99, 2000, isInView);
   const stat4 = useCounter(2, 1500, isInView);
-  const stat5 = useCounter(24, 2000, isInView);
-  const stat6 = useCounter(100, 2000, isInView);
 
   return (
-    <section id="dampak" className="py-24 md:py-40 bg-[#050505] text-white relative overflow-hidden z-20">
+    <section id="dampak" className="py-24 md:py-32 bg-[#FDFEFE] dark:bg-[#050505] text-black dark:text-white relative overflow-hidden z-20 transition-colors duration-300">
       
-      {/* Subtle background glow behind the grid */}
+      {/* Subtle background glow */}
       <div className="absolute top-[20%] right-[10%] w-[600px] h-[600px] bg-[#1B9981]/10 blur-[150px] rounded-full pointer-events-none" />
       <div className="absolute bottom-[10%] left-[10%] w-[500px] h-[500px] bg-[#00D4AA]/5 blur-[120px] rounded-full pointer-events-none" />
 
       <div className="w-full max-w-6xl mx-auto px-6 relative z-10" ref={ref}>
         
-        {/* HEADER */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-20 md:mb-32 relative">
-          {/* Top Left Logo */}
-          <div className="absolute -top-10 left-0 md:-top-16 md:left-0 text-xs font-black tracking-widest uppercase text-white/50">
-            di<span className="text-[#00D4AA]">BISA</span>litas
-          </div>
-
-          <motion.div
+        {/* Header */}
+        <div className="flex flex-col items-center mb-16 relative">
+          <motion.div 
             variants={fadeUp}
             initial="hidden"
             animate={isInView ? "visible" : "hidden"}
-            className="flex-1"
+            className="inline-block border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 rounded-full px-4 py-1.5 mb-6 backdrop-blur-md transition-colors duration-300"
           >
-            <h2 className="text-5xl sm:text-6xl md:text-7xl font-bold tracking-tighter leading-[0.9]">
-              dampak<br />nyata
-            </h2>
+            <span className="text-[10px] font-bold tracking-widest text-[#1B9981] dark:text-[#00D4AA] uppercase">Dampak Riset & Pengujian</span>
           </motion.div>
-
-          <motion.div
+          
+          <motion.h2 
             variants={fadeUp}
             initial="hidden"
             animate={isInView ? "visible" : "hidden"}
-            className="flex-1 md:text-right mt-6 md:mt-0"
+            className="text-4xl md:text-5xl font-bold tracking-tighter text-center"
           >
-            <p className="text-lg md:text-2xl font-medium leading-tight max-w-xs md:ml-auto text-white/80">
-              <span className="text-[#00D4AA] font-light mr-1">/</span>kesiapan teknologi nyata untuk indonesia inklusif
-            </p>
-          </motion.div>
+            Kesiapan Teknologi Nyata<br />Untuk Indonesia Inklusif
+          </motion.h2>
         </div>
 
-        {/* 6-CARD ASYMMETRICAL GRID */}
-        {/* MOBILE: CSS Grid (Flattened via 'contents') | DESKTOP: Staggered Flex Columns */}
-        <div className="grid grid-cols-2 gap-4 md:flex md:flex-row justify-center items-start md:gap-[24px] w-full relative">
-          
-          {/* COLUMN 1 */}
-          <div className="contents md:flex md:flex-col w-full md:w-1/3 md:pt-[calc(50%+12px)] relative z-20">
-             {/* Card 03: Square Gradient */}
-             <div className="relative w-full pb-[100%] group order-2 md:order-none">
-               <motion.div 
-                 variants={fadeUp}
-                 initial="hidden"
-                 animate={isInView ? "visible" : "hidden"}
-                 custom={2}
-                 className="absolute inset-0 bg-gradient-to-br from-[#1B9981] via-[#168C74] to-[#0A6B58] rounded-[2rem] p-5 sm:p-6 md:p-8 flex flex-col justify-between overflow-hidden shadow-[0_0_50px_-12px_rgba(27,153,129,0.5)]"
-               >
-                  <div className="absolute inset-0 bg-black/10 mix-blend-overlay pointer-events-none" />
-                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150%] h-[150%] bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-white/20 via-transparent to-transparent opacity-50 mix-blend-overlay pointer-events-none" />
-                  
-                  <h3 className="text-[3rem] sm:text-[3.5rem] md:text-[4.5rem] lg:text-[5rem] font-light leading-none tracking-tight text-white relative z-10">{stat3}%</h3>
-                  <div className="relative z-10 w-full">
-                    <h4 className="text-lg sm:text-xl md:text-2xl lg:text-[1.75rem] font-bold leading-[1.1] text-white">
-                      Akurasi Deteksi BISINDO
-                    </h4>
-                  </div>
-               </motion.div>
-             </div>
-          </div>
+        {/* 4-Card Horizontal Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 w-full">
+          {/* Card 1 */}
+          <motion.div 
+            variants={fadeUp}
+            initial="hidden"
+            animate={isInView ? "visible" : "hidden"}
+            custom={0}
+            className="bg-white dark:bg-[#141414] border border-black/5 dark:border-white/5 rounded-[2rem] p-8 flex flex-col items-center justify-center text-center shadow-xl transition-colors duration-300"
+          >
+            <h3 className="text-5xl font-bold mb-2">{stat1}+</h3>
+            <h4 className="text-xs font-bold text-[#1B9981] dark:text-[#00D4AA] tracking-widest uppercase mb-4">Juta</h4>
+            <p className="text-xs text-black/60 dark:text-white/50 leading-relaxed font-medium transition-colors duration-300">Penyandang disabilitas di Indonesia yang membutuhkan akses setara</p>
+          </motion.div>
 
-          {/* COLUMN 2 */}
-          <div className="contents md:flex md:flex-col md:gap-[24px] w-full md:w-1/3 relative z-30">
-             {/* Card 01: Square White */}
-             <div className="relative w-full pb-[100%] order-1 md:order-none">
-               <motion.div 
-                 variants={fadeUp}
-                 initial="hidden"
-                 animate={isInView ? "visible" : "hidden"}
-                 custom={0}
-                 className="absolute inset-0 bg-white rounded-[2rem] p-5 sm:p-6 md:p-8 flex flex-col justify-between shadow-2xl"
-               >
-                  <h3 className="text-[3rem] sm:text-[3.5rem] md:text-[4.5rem] lg:text-[5rem] font-light leading-none tracking-tight text-[#1B9981]">{stat1}+</h3>
-                  <div className="relative z-10 w-full">
-                    <h4 className="text-lg sm:text-xl md:text-2xl lg:text-[1.75rem] font-bold leading-[1.1] text-black">
-                      Juta Penyandang Disabilitas
-                    </h4>
-                  </div>
-               </motion.div>
-             </div>
+          {/* Card 2 */}
+          <motion.div 
+            variants={fadeUp}
+            initial="hidden"
+            animate={isInView ? "visible" : "hidden"}
+            custom={1}
+            className="bg-white dark:bg-[#141414] border border-black/5 dark:border-white/5 rounded-[2rem] p-8 flex flex-col items-center justify-center text-center shadow-xl transition-colors duration-300"
+          >
+            <h3 className="text-5xl font-bold mb-2">{stat2}</h3>
+            <h4 className="text-xs font-bold text-[#1B9981] dark:text-[#00D4AA] tracking-widest uppercase mb-4">Pilar</h4>
+            <p className="text-xs text-black/60 dark:text-white/50 leading-relaxed font-medium transition-colors duration-300">Modul AI cerdas terintegrasi dalam satu platform</p>
+          </motion.div>
 
-             {/* Card 04: Square Black Outline */}
-             <div className="relative w-full pb-[100%] order-4 md:order-none">
-               <motion.div 
-                 variants={fadeUp}
-                 initial="hidden"
-                 animate={isInView ? "visible" : "hidden"}
-                 custom={3}
-                 className="absolute inset-0 bg-[#050505] border border-[#1B9981]/50 rounded-[2rem] p-5 sm:p-6 md:p-8 flex flex-col justify-between shadow-xl"
-               >
-                  <h3 className="text-[3rem] sm:text-[3.5rem] md:text-[4.5rem] lg:text-[5rem] font-light leading-none tracking-tight text-[#1B9981]">&lt;{stat4}s</h3>
-                  <div className="relative z-10 w-full">
-                    <h4 className="text-lg sm:text-xl md:text-2xl lg:text-[1.75rem] font-bold leading-[1.1] text-white">
-                      Latensi Darurat SOS
-                    </h4>
-                  </div>
-               </motion.div>
-             </div>
+          {/* Card 3 */}
+          <motion.div 
+            variants={fadeUp}
+            initial="hidden"
+            animate={isInView ? "visible" : "hidden"}
+            custom={2}
+            className="bg-white dark:bg-[#141414] border border-black/5 dark:border-white/5 rounded-[2rem] p-8 flex flex-col items-center justify-center text-center shadow-xl transition-colors duration-300"
+          >
+            <h3 className="text-5xl font-bold mb-2">{stat3}%</h3>
+            <h4 className="text-xs font-bold text-[#1B9981] dark:text-[#00D4AA] tracking-widest uppercase mb-4">Akurasi</h4>
+            <p className="text-xs text-black/60 dark:text-white/50 leading-relaxed font-medium transition-colors duration-300">Keberhasilan deteksi alfabet BISINDO on-device</p>
+          </motion.div>
 
-             {/* Card 05: Square White */}
-             <div className="relative w-full pb-[100%] order-5 md:order-none">
-               <motion.div 
-                 variants={fadeUp}
-                 initial="hidden"
-                 animate={isInView ? "visible" : "hidden"}
-                 custom={4}
-                 className="absolute inset-0 bg-white rounded-[2rem] p-5 sm:p-6 md:p-8 flex flex-col justify-between shadow-2xl"
-               >
-                  <h3 className="text-[3rem] sm:text-[3.5rem] md:text-[4.5rem] lg:text-[5rem] font-light leading-none tracking-tight text-[#1B9981]">{stat5}/7</h3>
-                  <div className="relative z-10 w-full">
-                    <h4 className="text-lg sm:text-xl md:text-2xl lg:text-[1.75rem] font-bold leading-[1.1] text-black">
-                      Pantauan Relawan Siaga
-                    </h4>
-                  </div>
-               </motion.div>
-             </div>
-          </div>
-
-          {/* COLUMN 3 */}
-          <div className="contents md:flex md:flex-col w-full md:w-1/3 relative z-10">
-             
-             {/* Card 02: Wide Gradient */}
-             {/* Mobile: col-span-2 and pb-[50%] creates a wide rectangle spanning both grid columns */}
-             {/* Desktop: pb-[100%] forces square height, but absolute w-[145%] creates the right overflow */}
-             <div className="relative w-full pb-[50%] md:pb-[100%] col-span-2 md:col-span-1 order-3 md:order-none">
-               <motion.div 
-                 variants={fadeUp}
-                 initial="hidden"
-                 animate={isInView ? "visible" : "hidden"}
-                 custom={1}
-                 className="absolute top-0 left-0 w-full md:w-[145%] h-full bg-gradient-to-br from-[#1B9981] via-[#168C74] to-[#0A6B58] rounded-[2rem] p-5 sm:p-6 md:p-8 flex flex-col justify-between overflow-hidden shadow-[0_0_50px_-12px_rgba(27,153,129,0.5)] z-20"
-               >
-                  <div className="absolute inset-0 bg-black/10 mix-blend-overlay pointer-events-none" />
-                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150%] h-[150%] bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-white/20 via-transparent to-transparent opacity-50 mix-blend-overlay pointer-events-none" />
-                  
-                  <h3 className="text-[3rem] sm:text-[3.5rem] md:text-[4.5rem] lg:text-[5rem] font-light leading-none tracking-tight text-white relative z-10">{stat2}</h3>
-                  
-                  <div className="relative z-10 w-full h-full flex flex-col justify-end">
-                    {/* Paragraph positioned Top-Right */}
-                    <p className="absolute top-0 right-0 max-w-[55%] md:max-w-[45%] text-[10px] sm:text-xs lg:text-sm text-right font-medium leading-relaxed opacity-90 text-white mt-1">
-                      Menghadirkan solusi hulu ke hilir untuk penyandang disabilitas Tunanetra, Tunarungu, dan Tunadaksa di Indonesia.
-                    </p>
-                    <h4 className="text-lg sm:text-xl md:text-2xl lg:text-[1.75rem] font-bold leading-[1.1] text-white md:max-w-[80%]">
-                      Pilar Cerdas Terintegrasi
-                    </h4>
-                  </div>
-               </motion.div>
-             </div>
-
-             {/* Card 06: Square Dark */}
-             {/* Mobile: no margin-top. Desktop: mt-[calc(50%+12px)] pushes it down perfectly */}
-             <div className="relative w-full pb-[100%] mt-0 md:mt-[calc(50%+12px)] order-6 md:order-none">
-               <motion.div 
-                 variants={fadeUp}
-                 initial="hidden"
-                 animate={isInView ? "visible" : "hidden"}
-                 custom={5}
-                 className="absolute inset-0 bg-[#0a0a0a] border border-white/5 rounded-[2rem] p-5 sm:p-6 md:p-8 flex flex-col justify-between shadow-xl"
-               >
-                  <h3 className="text-[3rem] sm:text-[3.5rem] md:text-[4.5rem] lg:text-[5rem] font-light leading-none tracking-tight text-[#1B9981]">{stat6}%</h3>
-                  <div className="relative z-10 w-full">
-                    <h4 className="text-lg sm:text-xl md:text-2xl lg:text-[1.75rem] font-bold leading-[1.1] text-white">
-                      Kemandirian Tanpa Batas
-                    </h4>
-                  </div>
-               </motion.div>
-             </div>
-          </div>
-
+          {/* Card 4 */}
+          <motion.div 
+            variants={fadeUp}
+            initial="hidden"
+            animate={isInView ? "visible" : "hidden"}
+            custom={3}
+            className="bg-white dark:bg-[#141414] border border-black/5 dark:border-white/5 rounded-[2rem] p-8 flex flex-col items-center justify-center text-center shadow-xl transition-colors duration-300"
+          >
+            <h3 className="text-5xl font-bold mb-2">&lt; {stat4}</h3>
+            <h4 className="text-xs font-bold text-[#1B9981] dark:text-[#00D4AA] tracking-widest uppercase mb-4">Detik</h4>
+            <p className="text-xs text-black/60 dark:text-white/50 leading-relaxed font-medium transition-colors duration-300">Latensi transmisi darurat SOS ke Command Center</p>
+          </motion.div>
         </div>
       </div>
     </section>
