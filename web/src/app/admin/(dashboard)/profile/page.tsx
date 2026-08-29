@@ -27,6 +27,11 @@ export default function AdminProfilePage() {
   const [loadingPassword, setLoadingPassword] = useState(false);
 
   useEffect(() => {
+    if (typeof window !== "undefined" && window.sessionStorage.getItem("dibisalitas_admin_demo_mode") === "true") {
+      setName("Admin Demo");
+      setEmail("admin.demo@dibisalitas.id");
+    }
+
     const unsub = onAuthStateChanged(auth, async (u) => {
       if (!u) return;
       setUser(u);
@@ -45,9 +50,12 @@ export default function AdminProfilePage() {
 
   const handleSaveProfile = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!user) return;
     if (!name.trim()) {
       toast.error("Nama tidak boleh kosong.");
+      return;
+    }
+    if (!user) {
+      toast.success("Profil tersimpan (Simulasi Mode Demo).");
       return;
     }
     setLoadingProfile(true);
@@ -69,13 +77,19 @@ export default function AdminProfilePage() {
 
   const handleChangePassword = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!user || !user.email) return;
     if (newPassword.length < 6) {
       toast.error("Kata sandi baru minimal 6 karakter.");
       return;
     }
     if (newPassword !== confirmPassword) {
       toast.error("Konfirmasi kata sandi tidak cocok.");
+      return;
+    }
+    if (!user || !user.email) {
+      toast.success("Kata sandi berhasil diubah (Simulasi Mode Demo).");
+      setCurrentPassword("");
+      setNewPassword("");
+      setConfirmPassword("");
       return;
     }
     setLoadingPassword(true);

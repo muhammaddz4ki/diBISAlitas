@@ -22,6 +22,21 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const [showNotif, setShowNotif] = useState(false);
 
   useEffect(() => {
+    // 1. Cek apakah pengguna berada dalam mode demo (via query param ?demo=true atau sessionStorage)
+    const isDemo =
+      typeof window !== "undefined" &&
+      (new URLSearchParams(window.location.search).get("demo") === "true" ||
+        window.sessionStorage.getItem("dibisalitas_admin_demo_mode") === "true");
+
+    if (isDemo) {
+      if (typeof window !== "undefined") {
+        window.sessionStorage.setItem("dibisalitas_admin_demo_mode", "true");
+      }
+      setUserEmail("admin.demo@dibisalitas.id");
+      setIsChecking(false);
+      return;
+    }
+
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (!user) {
         router.replace("/admin/login");
@@ -156,6 +171,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   const handleLogout = async () => {
     try {
+      if (typeof window !== "undefined") {
+        window.sessionStorage.removeItem("dibisalitas_admin_demo_mode");
+      }
       await signOut(auth);
       router.push("/admin/login");
     } catch (error) {

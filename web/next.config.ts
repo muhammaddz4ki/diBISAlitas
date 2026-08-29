@@ -9,6 +9,9 @@ const withSerwist = withSerwistInit({
 
 const nextConfig: NextConfig = {
   /* config options here */
+  images: {
+    unoptimized: true,
+  },
   allowedDevOrigins: [
     'localhost',
     '127.0.0.1',

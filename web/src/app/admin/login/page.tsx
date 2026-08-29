@@ -5,7 +5,6 @@ import { Activity, AlertCircle, Info, Eye, EyeOff } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { auth } from "@/lib/firebase";
 import { signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
-import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function AdminLogin() {
@@ -87,14 +86,15 @@ export default function AdminLogin() {
       
       {/* KIRI/ATAS: GAMBAR FULL BLEED */}
       <div 
-        className="absolute top-0 left-0 w-full h-[60vh] lg:h-full lg:w-[55%] z-0"
+        className="absolute top-0 left-0 w-full h-[60vh] lg:h-full lg:w-[55%] z-0 overflow-hidden bg-[#E8F4F1]"
       >
-        <Image 
-          src="/images/login.jpeg"
+        <img 
+          src="/images/latar-belakang-login.png"
           alt="Latar Belakang Login"
-          fill
-          className="object-cover object-top lg:object-center"
-          priority
+          className="w-full h-full object-cover object-top lg:object-center"
+          onError={(e) => {
+            e.currentTarget.src = "/images/login.jpeg";
+          }}
         />
         {/* Overlay tipis agar transisi ke form lebih soft */}
         <div className="absolute inset-0 bg-black/5"></div>
@@ -200,6 +200,22 @@ export default function AdminLogin() {
               {isLoading && <Activity className="w-4 h-4 animate-spin" />}
               Log In
             </motion.button>
+
+            {/* Quick Demo Access Button */}
+            <div className="pt-4 text-center">
+              <button
+                type="button"
+                onClick={() => {
+                  if (typeof window !== "undefined") {
+                    window.sessionStorage.setItem("dibisalitas_admin_demo_mode", "true");
+                  }
+                  router.push("/admin/dashboard?demo=true");
+                }}
+                className="text-xs font-extrabold text-[#00B894] hover:text-[#00a383] underline transition-colors"
+              >
+                Masuk sebagai Admin Demo (Mode Tamu)
+              </button>
+            </div>
           </motion.form>
           
         </motion.div>
