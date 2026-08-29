@@ -26,12 +26,21 @@ export default function AdminLogin() {
   }, []);
 
   useEffect(() => {
+    if (typeof window !== "undefined") {
+      const isDemo = new URLSearchParams(window.location.search).get("demo") === "true";
+      if (isDemo) {
+        window.sessionStorage.setItem("dibisalitas_admin_demo_mode", "true");
+        router.replace("/admin/dashboard?demo=true");
+        return;
+      }
+    }
+
     const reason = new URLSearchParams(window.location.search).get("error");
     if (reason === "forbidden") {
       setNotice("Halaman khusus admin.");
       window.history.replaceState({}, "", "/admin/login");
     }
-  }, []);
+  }, [router]);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {

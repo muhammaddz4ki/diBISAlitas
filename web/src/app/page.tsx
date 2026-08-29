@@ -1208,7 +1208,7 @@ function Footer() {
         <div className="space-y-2 text-xs">
           <div className="font-bold text-slate-900 dark:text-white uppercase tracking-wider mb-2 transition-colors duration-300">Akses Cepat</div>
           <div><Link href="/demo" className="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors duration-300">Demo Aplikasi (Tanpa Login)</Link></div>
-          <div><Link href="/admin/rintangan" className="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors duration-300">Dashboard BiPANTAU</Link></div>
+          <div><Link href="/admin/rintangan?demo=true" className="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors duration-300">Dashboard BiPANTAU</Link></div>
           <div><Link href="/fitur" className="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors duration-300">Pusat Fitur</Link></div>
           <div><Link href="/app/login" className="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors duration-300">Masuk / Daftar Akun</Link></div>
         </div>
