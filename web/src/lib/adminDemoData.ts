@@ -40,7 +40,9 @@ export function isAdminDemoMode(): boolean {
   return (
     new URLSearchParams(window.location.search).get("demo") === "true" ||
     window.sessionStorage.getItem("dibisalitas_admin_demo") === "true" ||
-    window.localStorage.getItem("dibisalitas_admin_demo") === "true"
+    window.sessionStorage.getItem("dibisalitas_admin_demo_mode") === "true" ||
+    window.localStorage.getItem("dibisalitas_admin_demo") === "true" ||
+    window.localStorage.getItem("dibisalitas_admin_demo_mode") === "true"
   );
 }
 

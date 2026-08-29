@@ -21,13 +21,21 @@ interface EmergencyReport {
   createdAt?: any;
 }
 
+import { INITIAL_DEMO_EMERGENCIES, isAdminDemoMode, safeFormatDate } from "@/lib/adminDemoData";
+
 export default function AdminDashboard() {
-  const [reports, setReports] = useState<EmergencyReport[]>([]);
+  const [reports, setReports] = useState<EmergencyReport[]>(INITIAL_DEMO_EMERGENCIES as any);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState("Semua");
 
   useEffect(() => {
+    if (isAdminDemoMode()) {
+      setReports(INITIAL_DEMO_EMERGENCIES as any);
+      setLoading(false);
+      return;
+    }
+
     const q = query(
       collection(db, "emergency_reports"),
       orderBy("createdAt", "desc")
@@ -41,7 +49,8 @@ export default function AdminDashboard() {
       setReports(data);
       setLoading(false);
     }, (error) => {
-      console.error("Error fetching reports:", error);
+      console.warn("Using demo dataset for dashboard:", error.message);
+      setReports(INITIAL_DEMO_EMERGENCIES as any);
       setLoading(false);
     });
 
@@ -49,6 +58,11 @@ export default function AdminDashboard() {
   }, []);
 
   const handleResolveAction = async (id: string) => {
+    if (isAdminDemoMode()) {
+      setReports(prev => prev.map(r => r.id === id ? { ...r, status: "resolved" } : r));
+      alert("Mode Demo (Hanya Pantau): Status diperbarui di tampilan simulasi. Data server asli tetap aman.");
+      return;
+    }
     try {
       const reportRef = doc(db, "emergency_reports", id);
       await updateDoc(reportRef, {
@@ -212,9 +226,7 @@ export default function AdminDashboard() {
                     <div className="col-span-2 text-sm text-slate-500 font-bold">
                       <div className="flex lg:hidden text-xs font-bold text-slate-400 mb-1 uppercase tracking-wider">Waktu</div>
                       <div>
-                        {report.createdAt?.toDate ? report.createdAt.toDate().toLocaleString('id-ID', {
-                          hour: '2-digit', minute:'2-digit', day: 'numeric', month: 'short'
-                        }) : 'Baru saja'}
+                        {safeFormatDate(report.createdAt)}
                       </div>
                     </div>
 

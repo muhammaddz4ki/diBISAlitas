@@ -10,6 +10,8 @@ import { collection, query, orderBy, limit, onSnapshot, doc, getDoc } from "fire
 import { Toaster, toast } from "react-hot-toast";
 import { motion } from "framer-motion";
 
+import { isAdminDemoMode } from "@/lib/adminDemoData";
+
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const router = useRouter();
@@ -17,23 +19,34 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const [authError, setAuthError] = useState<string | null>(null);
   const [userEmail, setUserEmail] = useState<string | null>(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isDemo, setIsDemo] = useState(false);
   // Notification State
   const [notifications, setNotifications] = useState<{id:string, type:string, message:string, time:Date}[]>([]);
   const [showNotif, setShowNotif] = useState(false);
 
   useEffect(() => {
     // 1. Cek apakah pengguna berada dalam mode demo (via query param ?demo=true atau sessionStorage)
-    const isDemo =
-      typeof window !== "undefined" &&
-      (new URLSearchParams(window.location.search).get("demo") === "true" ||
-        window.sessionStorage.getItem("dibisalitas_admin_demo_mode") === "true");
-
-    if (isDemo) {
+    if (isAdminDemoMode()) {
       if (typeof window !== "undefined") {
         window.sessionStorage.setItem("dibisalitas_admin_demo_mode", "true");
       }
+      setIsDemo(true);
       setUserEmail("admin.demo@dibisalitas.id");
       setIsChecking(false);
+      setNotifications([
+        {
+          id: "demo-notif-1",
+          type: "emergency",
+          message: "Simulasi: Laporan Darurat SOS Masuk dari Kawasan Sudirman",
+          time: new Date(Date.now() - 1000 * 60 * 15)
+        },
+        {
+          id: "demo-notif-2",
+          type: "obstacle",
+          message: "Simulasi: Rintangan Baru (Guiding Block Rusak) Ditambahkan",
+          time: new Date(Date.now() - 1000 * 60 * 45)
+        }
+      ]);
       return;
     }
 
@@ -84,7 +97,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   // Global Notification Listener
   useEffect(() => {
-    if (isChecking) return; // Wait until authenticated
+    if (isChecking || isDemo) return; // In demo mode, skip Firestore queries to avoid permission errors
 
     let initialLoadEmergency = true;
     let initialLoadObstacle = true;
@@ -124,7 +137,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           });
         }
       });
-    }, (err) => console.log(err));
+    }, (err) => console.warn("Emergency listener error:", err.message));
 
     // Listen to Obstacle Reports
     const qObstacle = query(
@@ -161,13 +174,13 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           });
         }
       });
-    }, (err) => console.log(err));
+    }, (err) => console.warn("Obstacle listener error:", err.message));
 
     return () => {
       unsubEmergency();
       unsubObstacle();
     };
-  }, [isChecking]);
+  }, [isChecking, isDemo]);
 
   const handleLogout = async () => {
     try {
@@ -331,7 +344,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               {(userEmail?.[0] || "A").toUpperCase()}
             </div>
             <div className="min-w-0 flex-1 transition-opacity duration-300 lg:opacity-0 lg:group-hover:opacity-100">
-              <p className="text-sm font-extrabold text-slate-800 truncate">Administrator</p>
+              <p className="text-sm font-extrabold text-slate-800 truncate">
+                {isDemo ? "Admin (Mode Demo)" : "Administrator"}
+              </p>
               <p className="text-xs text-slate-500 font-bold truncate mt-0.5">{userEmail || "admin"}</p>
             </div>
             <Settings className="w-4 h-4 text-slate-400 group-hover/profile:text-[#00B894] transition-colors shrink-0 lg:opacity-0 lg:group-hover:opacity-100" />
@@ -341,7 +356,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             className="w-full flex items-center gap-4 px-4 py-3.5 rounded-2xl text-slate-500 font-extrabold hover:neo-flat hover:-translate-y-[2px] hover:text-rose-500 transition-all border-none"
           >
             <LogOut className="w-5 h-5 shrink-0" />
-            <span className="text-sm transition-opacity duration-300 lg:opacity-0 lg:group-hover:opacity-100">Keluar Sistem</span>
+            <span className="text-sm transition-opacity duration-300 lg:opacity-0 lg:group-hover:opacity-100">
+              {isDemo ? "Keluar Demo" : "Keluar Sistem"}
+            </span>
           </button>
         </div>
       </aside>
@@ -357,6 +374,31 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             <Menu className="w-6 h-6" />
           </button>
         </div>
+
+        {/* Demo Mode Notice Banner */}
+        {isDemo && (
+          <div className="mx-4 sm:mx-6 lg:mx-8 mt-4 p-4 sm:p-5 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex flex-col md:flex-row items-start md:items-center justify-between gap-3 text-amber-900 dark:text-amber-200">
+            <div className="flex items-center gap-3">
+              <span className="px-3 py-1 rounded-xl bg-amber-500 text-white font-extrabold text-xs shrink-0 tracking-wider">
+                MODE DEMO (PANTAU ONLY)
+              </span>
+              <div>
+                <p className="text-xs sm:text-sm font-extrabold leading-tight">
+                  Simulasi Eksplorasi Command Center BiPANTAU
+                </p>
+                <p className="text-[11px] text-amber-700 dark:text-amber-300 mt-0.5 leading-relaxed">
+                  Anda dapat memantau seluruh peta GIS, riwayat hotspot, dan laporan masuk. Operasi modifikasi data (CRUD) dinonaktifkan untuk menjaga keamanan data simulasi.
+                </p>
+              </div>
+            </div>
+            <Link
+              href="/demo"
+              className="px-4 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-extrabold text-xs transition-colors shrink-0 shadow-sm"
+            >
+              Kembali ke Pusat Demo
+            </Link>
+          </div>
+        )}
 
         <div className="min-h-full w-full p-4 sm:p-6 lg:p-8 lg:pt-8">
           {children}

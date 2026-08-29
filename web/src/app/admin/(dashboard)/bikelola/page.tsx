@@ -17,8 +17,31 @@ interface Course {
   createdAt: any;
 }
 
+import { isAdminDemoMode } from "@/lib/adminDemoData";
+
+const DEMO_COURSES: Course[] = [
+  {
+    id: "demo-course-1",
+    title: "Pengenalan Abjad Isyarat BISINDO A-Z",
+    category: "Bahasa Isyarat",
+    description: "Panduan visual komprehensif gerakan tangan dasar alfabet BISINDO untuk pemula.",
+    videoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    thumbnailUrl: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=500&auto=format&fit=crop&q=60",
+    createdAt: { seconds: Math.floor(Date.now() / 1000) }
+  },
+  {
+    id: "demo-course-2",
+    title: "Navigasi Mandiri dengan Sensor BiJALAN",
+    category: "Mobilitas & Aksesibilitas",
+    description: "Pelatihan pemanfaatan AI pendeteksi halangan dan audio spasial bagi penyandang tunanetra.",
+    videoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    thumbnailUrl: "https://images.unsplash.com/photo-1577495508048-b635879837f1?w=500&auto=format&fit=crop&q=60",
+    createdAt: { seconds: Math.floor(Date.now() / 1000) }
+  }
+];
+
 export default function BiKelolaDashboard() {
-  const [courses, setCourses] = useState<Course[]>([]);
+  const [courses, setCourses] = useState<Course[]>(DEMO_COURSES);
   const [loading, setLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -38,6 +61,12 @@ export default function BiKelolaDashboard() {
   const [filterCategory, setFilterCategory] = useState("");
 
   useEffect(() => {
+    if (isAdminDemoMode()) {
+      setCourses(DEMO_COURSES);
+      setLoading(false);
+      return;
+    }
+
     const q = query(
       collection(db, "bipintar_courses"),
       orderBy("createdAt", "desc")
@@ -51,7 +80,8 @@ export default function BiKelolaDashboard() {
       setCourses(data);
       setLoading(false);
     }, (error) => {
-      console.error("Error fetching courses:", error);
+      console.warn("Using demo courses for bikelola:", error.message);
+      setCourses(DEMO_COURSES);
       setLoading(false);
     });
 
@@ -61,6 +91,28 @@ export default function BiKelolaDashboard() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!title || !category || !description) return;
+
+    if (isAdminDemoMode()) {
+      if (editingId) {
+        setCourses(prev => prev.map(c => c.id === editingId ? { ...c, title, category, description, videoUrl, thumbnailUrl } : c));
+        alert("Mode Demo (Hanya Pantau): Kelas diperbarui di tampilan simulasi. Data server asli tetap aman.");
+      } else {
+        const newCourse: Course = {
+          id: `demo-course-${Date.now()}`,
+          title,
+          category,
+          description,
+          videoUrl,
+          thumbnailUrl,
+          createdAt: { seconds: Math.floor(Date.now() / 1000) }
+        };
+        setCourses(prev => [newCourse, ...prev]);
+        alert("Mode Demo (Hanya Pantau): Kelas baru ditambahkan di tampilan simulasi. Data server asli tetap aman.");
+      }
+      resetForm();
+      setShowForm(false);
+      return;
+    }
 
     setIsSubmitting(true);
     try {
@@ -86,6 +138,7 @@ export default function BiKelolaDashboard() {
       }
       
       resetForm();
+      setShowForm(false);
     } catch (error) {
       console.error("Error saving course:", error);
       alert("Gagal menyimpan kelas. Silakan coba lagi.");

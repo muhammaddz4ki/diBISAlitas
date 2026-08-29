@@ -19,8 +19,10 @@ interface ObstacleReport {
   createdAt?: any;
 }
 
+import { INITIAL_DEMO_OBSTACLES, isAdminDemoMode, safeFormatDate } from "@/lib/adminDemoData";
+
 export default function RintanganDashboard() {
-  const [reports, setReports] = useState<ObstacleReport[]>([]);
+  const [reports, setReports] = useState<ObstacleReport[]>(INITIAL_DEMO_OBSTACLES as any);
   const [loading, setLoading] = useState(true);
   const [confirmDelete, setConfirmDelete] = useState<{ type: 'single', id: string } | { type: 'bulk', count: number } | null>(null);
 
@@ -28,6 +30,12 @@ export default function RintanganDashboard() {
   const [statusFilter, setStatusFilter] = useState("Semua");
 
   useEffect(() => {
+    if (isAdminDemoMode()) {
+      setReports(INITIAL_DEMO_OBSTACLES as any);
+      setLoading(false);
+      return;
+    }
+
     const q = query(
       collection(db, "obstacle_reports"),
       orderBy("createdAt", "desc")
@@ -41,7 +49,8 @@ export default function RintanganDashboard() {
       setReports(data);
       setLoading(false);
     }, (error) => {
-      console.error("Error fetching obstacle reports:", error);
+      console.warn("Using demo dataset for rintangan:", error.message);
+      setReports(INITIAL_DEMO_OBSTACLES as any);
       setLoading(false);
     });
 
@@ -49,6 +58,11 @@ export default function RintanganDashboard() {
   }, []);
 
   const handleResolveAction = async (id: string) => {
+    if (isAdminDemoMode()) {
+      setReports(prev => prev.map(r => r.id === id ? { ...r, isResolved: true } : r));
+      alert("Mode Demo (Hanya Pantau): Status verifikasi diperbarui di tampilan simulasi. Data server asli tetap aman.");
+      return;
+    }
     try {
       const reportRef = doc(db, "obstacle_reports", id);
       await updateDoc(reportRef, {
@@ -61,6 +75,11 @@ export default function RintanganDashboard() {
   };
 
   const handleDelete = async (id: string) => {
+    if (isAdminDemoMode()) {
+      setReports(prev => prev.filter(r => r.id !== id));
+      alert("Mode Demo (Hanya Pantau): Data dihapus dari tampilan simulasi. Data server asli tetap aman.");
+      return;
+    }
     try {
       await deleteDoc(doc(db, "obstacle_reports", id));
     } catch (error) {
@@ -79,6 +98,12 @@ export default function RintanganDashboard() {
   };
 
   const executeBulkDelete = async () => {
+    if (isAdminDemoMode()) {
+      setReports(prev => prev.filter(r => !r.isResolved));
+      setConfirmDelete(null);
+      alert("Mode Demo (Hanya Pantau): Laporan selesai dibersihkan dari simulasi.");
+      return;
+    }
     const resolved = reports.filter((r) => r.isResolved);
     try {
       await Promise.all(resolved.map((r) => deleteDoc(doc(db, "obstacle_reports", r.id))));
