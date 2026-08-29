@@ -31,6 +31,7 @@ import {
   Play,
 } from "lucide-react";
 import Navbar from "@/components/Navbar";
+import MobileMockupSection from "@/components/MobileMockupSection";
 import FloatingAccessibility from "@/components/FloatingAccessibility";
 
 
@@ -177,7 +178,7 @@ function HeroSection() {
       </div>
       
       {/* Overlay gradient at bottom to fade into next section and hide image crop */}
-      <div className="absolute bottom-[-2px] left-0 w-full h-48 md:h-72 lg:h-[24rem] bg-gradient-to-t from-[#FDFEFE] via-[#FDFEFE]/90 dark:from-[#090e17] dark:via-[#090e17]/90 to-transparent z-30 pointer-events-none transition-colors duration-300" />
+      <div className="absolute bottom-[-2px] left-0 w-full h-48 md:h-72 lg:h-[24rem] bg-gradient-to-t from-[#FDFEFE] via-[#FDFEFE]/90 dark:from-[#050505] dark:via-[#050505]/90 to-transparent z-30 pointer-events-none transition-colors duration-300" />
     </section>
   );
 }
@@ -488,11 +489,17 @@ function BentoFeaturesSection() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-60px" }}
-          className="text-center max-w-2xl mx-auto space-y-3"
+          className="text-center max-w-2xl mx-auto space-y-4 mb-10"
         >
-          <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-[#1B9981]/10 text-[#1B9981] dark:text-[#00D4AA] font-bold text-xs uppercase tracking-wider">
-            <Layers className="w-3.5 h-3.5" /> 6 Pilar Ekosistem Cerdas
+          <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-[#1B9981]/10 text-[#1B9981] dark:text-[#00D4AA] font-bold text-[10px] sm:text-xs uppercase tracking-widest">
+            <Layers className="w-3.5 h-3.5" /> 6 Pilar Ekosistem
           </span>
+          <h2 className="text-3xl md:text-5xl lg:text-6xl font-black leading-[1.15] md:leading-[1.1] tracking-tight text-slate-900 dark:text-white">
+            Fitur Cerdas Tanpa Batas
+          </h2>
+          <p className="text-sm sm:text-base text-slate-500 dark:text-slate-400 leading-relaxed max-w-2xl mx-auto">
+            Menghadirkan teknologi kecerdasan buatan terdepan yang dirancang khusus untuk memfasilitasi kemandirian penyandang disabilitas dalam kehidupan sehari-hari.
+          </p>
         </motion.div>
 
         {/* === MAIN BENTO GRID === */}
@@ -723,22 +730,32 @@ function BentoFeaturesSection() {
 }
 
 /* ============================================
-   CTA / ROTATING TEXT SECTION
+   CTA & STATS SECTION (COMBINED)
 ============================================ */
-function CTASection() {
+function CTAAndStatsSection() {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-80px" });
+
+  const stat1 = useCounter(22, 2000, isInView);
+  const stat2 = useCounter(6, 1500, isInView);
+  const stat3 = useCounter(99, 2000, isInView);
+  const stat4 = useCounter(2, 1500, isInView);
+
   const text = "riset pengujian • riset pengujian • ";
   const characters = text.split("");
 
   return (
-    <section className="relative w-full min-h-[70vh] md:min-h-screen bg-[#FDFEFE] dark:bg-black overflow-hidden flex items-center justify-center py-20 z-40 transition-colors duration-300">
+    <section id="dampak" className="relative w-full text-black dark:text-white overflow-x-clip overflow-y-visible flex flex-col items-center justify-center pt-20 pb-12 md:pb-16 z-40 transition-colors duration-300">
       
       {/* Background Gradients */}
       <div className="absolute top-0 left-0 w-[400px] md:w-[700px] h-[400px] md:h-[700px] bg-[#1B9981]/20 blur-[100px] md:blur-[150px] rounded-full -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
-      <div className="absolute bottom-0 right-0 w-[400px] md:w-[700px] h-[400px] md:h-[700px] bg-[#00D4AA]/20 blur-[100px] md:blur-[150px] rounded-full translate-x-1/2 translate-y-1/2 pointer-events-none" />
+      <div className="absolute top-[30%] right-0 w-[400px] md:w-[700px] h-[400px] md:h-[700px] bg-[#00D4AA]/20 blur-[100px] md:blur-[150px] rounded-full translate-x-1/2 translate-y-1/2 pointer-events-none" />
+      <div className="absolute bottom-[10%] left-[10%] w-[500px] h-[500px] bg-[#00D4AA]/5 blur-[120px] rounded-full pointer-events-none" />
 
-      {/* 3D Scene */}
+
+      {/* --- HAND AND ROTATING TEXT (CTA) --- */}
       <div 
-        className="relative w-full max-w-4xl aspect-[4/3] md:aspect-square flex items-center justify-center z-10"
+        className="relative w-full max-w-4xl aspect-[4/3] md:aspect-[16/9] lg:aspect-[21/9] flex items-center justify-center z-20 mb-12 md:mb-20"
         style={{ perspective: "1000px", transformStyle: "preserve-3d" }}
       >
         {/* Central Object (Static, facing front) */}
@@ -748,11 +765,15 @@ function CTASection() {
         >
            {/* Fallback glow if image is missing */}
            <div className="absolute w-40 h-40 md:w-80 md:h-80 bg-[#00D4AA]/10 blur-3xl rounded-full" />
-           <div className="relative -translate-y-12 md:-translate-y-24 flex flex-col justify-end">
+           <div className="relative translate-y-8 sm:translate-y-12 md:translate-y-16 flex flex-col justify-end">
              <img 
                src="/images/placeholder-hand.png" 
                alt="Hand Placeholder" 
-               className="w-56 sm:w-72 md:w-[28rem] h-auto object-contain drop-shadow-[0_0_40px_rgba(0,212,170,0.3)] block relative"
+               className="w-56 sm:w-72 md:w-[22rem] lg:w-[26rem] h-auto object-contain drop-shadow-[0_0_40px_rgba(0,212,170,0.3)] block relative"
+               style={{ 
+                 WebkitMaskImage: "radial-gradient(100% 100% at 50% 100%, black 50%, transparent 100%)", 
+                 maskImage: "radial-gradient(100% 100% at 50% 100%, black 50%, transparent 100%)" 
+               }}
                onError={(e) => {
                  e.currentTarget.style.display = 'none';
                }}
@@ -775,9 +796,9 @@ function CTASection() {
             {characters.map((char, i) => (
               <span
                 key={i}
-                className="absolute text-5xl sm:text-6xl md:text-[5.5rem] font-black text-white lowercase select-none tracking-tight transition-colors duration-300"
+                className="absolute text-4xl sm:text-5xl md:text-6xl lg:text-[5rem] font-black text-white lowercase select-none tracking-tight transition-colors duration-300"
                 style={{
-                  transform: `rotateY(${i * (360 / characters.length)}deg) translateZ(clamp(160px, 35vw, 350px))`,
+                  transform: `rotateY(${i * (360 / characters.length)}deg) translateZ(clamp(140px, 30vw, 320px))`,
                   textShadow: "1px 1px 0 #1B9981, -1px -1px 0 #1B9981, 1px -1px 0 #1B9981, -1px 1px 0 #1B9981, 0 1px 0 #1B9981, 0 -1px 0 #1B9981, 1px 0 0 #1B9981, -1px 0 0 #1B9981, 0 0 15px rgba(0, 212, 170, 0.9), 0 0 40px rgba(0, 212, 170, 0.4)"
                 }}
               >
@@ -788,54 +809,17 @@ function CTASection() {
         </div>
       </div>
 
-      {/* Global Bottom Gradient to fade EVERYTHING into black seamlessly (like Hero Section) */}
-      <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-[#FDFEFE] via-[#FDFEFE]/80 dark:from-black dark:via-black/80 to-transparent pointer-events-none z-50 transition-colors duration-300" />
-      
-      {/* Global Top Gradient to perfectly hide the top cut-off of the image */}
-      <div className="absolute top-0 left-0 w-full h-[30%] md:h-[40%] bg-gradient-to-b from-[#FDFEFE] from-15% via-[#FDFEFE]/85 via-50% dark:from-black dark:via-black/85 to-transparent pointer-events-none z-50 transition-colors duration-300" />
-    </section>
-  );
-}
-
-/* ============================================
-   STATS SECTION (Original 4-Card Layout)
-============================================ */
-function StatsSection() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-80px" });
-
-  const stat1 = useCounter(22, 2000, isInView);
-  const stat2 = useCounter(6, 1500, isInView);
-  const stat3 = useCounter(99, 2000, isInView);
-  const stat4 = useCounter(2, 1500, isInView);
-
-  return (
-    <section id="dampak" className="py-24 md:py-32 bg-[#FDFEFE] dark:bg-[#050505] text-black dark:text-white relative overflow-hidden z-20 transition-colors duration-300">
-      
-      {/* Subtle background glow */}
-      <div className="absolute top-[20%] right-[10%] w-[600px] h-[600px] bg-[#1B9981]/10 blur-[150px] rounded-full pointer-events-none" />
-      <div className="absolute bottom-[10%] left-[10%] w-[500px] h-[500px] bg-[#00D4AA]/5 blur-[120px] rounded-full pointer-events-none" />
-
+      {/* --- STATS SECTION --- */}
       <div className="w-full max-w-6xl mx-auto px-6 relative z-10" ref={ref}>
-        
         {/* Header */}
-        <div className="flex flex-col items-center mb-16 relative">
-          <motion.div 
-            variants={fadeUp}
-            initial="hidden"
-            animate={isInView ? "visible" : "hidden"}
-            className="inline-block border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 rounded-full px-4 py-1.5 mb-6 backdrop-blur-md transition-colors duration-300"
-          >
-            <span className="text-[10px] font-bold tracking-widest text-[#1B9981] dark:text-[#00D4AA] uppercase">Dampak Riset & Pengujian</span>
-          </motion.div>
-          
+        <div className="text-center max-w-2xl mx-auto space-y-4 mb-16 relative z-0 mt-0 sm:mt-2 md:mt-4">
           <motion.h2 
             variants={fadeUp}
             initial="hidden"
             animate={isInView ? "visible" : "hidden"}
-            className="text-4xl md:text-5xl font-bold tracking-tighter text-center"
+            className="text-3xl md:text-4xl lg:text-5xl font-black leading-[1.15] md:leading-[1.1] tracking-tight text-slate-900 dark:text-white drop-shadow-md"
           >
-            Kesiapan Teknologi Nyata<br />Untuk Indonesia Inklusif
+            Kesiapan Teknologi Nyata <br className="hidden md:block" /> Untuk <span className="text-[#1B9981] dark:text-[#00D4AA]">Indonesia Inklusif</span>
           </motion.h2>
         </div>
 
@@ -903,22 +887,22 @@ function StatsSection() {
 ============================================ */
 function ImpactSection() {
   return (
-    <section id="dampak" className="py-20 md:py-28 px-4 sm:px-6">
+    <section id="dampak" className="pt-8 md:pt-12 pb-20 md:pb-28 px-4 sm:px-6">
       <div className="max-w-7xl mx-auto space-y-16">
         <motion.div
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-60px" }}
-          className="text-center max-w-2xl mx-auto space-y-3"
+          className="text-center max-w-2xl mx-auto space-y-4 mb-10"
         >
-          <span className="text-xs font-bold uppercase text-[#1B9981] dark:text-[#00D4AA] bg-[#1B9981]/10 dark:bg-[#1B9981]/20 px-3.5 py-1.5 rounded-full">
+          <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-[#1B9981]/10 text-[#1B9981] dark:text-[#00D4AA] font-bold text-[10px] sm:text-xs uppercase tracking-widest">
             Dampak Sosial &amp; Inklusivitas
           </span>
-          <h2 className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white">
+          <h2 className="text-3xl md:text-5xl lg:text-6xl font-black leading-[1.15] md:leading-[1.1] tracking-tight text-slate-900 dark:text-white">
             Didesain Khusus Bersama Komunitas
           </h2>
-          <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">
+          <p className="text-sm sm:text-base text-slate-500 dark:text-slate-400 leading-relaxed max-w-2xl mx-auto">
             Kami mengembangkan fitur dengan mendengarkan langsung pengalaman dan tantangan nyata penyandang disabilitas di lapangan.
           </p>
         </motion.div>
@@ -993,17 +977,90 @@ function ImpactSection() {
 }
 
 /* ============================================
+   SHOWCASE / LAPTOP MOCKUP SECTION
+============================================ */
+function ShowcaseSection() {
+  const sectionRef = useRef(null);
+  const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
+
+  return (
+    <section ref={sectionRef} className="relative w-full overflow-x-clip overflow-y-visible flex flex-col items-center justify-center pt-0 transition-colors duration-300">
+      
+      {/* === BACKGROUND GIANT TEXT === */}
+      {/* Right side vertical text */}
+      <div className="absolute top-1/2 right-[-2%] md:right-[2%] -translate-y-1/2 z-0 pointer-events-none select-none">
+        <div className="flex flex-col items-end leading-[0.82] text-right">
+          <span className="text-[6rem] sm:text-[8rem] md:text-[12rem] lg:text-[16rem] xl:text-[18rem] font-black text-[#1B9981]/[0.05] dark:text-[#1B9981]/[0.12] tracking-tighter transition-colors duration-300" style={{ WebkitTextStroke: "1px rgba(27,153,129,0.08)" }}>di</span>
+          <span className="text-[6rem] sm:text-[8rem] md:text-[12rem] lg:text-[16rem] xl:text-[18rem] font-black text-[#1B9981]/[0.05] dark:text-[#1B9981]/[0.12] tracking-tighter transition-colors duration-300" style={{ WebkitTextStroke: "1px rgba(27,153,129,0.08)" }}>BI</span>
+          <span className="text-[6rem] sm:text-[8rem] md:text-[12rem] lg:text-[16rem] xl:text-[18rem] font-black text-[#1B9981]/[0.05] dark:text-[#1B9981]/[0.12] tracking-tighter transition-colors duration-300" style={{ WebkitTextStroke: "1px rgba(27,153,129,0.08)" }}>SA</span>
+        </div>
+      </div>
+      
+      {/* Left side faint text */}
+      <div className="absolute top-[8%] left-[-4%] md:left-[0%] z-0 pointer-events-none select-none">
+        <div className="flex flex-col items-start leading-[0.82]">
+          <span className="text-[5rem] sm:text-[7rem] md:text-[10rem] lg:text-[14rem] xl:text-[16rem] font-black text-[#1B9981]/[0.03] dark:text-[#1B9981]/[0.07] tracking-tighter transition-colors duration-300" style={{ WebkitTextStroke: "1px rgba(27,153,129,0.04)" }}>li</span>
+          <span className="text-[5rem] sm:text-[7rem] md:text-[10rem] lg:text-[14rem] xl:text-[16rem] font-black text-[#1B9981]/[0.03] dark:text-[#1B9981]/[0.07] tracking-tighter transition-colors duration-300" style={{ WebkitTextStroke: "1px rgba(27,153,129,0.04)" }}>ta</span>
+          <span className="text-[5rem] sm:text-[7rem] md:text-[10rem] lg:text-[14rem] xl:text-[16rem] font-black text-[#1B9981]/[0.03] dark:text-[#1B9981]/[0.07] tracking-tighter transition-colors duration-300" style={{ WebkitTextStroke: "1px rgba(27,153,129,0.04)" }}>s</span>
+        </div>
+      </div>
+
+      {/* === GLOW EFFECTS (Green Background Gradient) === */}
+      {/* Main wide green backdrop */}
+      <div className="absolute top-[45%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90vw] max-w-[1200px] h-[400px] sm:h-[600px] md:h-[800px] bg-[#1B9981]/30 dark:bg-[#00D4AA]/20 blur-[100px] sm:blur-[150px] md:blur-[200px] rounded-[100%] pointer-events-none transition-colors duration-300 z-0" />
+      {/* Core intense bright glow in the center */}
+      <div className="absolute top-[50%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] sm:w-[500px] h-[300px] sm:h-[500px] bg-[#1B9981]/40 dark:bg-[#00D4AA]/30 blur-[100px] sm:blur-[140px] rounded-full pointer-events-none transition-colors duration-300 z-0" />
+
+      {/* === LAPTOP SCENE === */}
+      {/* Container allows laptop image to span almost full width, pulled up to overlap previous section */}
+      <div className="relative w-full mx-auto px-2 sm:px-4 z-20 flex items-center justify-center mt-4 md:mt-8 lg:mt-12 pb-0">
+          
+          {/* ──── LAPTOPS SHOWCASE ──── */}
+          <motion.div
+            initial={{ opacity: 0, y: 60 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 60 }}
+            transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+            className="relative z-20 w-[100%] sm:w-[110%] md:w-[120%] lg:w-[115%] xl:w-[120%] flex justify-center scale-110 sm:scale-125 lg:scale-110 origin-bottom"
+          >
+            {/* User will replace this with their transparent laptop image containing both laptops */}
+            <img 
+              src="/images/showcase-laptops-light.png" 
+              alt="diBISAlitas Showcase Laptops (Light)" 
+              className="w-full h-auto drop-shadow-[0_20px_50px_rgba(0,0,0,0.15)] block dark:hidden object-contain"
+              onError={(e) => {
+                e.currentTarget.style.display = 'none';
+              }}
+            />
+            <img 
+              src="/images/showcase-laptops-dark.png" 
+              alt="diBISAlitas Showcase Laptops (Dark)" 
+              className="w-full h-auto drop-shadow-[0_40px_80px_rgba(0,0,0,0.8)] hidden dark:block object-contain"
+              onError={(e) => {
+                e.currentTarget.style.display = 'none';
+              }}
+            />
+          </motion.div>
+          
+      </div>
+
+      {/* Subtle bottom gradient to blend the cropped edge of the laptop into the footer */}
+      <div className="absolute bottom-0 left-0 w-full h-24 md:h-32 lg:h-48 bg-gradient-to-t from-slate-50 via-slate-50/80 to-transparent dark:from-black dark:via-black/80 pointer-events-none z-40" />
+    </section>
+  );
+}
+
+/* ============================================
    FOOTER
 ============================================ */
 function Footer() {
   return (
-    <footer className="bg-slate-950 text-slate-400 py-16 border-t border-slate-900 px-6">
+    <footer className="bg-slate-50 dark:bg-black text-slate-500 dark:text-slate-400 py-16 border-t border-slate-200 dark:border-white/10 px-6 transition-colors duration-300 relative z-50">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-10">
         <div className="space-y-3 md:col-span-2">
           <div className="flex items-center gap-2">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/logo/logo.png" alt="diBISAlitas" className="w-8 h-8 object-contain" />
-            <span className="text-lg font-black text-white">
+            <span className="text-lg font-black text-slate-900 dark:text-white transition-colors duration-300">
               di<span className="text-[#1B9981]">BISA</span>litas
             </span>
           </div>
@@ -1013,25 +1070,25 @@ function Footer() {
         </div>
 
         <div className="space-y-2 text-xs">
-          <div className="font-bold text-white uppercase tracking-wider mb-2">Fitur Unggulan</div>
-          <div><Link href="/fitur/bisafe" className="hover:text-white">BiSAFE (Darurat SOS)</Link></div>
-          <div><Link href="/fitur/bipantau" className="hover:text-white">BiPANTAU (Command Center)</Link></div>
-          <div><Link href="/fitur/bisapa" className="hover:text-white">BiSAPA (Isyarat AI)</Link></div>
-          <div><Link href="/fitur/bibaca" className="hover:text-white">BiBACA (Smart OCR)</Link></div>
-          <div><Link href="/fitur/bipintar" className="hover:text-white">BiPINTAR (E-Learning)</Link></div>
-          <div><Link href="/fitur/bijalan" className="hover:text-white">BiJALAN (Navigasi Spasial)</Link></div>
+          <div className="font-bold text-slate-900 dark:text-white uppercase tracking-wider mb-2 transition-colors duration-300">Fitur Unggulan</div>
+          <div><Link href="/fitur/bisafe" className="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors duration-300">BiSAFE (Darurat SOS)</Link></div>
+          <div><Link href="/fitur/bipantau" className="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors duration-300">BiPANTAU (Command Center)</Link></div>
+          <div><Link href="/fitur/bisapa" className="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors duration-300">BiSAPA (Isyarat AI)</Link></div>
+          <div><Link href="/fitur/bibaca" className="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors duration-300">BiBACA (Smart OCR)</Link></div>
+          <div><Link href="/fitur/bipintar" className="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors duration-300">BiPINTAR (E-Learning)</Link></div>
+          <div><Link href="/fitur/bijalan" className="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors duration-300">BiJALAN (Navigasi Spasial)</Link></div>
         </div>
 
         <div className="space-y-2 text-xs">
-          <div className="font-bold text-white uppercase tracking-wider mb-2">Akses Cepat</div>
-          <div><Link href="/demo" className="hover:text-white">Demo Aplikasi (Tanpa Login)</Link></div>
-          <div><Link href="/admin/rintangan" className="hover:text-white">Dashboard BiPANTAU</Link></div>
-          <div><Link href="/fitur" className="hover:text-white">Pusat Fitur</Link></div>
-          <div><Link href="/app/login" className="hover:text-white">Masuk / Daftar Akun</Link></div>
+          <div className="font-bold text-slate-900 dark:text-white uppercase tracking-wider mb-2 transition-colors duration-300">Akses Cepat</div>
+          <div><Link href="/demo" className="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors duration-300">Demo Aplikasi (Tanpa Login)</Link></div>
+          <div><Link href="/admin/rintangan" className="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors duration-300">Dashboard BiPANTAU</Link></div>
+          <div><Link href="/fitur" className="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors duration-300">Pusat Fitur</Link></div>
+          <div><Link href="/app/login" className="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors duration-300">Masuk / Daftar Akun</Link></div>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto pt-10 mt-10 border-t border-slate-900 text-center text-xs text-slate-600">
+      <div className="max-w-7xl mx-auto pt-10 mt-10 border-t border-slate-200 dark:border-white/10 text-center text-xs text-slate-400 transition-colors duration-300">
         Hak Cipta &copy; {new Date().getFullYear()} diBISAlitas Platform. Seluruh Hak Dilindungi.
       </div>
     </footer>
@@ -1178,9 +1235,10 @@ export default function LandingPage() {
         <HeroSection />
         <AboutProjectSection />
         <BentoFeaturesSection />
-        <CTASection />
-        <StatsSection />
+        <CTAAndStatsSection />
         <ImpactSection />
+        <ShowcaseSection />
+        <MobileMockupSection />
         <Footer />
         <FloatingAccessibility />
       </div>
