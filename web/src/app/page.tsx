@@ -776,7 +776,7 @@ function CTAAndStatsSection() {
   const characters = text.split("");
 
   return (
-    <section id="dampak" className="relative w-full text-black dark:text-white overflow-x-clip overflow-y-visible flex flex-col items-center justify-center pt-20 pb-12 md:pb-16 z-40 transition-colors duration-300">
+    <section className="relative w-full text-black dark:text-white overflow-x-clip overflow-y-visible flex flex-col items-center justify-center pt-20 pb-12 md:pb-16 z-40 transition-colors duration-300">
       
       {/* Background Gradients */}
       <div className="absolute top-0 left-0 w-[400px] md:w-[700px] h-[400px] md:h-[700px] bg-[#1B9981]/20 blur-[100px] md:blur-[150px] rounded-full -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
@@ -841,7 +841,7 @@ function CTAAndStatsSection() {
       </div>
 
       {/* --- STATS SECTION --- */}
-      <div className="w-full max-w-6xl mx-auto px-6 relative z-10" ref={ref}>
+      <div id="statistik" className="w-full max-w-6xl mx-auto px-6 relative z-10 scroll-mt-28" ref={ref}>
         {/* Header */}
         <div className="text-center max-w-2xl mx-auto space-y-4 mb-16 relative z-0 mt-0 sm:mt-2 md:mt-4">
           <motion.h2 
@@ -971,7 +971,7 @@ function ImpactSection() {
   };
 
   return (
-    <section id="dampak" className="py-20 md:py-32 w-full bg-slate-50 dark:bg-[#050103] relative overflow-hidden flex flex-col items-center transition-colors duration-300">
+    <section id="dampak" className="scroll-mt-20 py-20 md:py-32 w-full bg-slate-50 dark:bg-[#050103] relative overflow-hidden flex flex-col items-center transition-colors duration-300">
       
       {/* Background Giant Text similar to the 'octo' octopus text in the reference */}
       <div className="absolute top-[30%] left-1/2 -translate-x-1/2 text-[15rem] md:text-[25rem] font-black text-slate-900/[0.03] dark:text-white/[0.02] tracking-tighter pointer-events-none select-none z-0 whitespace-nowrap transition-colors duration-300">
