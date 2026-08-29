@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useTheme } from "@/lib/ThemeContext";
 import Link from "next/link";
-import { motion, useInView, useScroll, useTransform, AnimatePresence, Variants, LayoutGroup } from "framer-motion";
+import { motion, useInView, useScroll, useTransform, AnimatePresence, Variants, LayoutGroup, useMotionValue, useSpring } from "framer-motion";
 import {
   ShieldAlert,
   MessageCircle,
@@ -19,6 +19,7 @@ import {
   HeartHandshake,
   Users,
   ArrowRight,
+  ArrowUpRight,
   Smartphone,
   Shield,
   Brain,
@@ -91,11 +92,32 @@ function useCounter(end: number, duration: number = 2000, startCounting: boolean
    HERO SECTION
 ============================================ */
 function HeroSection() {
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    const { clientX, clientY } = e;
+    const { innerWidth, innerHeight } = window;
+    mouseX.set((clientX / innerWidth - 0.5) * 40);
+    mouseY.set((clientY / innerHeight - 0.5) * 40);
+  };
+
+  const springX = useSpring(mouseX, { stiffness: 150, damping: 20 });
+  const springY = useSpring(mouseY, { stiffness: 150, damping: 20 });
+  
+  const bgX = useTransform(springX, (v) => v * 1.5);
+  const bgY = useTransform(springY, (v) => v * 1.5);
+  const imgX = useTransform(springX, (v) => v * -1.5);
+  const imgY = useTransform(springY, (v) => v * -1.5);
+
   return (
-    <section className="relative min-h-screen pt-32 flex flex-col items-center justify-start md:justify-center overflow-hidden text-slate-900 dark:text-white transition-colors duration-300">
+    <section 
+      onMouseMove={handleMouseMove}
+      className="relative min-h-screen pt-32 flex flex-col items-center justify-start md:justify-center overflow-hidden text-slate-900 dark:text-white transition-colors duration-300"
+    >
       {/* Background Glow Elements */}
-      <div className="absolute top-[50%] md:top-[55%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] md:w-[900px] md:h-[900px] bg-[#1B9981]/20 dark:bg-[#1B9981]/30 blur-[120px] md:blur-[180px] rounded-full pointer-events-none" />
-      <div className="absolute top-[50%] md:top-[55%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] md:w-[600px] md:h-[600px] bg-[#00D4AA]/30 dark:bg-[#00D4AA]/40 blur-[90px] md:blur-[140px] rounded-full pointer-events-none" />
+      <motion.div style={{ x: bgX, y: bgY }} className="absolute top-[50%] md:top-[55%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] md:w-[900px] md:h-[900px] bg-[#1B9981]/20 dark:bg-[#1B9981]/30 blur-[120px] md:blur-[180px] rounded-full pointer-events-none" />
+      <motion.div style={{ x: bgX, y: bgY }} className="absolute top-[50%] md:top-[55%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] md:w-[600px] md:h-[600px] bg-[#00D4AA]/30 dark:bg-[#00D4AA]/40 blur-[90px] md:blur-[140px] rounded-full pointer-events-none" />
       
       {/* Giant faint background text */}
       <div className="absolute top-[40%] md:top-[45%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-full text-center pointer-events-none opacity-[0.03] dark:opacity-[0.05] flex flex-col justify-center items-center z-0">
@@ -141,19 +163,23 @@ function HeroSection() {
            transition={{ delay: 0.6, duration: 0.6 }}
            className="flex flex-wrap items-center justify-center gap-4 mb-4 md:mb-8 relative z-20 pointer-events-auto"
         >
-           <Link
-             href="/demo"
-             className="px-8 py-4 rounded-full bg-[#1B9981] text-white font-bold text-sm hover:bg-[#168C74] transition-colors shadow-[0_0_20px_rgba(27,153,129,0.3)] hover:shadow-[0_0_30px_rgba(27,153,129,0.5)] flex items-center gap-2"
-           >
-             <Zap className="w-4 h-4 fill-current text-white" />
-             Coba Demo Gratis
-           </Link>
-           <Link
-             href="#fitur"
-             className="px-8 py-4 rounded-full bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-slate-700 dark:text-white font-bold text-sm hover:bg-slate-200 dark:hover:bg-white/10 transition-colors backdrop-blur-md flex items-center gap-2"
-           >
-             Jelajahi Fitur
-           </Link>
+           <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+             <Link
+               href="/demo"
+               className="px-8 py-4 rounded-full bg-[#1B9981] text-white font-bold text-sm hover:bg-[#168C74] transition-colors shadow-[0_0_20px_rgba(27,153,129,0.3)] hover:shadow-[0_0_30px_rgba(27,153,129,0.5)] flex items-center gap-2"
+             >
+               <Zap className="w-4 h-4 fill-current text-white" />
+               Coba Demo Gratis
+             </Link>
+           </motion.div>
+           <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+             <Link
+               href="#fitur"
+               className="px-8 py-4 rounded-full bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-slate-700 dark:text-white font-bold text-sm hover:bg-slate-200 dark:hover:bg-white/10 transition-colors backdrop-blur-md flex items-center gap-2"
+             >
+               Jelajahi Fitur
+             </Link>
+           </motion.div>
         </motion.div>
 
         {/* Hero Image Group */}
@@ -167,13 +193,18 @@ function HeroSection() {
           <div className="absolute top-[20%] left-[10%] w-[400px] h-[400px] bg-gradient-to-r from-[#1B9981] to-[#00D4AA] blur-[80px] opacity-10 dark:opacity-20 transform -rotate-12 rounded-[100%]" />
           <div className="absolute top-[30%] right-[10%] w-[400px] h-[400px] bg-gradient-to-l from-[#1B9981] to-[#00D4AA] blur-[80px] opacity-10 dark:opacity-20 transform rotate-12 rounded-[100%]" />
           
-          <motion.img 
-            animate={{ y: [0, -12, 0] }}
-            transition={{ repeat: Infinity, duration: 5, ease: "easeInOut" }}
-            src="/images/hero-transparent.png" 
-            alt="diBISAlitas Users" 
-            className="w-full h-auto object-contain max-h-[65vh] md:max-h-[80vh] lg:max-h-[90vh] xl:max-h-none xl:max-w-[115%] drop-shadow-[0_30px_60px_rgba(27,153,129,0.2)] dark:drop-shadow-[0_30px_60px_rgba(27,153,129,0.3)] relative z-10"
-          />
+          <motion.div
+            style={{ x: imgX, y: imgY }}
+            className="relative z-10 w-full flex justify-center"
+          >
+            <motion.img 
+              animate={{ y: [0, -12, 0] }}
+              transition={{ repeat: Infinity, duration: 5, ease: "easeInOut" }}
+              src="/images/hero-transparent.png" 
+              alt="diBISAlitas Users" 
+              className="w-full h-auto object-contain max-h-[65vh] md:max-h-[80vh] lg:max-h-[90vh] xl:max-h-none xl:max-w-[115%] drop-shadow-[0_30px_60px_rgba(27,153,129,0.2)] dark:drop-shadow-[0_30px_60px_rgba(27,153,129,0.3)]"
+            />
+          </motion.div>
         </motion.div>
       </div>
       
@@ -831,6 +862,7 @@ function CTAAndStatsSection() {
             initial="hidden"
             animate={isInView ? "visible" : "hidden"}
             custom={0}
+            whileHover={{ scale: 1.05, y: -10 }}
             className="bg-white dark:bg-[#141414] border border-black/5 dark:border-white/5 rounded-[2rem] p-8 flex flex-col items-center justify-center text-center shadow-xl transition-colors duration-300"
           >
             <h3 className="text-5xl font-bold mb-2">{stat1}+</h3>
@@ -844,6 +876,7 @@ function CTAAndStatsSection() {
             initial="hidden"
             animate={isInView ? "visible" : "hidden"}
             custom={1}
+            whileHover={{ scale: 1.05, y: -10 }}
             className="bg-white dark:bg-[#141414] border border-black/5 dark:border-white/5 rounded-[2rem] p-8 flex flex-col items-center justify-center text-center shadow-xl transition-colors duration-300"
           >
             <h3 className="text-5xl font-bold mb-2">{stat2}</h3>
@@ -857,6 +890,7 @@ function CTAAndStatsSection() {
             initial="hidden"
             animate={isInView ? "visible" : "hidden"}
             custom={2}
+            whileHover={{ scale: 1.05, y: -10 }}
             className="bg-white dark:bg-[#141414] border border-black/5 dark:border-white/5 rounded-[2rem] p-8 flex flex-col items-center justify-center text-center shadow-xl transition-colors duration-300"
           >
             <h3 className="text-5xl font-bold mb-2">{stat3}%</h3>
@@ -870,6 +904,7 @@ function CTAAndStatsSection() {
             initial="hidden"
             animate={isInView ? "visible" : "hidden"}
             custom={3}
+            whileHover={{ scale: 1.05, y: -10 }}
             className="bg-white dark:bg-[#141414] border border-black/5 dark:border-white/5 rounded-[2rem] p-8 flex flex-col items-center justify-center text-center shadow-xl transition-colors duration-300"
           >
             <h3 className="text-5xl font-bold mb-2">&lt; {stat4}</h3>
@@ -882,95 +917,186 @@ function CTAAndStatsSection() {
   );
 }
 
-/* ============================================
-   IMPACT SECTION
-============================================ */
+const impactGalleryData = [
+  {
+    id: "tunarungu",
+    title: "Tunarungu & Wicara",
+    description: "Percakapan dua arah langsung dengan penerjemah suara-ke-teks BiSAPA.\nEdukasi bahasa isyarat BISINDO interaktif bersama BiPINTAR.",
+    color: "bg-[#FF0055]",
+    accent: "text-[#FF0055]",
+    mainImg: "/images/tunarungu-main.jpg",
+    sideImgs: [
+      "/images/tunarungu-1.jpg",
+      "/images/tunarungu-2.jpg",
+      "/images/tunarungu-3.jpg",
+      "/images/tunarungu-4.jpg"
+    ]
+  },
+  {
+    id: "tunanetra",
+    title: "Tunanetra & Low Vision",
+    description: "Navigasi trotoar aman dengan radar deteksi rintangan spasial BiJALAN.\nAkses baca dokumen cetak dan surat kabar mandiri lewat suara BiBACA.",
+    color: "bg-[#00D4AA]",
+    accent: "text-[#00D4AA]",
+    mainImg: "/images/tunanetra-main.jpg",
+    sideImgs: [
+      "/images/tunanetra-1.jpg",
+      "/images/tunanetra-2.jpg",
+      "/images/tunanetra-3.jpg",
+      "/images/tunanetra-4.jpg"
+    ]
+  },
+  {
+    id: "tunadaksa",
+    title: "Tunadaksa & Pengguna Kursi Roda",
+    description: "Perlindungan darurat satu sentuhan dengan pemancar lokasi GPS BiSAFE.\nPemetaan jalur ramah kursi roda dan rintangan fasilitas di BiPANTAU.",
+    color: "bg-[#38BDF8]",
+    accent: "text-[#38BDF8]",
+    mainImg: "/images/tunadaksa-main.jpg",
+    sideImgs: [
+      "/images/tunadaksa-1.jpg",
+      "/images/tunadaksa-2.jpg",
+      "/images/tunadaksa-3.jpg",
+      "/images/tunadaksa-4.jpg"
+    ]
+  }
+];
+
 function ImpactSection() {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const activeItem = impactGalleryData[activeIndex];
+
+  const nextSlide = () => {
+    setActiveIndex((prev) => (prev + 1) % impactGalleryData.length);
+  };
+
   return (
-    <section id="dampak" className="pt-8 md:pt-12 pb-20 md:pb-28 px-4 sm:px-6">
-      <div className="max-w-7xl mx-auto space-y-16">
-        <motion.div
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-60px" }}
-          className="text-center max-w-2xl mx-auto space-y-4 mb-10"
-        >
-          <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-[#1B9981]/10 text-[#1B9981] dark:text-[#00D4AA] font-bold text-[10px] sm:text-xs uppercase tracking-widest">
-            Dampak Sosial &amp; Inklusivitas
-          </span>
-          <h2 className="text-3xl md:text-5xl lg:text-6xl font-black leading-[1.15] md:leading-[1.1] tracking-tight text-slate-900 dark:text-white">
-            Didesain Khusus Bersama Komunitas
-          </h2>
-          <p className="text-sm sm:text-base text-slate-500 dark:text-slate-400 leading-relaxed max-w-2xl mx-auto">
-            Kami mengembangkan fitur dengan mendengarkan langsung pengalaman dan tantangan nyata penyandang disabilitas di lapangan.
-          </p>
-        </motion.div>
+    <section id="dampak" className="py-20 md:py-32 w-full bg-slate-50 dark:bg-[#050103] relative overflow-hidden flex flex-col items-center transition-colors duration-300">
+      
+      {/* Background Giant Text similar to the 'octo' octopus text in the reference */}
+      <div className="absolute top-[30%] left-1/2 -translate-x-1/2 text-[15rem] md:text-[25rem] font-black text-slate-900/[0.03] dark:text-white/[0.02] tracking-tighter pointer-events-none select-none z-0 whitespace-nowrap transition-colors duration-300">
+        IMPACT
+      </div>
+      
+      <div className="relative z-10 w-full max-w-[1400px] mx-auto flex flex-col items-center">
+        {/* Title */}
+        <h2 className="text-4xl md:text-6xl lg:text-[5rem] font-black text-center text-slate-900 dark:text-white mb-16 md:mb-24 tracking-tight leading-[1.1] transition-colors duration-300">
+          dampak <span className={activeItem.accent}>sosial</span> <br />
+          & inklusivitas
+        </h2>
 
-        <motion.div
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-60px" }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-6"
-        >
-          {[
-            {
-              title: "Tunanetra & Low Vision",
-              icon: Eye,
-              color: "text-sky-600 dark:text-sky-400 bg-sky-50 dark:bg-sky-950/60",
-              items: [
-                "Navigasi trotoar aman dengan radar deteksi rintangan spasial BiJALAN",
-                "Akses baca dokumen cetak dan surat kabar mandiri lewat suara BiBACA",
-              ],
-            },
-            {
-              title: "Tunarungu & Wicara",
-              icon: Ear,
-              color: "text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/60",
-              items: [
-                "Percakapan dua arah langsung dengan penerjemah suara-ke-teks BiSAPA",
-                "Edukasi bahasa isyarat BISINDO interaktif bersama BiPINTAR",
-              ],
-            },
-            {
-              title: "Tunadaksa & Pengguna Kursi Roda",
-              icon: Accessibility,
-              color: "text-rose-600 dark:text-rose-400 bg-rose-50 dark:bg-rose-950/60",
-              items: [
-                "Perlindungan darurat satu sentuhan dengan pemancar lokasi GPS BiSAFE",
-                "Pemetaan jalur ramah kursi roda dan rintangan fasilitas di BiPANTAU",
-              ],
-            },
-          ].map((card, i) => {
-            const Icon = card.icon;
-            return (
-              <motion.div
-                key={i}
-                variants={fadeUp}
-                whileHover={{ y: -6 }}
-                transition={{ type: "spring", stiffness: 300, damping: 22 }}
-                className="bg-white dark:bg-[#0F172A] rounded-3xl p-8 border border-slate-200/80 dark:border-slate-800 shadow-sm hover:shadow-lg dark:hover:border-slate-700 transition-all space-y-6"
+        {/* Carousel Area */}
+        <div className="relative w-full h-[400px] sm:h-[450px] md:h-[500px] lg:h-[600px] flex justify-center items-center px-4 md:px-0">
+          
+          <div 
+            className="flex items-center justify-center gap-2 sm:gap-4 md:gap-6 lg:gap-8 w-full"
+            style={{ perspective: "2000px", transformStyle: "preserve-3d" }}
+          >
+            <AnimatePresence mode="wait">
+              {/* Card -2 */}
+              <motion.div 
+                key={`c-2-${activeIndex}`}
+                initial={{ opacity: 0, rotateY: 0, z: -300, x: "300%" }}
+                animate={{ opacity: 1, rotateY: 25, z: -150, x: 20 }}
+                exit={{ opacity: 0, rotateY: 0, z: -300, x: "300%" }}
+                transition={{ duration: 0.85, ease: [0.32, 0.72, 0, 1] }}
+                className="order-1 hidden lg:block w-[140px] xl:w-[180px] h-[300px] xl:h-[380px] rounded-2xl overflow-hidden grayscale brightness-50 flex-shrink-0 relative"
               >
-                <div className="flex items-center gap-3.5">
-                  <div className={`w-12 h-12 rounded-2xl ${card.color} flex items-center justify-center border border-transparent dark:border-white/5`}>
-                    <Icon className="w-6 h-6" />
-                  </div>
-                  <h3 className="text-lg font-bold text-slate-900 dark:text-white">{card.title}</h3>
-                </div>
-
-                <ul className="space-y-3">
-                  {card.items.map((it, idx) => (
-                    <li key={idx} className="flex items-start gap-2.5 text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
-                      <CheckCircle2 className="w-4 h-4 text-[#1B9981] dark:text-[#00D4AA] shrink-0 mt-0.5" />
-                      <span>{it}</span>
-                    </li>
-                  ))}
-                </ul>
+                <img src={activeItem.sideImgs[0]} alt="" className="w-full h-full object-cover" />
+                <div className="absolute inset-0 bg-black/40" />
               </motion.div>
-            );
-          })}
-        </motion.div>
+
+              {/* Card -1 */}
+              <motion.div 
+                key={`c-1-${activeIndex}`}
+                initial={{ opacity: 0, rotateY: 0, z: -200, x: "150%" }}
+                animate={{ opacity: 1, rotateY: 15, z: -80, x: 10 }}
+                exit={{ opacity: 0, rotateY: 0, z: -200, x: "150%" }}
+                transition={{ duration: 0.85, ease: [0.32, 0.72, 0, 1] }}
+                className="order-2 hidden md:block w-[150px] lg:w-[180px] xl:w-[240px] h-[320px] lg:h-[400px] xl:h-[480px] rounded-3xl overflow-hidden grayscale brightness-75 flex-shrink-0 relative"
+              >
+                <img src={activeItem.sideImgs[1]} alt="" className="w-full h-full object-cover" />
+                <div className="absolute inset-0 bg-black/20" />
+              </motion.div>
+
+              {/* Card +1 */}
+              <motion.div 
+                key={`c1-${activeIndex}`}
+                initial={{ opacity: 0, rotateY: 0, z: -200, x: "-150%" }}
+                animate={{ opacity: 1, rotateY: -15, z: -80, x: -10 }}
+                exit={{ opacity: 0, rotateY: 0, z: -200, x: "-150%" }}
+                transition={{ duration: 0.85, ease: [0.32, 0.72, 0, 1] }}
+                className="order-4 hidden md:block w-[150px] lg:w-[180px] xl:w-[240px] h-[320px] lg:h-[400px] xl:h-[480px] rounded-3xl overflow-hidden grayscale brightness-75 flex-shrink-0 relative"
+              >
+                <img src={activeItem.sideImgs[2]} alt="" className="w-full h-full object-cover" />
+                <div className="absolute inset-0 bg-black/20" />
+              </motion.div>
+
+              {/* Card +2 */}
+              <motion.div 
+                key={`c2-${activeIndex}`}
+                initial={{ opacity: 0, rotateY: 0, z: -300, x: "-300%" }}
+                animate={{ opacity: 1, rotateY: -25, z: -150, x: -20 }}
+                exit={{ opacity: 0, rotateY: 0, z: -300, x: "-300%" }}
+                transition={{ duration: 0.85, ease: [0.32, 0.72, 0, 1] }}
+                className="order-5 hidden lg:block w-[140px] xl:w-[180px] h-[300px] xl:h-[380px] rounded-2xl overflow-hidden grayscale brightness-50 flex-shrink-0 relative"
+              >
+                <img src={activeItem.sideImgs[3]} alt="" className="w-full h-full object-cover" />
+                <div className="absolute inset-0 bg-black/40" />
+              </motion.div>
+            </AnimatePresence>
+
+            {/* Center Card 0 (Fixed Wrapper) */}
+            <div 
+              className={`order-3 relative w-[280px] sm:w-[320px] md:w-[350px] lg:w-[400px] h-[380px] sm:h-[420px] md:h-[480px] lg:h-[550px] rounded-[2rem] md:rounded-[3rem] p-3 md:p-5 flex flex-col ${activeItem.color} shadow-2xl z-20 flex-shrink-0 transform transition-colors duration-700 hover:scale-[1.02]`}
+            >
+              <AnimatePresence mode="wait">
+                <motion.div 
+                  key={`center-content-${activeIndex}`}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="w-full h-full flex flex-col"
+                >
+                  {/* Image Top Half */}
+                  <div className="w-full h-[50%] md:h-[55%] rounded-[1.5rem] md:rounded-[2rem] overflow-hidden bg-black/20 relative">
+                    <img src={activeItem.mainImg} alt={activeItem.title} className="w-full h-full object-cover grayscale brightness-90 mix-blend-luminosity opacity-90" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                  </div>
+                  
+                  {/* Text Bottom Half */}
+                  <div className="flex-1 mt-4 md:mt-6 px-2 md:px-4 flex flex-col">
+                    <h3 className="text-white text-2xl md:text-3xl lg:text-4xl font-bold leading-tight mb-2 md:mb-4">{activeItem.title}</h3>
+                    <p className="text-white/90 text-xs md:text-sm lg:text-[15px] leading-relaxed font-medium whitespace-pre-line">
+                      {activeItem.description}
+                    </p>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+
+              {/* Next Button (Fixed outside content fade) */}
+              <button 
+                onClick={nextSlide} 
+                className="absolute -bottom-5 -left-5 md:-bottom-8 md:-left-8 w-14 h-14 md:w-20 md:h-20 bg-white rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-transform z-30 group"
+              >
+                <ArrowUpRight className="w-6 h-6 md:w-8 md:h-8 text-black transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Indicators */}
+        <div className="flex justify-center items-center gap-3 mt-16 md:mt-24">
+          {impactGalleryData.map((_, i) => (
+            <button 
+              key={i}
+              onClick={() => setActiveIndex(i)}
+              className={`h-2 md:h-2.5 rounded-full transition-all duration-500 ${i === activeIndex ? `w-10 md:w-16 ${activeItem.color}` : 'w-2 md:w-2.5 bg-black/20 hover:bg-black/40 dark:bg-white/20 dark:hover:bg-white/40'}`}
+              aria-label={`Go to slide ${i + 1}`}
+            />
+          ))}
+        </div>
       </div>
     </section>
   );
