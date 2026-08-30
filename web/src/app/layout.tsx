@@ -48,7 +48,7 @@ export default function RootLayout({
       suppressHydrationWarning
       className={`${jakarta.variable} ${geistMono.variable} ${playfair.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-[#ffffff] dark:bg-[#090e17] text-slate-800 dark:text-slate-100 transition-colors duration-300">
+      <body className="min-h-full flex flex-col bg-[#ffffff] dark:bg-black text-slate-800 dark:text-slate-100 transition-colors duration-300">
         <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>

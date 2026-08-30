@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import {
@@ -9,172 +9,171 @@ import {
   Volume2,
   AlertTriangle,
   Zap,
-  ArrowRight,
-  ArrowLeft,
-  CheckCircle2,
-  Activity,
-  Eye,
-  Camera,
+  ArrowRight
 } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import FloatingAccessibility from "@/components/FloatingAccessibility";
-import InteractiveDeviceMockup from "@/components/InteractiveDeviceMockup";
 
 export default function BiJalanDetailPage() {
-  const [activeObstacle, setActiveObstacle] = useState(0);
-
-  const obstacles = [
-    { name: "Tiang Listrik", dist: "1.2 Meter", dir: "Depan Kiri", action: "Geser ke kanan 30 cm", haptic: "Getar Ringan" },
-    { name: "Lubang Galian Trotoar", dist: "2.0 Meter", dir: "Tepat di Depan", action: "Berhenti dan melangkah ke kiri", haptic: "Getar Cepat Berulang" },
-    { name: "Pejalan Kaki Mendekat", dist: "3.5 Meter", dir: "Depan Kanan", action: "Jaga kecepatan jalan normal", haptic: "Getar Lembut" },
-  ];
-
   return (
-    <div className="min-h-screen bg-[#FDFEFE] text-slate-800 selection:bg-sky-500/20">
+    <div className="min-h-screen bg-slate-50 dark:bg-black text-slate-800 dark:text-slate-200 selection:bg-sky-500/20">
       <Navbar />
 
       {/* Hero */}
-      <section className="pt-32 pb-16 px-4 sm:px-6 relative overflow-hidden">
-        <div className="absolute top-10 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-sky-500/10 blur-3xl rounded-full pointer-events-none" />
+      <section className="pt-32 pb-16 px-4 sm:px-6 relative overflow-visible">
+        <div className="absolute top-10 left-1/2 -translate-x-1/2 w-[400px] h-[200px]  bg-sky-500/10 dark:bg-sky-500/20  blur-3xl rounded-full pointer-events-none" />
 
         <div className="max-w-7xl mx-auto">
-          <div className="flex items-center gap-2 text-xs font-semibold text-slate-400 mb-6">
-            <Link href="/fitur" className="hover:text-slate-700 flex items-center gap-1">
-              <ArrowLeft className="w-3.5 h-3.5" /> Semua Fitur
-            </Link>
-            <span>/</span>
-            <span className="text-sky-600 font-bold">BiJALAN</span>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            {/* Left */}
-            <div className="lg:col-span-7 space-y-6">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-sky-50 border border-sky-200 text-sky-600 text-xs font-bold uppercase tracking-wider">
-                <Navigation className="w-4 h-4" /> Spatial Vision &amp; Haptic Guidance
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center min-h-[60vh]">
+            {/* Left: Info */}
+            <div className="lg:col-span-7 space-y-6 relative z-10">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-sky-500/10 dark:bg-sky-500/20 border border-sky-500/20 dark:border-sky-500/30 text-sky-600 dark:text-sky-400 text-xs font-bold uppercase tracking-wider">
+                <Navigation className="w-4 h-4" /> Spatial Vision & Haptic Guidance
               </div>
 
-              <h1 className="text-4xl sm:text-5xl font-black tracking-tight text-slate-900 leading-tight">
+              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight text-slate-900 dark:text-white leading-[1.05]">
                 BiJALAN: Navigasi Spasial <br />
-                <span className="text-sky-600">Mata Kedua</span> Tunanetra
+                <span className="text-sky-600 dark:text-sky-500">Mata Kedua</span> Tunanetra
               </h1>
 
-              <p className="text-slate-600 text-base sm:text-lg leading-relaxed">
-                BiJALAN mengubah kamera ponsel menjadi sensor pendeteksi rintangan jalan secara real-time. Dengan kombinasi bounding box YOLO on-device, estimasi jarak spasial, panduan suara, dan getaran haptic, mobilitas Tunanetra di trotoar menjadi jauh lebih aman.
+              <p className="text-slate-600 dark:text-slate-300 text-base sm:text-lg lg:text-xl leading-relaxed max-w-2xl font-light">
+                BiJALAN mengubah kamera ponsel Anda menjadi asisten mobilitas proaktif. Kecerdasan buatan kami memindai jalanan di depan Anda secara langsung, mengenali bahaya, dan memberikan instruksi suara interaktif agar Anda selalu melangkah di jalur yang aman.
               </p>
 
               <div className="flex flex-wrap gap-4 pt-2">
                 <Link
                   href="/app/bijalan"
-                  className="px-7 py-3.5 rounded-2xl bg-sky-600 text-white font-extrabold text-sm hover:bg-sky-700 transition-all shadow-lg shadow-sky-600/20 flex items-center gap-2"
+                  className="px-8 py-4 rounded-full bg-sky-600 text-white font-extrabold text-sm hover:bg-sky-700 transition-all shadow-lg shadow-sky-600/20 flex items-center gap-2"
                 >
                   <Zap className="w-4 h-4 fill-current" />
                   Buka Kamera BiJALAN
                 </Link>
-                <a
-                  href="#simulator"
-                  className="px-7 py-3.5 rounded-2xl bg-slate-100 text-slate-800 font-bold text-sm hover:bg-slate-200 transition-all"
+                <Link
+                  href="/demo"
+                  className="px-8 py-4 rounded-full bg-slate-200 dark:bg-white/10 text-slate-800 dark:text-white font-bold text-sm hover:bg-slate-300 dark:hover:bg-white/20 transition-all border border-transparent dark:border-white/10"
                 >
-                  Uji Radar Spasial
-                </a>
+                  Lihat Demo Interaktif
+                </Link>
               </div>
             </div>
 
-            {/* Right: Mockup */}
-            <div className="lg:col-span-5 flex justify-center">
-              <InteractiveDeviceMockup activeFeature="bijalan" interactive={false} />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Interactive Simulator */}
-      <section id="simulator" className="py-16 px-4 sm:px-6 bg-slate-50 border-y border-slate-200">
-        <div className="max-w-4xl mx-auto space-y-6">
-          <div className="text-center space-y-2">
-            <span className="text-xs font-bold uppercase text-sky-600 bg-sky-100/60 px-3 py-1 rounded-full">
-              Simulator Deteksi Spasial
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900">
-              Uji Coba Pengenalan Rintangan Trotoar
-            </h2>
-            <p className="text-slate-500 text-sm max-w-xl mx-auto">
-              Pilih rintangan di bawah untuk mensimulasikan respons getaran dan panduan arah suara.
-            </p>
-          </div>
-
-          <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-6">
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              {obstacles.map((obs, i) => (
-                <button
-                  key={i}
-                  onClick={() => setActiveObstacle(i)}
-                  className={`p-4 rounded-2xl border text-left transition-all ${
-                    activeObstacle === i
-                      ? "bg-sky-600 text-white border-sky-600 shadow-md scale-105"
-                      : "bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100"
-                  }`}
-                >
-                  <div className="font-bold text-xs">{obs.name}</div>
-                  <div className={`text-[10px] ${activeObstacle === i ? "text-sky-100" : "text-slate-400"}`}>
-                    Jarak {obs.dist}
-                  </div>
-                </button>
-              ))}
-            </div>
-
-            <div className="p-6 rounded-2xl bg-slate-950 text-white space-y-4">
-              <div className="flex items-center justify-between text-xs text-sky-400 font-bold">
-                <span>YOLO Spatial Inference:</span>
-                <span>Posisi: {obstacles[activeObstacle].dir}</span>
-              </div>
-              <div className="text-xl font-bold text-white">
-                ⚠️ Peringatan: {obstacles[activeObstacle].name} terdeteksi dalam jarak {obstacles[activeObstacle].dist}
-              </div>
-              <div className="p-3 rounded-xl bg-slate-900 border border-slate-800 text-xs flex items-center justify-between">
-                <span className="text-slate-300">Instruksi Suara: <strong>&ldquo;{obstacles[activeObstacle].action}&rdquo;</strong></span>
-                <span className="px-2.5 py-1 rounded bg-sky-500/20 text-sky-300 font-mono text-[10px]">
-                  {obstacles[activeObstacle].haptic}
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 3 Pillars */}
-      <section className="py-20 px-4 sm:px-6">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
-          {[
-            {
-              icon: Camera,
-              title: "YOLO Object Detection",
-              desc: "Mengenali objek trotoar, marka jalan, tangga, kendaraan, dan orang pada kecepatan 30 FPS.",
-            },
-            {
-              icon: Activity,
-              title: "Haptic Vibration Feedback",
-              desc: "Pola getaran smartphone intuitif yang mengindikasikan arah aman belok kiri atau kanan.",
-            },
-            {
-              icon: Volume2,
-              title: "Voice Audio Guidance",
-              desc: "Panduan suara cerdas yang tidak mengganggu pendengaran pengguna di lingkungan luar ruang.",
-            },
-          ].map((c, i) => {
-            const Icon = c.icon;
-            return (
-              <div
-                key={i}
-                className="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm space-y-4 hover:shadow-lg transition-all"
+            {/* Right: Video Mockup */}
+            <motion.div 
+              initial={{ opacity: 0, x: 60 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+              className="lg:col-span-5 flex justify-center relative z-10" 
+              style={{ perspective: "1200px" }}
+            >
+              <div 
+                className="relative w-[270px] sm:w-[310px] lg:w-[340px] aspect-[9/18.5] mx-auto bg-slate-200 dark:bg-[#0a0a0a] rounded-[1.75rem] md:rounded-[2.25rem] border-[6px] md:border-[8px] border-slate-300 dark:border-[#1a1a1a] overflow-hidden flex flex-col items-center justify-center group transform-gpu preserve-3d transition-colors duration-300"
+                style={{
+                  transform: "rotateY(-18deg) rotateX(5deg) rotateZ(2deg)",
+                  boxShadow: "20px 30px 60px rgba(0,0,0,0.15), 8px 12px 25px rgba(0,0,0,0.08)",
+                  WebkitMaskImage: "linear-gradient(to left, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 50%, rgba(0,0,0,0.5) 80%, rgba(0,0,0,0) 100%), linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 60%, rgba(0,0,0,0.3) 85%, rgba(0,0,0,0) 100%)",
+                  WebkitMaskComposite: "destination-in",
+                  maskImage: "linear-gradient(to left, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 50%, rgba(0,0,0,0.5) 80%, rgba(0,0,0,0) 100%), linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 60%, rgba(0,0,0,0.3) 85%, rgba(0,0,0,0) 100%)",
+                  maskComposite: "intersect"
+                }}
               >
-                <div className="w-12 h-12 rounded-2xl bg-sky-50 text-sky-600 flex items-center justify-center">
-                  <Icon className="w-6 h-6" />
-                </div>
-                <h3 className="text-xl font-bold text-slate-900">{c.title}</h3>
-                <p className="text-slate-600 text-xs sm:text-sm leading-relaxed">{c.desc}</p>
+                <video
+                  src="/video/bijalan.mp4"
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent pointer-events-none" />
               </div>
-            );
-          })}
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Screen 1: Radar Spasial dengan Fade-out Masking Effect */}
+      <section className="py-16 md:py-24 px-4 sm:px-6 overflow-visible relative z-10 border-t border-slate-200 dark:border-white/5">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-12 lg:gap-8 items-center min-h-[60vh]">
+            
+            <motion.div 
+              initial={{ opacity: 0, x: -60 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+              className="order-2 lg:order-1 relative flex items-center justify-center lg:justify-start"
+              style={{ perspective: "1200px" }}
+            >
+              <div className="absolute w-[40%] h-[60%]  bg-sky-500/10 dark:bg-sky-500/15  blur-[70px] rounded-full top-1/2 left-[40%] -translate-x-1/2 -translate-y-1/2" />
+              
+              {/* Fade out mask effect matching landing page */}
+              <div 
+                className="relative w-[270px] sm:w-[310px] lg:w-[340px] aspect-[9/18.5] mx-auto bg-slate-200 dark:bg-[#0a0a0a] rounded-[1.75rem] md:rounded-[2.25rem] border-[6px] md:border-[8px] border-slate-300 dark:border-[#1a1a1a] overflow-hidden flex flex-col items-center justify-center group transform-gpu preserve-3d transition-colors duration-300"
+                style={{
+                  transform: "rotateY(25deg) rotateX(10deg) rotateZ(-3deg)",
+                  boxShadow: "-20px 30px 60px rgba(0,0,0,0.15), -8px 12px 25px rgba(0,0,0,0.08)",
+                  WebkitMaskImage: "linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 50%, rgba(0,0,0,0.5) 80%, rgba(0,0,0,0) 100%), linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 60%, rgba(0,0,0,0.3) 85%, rgba(0,0,0,0) 100%)",
+                  WebkitMaskComposite: "destination-in",
+                  maskImage: "linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 50%, rgba(0,0,0,0.5) 80%, rgba(0,0,0,0) 100%), linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 60%, rgba(0,0,0,0.3) 85%, rgba(0,0,0,0) 100%)",
+                  maskComposite: "intersect",
+                }}
+              >
+                <span className="text-slate-500 dark:text-slate-400 font-medium text-[10px] sm:text-xs text-center px-4 absolute top-4 z-10 w-full">Screenshot: Radar Spasial AI</span>
+                <img src="/images/bijalan-screen1.jpg" alt="BiJALAN Radar Scanner" className="absolute inset-0 w-full h-full object-cover" onError={(e) => (e.currentTarget.style.display = 'none')} />
+                
+                <div className="absolute inset-0 bg-gradient-to-br from-slate-100 via-slate-200 to-sky-500/20 dark:from-[#0a0e17] dark:via-[#111827] dark:to-sky-500/30 -z-10" />
+                <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent pointer-events-none" />
+              </div>
+            </motion.div>
+            
+            <motion.div 
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
+              className="order-1 lg:order-2 flex flex-col space-y-5 lg:pl-4 justify-center"
+            >
+              <span className="text-sm md:text-base font-light tracking-normal text-slate-400 dark:text-white/40">
+                Pendeteksi Rintangan Pintar:
+              </span>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.5rem] font-black leading-[1.05] tracking-tight text-slate-900 dark:text-white">
+                Identifikasi Bahaya <br />
+                <em className="font-black italic text-sky-600 dark:text-sky-500">
+                  dan panduan suara akurat.
+                </em>
+              </h2>
+              <p className="text-slate-500 dark:text-white/70 text-sm md:text-[15px] leading-relaxed max-w-md font-light">
+                Saat berjalan, cukup arahkan ponsel Anda ke depan. BiJALAN akan terus mendeteksi objek di sekitar Anda—mulai dari tiang listrik, lubang trotoar, genangan air, hingga pejalan kaki lainnya. Sistem akan memberikan informasi arah yang aman melalui perintah suara yang jernih, sehingga Anda bisa menghindari halangan dengan penuh percaya diri tanpa rasa cemas.
+              </p>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Bottom CTA */}
+      <section className="py-20 px-4 sm:px-6 text-center relative z-10 border-t border-slate-200 dark:border-white/5">
+        <div className="max-w-3xl mx-auto space-y-8">
+          <h2 className="text-3xl md:text-5xl font-black text-slate-900 dark:text-white leading-[1.1]">
+            Melangkah Lebih Jauh dengan Aman
+          </h2>
+          <p className="text-slate-500 dark:text-slate-400 text-base md:text-lg">
+            Gunakan BiJALAN sebagai mata tambahan Anda setiap kali melangkah ke luar rumah.
+          </p>
+          <div className="flex flex-wrap justify-center gap-4">
+            <Link
+              href="/app/bijalan"
+              className="px-8 py-4 rounded-full bg-sky-600 text-white font-extrabold text-sm hover:bg-sky-700 shadow-lg shadow-sky-600/20 hover:shadow-sky-600/40 transition-all"
+            >
+              Buka BiJALAN
+            </Link>
+            <Link
+              href="/fitur"
+              className="px-8 py-4 rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 font-bold text-sm hover:bg-slate-50 dark:hover:bg-slate-800 transition-all shadow-sm"
+            >
+              Eksplorasi Fitur Lain
+            </Link>
+          </div>
         </div>
       </section>
 

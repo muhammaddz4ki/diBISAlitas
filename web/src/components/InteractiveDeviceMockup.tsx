@@ -138,32 +138,34 @@ export default function InteractiveDeviceMockup({
   return (
     <div className="relative mx-auto flex flex-col items-center justify-center gap-3">
       {/* Mode Switcher Pill */}
-      <div className="flex items-center gap-1.5 p-1 rounded-full bg-slate-200/80 dark:bg-zinc-800/80 border border-slate-300/80 dark:border-zinc-700 text-[11px] font-bold text-slate-700 dark:text-slate-200 shadow-xs">
-        <button
-          type="button"
-          onClick={() => setPlayMode("video")}
-          className={`px-3 py-1 rounded-full transition-all flex items-center gap-1.5 ${
-            playMode === "video"
-              ? "bg-white dark:bg-[#1B9981] text-slate-900 dark:text-white shadow-xs"
-              : "text-slate-500 hover:text-slate-900 dark:hover:text-white"
-          }`}
-        >
-          <Play className="w-3 h-3 fill-current" />
-          <span>Video Demo</span>
-        </button>
-        <button
-          type="button"
-          onClick={() => setPlayMode("interactive")}
-          className={`px-3 py-1 rounded-full transition-all flex items-center gap-1.5 ${
-            playMode === "interactive"
-              ? "bg-white dark:bg-[#1B9981] text-slate-900 dark:text-white shadow-xs"
-              : "text-slate-500 hover:text-slate-900 dark:hover:text-white"
-          }`}
-        >
-          <Sliders className="w-3 h-3" />
-          <span>Simulasi</span>
-        </button>
-      </div>
+      {interactive && (
+        <div className="flex items-center gap-1.5 p-1 rounded-full bg-slate-200/80 dark:bg-zinc-800/80 border border-slate-300/80 dark:border-zinc-700 text-[11px] font-bold text-slate-700 dark:text-slate-200 shadow-xs">
+          <button
+            type="button"
+            onClick={() => setPlayMode("video")}
+            className={`px-3 py-1 rounded-full transition-all flex items-center gap-1.5 ${
+              playMode === "video"
+                ? "bg-white dark:bg-[#1B9981] text-slate-900 dark:text-white shadow-xs"
+                : "text-slate-500 hover:text-slate-900 dark:hover:text-white"
+            }`}
+          >
+            <Play className="w-3 h-3 fill-current" />
+            <span>Video Demo</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => setPlayMode("interactive")}
+            className={`px-3 py-1 rounded-full transition-all flex items-center gap-1.5 ${
+              playMode === "interactive"
+                ? "bg-white dark:bg-[#1B9981] text-slate-900 dark:text-white shadow-xs"
+                : "text-slate-500 hover:text-slate-900 dark:hover:text-white"
+            }`}
+          >
+            <Sliders className="w-3 h-3" />
+            <span>Simulasi</span>
+          </button>
+        </div>
+      )}
 
       {/* Realistic Smartphone Clean Matte Chassis */}
       <div className="relative w-[300px] sm:w-[325px] h-[615px] rounded-[3.25rem] bg-[#0f172a] p-3 shadow-[0_20px_60px_rgba(0,0,0,0.2)] border-2 border-slate-700/80">

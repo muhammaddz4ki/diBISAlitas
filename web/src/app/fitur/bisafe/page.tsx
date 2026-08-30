@@ -1,150 +1,106 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import {
   ShieldAlert,
   MapPin,
   Volume2,
-  Radio,
   Wifi,
   PhoneCall,
   CheckCircle2,
-  ArrowRight,
   Zap,
-  Clock,
-  Layers,
   ArrowLeft,
-  AlertOctagon,
+  Users,
+  FileClock,
 } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import FloatingAccessibility from "@/components/FloatingAccessibility";
 import InteractiveDeviceMockup from "@/components/InteractiveDeviceMockup";
 
 export default function BiSafeDetailPage() {
-  const [testTriggered, setTestTriggered] = useState(false);
-  const [sirenPlaying, setSirenPlaying] = useState(false);
-
-  const handleTestSOS = () => {
-    setTestTriggered(true);
-    setSirenPlaying(true);
-    setTimeout(() => {
-      setSirenPlaying(false);
-    }, 4000);
-  };
-
   return (
-    <div className="min-h-screen bg-[#FDFEFE] text-slate-800 selection:bg-rose-500/20">
+    <div className="min-h-screen bg-slate-50 dark:bg-black text-slate-900 dark:text-white transition-colors duration-300 selection:bg-red-500/20">
       <Navbar />
 
       {/* Hero Section */}
       <section className="pt-32 pb-16 px-4 sm:px-6 relative overflow-hidden">
-        <div className="absolute top-10 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-rose-500/10 blur-3xl rounded-full pointer-events-none" />
+        <div className="absolute top-10 left-1/2 -translate-x-1/2 w-[400px] h-[200px]  bg-red-500/10 dark:bg-red-500/20  blur-3xl rounded-full pointer-events-none" />
 
         <div className="max-w-7xl mx-auto">
-          {/* Breadcrumb */}
-          <div className="flex items-center gap-2 text-xs font-semibold text-slate-400 mb-6">
-            <Link href="/fitur" className="hover:text-slate-700 flex items-center gap-1">
-              <ArrowLeft className="w-3.5 h-3.5" /> Semua Fitur
-            </Link>
-            <span>/</span>
-            <span className="text-rose-600 font-bold">BiSAFE</span>
-          </div>
+
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             {/* Left: Info */}
-            <div className="lg:col-span-7 space-y-6">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-rose-50 border border-rose-200 text-rose-600 text-xs font-bold uppercase tracking-wider">
+            <div className="lg:col-span-7 space-y-6 relative z-10">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-red-100 dark:bg-red-500/10 border border-red-200 dark:border-red-500/20 text-red-700 dark:text-red-400 text-xs font-bold uppercase tracking-wider">
                 <ShieldAlert className="w-4 h-4" /> Sistem Alarm &amp; Panic Button Darurat
               </div>
 
-              <h1 className="text-4xl sm:text-5xl font-black tracking-tight text-slate-900 leading-tight">
-                BiSAFE: Perlindungan <br />
-                <span className="text-rose-600">Satu Sentuhan</span> Tanpa Jeda
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tight text-slate-900 dark:text-white leading-[1.1]">
+                BiSAFE: Perlindungan <br className="hidden md:block" />
+                <span className="text-red-600 dark:text-red-500">Satu Sentuhan</span> Tanpa Jeda
               </h1>
 
-              <p className="text-slate-600 text-base sm:text-lg leading-relaxed">
+              <p className="text-slate-600 dark:text-slate-400 text-base sm:text-lg leading-relaxed">
                 BiSAFE dirancang sebagai garis pertahanan pertama bagi penyandang disabilitas saat menghadapi kondisi krisis, ancaman fisik, kecelakaan, atau disorientasi spasial di ruang publik.
               </p>
 
               <div className="flex flex-wrap gap-4 pt-2">
                 <Link
                   href="/demo"
-                  className="px-7 py-3.5 rounded-2xl bg-rose-600 text-white font-extrabold text-sm hover:bg-rose-700 transition-all shadow-lg shadow-rose-600/20 flex items-center gap-2"
+                  className="px-7 py-3.5 rounded-full bg-red-600 text-white font-extrabold text-sm hover:bg-red-700 transition-all shadow-lg shadow-red-600/20 hover:shadow-red-600/40 flex items-center gap-2"
                 >
                   <Zap className="w-4 h-4 fill-current" />
                   Coba Demo BiSAFE
                 </Link>
-                <a
-                  href="#simulator"
-                  className="px-7 py-3.5 rounded-2xl bg-slate-100 text-slate-800 font-bold text-sm hover:bg-slate-200 transition-all"
-                >
-                  Uji Simulator di Layar
-                </a>
               </div>
             </div>
 
-            {/* Right: Live Interactive Mockup */}
-            <div className="lg:col-span-5 flex justify-center">
-              <InteractiveDeviceMockup activeFeature="bisafe" interactive={false} />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Interactive Sandbox Simulator on Page */}
-      <section id="simulator" className="py-16 px-4 sm:px-6 bg-slate-50 border-y border-slate-200">
-        <div className="max-w-4xl mx-auto bg-white rounded-3xl p-6 sm:p-10 border border-slate-200 shadow-sm text-center space-y-6">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-50 text-rose-600 text-xs font-bold uppercase">
-            <Radio className="w-3.5 h-3.5 animate-pulse" /> Sandbox Uji Coba Langsung
-          </div>
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900">
-            Simulasi Sinyal Darurat BiSAFE
-          </h2>
-          <p className="text-slate-500 text-sm max-w-xl mx-auto">
-            Klik tombol darurat di bawah untuk melihat bagaimana koordinat satelit disiarkan secara instan ke server Cloud relawan diBISAlitas.
-          </p>
-
-          <div className="py-6 flex flex-col items-center justify-center">
-            <button
-              onClick={handleTestSOS}
-              className={`w-32 h-32 rounded-full flex flex-col items-center justify-center font-black text-white shadow-2xl transition-all ${
-                testTriggered
-                  ? "bg-rose-700 scale-95 ring-8 ring-rose-400/50"
-                  : "bg-rose-600 hover:scale-105 active:scale-95 shadow-rose-600/30"
-              }`}
+            {/* Right: Video Mockup */}
+            <motion.div 
+              initial={{ opacity: 0, x: 60 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+              className="lg:col-span-5 flex justify-center relative z-10" 
+              style={{ perspective: "1200px" }}
             >
-              <ShieldAlert className="w-12 h-12 mb-1" />
-              <span className="text-xs tracking-wider">{testTriggered ? "SOS AKTIF!" : "TEKAN SOS"}</span>
-            </button>
-
-            {testTriggered && (
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="mt-6 p-4 rounded-2xl bg-rose-50 border border-rose-200 text-rose-800 text-xs font-semibold max-w-md text-left space-y-1.5"
+              <div 
+                className="relative w-[270px] sm:w-[310px] lg:w-[340px] aspect-[9/18.5] mx-auto bg-slate-200 dark:bg-[#0a0a0a] rounded-[1.75rem] md:rounded-[2.25rem] border-[6px] md:border-[8px] border-slate-300 dark:border-[#1a1a1a] overflow-hidden flex flex-col items-center justify-center group transform-gpu preserve-3d transition-colors duration-300"
+                style={{
+                  transform: "rotateY(-18deg) rotateX(5deg) rotateZ(2deg)",
+                  boxShadow: "20px 30px 60px rgba(0,0,0,0.15), 8px 12px 25px rgba(0,0,0,0.08)",
+                  WebkitMaskImage: "linear-gradient(to left, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 50%, rgba(0,0,0,0.5) 80%, rgba(0,0,0,0) 100%), linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 60%, rgba(0,0,0,0.3) 85%, rgba(0,0,0,0) 100%)",
+                  WebkitMaskComposite: "destination-in",
+                  maskImage: "linear-gradient(to left, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 50%, rgba(0,0,0,0.5) 80%, rgba(0,0,0,0) 100%), linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 60%, rgba(0,0,0,0.3) 85%, rgba(0,0,0,0) 100%)",
+                  maskComposite: "intersect",
+                }}
               >
-                <div className="font-bold flex items-center gap-1.5 text-rose-900">
-                  <CheckCircle2 className="w-4 h-4 text-rose-600" /> Sinyal Terverifikasi ke Command Center:
-                </div>
-                <div>• Koordinat: <span className="font-mono">-6.2088° S, 106.8456° E (Presisi 1.2m)</span></div>
-                <div>• Timestamp: <span className="font-mono">{new Date().toLocaleTimeString()} WIB</span></div>
-                <div>• Status Sirene: <span className="font-bold text-rose-700">{sirenPlaying ? "Membunyikan Frekuensi Bahaya 85dB" : "Sinyal Siap"}</span></div>
-              </motion.div>
-            )}
+                <video
+                  src="/video/bisafe.mp4"
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent pointer-events-none" />
+              </div>
+            </motion.div>
           </div>
         </div>
       </section>
 
       {/* Feature Deep Breakdown */}
-      <section className="py-20 px-4 sm:px-6">
+      <section className="py-20 px-4 sm:px-6 relative z-10">
         <div className="max-w-7xl mx-auto space-y-16">
           <div className="text-center max-w-2xl mx-auto">
-            <h2 className="text-3xl font-black text-slate-900">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-black text-slate-900 dark:text-white leading-[1.1] tracking-tight">
               Bagaimana BiSAFE Melindungi Pengguna?
             </h2>
-            <p className="text-slate-500 text-sm mt-2">
+            <p className="text-slate-500 dark:text-slate-400 text-sm md:text-base mt-4">
               4 pilar perlindungan tanpa kompromi saat detik-detik genting.
             </p>
           </div>
@@ -176,13 +132,13 @@ export default function BiSafeDetailPage() {
               return (
                 <div
                   key={i}
-                  className="bg-white rounded-3xl p-7 border border-slate-200/80 shadow-sm hover:shadow-lg transition-all space-y-3"
+                  className="bg-white dark:bg-transparent rounded-3xl p-7 border border-slate-200/80 dark:border-white/10 shadow-sm hover:shadow-lg dark:hover:shadow-[0_0_30px_rgba(255,255,255,0.05)] transition-all space-y-4"
                 >
-                  <div className="w-12 h-12 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center">
+                  <div className="w-12 h-12 rounded-2xl bg-red-50 dark:bg-red-500/20 text-red-600 dark:text-red-400 flex items-center justify-center">
                     <Icon className="w-6 h-6" />
                   </div>
-                  <h3 className="text-lg font-bold text-slate-900">{card.title}</h3>
-                  <p className="text-slate-600 text-xs leading-relaxed">{card.desc}</p>
+                  <h3 className="text-lg font-bold text-slate-900 dark:text-white">{card.title}</h3>
+                  <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">{card.desc}</p>
                 </div>
               );
             })}
@@ -190,59 +146,197 @@ export default function BiSafeDetailPage() {
         </div>
       </section>
 
-      {/* Technical Specs Table */}
-      <section className="py-16 px-4 sm:px-6 bg-slate-50 border-t border-slate-200">
-        <div className="max-w-4xl mx-auto space-y-6">
-          <h3 className="text-xl font-bold text-slate-900">Spesifikasi Arsitektur BiSAFE</h3>
-          <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden text-xs">
-            <div className="grid grid-cols-3 p-4 border-b border-slate-100 font-bold bg-slate-50 text-slate-700">
-              <span>Komponen</span>
-              <span>Teknologi</span>
-              <span>Spesifikasi</span>
-            </div>
-            <div className="grid grid-cols-3 p-4 border-b border-slate-100 text-slate-600">
-              <span className="font-semibold text-slate-800">Positioning Engine</span>
-              <span>HTML5 Geolocation + GPS</span>
-              <span>Akurasi &lt; 2 meter, Update interval 1.5s</span>
-            </div>
-            <div className="grid grid-cols-3 p-4 border-b border-slate-100 text-slate-600">
-              <span className="font-semibold text-slate-800">Transmission Protocol</span>
-              <span>Firestore WebSocket Stream</span>
-              <span>Latensi transmisi &lt; 150 ms</span>
-            </div>
-            <div className="grid grid-cols-3 p-4 border-b border-slate-100 text-slate-600">
-              <span className="font-semibold text-slate-800">Audio Alarm Synthesizer</span>
-              <span>Web Audio API</span>
-              <span>Dual-frequency siren (800Hz / 1200Hz)</span>
-            </div>
-            <div className="grid grid-cols-3 p-4 text-slate-600">
-              <span className="font-semibold text-slate-800">Trigger Methods</span>
-              <span>GUI Tap, Voice &quot;TOLONG&quot;, Volume Key</span>
-              <span>Tiga jalur aktivasi redundan</span>
-            </div>
+      {/* Screen 1: Halaman Utama Panic Button */}
+      <section className="py-16 md:py-24 px-4 sm:px-6 overflow-visible relative z-10">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-12 lg:gap-8 items-center min-h-[60vh]">
+            <motion.div 
+              initial={{ opacity: 0, x: -60 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+              className="order-2 lg:order-1 relative flex items-center justify-center lg:justify-start"
+              style={{ perspective: "1200px" }}
+            >
+              <div className="absolute w-[40%] h-[60%]  bg-red-500/10 dark:bg-red-500/15  blur-[70px] rounded-full top-1/2 left-[40%] -translate-x-1/2 -translate-y-1/2" />
+              <div 
+                className="relative w-[270px] sm:w-[310px] lg:w-[340px] aspect-[9/18.5] mx-auto bg-slate-200 dark:bg-[#0a0a0a] rounded-[1.75rem] md:rounded-[2.25rem] border-[6px] md:border-[8px] border-slate-300 dark:border-[#1a1a1a] overflow-hidden flex flex-col items-center justify-center group transform-gpu preserve-3d transition-colors duration-300"
+                style={{
+                  transform: "rotateY(18deg) rotateX(5deg) rotateZ(-2deg)",
+                  boxShadow: "-20px 30px 60px rgba(0,0,0,0.15), -8px 12px 25px rgba(0,0,0,0.08)",
+                  WebkitMaskImage: "linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 50%, rgba(0,0,0,0.5) 80%, rgba(0,0,0,0) 100%), linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 60%, rgba(0,0,0,0.3) 85%, rgba(0,0,0,0) 100%)",
+                  WebkitMaskComposite: "destination-in",
+                  maskImage: "linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 50%, rgba(0,0,0,0.5) 80%, rgba(0,0,0,0) 100%), linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 60%, rgba(0,0,0,0.3) 85%, rgba(0,0,0,0) 100%)",
+                  maskComposite: "intersect",
+                }}
+              >
+                <span className="text-slate-400 dark:text-slate-600 font-medium text-xs text-center px-4">Screenshot: Halaman Utama</span>
+                <img src="/images/bisafe-screen1.jpg" alt="BiSAFE Main Screen" className="absolute inset-0 w-full h-full object-cover" onError={(e) => (e.currentTarget.style.display = 'none')} />
+                
+                {/* Fallback gradient if no image */}
+                <div className="absolute inset-0 bg-gradient-to-br from-slate-100 via-slate-200 to-red-500/20 dark:from-[#0a0e17] dark:via-[#111827] dark:to-red-500/30 -z-10" />
+                {/* Subtle shine */}
+                <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent pointer-events-none" />
+              </div>
+            </motion.div>
+            
+            <motion.div 
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
+              className="order-1 lg:order-2 flex flex-col space-y-5 lg:pl-4 justify-center"
+            >
+              <span className="text-sm md:text-base font-light tracking-normal text-slate-400 dark:text-white/40">
+                Fitur utama:
+              </span>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.5rem] font-black leading-[1.05] tracking-tight text-slate-900 dark:text-white">
+                Akses Instan Panic Button{" "}
+                <em className="font-black italic text-red-600 dark:text-red-500">
+                  satu sentuhan di saat genting.
+                </em>
+              </h2>
+              <p className="text-slate-500 dark:text-white/70 text-sm md:text-[15px] leading-relaxed max-w-md font-light">
+                Halaman utama didesain dengan kontras visual tinggi dan tombol berukuran masif agar mudah dijangkau dalam keadaan panik. Mengirimkan koordinat presisi dan menyalakan sirene secara bersamaan.
+              </p>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Screen 2: Halaman Tambah Kontak Darurat */}
+      <section className="py-16 md:py-24 px-4 sm:px-6 overflow-visible bg-transparent relative z-10">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-[0.9fr_1.1fr] gap-12 lg:gap-8 items-center min-h-[60vh]">
+            <motion.div 
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
+              className="flex flex-col space-y-5 lg:pr-4 justify-center"
+            >
+              <span className="text-sm md:text-base font-light tracking-normal text-slate-400 dark:text-white/40">
+                Integrasi keluarga:
+              </span>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.5rem] font-black leading-[1.05] tracking-tight text-slate-900 dark:text-white">
+                Kelola Kontak Darurat{" "}
+                <em className="font-black italic text-red-600 dark:text-red-500">
+                  dengan mudah dan tanpa batas.
+                </em>
+              </h2>
+              <p className="text-slate-500 dark:text-white/70 text-sm md:text-[15px] leading-relaxed max-w-md font-light">
+                Tambahkan keluarga atau pendamping yang akan dihubungi oleh sistem saat Anda menekan tombol SOS. Mereka menerima notifikasi prioritas beserta tautan tracking lokasi live.
+              </p>
+            </motion.div>
+            
+            <motion.div 
+              initial={{ opacity: 0, x: 60 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+              className="relative flex items-center justify-center lg:justify-end"
+              style={{ perspective: "1200px" }}
+            >
+              <div className="absolute w-[40%] h-[60%]  bg-red-500/10 dark:bg-red-500/15  blur-[70px] rounded-full top-1/2 left-[60%] -translate-x-1/2 -translate-y-1/2" />
+              <div 
+                className="relative w-[270px] sm:w-[310px] lg:w-[340px] aspect-[9/18.5] mx-auto bg-slate-200 dark:bg-[#0a0a0a] rounded-[1.75rem] md:rounded-[2.25rem] border-[6px] md:border-[8px] border-slate-300 dark:border-[#1a1a1a] overflow-hidden flex flex-col items-center justify-center group transform-gpu preserve-3d transition-colors duration-300"
+                style={{
+                  transform: "rotateY(-18deg) rotateX(5deg) rotateZ(2deg)",
+                  boxShadow: "20px 30px 60px rgba(0,0,0,0.15), 8px 12px 25px rgba(0,0,0,0.08)",
+                  WebkitMaskImage: "linear-gradient(to left, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 50%, rgba(0,0,0,0.5) 80%, rgba(0,0,0,0) 100%), linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 60%, rgba(0,0,0,0.3) 85%, rgba(0,0,0,0) 100%)",
+                  WebkitMaskComposite: "destination-in",
+                  maskImage: "linear-gradient(to left, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 50%, rgba(0,0,0,0.5) 80%, rgba(0,0,0,0) 100%), linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 60%, rgba(0,0,0,0.3) 85%, rgba(0,0,0,0) 100%)",
+                  maskComposite: "intersect",
+                }}
+              >
+                <span className="text-slate-400 dark:text-slate-600 font-medium text-xs text-center px-4">Screenshot: Tambah Kontak Darurat</span>
+                <img src="/images/bisafe-screen2.jpg" alt="BiSAFE Emergency Contacts" className="absolute inset-0 w-full h-full object-cover" onError={(e) => (e.currentTarget.style.display = 'none')} />
+                
+                {/* Fallback gradient if no image */}
+                <div className="absolute inset-0 bg-gradient-to-bl from-slate-100 via-slate-200 to-red-500/20 dark:from-[#0a0e17] dark:via-[#111827] dark:to-red-500/30 -z-10" />
+                <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent pointer-events-none" />
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Screen 3: Riwayat Laporan */}
+      <section className="py-16 md:py-24 px-4 sm:px-6 overflow-visible relative z-10">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-12 lg:gap-8 items-center min-h-[60vh]">
+            <motion.div 
+              initial={{ opacity: 0, x: -60 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+              className="order-2 lg:order-1 relative flex items-center justify-center lg:justify-start"
+              style={{ perspective: "1200px" }}
+            >
+              <div className="absolute w-[40%] h-[60%]  bg-red-500/10 dark:bg-red-500/15  blur-[70px] rounded-full top-1/2 left-[40%] -translate-x-1/2 -translate-y-1/2" />
+              <div 
+                className="relative w-[270px] sm:w-[310px] lg:w-[340px] aspect-[9/18.5] mx-auto bg-slate-200 dark:bg-[#0a0a0a] rounded-[1.75rem] md:rounded-[2.25rem] border-[6px] md:border-[8px] border-slate-300 dark:border-[#1a1a1a] overflow-hidden flex flex-col items-center justify-center group transform-gpu preserve-3d transition-colors duration-300"
+                style={{
+                  transform: "rotateY(18deg) rotateX(5deg) rotateZ(-2deg)",
+                  boxShadow: "-20px 30px 60px rgba(0,0,0,0.15), -8px 12px 25px rgba(0,0,0,0.08)",
+                  WebkitMaskImage: "linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 50%, rgba(0,0,0,0.5) 80%, rgba(0,0,0,0) 100%), linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 60%, rgba(0,0,0,0.3) 85%, rgba(0,0,0,0) 100%)",
+                  WebkitMaskComposite: "destination-in",
+                  maskImage: "linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 50%, rgba(0,0,0,0.5) 80%, rgba(0,0,0,0) 100%), linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 60%, rgba(0,0,0,0.3) 85%, rgba(0,0,0,0) 100%)",
+                  maskComposite: "intersect",
+                }}
+              >
+                <span className="text-slate-400 dark:text-slate-600 font-medium text-xs text-center px-4">Screenshot: Riwayat Laporan</span>
+                <img src="/images/bisafe-screen3.jpg" alt="BiSAFE History" className="absolute inset-0 w-full h-full object-cover" onError={(e) => (e.currentTarget.style.display = 'none')} />
+                
+                {/* Fallback gradient if no image */}
+                <div className="absolute inset-0 bg-gradient-to-br from-slate-100 via-slate-200 to-red-500/20 dark:from-[#0a0e17] dark:via-[#111827] dark:to-red-500/30 -z-10" />
+                <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent pointer-events-none" />
+              </div>
+            </motion.div>
+            
+            <motion.div 
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
+              className="order-1 lg:order-2 flex flex-col space-y-5 lg:pl-4 justify-center"
+            >
+              <span className="text-sm md:text-base font-light tracking-normal text-slate-400 dark:text-white/40">
+                Pencatatan transparan:
+              </span>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.5rem] font-black leading-[1.05] tracking-tight text-slate-900 dark:text-white">
+                Riwayat Sinyal Bahaya{" "}
+                <em className="font-black italic text-red-600 dark:text-red-500">
+                  terekam secara persisten.
+                </em>
+              </h2>
+              <p className="text-slate-500 dark:text-white/70 text-sm md:text-[15px] leading-relaxed max-w-md font-light">
+                Setiap laporan yang dipancarkan dicatat dengan log waktu kejadian dan lokasi untuk bukti pelaporan yang kredibel kepada pihak relawan atau kepolisian.
+              </p>
+            </motion.div>
           </div>
         </div>
       </section>
 
       {/* Bottom CTA */}
-      <section className="py-16 px-4 sm:px-6 text-center">
-        <div className="max-w-3xl mx-auto space-y-6">
-          <h2 className="text-3xl font-black text-slate-900">
+      <section className="py-20 px-4 sm:px-6 text-center relative z-10 border-t border-slate-200 dark:border-white/5">
+        <div className="max-w-3xl mx-auto space-y-8">
+          <h2 className="text-3xl md:text-5xl font-black text-slate-900 dark:text-white leading-[1.1]">
             Coba BiSAFE di Aplikasi Sekarang
           </h2>
-          <p className="text-slate-500 text-sm">
+          <p className="text-slate-500 dark:text-slate-400 text-base md:text-lg">
             Rasakan langsung kemudahan dan kecepatan aktivasi sistem darurat diBISAlitas.
           </p>
-          <div className="flex justify-center gap-3">
+          <div className="flex flex-wrap justify-center gap-4">
             <Link
               href="/demo"
-              className="px-8 py-3.5 rounded-2xl bg-rose-600 text-white font-extrabold text-sm hover:bg-rose-700 shadow-md transition-all"
+              className="px-8 py-4 rounded-full bg-red-600 text-white font-extrabold text-sm hover:bg-red-700 shadow-lg shadow-red-600/20 hover:shadow-red-600/40 transition-all"
             >
               Buka Demo Aplikasi
             </Link>
             <Link
               href="/fitur"
-              className="px-8 py-3.5 rounded-2xl bg-slate-100 text-slate-700 font-bold text-sm hover:bg-slate-200 transition-all"
+              className="px-8 py-4 rounded-full bg-slate-100 dark:bg-transparent border border-slate-200 dark:border-white/10 text-slate-800 dark:text-white font-bold text-sm hover:bg-slate-200 dark:hover:bg-white/10 transition-all"
             >
               Lihat Fitur Lainnya
             </Link>

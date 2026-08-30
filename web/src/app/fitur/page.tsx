@@ -163,7 +163,7 @@ export default function FiturOverviewPage() {
     DETAILED_FEATURES.find((f) => f.key === selectedFeature) || DETAILED_FEATURES[0];
 
   return (
-    <div className="min-h-screen bg-[#FDFEFE] dark:bg-[#090e17] text-slate-800 dark:text-slate-100 selection:bg-[#1B9981]/20 transition-colors duration-300">
+    <div className="min-h-screen bg-[#FDFEFE] dark:bg-black text-slate-800 dark:text-slate-100 selection:bg-[#1B9981]/20 transition-colors duration-300">
       <Navbar />
 
       {/* Hero Header */}

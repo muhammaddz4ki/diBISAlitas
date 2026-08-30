@@ -971,7 +971,7 @@ function ImpactSection() {
   };
 
   return (
-    <section id="dampak" className="scroll-mt-20 py-20 md:py-32 w-full bg-slate-50 dark:bg-[#050103] relative overflow-hidden flex flex-col items-center transition-colors duration-300">
+    <section id="dampak" className="scroll-mt-20 py-20 md:py-32 w-full bg-slate-50 dark:bg-black relative overflow-hidden flex flex-col items-center transition-colors duration-300">
       
       {/* Background Giant Text similar to the 'octo' octopus text in the reference */}
       <div className="absolute top-[30%] left-1/2 -translate-x-1/2 text-[15rem] md:text-[25rem] font-black text-slate-900/[0.03] dark:text-white/[0.02] tracking-tighter pointer-events-none select-none z-0 whitespace-nowrap transition-colors duration-300">
@@ -980,13 +980,13 @@ function ImpactSection() {
       
       <div className="relative z-10 w-full max-w-[1400px] mx-auto flex flex-col items-center">
         {/* Title */}
-        <h2 className="text-4xl md:text-6xl lg:text-[5rem] font-black text-center text-slate-900 dark:text-white mb-16 md:mb-24 tracking-tight leading-[1.1] transition-colors duration-300">
-          dampak <span className={activeItem.accent}>sosial</span> <br />
-          & inklusivitas
+        <h2 className="text-3xl md:text-4xl lg:text-5xl font-black text-center leading-[1.15] md:leading-[1.1] tracking-tight text-slate-900 dark:text-white drop-shadow-md mb-4 md:mb-8 transition-colors duration-300">
+          Dampak <span className={activeItem.accent}>Sosial</span> <br />
+          & Inklusivitas
         </h2>
 
         {/* Carousel Area */}
-        <div className="relative w-full h-[400px] sm:h-[450px] md:h-[500px] lg:h-[600px] flex justify-center items-center px-4 md:px-0">
+        <div className="relative w-full h-[360px] sm:h-[400px] md:h-[500px] lg:h-[600px] flex justify-center items-center px-4 md:px-0">
           
           <div 
             className="flex items-center justify-center gap-2 sm:gap-4 md:gap-6 lg:gap-8 w-full"
@@ -1000,7 +1000,7 @@ function ImpactSection() {
                 animate={{ opacity: 1, rotateY: 25, z: -150, x: 20 }}
                 exit={{ opacity: 0, rotateY: 0, z: -300, x: "300%" }}
                 transition={{ duration: 0.85, ease: [0.32, 0.72, 0, 1] }}
-                className="order-1 hidden lg:block w-[140px] xl:w-[180px] h-[300px] xl:h-[380px] rounded-2xl overflow-hidden grayscale brightness-50 flex-shrink-0 relative"
+                className="order-1 hidden md:block w-[100px] lg:w-[140px] xl:w-[180px] h-[220px] lg:h-[300px] xl:h-[380px] rounded-xl lg:rounded-2xl overflow-hidden grayscale brightness-50 flex-shrink-0 relative"
               >
                 <img src={activeItem.sideImgs[0]} alt="" className="w-full h-full object-cover" />
                 <div className="absolute inset-0 bg-black/40" />
@@ -1013,7 +1013,7 @@ function ImpactSection() {
                 animate={{ opacity: 1, rotateY: 15, z: -80, x: 10 }}
                 exit={{ opacity: 0, rotateY: 0, z: -200, x: "150%" }}
                 transition={{ duration: 0.85, ease: [0.32, 0.72, 0, 1] }}
-                className="order-2 hidden md:block w-[150px] lg:w-[180px] xl:w-[240px] h-[320px] lg:h-[400px] xl:h-[480px] rounded-3xl overflow-hidden grayscale brightness-75 flex-shrink-0 relative"
+                className="order-2 w-[80px] sm:w-[120px] md:w-[150px] lg:w-[180px] xl:w-[240px] h-[220px] sm:h-[280px] md:h-[320px] lg:h-[400px] xl:h-[480px] rounded-xl sm:rounded-2xl lg:rounded-3xl overflow-hidden grayscale brightness-75 flex-shrink-0 relative"
               >
                 <img src={activeItem.sideImgs[1]} alt="" className="w-full h-full object-cover" />
                 <div className="absolute inset-0 bg-black/20" />
@@ -1026,7 +1026,7 @@ function ImpactSection() {
                 animate={{ opacity: 1, rotateY: -15, z: -80, x: -10 }}
                 exit={{ opacity: 0, rotateY: 0, z: -200, x: "-150%" }}
                 transition={{ duration: 0.85, ease: [0.32, 0.72, 0, 1] }}
-                className="order-4 hidden md:block w-[150px] lg:w-[180px] xl:w-[240px] h-[320px] lg:h-[400px] xl:h-[480px] rounded-3xl overflow-hidden grayscale brightness-75 flex-shrink-0 relative"
+                className="order-4 w-[80px] sm:w-[120px] md:w-[150px] lg:w-[180px] xl:w-[240px] h-[220px] sm:h-[280px] md:h-[320px] lg:h-[400px] xl:h-[480px] rounded-xl sm:rounded-2xl lg:rounded-3xl overflow-hidden grayscale brightness-75 flex-shrink-0 relative"
               >
                 <img src={activeItem.sideImgs[2]} alt="" className="w-full h-full object-cover" />
                 <div className="absolute inset-0 bg-black/20" />
@@ -1039,7 +1039,7 @@ function ImpactSection() {
                 animate={{ opacity: 1, rotateY: -25, z: -150, x: -20 }}
                 exit={{ opacity: 0, rotateY: 0, z: -300, x: "-300%" }}
                 transition={{ duration: 0.85, ease: [0.32, 0.72, 0, 1] }}
-                className="order-5 hidden lg:block w-[140px] xl:w-[180px] h-[300px] xl:h-[380px] rounded-2xl overflow-hidden grayscale brightness-50 flex-shrink-0 relative"
+                className="order-5 hidden md:block w-[100px] lg:w-[140px] xl:w-[180px] h-[220px] lg:h-[300px] xl:h-[380px] rounded-xl lg:rounded-2xl overflow-hidden grayscale brightness-50 flex-shrink-0 relative"
               >
                 <img src={activeItem.sideImgs[3]} alt="" className="w-full h-full object-cover" />
                 <div className="absolute inset-0 bg-black/40" />
@@ -1048,7 +1048,7 @@ function ImpactSection() {
 
             {/* Center Card 0 (Fixed Wrapper) */}
             <div 
-              className={`order-3 relative w-[280px] sm:w-[320px] md:w-[350px] lg:w-[400px] h-[380px] sm:h-[420px] md:h-[480px] lg:h-[550px] rounded-[2rem] md:rounded-[3rem] p-3 md:p-5 flex flex-col ${activeItem.color} shadow-2xl z-20 flex-shrink-0 transform transition-colors duration-700 hover:scale-[1.02]`}
+              className={`order-3 relative w-[240px] sm:w-[280px] md:w-[350px] lg:w-[400px] h-[340px] sm:h-[380px] md:h-[480px] lg:h-[550px] rounded-[1.5rem] md:rounded-[2rem] lg:rounded-[3rem] p-3 md:p-5 flex flex-col ${activeItem.color} shadow-2xl z-20 flex-shrink-0 transform transition-colors duration-700 hover:scale-[1.02]`}
             >
               <AnimatePresence mode="wait">
                 <motion.div 
@@ -1060,15 +1060,15 @@ function ImpactSection() {
                   className="w-full h-full flex flex-col"
                 >
                   {/* Image Top Half */}
-                  <div className="w-full h-[50%] md:h-[55%] rounded-[1.5rem] md:rounded-[2rem] overflow-hidden bg-black/20 relative">
+                  <div className="w-full h-[50%] md:h-[55%] rounded-[1.25rem] md:rounded-[1.5rem] lg:rounded-[2rem] overflow-hidden bg-black/20 relative">
                     <img src={activeItem.mainImg} alt={activeItem.title} className="w-full h-full object-cover grayscale brightness-90 mix-blend-luminosity opacity-90" />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                   </div>
                   
                   {/* Text Bottom Half */}
-                  <div className="flex-1 mt-4 md:mt-6 px-2 md:px-4 flex flex-col">
-                    <h3 className="text-white text-2xl md:text-3xl lg:text-4xl font-bold leading-tight mb-2 md:mb-4">{activeItem.title}</h3>
-                    <p className="text-white/90 text-xs md:text-sm lg:text-[15px] leading-relaxed font-medium whitespace-pre-line">
+                  <div className="flex-1 mt-3 sm:mt-4 md:mt-6 px-1 sm:px-2 md:px-4 flex flex-col">
+                    <h3 className="text-white text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold leading-tight mb-1 sm:mb-2 md:mb-4">{activeItem.title}</h3>
+                    <p className="text-white/90 text-[10px] sm:text-xs md:text-sm lg:text-[15px] leading-relaxed font-medium whitespace-pre-line line-clamp-3 sm:line-clamp-none">
                       {activeItem.description}
                     </p>
                   </div>
@@ -1078,9 +1078,9 @@ function ImpactSection() {
               {/* Next Button (Fixed outside content fade) */}
               <button 
                 onClick={nextSlide} 
-                className="absolute -bottom-5 -left-5 md:-bottom-8 md:-left-8 w-14 h-14 md:w-20 md:h-20 bg-white rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-transform z-30 group"
+                className="absolute -bottom-4 -left-4 sm:-bottom-5 sm:-left-5 md:-bottom-8 md:-left-8 w-12 h-12 sm:w-14 sm:h-14 md:w-20 md:h-20 bg-white rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-transform z-30 group"
               >
-                <ArrowUpRight className="w-6 h-6 md:w-8 md:h-8 text-black transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+                <ArrowUpRight className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 text-black transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
               </button>
             </div>
           </div>
