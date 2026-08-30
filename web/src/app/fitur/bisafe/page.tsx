@@ -62,7 +62,7 @@ export default function BiSafeDetailPage() {
             <motion.div 
               initial={{ opacity: 0, x: 60 }}
               whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
+              viewport={{ once: false, margin: "-50px" }}
               transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
               className="lg:col-span-5 flex justify-center relative z-10" 
               style={{ perspective: "1200px" }}
@@ -153,7 +153,7 @@ export default function BiSafeDetailPage() {
             <motion.div 
               initial={{ opacity: 0, x: -60 }}
               whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
+              viewport={{ once: false, margin: "-50px" }}
               transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
               className="order-2 lg:order-1 relative flex items-center justify-center lg:justify-start"
               style={{ perspective: "1200px" }}
@@ -183,7 +183,7 @@ export default function BiSafeDetailPage() {
             <motion.div 
               initial={{ opacity: 0, x: 50 }}
               whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
+              viewport={{ once: false, margin: "-50px" }}
               transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
               className="order-1 lg:order-2 flex flex-col space-y-5 lg:pl-4 justify-center"
             >
@@ -211,7 +211,7 @@ export default function BiSafeDetailPage() {
             <motion.div 
               initial={{ opacity: 0, x: -50 }}
               whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
+              viewport={{ once: false, margin: "-50px" }}
               transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
               className="flex flex-col space-y-5 lg:pr-4 justify-center"
             >
@@ -232,7 +232,7 @@ export default function BiSafeDetailPage() {
             <motion.div 
               initial={{ opacity: 0, x: 60 }}
               whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
+              viewport={{ once: false, margin: "-50px" }}
               transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
               className="relative flex items-center justify-center lg:justify-end"
               style={{ perspective: "1200px" }}
@@ -268,7 +268,7 @@ export default function BiSafeDetailPage() {
             <motion.div 
               initial={{ opacity: 0, x: -60 }}
               whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
+              viewport={{ once: false, margin: "-50px" }}
               transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
               className="order-2 lg:order-1 relative flex items-center justify-center lg:justify-start"
               style={{ perspective: "1200px" }}
@@ -297,7 +297,7 @@ export default function BiSafeDetailPage() {
             <motion.div 
               initial={{ opacity: 0, x: 50 }}
               whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
+              viewport={{ once: false, margin: "-50px" }}
               transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
               className="order-1 lg:order-2 flex flex-col space-y-5 lg:pl-4 justify-center"
             >

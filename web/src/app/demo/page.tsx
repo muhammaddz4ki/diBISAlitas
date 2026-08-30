@@ -65,7 +65,7 @@ export default function DemoHubPage() {
           <motion.div 
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
+            viewport={{ once: false, margin: "-50px" }}
             transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
             className="flex flex-col space-y-6 lg:pr-8 justify-center order-2 lg:order-1"
           >
@@ -127,7 +127,7 @@ export default function DemoHubPage() {
           <motion.div 
             initial={{ opacity: 0, x: 60 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
+            viewport={{ once: false, margin: "-50px" }}
             transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
             className="relative flex items-center justify-center lg:justify-end order-1 lg:order-2"
             style={{ perspective: "1200px" }}
@@ -167,7 +167,7 @@ export default function DemoHubPage() {
           <motion.div 
             initial={{ opacity: 0, x: -60 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
+            viewport={{ once: false, margin: "-50px" }}
             transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
             className="relative flex items-center justify-center lg:justify-start"
             style={{ perspective: "1200px" }}
@@ -210,7 +210,7 @@ export default function DemoHubPage() {
           <motion.div 
             initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
+            viewport={{ once: false, margin: "-50px" }}
             transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
             className="flex flex-col space-y-6 lg:pl-4 justify-center"
           >

@@ -232,7 +232,7 @@ function AboutProjectSection() {
         <motion.div 
           initial={{ opacity: 0, x: -60 }}
           whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, margin: "-50px" }}
+          viewport={{ once: false, margin: "-50px" }}
           transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
           className="relative flex items-center justify-center lg:justify-start"
           style={{ perspective: "1200px" }}
@@ -294,7 +294,7 @@ function AboutProjectSection() {
         <motion.div 
           initial={{ opacity: 0, x: 50 }}
           whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, margin: "-50px" }}
+          viewport={{ once: false, margin: "-50px" }}
           transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
           className="flex flex-col space-y-5 lg:pl-4 justify-center"
         >
@@ -519,7 +519,7 @@ function BentoFeaturesSection() {
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: "-60px" }}
+          viewport={{ once: false, margin: "-60px" }}
           className="text-center max-w-2xl mx-auto space-y-4 mb-10"
         >
           <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-[#1B9981]/10 text-[#1B9981] dark:text-[#00D4AA] font-bold text-[10px] sm:text-xs uppercase tracking-widest">
@@ -765,7 +765,7 @@ function BentoFeaturesSection() {
 ============================================ */
 function CTAAndStatsSection() {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-80px" });
+  const isInView = useInView(ref, { once: false, margin: "-80px" });
 
   const stat1 = useCounter(22, 2000, isInView);
   const stat2 = useCounter(6, 1500, isInView);
@@ -1061,7 +1061,7 @@ function ImpactSection() {
                 >
                   {/* Image Top Half */}
                   <div className="w-full h-[50%] md:h-[55%] rounded-[1.25rem] md:rounded-[1.5rem] lg:rounded-[2rem] overflow-hidden bg-black/20 relative">
-                    <img src={activeItem.mainImg} alt={activeItem.title} className="w-full h-full object-cover grayscale brightness-90 mix-blend-luminosity opacity-90" />
+                    <img src={activeItem.mainImg} alt={activeItem.title} className="w-full h-full object-cover" />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                   </div>
                   
@@ -1107,7 +1107,7 @@ function ImpactSection() {
 ============================================ */
 function ShowcaseSection() {
   const sectionRef = useRef(null);
-  const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
+  const isInView = useInView(sectionRef, { once: false, margin: "-100px" });
 
   return (
     <section ref={sectionRef} className="relative w-full overflow-x-clip overflow-y-visible flex flex-col items-center justify-center pt-0 transition-colors duration-300">

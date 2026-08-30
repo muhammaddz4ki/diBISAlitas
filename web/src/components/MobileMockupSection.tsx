@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 
 export default function MobileMockupSection() {
   return (
-    <section className="relative w-full h-[120vh] md:h-[150vh] bg-[#FDFEFE] dark:bg-[#050505] overflow-hidden flex flex-col justify-center transition-colors duration-300">
+    <section className="relative w-full h-[120vh] md:h-[150vh] bg-[#FDFEFE] dark:bg-black overflow-hidden flex flex-col justify-center transition-colors duration-300">
       
       {/* Text Content */}
       <div className="absolute top-16 md:top-32 right-6 md:right-16 lg:right-24 z-30 max-w-xs sm:max-w-sm lg:max-w-md pointer-events-none">
@@ -71,8 +71,8 @@ export default function MobileMockupSection() {
       </div>
 
       {/* Gradients to fade out the top and bottom of the scrolling section */}
-      <div className="absolute top-0 left-0 w-full h-32 md:h-48 bg-gradient-to-b from-[#FDFEFE] to-transparent dark:from-[#050505] pointer-events-none z-40 transition-colors duration-300" />
-      <div className="absolute bottom-0 left-0 w-full h-32 md:h-48 bg-gradient-to-t from-[#FDFEFE] to-transparent dark:from-[#050505] pointer-events-none z-40 transition-colors duration-300" />
+      <div className="absolute top-0 left-0 w-full h-64 md:h-96 bg-gradient-to-b from-[#FDFEFE] to-transparent dark:from-black pointer-events-none z-40 transition-colors duration-300" />
+      <div className="absolute bottom-0 left-0 w-full h-64 md:h-96 bg-gradient-to-t from-[#FDFEFE] to-transparent dark:from-black pointer-events-none z-40 transition-colors duration-300" />
     </section>
   );
 }
