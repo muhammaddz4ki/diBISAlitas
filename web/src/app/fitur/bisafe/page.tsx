@@ -21,12 +21,12 @@ import InteractiveDeviceMockup from "@/components/InteractiveDeviceMockup";
 
 export default function BiSafeDetailPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-red-50/60 dark:from-black dark:to-red-950/20 text-slate-900 dark:text-white transition-colors duration-300 selection:bg-red-800/20">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-rose-50/60 dark:from-black dark:to-rose-950/20 text-slate-900 dark:text-white transition-colors duration-300 selection:bg-rose-500/20">
       <Navbar />
 
       {/* Hero Section */}
       <section className="pt-32 pb-16 px-4 sm:px-6 relative overflow-hidden">
-        <div className="absolute top-10 left-1/2 -translate-x-1/2 w-[400px] h-[200px]  bg-red-800/10 dark:bg-red-900/30  blur-3xl rounded-full pointer-events-none" />
+        <div className="absolute top-10 left-1/2 -translate-x-1/2 w-[400px] h-[200px]  bg-rose-500/10 dark:bg-rose-600/20  blur-3xl rounded-full pointer-events-none" />
 
         <div className="max-w-7xl mx-auto">
 
@@ -34,13 +34,13 @@ export default function BiSafeDetailPage() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             {/* Left: Info */}
             <div className="lg:col-span-7 space-y-6 relative z-10">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-red-900/10 dark:bg-red-900/30 border border-red-800/20 dark:border-red-800/40 text-red-800 dark:text-red-500 text-xs font-bold uppercase tracking-wider">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-rose-500/10 dark:bg-rose-600/20 border border-rose-500/20 dark:border-rose-600/30 text-rose-600 dark:text-rose-600 text-xs font-bold uppercase tracking-wider">
                 <ShieldAlert className="w-4 h-4" /> Sistem Alarm &amp; Panic Button Darurat
               </div>
 
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tight text-slate-900 dark:text-white leading-[1.1]">
                 BiSAFE: Perlindungan <br className="hidden md:block" />
-                <span className="text-red-800 dark:text-red-600">Satu Sentuhan</span> Tanpa Jeda
+                <span className="text-rose-600 dark:text-rose-600">Satu Sentuhan</span> Tanpa Jeda
               </h1>
 
               <p className="text-slate-600 dark:text-slate-400 text-base sm:text-lg leading-relaxed">
@@ -50,7 +50,7 @@ export default function BiSafeDetailPage() {
               <div className="flex flex-wrap gap-4 pt-2">
                 <Link
                   href="/demo"
-                  className="px-7 py-3.5 rounded-full bg-red-800 text-white font-extrabold text-sm hover:bg-red-900 transition-all shadow-lg shadow-red-900/30 hover:shadow-red-900/50 flex items-center gap-2"
+                  className="px-7 py-3.5 rounded-full bg-gradient-to-br from-rose-500 to-rose-700 text-white font-extrabold text-sm hover:from-rose-600 hover:to-rose-800 transition-all shadow-lg shadow-rose-600/30 hover:shadow-rose-600/50 flex items-center gap-2"
                 >
                   <Zap className="w-4 h-4 fill-current" />
                   Coba Demo BiSAFE
@@ -134,7 +134,7 @@ export default function BiSafeDetailPage() {
                   key={i}
                   className="bg-white dark:bg-transparent rounded-3xl p-7 border border-slate-200/80 dark:border-white/10 shadow-sm hover:shadow-lg dark:hover:shadow-[0_0_30px_rgba(255,255,255,0.05)] transition-all space-y-4"
                 >
-                  <div className="w-12 h-12 rounded-2xl bg-red-900/10 dark:bg-red-900/30 text-red-800 dark:text-red-500 flex items-center justify-center">
+                  <div className="w-12 h-12 rounded-2xl bg-rose-500/10 dark:bg-rose-600/20 text-rose-600 dark:text-rose-600 flex items-center justify-center">
                     <Icon className="w-6 h-6" />
                   </div>
                   <h3 className="text-lg font-bold text-slate-900 dark:text-white">{card.title}</h3>
@@ -158,7 +158,7 @@ export default function BiSafeDetailPage() {
               className="order-2 lg:order-1 relative flex items-center justify-center lg:justify-start"
               style={{ perspective: "1200px" }}
             >
-              <div className="absolute w-[40%] h-[60%]  bg-red-800/10 dark:bg-red-900/20  blur-[70px] rounded-full top-1/2 left-[40%] -translate-x-1/2 -translate-y-1/2" />
+              <div className="absolute w-[40%] h-[60%]  bg-rose-600/10 dark:bg-rose-600/20  blur-[70px] rounded-full top-1/2 left-[40%] -translate-x-1/2 -translate-y-1/2" />
               <div 
                 className="relative w-[270px] sm:w-[310px] lg:w-[340px] aspect-[9/18.5] mx-auto bg-slate-200 dark:bg-[#0a0a0a] rounded-[1.75rem] md:rounded-[2.25rem] border-[6px] md:border-[8px] border-slate-300 dark:border-[#1a1a1a] overflow-hidden flex flex-col items-center justify-center group transform-gpu preserve-3d transition-colors duration-300"
                 style={{
@@ -174,7 +174,7 @@ export default function BiSafeDetailPage() {
                 <img src="/images/bisafe-screen1.jpg" alt="BiSAFE Main Screen" className="absolute inset-0 w-full h-full object-cover" onError={(e) => (e.currentTarget.style.display = 'none')} />
                 
                 {/* Fallback gradient if no image */}
-                <div className="absolute inset-0 bg-gradient-to-br from-slate-100 via-slate-200 to-red-800/20 dark:from-[#0a0e17] dark:via-[#111827] dark:to-red-900/30 -z-10" />
+                <div className="absolute inset-0 bg-gradient-to-br from-slate-100 via-slate-200 to-rose-600/20 dark:from-[#0a0e17] dark:via-[#111827] dark:to-rose-900/30 -z-10" />
                 {/* Subtle shine */}
                 <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent pointer-events-none" />
               </div>
@@ -192,7 +192,7 @@ export default function BiSafeDetailPage() {
               </span>
               <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.5rem] font-black leading-[1.05] tracking-tight text-slate-900 dark:text-white">
                 Akses Instan Panic Button{" "}
-                <em className="font-black italic text-red-800 dark:text-red-600">
+                <em className="font-black italic text-rose-600 dark:text-rose-600">
                   satu sentuhan di saat genting.
                 </em>
               </h2>
@@ -220,7 +220,7 @@ export default function BiSafeDetailPage() {
               </span>
               <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.5rem] font-black leading-[1.05] tracking-tight text-slate-900 dark:text-white">
                 Kelola Kontak Darurat{" "}
-                <em className="font-black italic text-red-800 dark:text-red-600">
+                <em className="font-black italic text-rose-600 dark:text-rose-600">
                   dengan mudah dan tanpa batas.
                 </em>
               </h2>
@@ -237,7 +237,7 @@ export default function BiSafeDetailPage() {
               className="relative flex items-center justify-center lg:justify-end"
               style={{ perspective: "1200px" }}
             >
-              <div className="absolute w-[40%] h-[60%]  bg-red-800/10 dark:bg-red-900/20  blur-[70px] rounded-full top-1/2 left-[60%] -translate-x-1/2 -translate-y-1/2" />
+              <div className="absolute w-[40%] h-[60%]  bg-rose-600/10 dark:bg-rose-600/20  blur-[70px] rounded-full top-1/2 left-[60%] -translate-x-1/2 -translate-y-1/2" />
               <div 
                 className="relative w-[270px] sm:w-[310px] lg:w-[340px] aspect-[9/18.5] mx-auto bg-slate-200 dark:bg-[#0a0a0a] rounded-[1.75rem] md:rounded-[2.25rem] border-[6px] md:border-[8px] border-slate-300 dark:border-[#1a1a1a] overflow-hidden flex flex-col items-center justify-center group transform-gpu preserve-3d transition-colors duration-300"
                 style={{
@@ -253,7 +253,7 @@ export default function BiSafeDetailPage() {
                 <img src="/images/bisafe-screen2.jpg" alt="BiSAFE Emergency Contacts" className="absolute inset-0 w-full h-full object-cover" onError={(e) => (e.currentTarget.style.display = 'none')} />
                 
                 {/* Fallback gradient if no image */}
-                <div className="absolute inset-0 bg-gradient-to-bl from-slate-100 via-slate-200 to-red-800/20 dark:from-[#0a0e17] dark:via-[#111827] dark:to-red-900/30 -z-10" />
+                <div className="absolute inset-0 bg-gradient-to-bl from-slate-100 via-slate-200 to-rose-600/20 dark:from-[#0a0e17] dark:via-[#111827] dark:to-rose-900/30 -z-10" />
                 <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent pointer-events-none" />
               </div>
             </motion.div>
@@ -273,7 +273,7 @@ export default function BiSafeDetailPage() {
               className="order-2 lg:order-1 relative flex items-center justify-center lg:justify-start"
               style={{ perspective: "1200px" }}
             >
-              <div className="absolute w-[40%] h-[60%]  bg-red-800/10 dark:bg-red-900/20  blur-[70px] rounded-full top-1/2 left-[40%] -translate-x-1/2 -translate-y-1/2" />
+              <div className="absolute w-[40%] h-[60%]  bg-rose-600/10 dark:bg-rose-600/20  blur-[70px] rounded-full top-1/2 left-[40%] -translate-x-1/2 -translate-y-1/2" />
               <div 
                 className="relative w-[270px] sm:w-[310px] lg:w-[340px] aspect-[9/18.5] mx-auto bg-slate-200 dark:bg-[#0a0a0a] rounded-[1.75rem] md:rounded-[2.25rem] border-[6px] md:border-[8px] border-slate-300 dark:border-[#1a1a1a] overflow-hidden flex flex-col items-center justify-center group transform-gpu preserve-3d transition-colors duration-300"
                 style={{
@@ -289,7 +289,7 @@ export default function BiSafeDetailPage() {
                 <img src="/images/bisafe-screen3.jpg" alt="BiSAFE History" className="absolute inset-0 w-full h-full object-cover" onError={(e) => (e.currentTarget.style.display = 'none')} />
                 
                 {/* Fallback gradient if no image */}
-                <div className="absolute inset-0 bg-gradient-to-br from-slate-100 via-slate-200 to-red-800/20 dark:from-[#0a0e17] dark:via-[#111827] dark:to-red-900/30 -z-10" />
+                <div className="absolute inset-0 bg-gradient-to-br from-slate-100 via-slate-200 to-rose-600/20 dark:from-[#0a0e17] dark:via-[#111827] dark:to-rose-900/30 -z-10" />
                 <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent pointer-events-none" />
               </div>
             </motion.div>
@@ -306,7 +306,7 @@ export default function BiSafeDetailPage() {
               </span>
               <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.5rem] font-black leading-[1.05] tracking-tight text-slate-900 dark:text-white">
                 Riwayat Sinyal Bahaya{" "}
-                <em className="font-black italic text-red-800 dark:text-red-600">
+                <em className="font-black italic text-rose-600 dark:text-rose-600">
                   terekam secara persisten.
                 </em>
               </h2>
@@ -330,7 +330,7 @@ export default function BiSafeDetailPage() {
           <div className="flex flex-wrap justify-center gap-4">
             <Link
               href="/demo"
-              className="px-8 py-4 rounded-full bg-red-800 text-white font-extrabold text-sm hover:bg-red-900 shadow-lg shadow-red-900/30 hover:shadow-red-900/50 transition-all"
+              className="px-8 py-4 rounded-full bg-gradient-to-br from-rose-500 to-rose-700 text-white font-extrabold text-sm hover:from-rose-600 hover:to-rose-800 shadow-lg shadow-rose-600/30 hover:shadow-rose-600/50 transition-all"
             >
               Buka Demo Aplikasi
             </Link>
