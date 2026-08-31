@@ -33,7 +33,7 @@ import {
 } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import MobileMockupSection from "@/components/MobileMockupSection";
-import FloatingAccessibility from "@/components/FloatingAccessibility";
+
 
 
 /* ============================================
@@ -512,33 +512,49 @@ function BentoFeaturesSection() {
   const glass2 = pillars[(activeIndex + 2) % pillars.length];
 
   return (
-    <section id="fitur" className="py-20 md:py-28 px-4 sm:px-6">
+    <section id="fitur" className="py-20 md:py-28 px-4 sm:px-6 overflow-hidden">
       <div className="max-w-7xl mx-auto space-y-14">
         {/* Header */}
-        <motion.div
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: false, margin: "-60px" }}
-          className="text-center max-w-2xl mx-auto space-y-4 mb-10"
-        >
-          <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-[#1B9981]/10 text-[#1B9981] dark:text-[#00D4AA] font-bold text-[10px] sm:text-xs uppercase tracking-widest">
-            <Layers className="w-3.5 h-3.5" /> 6 Pilar Ekosistem
-          </span>
-          <h2 className="text-3xl md:text-5xl lg:text-6xl font-black leading-[1.15] md:leading-[1.1] tracking-tight text-slate-900 dark:text-white">
-            Fitur Cerdas Tanpa Batas
-          </h2>
-          <p className="text-sm sm:text-base text-slate-500 dark:text-slate-400 leading-relaxed max-w-2xl mx-auto">
-            Menghadirkan teknologi kecerdasan buatan terdepan yang dirancang khusus untuk memfasilitasi kemandirian penyandang disabilitas dalam kehidupan sehari-hari.
-          </p>
-        </motion.div>
+        <div className="text-center max-w-2xl mx-auto mb-10">
+          <motion.div
+            initial={{ opacity: 0, x: -60 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: false, margin: "-60px" }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            className="space-y-4"
+          >
+            <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-[#1B9981]/10 text-[#1B9981] dark:text-[#00D4AA] font-bold text-[10px] sm:text-xs uppercase tracking-widest">
+              <Layers className="w-3.5 h-3.5" /> 6 Pilar Ekosistem
+            </span>
+            <h2 className="text-3xl md:text-5xl lg:text-6xl font-black leading-[1.15] md:leading-[1.1] tracking-tight text-slate-900 dark:text-white">
+              Fitur Cerdas Tanpa Batas
+            </h2>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, x: 60 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: false, margin: "-60px" }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
+            className="mt-4"
+          >
+            <p className="text-sm sm:text-base text-slate-500 dark:text-slate-400 leading-relaxed max-w-2xl mx-auto">
+              Menghadirkan teknologi kecerdasan buatan terdepan yang dirancang khusus untuk memfasilitasi kemandirian penyandang disabilitas dalam kehidupan sehari-hari.
+            </p>
+          </motion.div>
+        </div>
 
         {/* === MAIN BENTO GRID === */}
         <LayoutGroup>
         <div className="flex flex-col lg:grid lg:grid-cols-2 gap-4 md:gap-8 lg:gap-10">
 
           {/* ──── MOBILE TOP ROW: Big Card + Vertical Selector ──── */}
-          <div className="flex flex-row gap-2 sm:gap-4 w-full h-[280px] sm:h-[340px] lg:h-auto">
+          <motion.div 
+            initial={{ opacity: 0, x: -80 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: false, margin: "-60px" }}
+            transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
+            className="flex flex-row gap-2 sm:gap-4 w-full h-[280px] sm:h-[340px] lg:h-auto"
+          >
             
             {/* ──── LEFT: Large Gradient Card ──── */}
             <div className="relative flex-1 rounded-[1.5rem] md:rounded-[2rem] overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.25)] h-full lg:min-h-[480px]">
@@ -669,10 +685,16 @@ function BentoFeaturesSection() {
               })}
             </motion.div>
           </div>
-        </div>
+        </motion.div>
 
         {/* ──── RIGHT COLUMN ──── */}
-          <div className="flex flex-col gap-4 md:gap-5 h-full">
+          <motion.div 
+            initial={{ opacity: 0, x: 80 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: false, margin: "-60px" }}
+            transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
+            className="flex flex-col gap-4 md:gap-5 h-full"
+          >
 
             {/* RIGHT TOP: Title + Description */}
             <AnimatePresence mode="wait">
@@ -752,7 +774,7 @@ function BentoFeaturesSection() {
               </motion.div>
             </div>
 
-          </div>
+          </motion.div>
         </div>
         </LayoutGroup>
       </div>
@@ -797,7 +819,11 @@ function CTAAndStatsSection() {
            {/* Fallback glow if image is missing */}
            <div className="absolute w-40 h-40 md:w-80 md:h-80 bg-[#00D4AA]/10 blur-3xl rounded-full" />
            <div className="relative translate-y-8 sm:translate-y-12 md:translate-y-16 flex flex-col justify-end">
-             <img 
+             <motion.img 
+               initial={{ opacity: 0, y: -150 }}
+               whileInView={{ opacity: 1, y: 0 }}
+               viewport={{ once: false, margin: "-60px" }}
+               transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
                src="/images/placeholder-hand.png" 
                alt="Hand Placeholder" 
                className="w-56 sm:w-72 md:w-[22rem] lg:w-[26rem] h-auto object-contain drop-shadow-[0_0_40px_rgba(0,212,170,0.3)] block relative"
@@ -997,7 +1023,8 @@ function ImpactSection() {
               <motion.div 
                 key={`c-2-${activeIndex}`}
                 initial={{ opacity: 0, rotateY: 0, z: -300, x: "300%" }}
-                animate={{ opacity: 1, rotateY: 25, z: -150, x: 20 }}
+                whileInView={{ opacity: 1, rotateY: 25, z: -150, x: 20 }}
+                viewport={{ once: false, margin: "-60px" }}
                 exit={{ opacity: 0, rotateY: 0, z: -300, x: "300%" }}
                 transition={{ duration: 0.85, ease: [0.32, 0.72, 0, 1] }}
                 className="order-1 hidden md:block w-[100px] lg:w-[140px] xl:w-[180px] h-[220px] lg:h-[300px] xl:h-[380px] rounded-xl lg:rounded-2xl overflow-hidden grayscale brightness-50 flex-shrink-0 relative"
@@ -1010,7 +1037,8 @@ function ImpactSection() {
               <motion.div 
                 key={`c-1-${activeIndex}`}
                 initial={{ opacity: 0, rotateY: 0, z: -200, x: "150%" }}
-                animate={{ opacity: 1, rotateY: 15, z: -80, x: 10 }}
+                whileInView={{ opacity: 1, rotateY: 15, z: -80, x: 10 }}
+                viewport={{ once: false, margin: "-60px" }}
                 exit={{ opacity: 0, rotateY: 0, z: -200, x: "150%" }}
                 transition={{ duration: 0.85, ease: [0.32, 0.72, 0, 1] }}
                 className="order-2 w-[80px] sm:w-[120px] md:w-[150px] lg:w-[180px] xl:w-[240px] h-[220px] sm:h-[280px] md:h-[320px] lg:h-[400px] xl:h-[480px] rounded-xl sm:rounded-2xl lg:rounded-3xl overflow-hidden grayscale brightness-75 flex-shrink-0 relative"
@@ -1023,7 +1051,8 @@ function ImpactSection() {
               <motion.div 
                 key={`c1-${activeIndex}`}
                 initial={{ opacity: 0, rotateY: 0, z: -200, x: "-150%" }}
-                animate={{ opacity: 1, rotateY: -15, z: -80, x: -10 }}
+                whileInView={{ opacity: 1, rotateY: -15, z: -80, x: -10 }}
+                viewport={{ once: false, margin: "-60px" }}
                 exit={{ opacity: 0, rotateY: 0, z: -200, x: "-150%" }}
                 transition={{ duration: 0.85, ease: [0.32, 0.72, 0, 1] }}
                 className="order-4 w-[80px] sm:w-[120px] md:w-[150px] lg:w-[180px] xl:w-[240px] h-[220px] sm:h-[280px] md:h-[320px] lg:h-[400px] xl:h-[480px] rounded-xl sm:rounded-2xl lg:rounded-3xl overflow-hidden grayscale brightness-75 flex-shrink-0 relative"
@@ -1036,7 +1065,8 @@ function ImpactSection() {
               <motion.div 
                 key={`c2-${activeIndex}`}
                 initial={{ opacity: 0, rotateY: 0, z: -300, x: "-300%" }}
-                animate={{ opacity: 1, rotateY: -25, z: -150, x: -20 }}
+                whileInView={{ opacity: 1, rotateY: -25, z: -150, x: -20 }}
+                viewport={{ once: false, margin: "-60px" }}
                 exit={{ opacity: 0, rotateY: 0, z: -300, x: "-300%" }}
                 transition={{ duration: 0.85, ease: [0.32, 0.72, 0, 1] }}
                 className="order-5 hidden md:block w-[100px] lg:w-[140px] xl:w-[180px] h-[220px] lg:h-[300px] xl:h-[380px] rounded-xl lg:rounded-2xl overflow-hidden grayscale brightness-50 flex-shrink-0 relative"
@@ -1047,7 +1077,11 @@ function ImpactSection() {
             </AnimatePresence>
 
             {/* Center Card 0 (Fixed Wrapper) */}
-            <div 
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.9, y: 30 }}
+              whileInView={{ opacity: 1, scale: 1, y: 0 }}
+              viewport={{ once: false, margin: "-60px" }}
+              transition={{ duration: 0.8, ease: [0.32, 0.72, 0, 1] }}
               className={`order-3 relative w-[240px] sm:w-[280px] md:w-[350px] lg:w-[400px] h-[340px] sm:h-[380px] md:h-[480px] lg:h-[550px] rounded-[1.5rem] md:rounded-[2rem] lg:rounded-[3rem] p-3 md:p-5 flex flex-col ${activeItem.color} shadow-2xl z-20 flex-shrink-0 transform transition-colors duration-700 hover:scale-[1.02]`}
             >
               <AnimatePresence mode="wait">
@@ -1082,7 +1116,7 @@ function ImpactSection() {
               >
                 <ArrowUpRight className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 text-black transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
               </button>
-            </div>
+            </motion.div>
           </div>
         </div>
 
@@ -1366,7 +1400,7 @@ export default function LandingPage() {
         <ShowcaseSection />
         <MobileMockupSection />
         <Footer />
-        <FloatingAccessibility />
+        
       </div>
     </>
   );

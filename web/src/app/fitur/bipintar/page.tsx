@@ -11,7 +11,7 @@ import {
   Zap
 } from "lucide-react";
 import Navbar from "@/components/Navbar";
-import FloatingAccessibility from "@/components/FloatingAccessibility";
+
 
 // Reusable component for 2 overlapping mockups
 const DualMockup = ({ img1, img2, label1, label2, reverse = false }: { img1: string, img2: string, label1: string, label2: string, reverse?: boolean }) => {
@@ -136,7 +136,7 @@ const LaptopAndMobileMockup = ({ laptopImg, mobileImg, label1, label2 }: { lapto
 
 export default function BiPintarDetailPage() {
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-black text-slate-800 dark:text-slate-200 selection:bg-orange-500/20">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-orange-50/60 dark:from-black dark:to-orange-950/20 text-slate-800 dark:text-slate-200 selection:bg-orange-500/20">
       <Navbar />
 
       {/* Hero */}
@@ -451,7 +451,7 @@ export default function BiPintarDetailPage() {
         </div>
       </section>
 
-      <FloatingAccessibility />
+      
     </div>
   );
 }

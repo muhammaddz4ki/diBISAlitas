@@ -11,11 +11,11 @@ import {
   Zap
 } from "lucide-react";
 import Navbar from "@/components/Navbar";
-import FloatingAccessibility from "@/components/FloatingAccessibility";
+
 
 export default function BiBacaDetailPage() {
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-black text-slate-800 dark:text-slate-200 selection:bg-purple-500/20">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-purple-50/60 dark:from-black dark:to-purple-950/20 text-slate-800 dark:text-slate-200 selection:bg-purple-500/20">
       <Navbar />
 
       {/* Hero */}
@@ -173,7 +173,7 @@ export default function BiBacaDetailPage() {
         </div>
       </section>
 
-      <FloatingAccessibility />
+      
     </div>
   );
 }

@@ -12,11 +12,11 @@ import {
   ArrowRight
 } from "lucide-react";
 import Navbar from "@/components/Navbar";
-import FloatingAccessibility from "@/components/FloatingAccessibility";
+
 
 export default function BiJalanDetailPage() {
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-black text-slate-800 dark:text-slate-200 selection:bg-sky-500/20">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-sky-50/60 dark:from-black dark:to-sky-950/20 text-slate-800 dark:text-slate-200 selection:bg-sky-500/20">
       <Navbar />
 
       {/* Hero */}
@@ -177,7 +177,7 @@ export default function BiJalanDetailPage() {
         </div>
       </section>
 
-      <FloatingAccessibility />
+      
     </div>
   );
 }

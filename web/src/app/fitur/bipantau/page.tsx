@@ -18,11 +18,11 @@ import {
   Users
 } from "lucide-react";
 import Navbar from "@/components/Navbar";
-import FloatingAccessibility from "@/components/FloatingAccessibility";
+
 
 export default function BiPantauDetailPage() {
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-black text-slate-800 dark:text-slate-200 selection:bg-[#1B9981]/20">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-emerald-50/60 dark:from-black dark:to-[#1B9981]/20 text-slate-800 dark:text-slate-200 selection:bg-[#1B9981]/20">
       <Navbar />
 
       {/* Hero */}
@@ -110,7 +110,7 @@ export default function BiPantauDetailPage() {
               className="order-2 lg:order-1 relative flex items-center justify-center lg:justify-start"
               style={{ perspective: "1200px" }}
             >
-              <div className="absolute w-[40%] h-[60%]  bg-blue-500/10 dark:bg-blue-500/15  blur-[70px] rounded-full top-1/2 left-[40%] -translate-x-1/2 -translate-y-1/2" />
+              <div className="absolute w-[40%] h-[60%]  bg-[#1B9981]/10 dark:bg-[#1B9981]/15  blur-[70px] rounded-full top-1/2 left-[40%] -translate-x-1/2 -translate-y-1/2" />
               <div 
                 className="relative w-[270px] sm:w-[310px] lg:w-[340px] aspect-[9/18.5] mx-auto bg-slate-200 dark:bg-[#0a0a0a] rounded-[1.75rem] md:rounded-[2.25rem] border-[6px] md:border-[8px] border-slate-300 dark:border-[#1a1a1a] overflow-hidden flex flex-col items-center justify-center group transform-gpu preserve-3d transition-colors duration-300"
                 style={{
@@ -125,7 +125,7 @@ export default function BiPantauDetailPage() {
                 <span className="text-slate-400 dark:text-slate-600 font-medium text-xs text-center px-4">Screenshot: Peta Pengguna (Mobile)</span>
                 <img src="/images/bipantau-mobile-map.jpg" alt="BiPANTAU Mobile Map" className="absolute inset-0 w-full h-full object-cover" onError={(e) => (e.currentTarget.style.display = 'none')} />
                 
-                <div className="absolute inset-0 bg-gradient-to-br from-slate-100 via-slate-200 to-blue-500/20 dark:from-[#0a0e17] dark:via-[#111827] dark:to-blue-500/30 -z-10" />
+                <div className="absolute inset-0 bg-gradient-to-br from-slate-100 via-slate-200 to-[#1B9981]/20 dark:from-[#0a0e17] dark:via-[#111827] dark:to-[#1B9981]/30 -z-10" />
                 <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent pointer-events-none" />
               </div>
             </motion.div>
@@ -142,7 +142,7 @@ export default function BiPantauDetailPage() {
               </span>
               <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.5rem] font-black leading-[1.05] tracking-tight text-slate-900 dark:text-white">
                 Navigasi Kota <br />
-                <em className="font-black italic text-blue-600 dark:text-blue-500">
+                <em className="font-black italic text-[#1B9981] dark:text-[#2DD4BF]">
                   tanpa hambatan tak terduga.
                 </em>
               </h2>
@@ -170,7 +170,7 @@ export default function BiPantauDetailPage() {
               </span>
               <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.5rem] font-black leading-[1.05] tracking-tight text-slate-900 dark:text-white">
                 Laporkan Rintangan{" "}
-                <em className="font-black italic text-rose-600 dark:text-rose-500">
+                <em className="font-black italic text-[#1B9981] dark:text-[#2DD4BF]">
                   dengan bukti foto langsung.
                 </em>
               </h2>
@@ -187,7 +187,7 @@ export default function BiPantauDetailPage() {
               className="relative flex items-center justify-center lg:justify-end"
               style={{ perspective: "1200px" }}
             >
-              <div className="absolute w-[40%] h-[60%]  bg-rose-500/10 dark:bg-rose-500/15  blur-[70px] rounded-full top-1/2 left-[60%] -translate-x-1/2 -translate-y-1/2" />
+              <div className="absolute w-[40%] h-[60%]  bg-[#1B9981]/10 dark:bg-[#1B9981]/15  blur-[70px] rounded-full top-1/2 left-[60%] -translate-x-1/2 -translate-y-1/2" />
               <div 
                 className="relative w-[270px] sm:w-[310px] lg:w-[340px] aspect-[9/18.5] mx-auto bg-slate-200 dark:bg-[#0a0a0a] rounded-[1.75rem] md:rounded-[2.25rem] border-[6px] md:border-[8px] border-slate-300 dark:border-[#1a1a1a] overflow-hidden flex flex-col items-center justify-center group transform-gpu preserve-3d transition-colors duration-300"
                 style={{
@@ -202,7 +202,7 @@ export default function BiPantauDetailPage() {
                 <span className="text-slate-400 dark:text-slate-600 font-medium text-xs text-center px-4">Screenshot: Tambah Laporan (Mobile)</span>
                 <img src="/images/bipantau-mobile-report.jpg" alt="BiPANTAU Report Screen" className="absolute inset-0 w-full h-full object-cover" onError={(e) => (e.currentTarget.style.display = 'none')} />
                 
-                <div className="absolute inset-0 bg-gradient-to-bl from-slate-100 via-slate-200 to-rose-500/20 dark:from-[#0a0e17] dark:via-[#111827] dark:to-rose-500/30 -z-10" />
+                <div className="absolute inset-0 bg-gradient-to-bl from-slate-100 via-slate-200 to-[#1B9981]/20 dark:from-[#0a0e17] dark:via-[#111827] dark:to-[#1B9981]/30 -z-10" />
                 <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent pointer-events-none" />
               </div>
             </motion.div>
@@ -287,7 +287,7 @@ export default function BiPantauDetailPage() {
         </div>
       </section>
 
-      <FloatingAccessibility />
+      
     </div>
   );
 }

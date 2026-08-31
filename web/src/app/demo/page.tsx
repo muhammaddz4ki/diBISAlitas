@@ -14,7 +14,7 @@ import {
   ExternalLink,
 } from "lucide-react";
 import Navbar from "@/components/Navbar";
-import FloatingAccessibility from "@/components/FloatingAccessibility";
+
 
 export default function DemoHubPage() {
   const { theme } = useTheme();
@@ -262,7 +262,7 @@ export default function DemoHubPage() {
         </div>
       </section>
 
-      <FloatingAccessibility />
+      
     </div>
   );
 }
