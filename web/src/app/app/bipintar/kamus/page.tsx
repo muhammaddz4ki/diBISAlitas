@@ -10,6 +10,41 @@ import { HIJAIYAH_LABELS, SignLabel } from "@/constants/signLabels";
 import { subscribeLearningStats, LearningStats, LetterStat } from "@/lib/learningStats";
 import ModalPortal from "@/components/ModalPortal";
 
+// Urutan abjad Hijaiyah yang benar (sesuai standar)
+const HIJAIYAH_SORTED_IDS = [
+  1,  // Alif
+  2,  // Ba
+  21, // Ta
+  24, // Tsa
+  10, // Jim
+  8,  // Ha
+  12, // Kha
+  3,  // Dal
+  5,  // Dzal
+  17, // Ra
+  28, // Zay (Zai)
+  19, // Sin
+  20, // Syin
+  18, // Shad
+  4,  // Dhad
+  23, // Tha
+  27, // Zaa (Zha)
+  0,  // Ain
+  7,  // Gain (Ghain)
+  6,  // Fa
+  16, // Qaf
+  11, // Kaf
+  13, // Lam
+  14, // Mim
+  15, // Nun
+  25, // Waw (Wau)
+  9,  // Hha (Ha besar)
+  26, // Ya
+  22, // TaMarbutah
+];
+
+const SORTED_LABELS = HIJAIYAH_SORTED_IDS.map(id => HIJAIYAH_LABELS.find(l => l.id === id)!).filter(Boolean);
+
 type Mastery = "none" | "weak" | "ok" | "master";
 
 function masteryOf(stat: LetterStat | undefined): Mastery {
@@ -90,7 +125,7 @@ export default function KamusPage() {
 
       {/* Grid huruf */}
       <div className="px-6 grid grid-cols-3 gap-4">
-        {HIJAIYAH_LABELS.map((l) => {
+        {SORTED_LABELS.map((l) => {
           const m = masteryOf(stats?.letters?.[String(l.id)]);
           return (
             <button
@@ -140,16 +175,30 @@ export default function KamusPage() {
 
               <div className="flex flex-col items-center">
                 {showDemonstration ? (
-                  <div className="w-32 h-32 sm:w-40 sm:h-40 bg-[#f4f6fc] rounded-3xl mb-4 mt-2 flex items-center justify-center overflow-hidden shadow-[inset_2px_2px_5px_rgba(0,0,0,0.05),_inset_-3px_-3px_7px_rgba(255,255,255,1)] border border-white">
-                    <img
-                      src={`/gifs/hijaiyah/${selected.label.toLowerCase()}.gif`}
-                      alt={`Peragaan isyarat ${selected.indo}`}
-                      className="w-full h-full object-cover"
-                      onError={(e) => {
-                        e.currentTarget.style.display = 'none';
-                        e.currentTarget.parentElement!.innerHTML = '<div class="text-center text-slate-400 p-2"><p class="text-xs font-semibold">GIF Belum Tersedia</p></div>';
-                      }}
-                    />
+                  <div className="w-32 h-32 sm:w-40 sm:h-40 bg-[#f4f6fc] rounded-3xl mb-4 mt-2 flex items-center justify-center overflow-hidden shadow-[inset_2px_2px_5px_rgba(0,0,0,0.05),_inset_-3px_-3px_7px_rgba(255,255,255,1)] border border-white p-2">
+                    {(() => {
+                      const l = selected.label.toLowerCase();
+                      const map: Record<string, string> = {
+                        gain: "ghain",
+                        hha: "ha_besar",
+                        tamarbutah: "ta_marbutah",
+                        waw: "wau",
+                        zaa: "zha",
+                        zay: "zai"
+                      };
+                      const fileName = map[l] || l;
+                      return (
+                        <img
+                          src={`/images/hijaiyah/${fileName}.png`}
+                          alt={`Peragaan isyarat ${selected.indo}`}
+                          className="w-full h-full object-contain mix-blend-multiply"
+                          onError={(e) => {
+                            e.currentTarget.style.display = 'none';
+                            e.currentTarget.parentElement!.innerHTML = '<div class="text-center text-slate-400 p-2"><p class="text-xs font-semibold">Gambar Belum Tersedia</p></div>';
+                          }}
+                        />
+                      );
+                    })()}
                   </div>
                 ) : (
                   <span
