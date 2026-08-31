@@ -21,6 +21,7 @@ import {
   Zap,
 } from "lucide-react";
 import ThemeToggle from "@/components/ThemeToggle";
+import { useTheme } from "@/lib/ThemeContext";
 
 export const FEATURES_LIST = [
   {
@@ -109,6 +110,7 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const pathname = usePathname();
+  const { highContrast } = useTheme();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -121,10 +123,12 @@ export default function Navbar() {
     setActiveDropdown(null);
   }, [pathname]);
 
+  const isSolid = scrolled || highContrast;
+
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
+        isSolid
           ? "bg-white/90 dark:bg-[#090e17]/90 backdrop-blur-xl shadow-[0_4px_30px_rgba(0,0,0,0.06)] dark:shadow-[0_4px_30px_rgba(0,0,0,0.4)] border-b border-slate-100 dark:border-slate-800/80 py-3"
           : "bg-transparent py-4"
       }`}

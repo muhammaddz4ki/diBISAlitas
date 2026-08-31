@@ -411,22 +411,69 @@ html.dark .liquid-crystal-glow {
 }
 
 /* ===== Aksesibilitas ===== */
-/* Kontras tinggi: pertegas warna & border seluruh konten */
-body.a11y-hc {
-  filter: contrast(1.18) saturate(1.12);
+/* Kombinasi Filter: Kontras Tinggi & Monokrom */
+html.a11y-hc .a11y-content-wrapper,
+html.a11y-grayscale .a11y-content-wrapper {
+  transition: filter 0.3s ease;
 }
-/* Colorful mode: disiapkan untuk menu saja (belum diaktifkan efeknya) */
-body.a11y-colorful {
-  /* filter: sepia(0.3) saturate(3.5) contrast(1.15) brightness(1.02) hue-rotate(-5deg) !important; */
+
+html.a11y-hc.a11y-grayscale .a11y-content-wrapper {
+  filter: contrast(1.25) grayscale(100%) !important;
 }
-/* Kurangi animasi: matikan animasi & transisi CSS (framer-motion ditangani MotionConfig) */
-body.a11y-reduce *,
-body.a11y-reduce *::before,
-body.a11y-reduce *::after {
-  animation-duration: 0.001ms !important;
-  animation-iteration-count: 1 !important;
-  transition-duration: 0.001ms !important;
+html.a11y-hc:not(.a11y-grayscale) .a11y-content-wrapper {
+  filter: contrast(1.25) saturate(1.2) !important;
+}
+html.a11y-grayscale:not(.a11y-hc) .a11y-content-wrapper {
+  filter: grayscale(100%) !important;
+}
+
+/* Mode Disleksia: Font mudah dibaca, jarak huruf dan baris lebih renggang */
+html.a11y-dyslexia body,
+html.a11y-dyslexia p,
+html.a11y-dyslexia h1,
+html.a11y-dyslexia h2,
+html.a11y-dyslexia h3,
+html.a11y-dyslexia h4,
+html.a11y-dyslexia h5,
+html.a11y-dyslexia h6,
+html.a11y-dyslexia span,
+html.a11y-dyslexia a,
+html.a11y-dyslexia div,
+html.a11y-dyslexia li {
+  font-family: 'Comic Sans MS', 'OpenDyslexic', sans-serif !important;
+  letter-spacing: 0.05em !important;
+  word-spacing: 0.1em !important;
+  line-height: 1.7 !important;
+}
+
+/* Garis Bawahi & Sorot Tautan */
+html.a11y-highlight-links a {
+  text-decoration: underline !important;
+  text-decoration-thickness: 3px !important;
+  text-decoration-color: #1B9981 !important;
+  text-underline-offset: 4px !important;
+  font-weight: 700 !important;
+}
+html.dark.a11y-highlight-links a {
+  text-decoration-color: #00D4AA !important;
+}
+
+/* Kurangi animasi: matikan animasi & transisi CSS */
+html.a11y-reduce *,
+html.a11y-reduce *::before,
+html.a11y-reduce *::after {
+  animation: none !important;
+  transition: none !important;
   scroll-behavior: auto !important;
+}
+
+/* Navigasi Navbar saat High Contrast: Tetap solid saat scroll */
+html.a11y-hc header {
+  background-color: var(--background) !important;
+  backdrop-filter: blur(24px) !important;
+  padding-top: 0.75rem !important;
+  padding-bottom: 0.75rem !important;
+  border-bottom: 1px solid var(--card-border) !important;
 }
 
 /* ===== Aksesibilitas: Focus Visible (Navigasi Keyboard) ===== */

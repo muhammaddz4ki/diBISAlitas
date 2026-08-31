@@ -23,11 +23,9 @@ import {
 import { useTheme } from "@/lib/ThemeContext";
 
 export default function FloatingAccessibility() {
-  const { theme, setTheme } = useTheme();
+  const { theme, setTheme, reduceMotion, setReduceMotion, highContrast, setHighContrast } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
   const [fontSizeIndex, setFontSizeIndex] = useState(0); // 0: Normal, 1: Besar (115%), 2: Sangat Besar (130%)
-  const [highContrast, setHighContrast] = useState(false);
-  const [reduceMotion, setReduceMotion] = useState(false);
   const [dyslexiaMode, setDyslexiaMode] = useState(false);
   const [grayscaleMode, setGrayscaleMode] = useState(false);
   const [highlightLinks, setHighlightLinks] = useState(false);
@@ -42,7 +40,6 @@ export default function FloatingAccessibility() {
     if (typeof window === "undefined") return;
 
     const savedFont = localStorage.getItem("a11y_font");
-    const savedHC = localStorage.getItem("a11y_hc") === "1";
     const savedRM = localStorage.getItem("a11y_rm") === "1";
     const savedDyslexia = localStorage.getItem("a11y_dyslexia") === "1";
     const savedGray = localStorage.getItem("a11y_gray") === "1";
@@ -52,7 +49,6 @@ export default function FloatingAccessibility() {
       const idx = Number(savedFont);
       setFontSizeIndex(Number.isFinite(idx) ? Math.min(2, Math.max(0, idx)) : 0);
     }
-    setHighContrast(savedHC);
     setReduceMotion(savedRM);
     setDyslexiaMode(savedDyslexia);
     setGrayscaleMode(savedGray);
@@ -62,7 +58,6 @@ export default function FloatingAccessibility() {
     // Apply to DOM
     applyDomClasses({
       font: Number(savedFont || 0),
-      hc: savedHC,
       rm: savedRM,
       dyslexia: savedDyslexia,
       gray: savedGray,
@@ -77,19 +72,44 @@ export default function FloatingAccessibility() {
       }
     };
     window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
+    
+    // Global Video Auto-Pauser for Reduce Motion
+    const updateVideos = (rmState: boolean) => {
+      const videos = document.querySelectorAll('video');
+      videos.forEach(video => {
+        if (rmState) {
+          video.pause();
+        } else {
+          // Only play if it has autoPlay
+          if (video.autoplay) video.play().catch(() => {});
+        }
+      });
+    };
+    
+    updateVideos(savedRM); // Initial check
+
+    const observer = new MutationObserver(() => {
+      if (document.documentElement.classList.contains("a11y-reduce")) {
+        updateVideos(true);
+      }
+    });
+    
+    observer.observe(document.body, { childList: true, subtree: true });
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      observer.disconnect();
+    };
   }, []);
 
   const applyDomClasses = ({
     font,
-    hc,
     rm,
     dyslexia,
     gray,
     links,
   }: {
     font: number;
-    hc: boolean;
     rm: boolean;
     dyslexia: boolean;
     gray: boolean;
@@ -101,14 +121,12 @@ export default function FloatingAccessibility() {
 
     (document.body.style as CSSStyleDeclaration & { zoom?: string }).zoom = String(scale);
     
-    // Toggle on documentElement (root html) so position: fixed is NEVER broken
-    document.documentElement.classList.toggle("a11y-hc", hc);
+    // High contrast is handled by ThemeContext
     document.documentElement.classList.toggle("a11y-reduce", rm);
     document.documentElement.classList.toggle("a11y-dyslexia", dyslexia);
     document.documentElement.classList.toggle("a11y-grayscale", gray);
     document.documentElement.classList.toggle("a11y-highlight-links", links);
 
-    // Also toggle on body for legacy rule fallback
     document.body.classList.toggle("a11y-reduce", rm);
     document.body.classList.toggle("a11y-dyslexia", dyslexia);
     document.body.classList.toggle("a11y-highlight-links", links);
@@ -119,7 +137,6 @@ export default function FloatingAccessibility() {
     localStorage.setItem("a11y_font", String(idx));
     applyDomClasses({
       font: idx,
-      hc: highContrast,
       rm: reduceMotion,
       dyslexia: dyslexiaMode,
       gray: grayscaleMode,
@@ -129,11 +146,11 @@ export default function FloatingAccessibility() {
 
   const toggleHighContrast = () => {
     const next = !highContrast;
-    setHighContrast(next);
-    localStorage.setItem("a11y_hc", next ? "1" : "0");
+    setHighContrast(next); // Uses ThemeContext
+
+    // Still need to trigger re-render of layout/filters if needed
     applyDomClasses({
       font: fontSizeIndex,
-      hc: next,
       rm: reduceMotion,
       dyslexia: dyslexiaMode,
       gray: grayscaleMode,
@@ -144,10 +161,16 @@ export default function FloatingAccessibility() {
   const toggleReduceMotion = () => {
     const next = !reduceMotion;
     setReduceMotion(next);
-    localStorage.setItem("a11y_rm", next ? "1" : "0");
+
+    // Pause/Play videos immediately
+    const videos = document.querySelectorAll('video');
+    videos.forEach(video => {
+      if (next) video.pause();
+      else if (video.autoplay) video.play().catch(() => {});
+    });
+
     applyDomClasses({
       font: fontSizeIndex,
-      hc: highContrast,
       rm: next,
       dyslexia: dyslexiaMode,
       gray: grayscaleMode,
@@ -161,7 +184,6 @@ export default function FloatingAccessibility() {
     localStorage.setItem("a11y_dyslexia", next ? "1" : "0");
     applyDomClasses({
       font: fontSizeIndex,
-      hc: highContrast,
       rm: reduceMotion,
       dyslexia: next,
       gray: grayscaleMode,
@@ -175,7 +197,6 @@ export default function FloatingAccessibility() {
     localStorage.setItem("a11y_gray", next ? "1" : "0");
     applyDomClasses({
       font: fontSizeIndex,
-      hc: highContrast,
       rm: reduceMotion,
       dyslexia: dyslexiaMode,
       gray: next,
@@ -189,7 +210,6 @@ export default function FloatingAccessibility() {
     localStorage.setItem("a11y_links", next ? "1" : "0");
     applyDomClasses({
       font: fontSizeIndex,
-      hc: highContrast,
       rm: reduceMotion,
       dyslexia: dyslexiaMode,
       gray: grayscaleMode,
@@ -227,7 +247,6 @@ export default function FloatingAccessibility() {
     }
     applyDomClasses({
       font: 0,
-      hc: false,
       rm: false,
       dyslexia: false,
       gray: false,
@@ -275,6 +294,18 @@ export default function FloatingAccessibility() {
 
   return (
     <div className="fixed bottom-6 right-6 z-[9999] font-sans">
+      {/* Dynamic Style Injector for robust accessibility filters */}
+      <style dangerouslySetInnerHTML={{ __html: `
+        .a11y-content-wrapper {
+          filter: ${
+            (highContrast && grayscaleMode) ? 'contrast(1.25) grayscale(100%)' :
+            highContrast ? 'contrast(1.25) saturate(1.2)' :
+            grayscaleMode ? 'grayscale(100%)' : 'none'
+          } !important;
+          transition: filter 0.3s ease !important;
+        }
+      `}} />
+
       {/* Floating Action Button */}
       <div className="relative flex items-center justify-end">
         {/* Tooltip on hover */}
