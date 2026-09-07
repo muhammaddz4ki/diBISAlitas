@@ -116,13 +116,13 @@ function HeroSection() {
       className="relative min-h-screen pt-32 flex flex-col items-center justify-start md:justify-center overflow-hidden text-slate-900 dark:text-white transition-colors duration-300"
     >
       {/* Background Glow Elements */}
-      <motion.div style={{ x: bgX, y: bgY }} className="absolute top-[50%] md:top-[55%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] md:w-[900px] md:h-[900px] bg-[#1B9981]/20 dark:bg-[#1B9981]/30 blur-[120px] md:blur-[180px] rounded-full pointer-events-none" />
-      <motion.div style={{ x: bgX, y: bgY }} className="absolute top-[50%] md:top-[55%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] md:w-[600px] md:h-[600px] bg-[#00D4AA]/30 dark:bg-[#00D4AA]/40 blur-[90px] md:blur-[140px] rounded-full pointer-events-none" />
+      <motion.div style={{ x: bgX, y: bgY }} className="absolute top-[50%] md:top-[55%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] md:w-[900px] md:h-[900px] bg-[#2a9d8f]/20 dark:bg-[#2a9d8f]/30 blur-[120px] md:blur-[180px] rounded-full pointer-events-none" />
+      <motion.div style={{ x: bgX, y: bgY }} className="absolute top-[50%] md:top-[55%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] md:w-[600px] md:h-[600px] bg-[#4fd1c5]/30 dark:bg-[#4fd1c5]/40 blur-[90px] md:blur-[140px] rounded-full pointer-events-none" />
       
       {/* Giant faint background text */}
       <div className="absolute top-[40%] md:top-[45%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-full text-center pointer-events-none opacity-[0.03] dark:opacity-[0.05] flex flex-col justify-center items-center z-0">
-         <span className="text-[12rem] md:text-[22rem] font-black leading-none tracking-tighter text-[#1B9981] dark:text-[#00D4AA]">diBISA</span>
-         <span className="text-[12rem] md:text-[22rem] font-black leading-none tracking-tighter text-[#1B9981] dark:text-[#00D4AA]">litas</span>
+         <span className="text-[12rem] md:text-[22rem] font-black leading-none tracking-tighter text-[#2a9d8f] dark:text-[#4fd1c5]">diBISA</span>
+         <span className="text-[12rem] md:text-[22rem] font-black leading-none tracking-tighter text-[#2a9d8f] dark:text-[#4fd1c5]">litas</span>
       </div>
 
       <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 flex flex-col items-center text-center mt-12 md:mt-0">
@@ -133,7 +133,7 @@ function HeroSection() {
           transition={{ duration: 0.6 }}
           className="mb-6 flex items-center justify-center font-bold tracking-[0.3em] text-xs sm:text-sm text-slate-500 dark:text-white/80 uppercase"
         >
-          di<span className="text-[#1B9981] dark:text-[#00D4AA] mx-1">BISA</span>litas
+          di<span className="text-[#2a9d8f] dark:text-[#4fd1c5] mx-1">BISA</span>litas
         </motion.div>
 
         {/* Title */}
@@ -143,7 +143,7 @@ function HeroSection() {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="text-4xl sm:text-5xl md:text-6xl lg:text-[4.5rem] font-extrabold leading-[1.1] tracking-tight max-w-5xl mx-auto mb-6"
         >
-          Aksesibilitas <span className="text-[#1B9981] dark:text-[#00D4AA]">Cerdas</span>, Kemandirian Tanpa Batas.
+          Aksesibilitas <span className="text-[#2a9d8f] dark:text-[#4fd1c5]">Cerdas</span>, Kemandirian Tanpa Batas.
         </motion.h1>
 
         {/* Subtitle */}
@@ -166,7 +166,7 @@ function HeroSection() {
            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
              <Link
                href="/demo"
-               className="px-8 py-4 rounded-full bg-[#1B9981] text-white font-bold text-sm hover:bg-[#168C74] transition-colors shadow-[0_0_20px_rgba(27,153,129,0.3)] hover:shadow-[0_0_30px_rgba(27,153,129,0.5)] flex items-center gap-2"
+               className="px-8 py-4 rounded-full bg-[#2a9d8f] text-white font-bold text-sm hover:bg-[#1e7b6d] transition-colors shadow-[0_0_20px_rgba(42,157,143,0.3)] hover:shadow-[0_0_30px_rgba(42,157,143,0.5)] flex items-center gap-2"
              >
                <Zap className="w-4 h-4 fill-current text-white" />
                Coba Demo Gratis
@@ -190,8 +190,8 @@ function HeroSection() {
            className="relative w-full max-w-7xl mx-auto flex justify-center mt-[-3rem] md:mt-[-5rem] lg:mt-[-8rem] z-30 pointer-events-none px-2 sm:px-6"
         >
           {/* Faux Fabric effects behind image */}
-          <div className="absolute top-[20%] left-[10%] w-[400px] h-[400px] bg-gradient-to-r from-[#1B9981] to-[#00D4AA] blur-[80px] opacity-10 dark:opacity-20 transform -rotate-12 rounded-[100%]" />
-          <div className="absolute top-[30%] right-[10%] w-[400px] h-[400px] bg-gradient-to-l from-[#1B9981] to-[#00D4AA] blur-[80px] opacity-10 dark:opacity-20 transform rotate-12 rounded-[100%]" />
+          <div className="absolute top-[20%] left-[10%] w-[400px] h-[400px] bg-gradient-to-r from-[#2a9d8f] to-[#4fd1c5] blur-[80px] opacity-10 dark:opacity-20 transform -rotate-12 rounded-[100%]" />
+          <div className="absolute top-[30%] right-[10%] w-[400px] h-[400px] bg-gradient-to-l from-[#2a9d8f] to-[#4fd1c5] blur-[80px] opacity-10 dark:opacity-20 transform rotate-12 rounded-[100%]" />
           
           <motion.div
             style={{ x: imgX, y: imgY }}
@@ -202,7 +202,7 @@ function HeroSection() {
               transition={{ repeat: Infinity, duration: 5, ease: "easeInOut" }}
               src="/images/hero-transparent.png" 
               alt="diBISAlitas Users" 
-              className="w-full h-auto object-contain max-h-[65vh] md:max-h-[80vh] lg:max-h-[90vh] xl:max-h-none xl:max-w-[115%] drop-shadow-[0_30px_60px_rgba(27,153,129,0.2)] dark:drop-shadow-[0_30px_60px_rgba(27,153,129,0.3)]"
+              className="w-full h-auto object-contain max-h-[65vh] md:max-h-[80vh] lg:max-h-[90vh] xl:max-h-none xl:max-w-[115%] drop-shadow-[0_30px_60px_rgba(42,157,143,0.2)] dark:drop-shadow-[0_30px_60px_rgba(42,157,143,0.3)]"
             />
           </motion.div>
         </motion.div>
@@ -238,7 +238,7 @@ function AboutProjectSection() {
           style={{ perspective: "1200px" }}
         >
           {/* Faint Glow Behind Laptop */}
-          <div className="absolute w-[90%] h-[90%] bg-[#1B9981]/10 dark:bg-[#00D4AA]/15 blur-[100px] rounded-full top-1/2 left-[40%] -translate-x-1/2 -translate-y-1/2" />
+          <div className="absolute w-[90%] h-[90%] bg-[#2a9d8f]/10 dark:bg-[#4fd1c5]/15 blur-[100px] rounded-full top-1/2 left-[40%] -translate-x-1/2 -translate-y-1/2" />
           
           {/* The 3D Laptop Frame */}
           <div 
@@ -280,7 +280,7 @@ function AboutProjectSection() {
                 }}
               />
               {/* Fallback gradient when no images */}
-              <div className="absolute inset-0 bg-gradient-to-br from-slate-100 via-slate-200 to-[#1B9981]/20 dark:from-[#0a0e17] dark:via-[#111827] dark:to-[#1B9981]/30 -z-10" />
+              <div className="absolute inset-0 bg-gradient-to-br from-slate-100 via-slate-200 to-[#2a9d8f]/20 dark:from-[#0a0e17] dark:via-[#111827] dark:to-[#2a9d8f]/30 -z-10" />
               {/* Subtle shine across screen */}
               <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent pointer-events-none" />
             </div>
@@ -304,7 +304,7 @@ function AboutProjectSection() {
           
           <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.5rem] font-black leading-[1.05] tracking-tight">
             diBISAlitas adalah platform AI{" "}
-            <em className="font-black italic text-[#1B9981] dark:text-[#00D4AA]">
+            <em className="font-black italic text-[#2a9d8f] dark:text-[#4fd1c5]">
               yang mengubah hidup penyandang disabilitas.
             </em>
           </h2>
@@ -332,6 +332,7 @@ type Pillar = {
   target: string;
   href: string;
   gradient: string;
+  textGradient: string;
   accent: string;
   video: string;
   hoverBorder: string;
@@ -353,7 +354,8 @@ const pillars: Pillar[] = [
     icon: ShieldAlert,
     target: "Tunadaksa & Tunanetra",
     href: "/fitur/bisafe",
-    gradient: "from-rose-600 via-rose-500 to-rose-700 dark:from-rose-900 dark:via-rose-800 dark:to-[rgb(60,10,20)]",
+    gradient: "from-rose-500 to-rose-700 dark:from-rose-800 dark:to-rose-950",
+    textGradient: "from-rose-500 to-rose-700 dark:from-rose-400 dark:to-rose-300",
     accent: "text-rose-100",
     video: "bisafe.mp4",
     hoverBorder: "hover:border-rose-500/50 dark:hover:border-rose-400/50",
@@ -373,11 +375,12 @@ const pillars: Pillar[] = [
     icon: BarChart,
     target: "Pemda & Relawan",
     href: "/fitur/bipantau",
-    gradient: "from-[#168C74] via-[#1B9981] to-[#0A6B58] dark:from-[#0B4A3D] dark:via-[#0F6352] dark:to-[#05261F]",
+    gradient: "from-[#2a9d8f] to-[#1e7b6d] dark:from-[#1e7b6d] dark:to-[#0f4038]",
+    textGradient: "from-[#2a9d8f] to-[#1e7b6d] dark:from-[#2a9d8f] dark:to-[#4fd1c5]",
     accent: "text-[#8FEAD4]",
     video: "peta.mp4",
-    hoverBorder: "hover:border-[#1B9981]/50 dark:hover:border-[#00D4AA]/50",
-    hoverText: "group-hover:text-[#1B9981] dark:group-hover:text-[#00D4AA]",
+    hoverBorder: "hover:border-[#2a9d8f]/50 dark:hover:border-[#4fd1c5]/50",
+    hoverText: "group-hover:text-[#2a9d8f] dark:group-hover:text-[#4fd1c5]",
     glass1Title: "Pantauan Real-time",
     glass1Subtitle: "Kendali penuh atas insiden kota dalam satu dasbor visual yang sangat cerdas.",
     glass2Title: "Kolaborasi Ekstra Cepat",
@@ -393,7 +396,8 @@ const pillars: Pillar[] = [
     icon: MessageCircle,
     target: "Tunarungu & Tunanetra",
     href: "/fitur/bisapa",
-    gradient: "from-blue-600 via-blue-500 to-blue-700 dark:from-blue-900 dark:via-blue-800 dark:to-blue-950",
+    gradient: "from-blue-500 to-blue-700 dark:from-blue-800 dark:to-blue-950",
+    textGradient: "from-blue-500 to-blue-700 dark:from-blue-400 dark:to-blue-300",
     accent: "text-blue-100",
     video: "bisapa.mp4",
     hoverBorder: "hover:border-blue-500/50 dark:hover:border-blue-400/50",
@@ -413,7 +417,8 @@ const pillars: Pillar[] = [
     icon: BookOpen,
     target: "Tunanetra & Disleksia",
     href: "/fitur/bibaca",
-    gradient: "from-purple-700 via-purple-600 to-purple-800 dark:from-purple-900 dark:via-purple-800 dark:to-[rgb(35,10,50)]",
+    gradient: "from-purple-500 to-purple-700 dark:from-purple-800 dark:to-purple-950",
+    textGradient: "from-purple-500 to-purple-700 dark:from-purple-400 dark:to-purple-300",
     accent: "text-purple-100",
     video: "bibaca.mp4",
     hoverBorder: "hover:border-purple-500/50 dark:hover:border-purple-400/50",
@@ -433,7 +438,8 @@ const pillars: Pillar[] = [
     icon: GraduationCap,
     target: "Pelajar & Komunitas",
     href: "/fitur/bipintar",
-    gradient: "from-amber-500 via-orange-500 to-orange-600 dark:from-amber-700 dark:via-orange-700 dark:to-orange-950",
+    gradient: "from-orange-500 to-orange-700 dark:from-orange-800 dark:to-orange-950",
+    textGradient: "from-orange-500 to-orange-700 dark:from-orange-400 dark:to-orange-300",
     accent: "text-orange-100",
     video: "bipintar.mp4",
     hoverBorder: "hover:border-orange-500/50 dark:hover:border-orange-400/50",
@@ -453,11 +459,12 @@ const pillars: Pillar[] = [
     icon: Navigation,
     target: "Tunanetra & Pejalan Kaki",
     href: "/fitur/bijalan",
-    gradient: "from-sky-700 via-sky-600 to-sky-800 dark:from-sky-900 dark:via-sky-800 dark:to-[#081e36]",
-    accent: "text-sky-100",
+    gradient: "from-[#2a9d8f] to-[#1e7b6d] dark:from-[#1e7b6d] dark:to-[#0f4038]",
+    textGradient: "from-[#2a9d8f] to-[#1e7b6d] dark:from-[#2a9d8f] dark:to-[#4fd1c5]",
+    accent: "text-[#4fd1c5]",
     video: "bijalan.mp4",
-    hoverBorder: "hover:border-sky-500/50 dark:hover:border-sky-400/50",
-    hoverText: "group-hover:text-sky-600 dark:group-hover:text-sky-400",
+    hoverBorder: "hover:border-[#2a9d8f]/50 dark:hover:border-[#4fd1c5]/50",
+    hoverText: "group-hover:text-[#2a9d8f] dark:group-hover:text-[#4fd1c5]",
     glass1Title: "Navigasi Lebih Cerdas",
     glass1Subtitle: "Deteksi rintangan di depanmu dengan asisten AI dan panduan suara akurat.",
     glass2Title: "Langkah Lebih Mantap",
@@ -523,9 +530,7 @@ function BentoFeaturesSection() {
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
             className="space-y-4"
           >
-            <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-[#1B9981]/10 text-[#1B9981] dark:text-[#00D4AA] font-bold text-[10px] sm:text-xs uppercase tracking-widest">
-              <Layers className="w-3.5 h-3.5" /> 6 Pilar Ekosistem
-            </span>
+
             <h2 className="text-3xl md:text-5xl lg:text-6xl font-black leading-[1.15] md:leading-[1.1] tracking-tight text-slate-900 dark:text-white">
               Fitur Cerdas Tanpa Batas
             </h2>
@@ -709,7 +714,7 @@ function BentoFeaturesSection() {
                 <h3 className="text-3xl sm:text-4xl md:text-[2.8rem] font-black leading-[1.1] tracking-tight text-slate-900 dark:text-white line-clamp-3">
                   {activePillar.title}
                   <br />
-                  <em className={`font-black italic bg-clip-text text-transparent bg-gradient-to-r ${activePillar.gradient}`}>
+                  <em className={`font-black italic bg-clip-text text-transparent bg-gradient-to-r ${activePillar.textGradient}`}>
                     {activePillar.tagline}
                   </em>
                 </h3>
@@ -720,7 +725,7 @@ function BentoFeaturesSection() {
 
                 <Link
                   href={activePillar.href}
-                  className="inline-flex items-center gap-2 text-slate-900 dark:text-white font-bold text-sm group hover:text-[#1B9981] dark:hover:text-[#00D4AA] transition-colors"
+                  className="inline-flex items-center gap-2 text-slate-900 dark:text-white font-bold text-sm group hover:text-[#2a9d8f] dark:hover:text-[#4fd1c5] transition-colors"
                 >
                   Lihat Detail
                   <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1.5" />
@@ -801,9 +806,9 @@ function CTAAndStatsSection() {
     <section className="relative w-full text-black dark:text-white overflow-x-clip overflow-y-visible flex flex-col items-center justify-center pt-20 pb-12 md:pb-16 z-40 transition-colors duration-300">
       
       {/* Background Gradients */}
-      <div className="absolute top-0 left-0 w-[400px] md:w-[700px] h-[400px] md:h-[700px] bg-[#1B9981]/20 blur-[100px] md:blur-[150px] rounded-full -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
-      <div className="absolute top-[30%] right-0 w-[400px] md:w-[700px] h-[400px] md:h-[700px] bg-[#00D4AA]/20 blur-[100px] md:blur-[150px] rounded-full translate-x-1/2 translate-y-1/2 pointer-events-none" />
-      <div className="absolute bottom-[10%] left-[10%] w-[500px] h-[500px] bg-[#00D4AA]/5 blur-[120px] rounded-full pointer-events-none" />
+      <div className="absolute top-0 left-0 w-[400px] md:w-[700px] h-[400px] md:h-[700px] bg-[#2a9d8f]/20 blur-[100px] md:blur-[150px] rounded-full -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
+      <div className="absolute top-[30%] right-0 w-[400px] md:w-[700px] h-[400px] md:h-[700px] bg-[#4fd1c5]/20 blur-[100px] md:blur-[150px] rounded-full translate-x-1/2 translate-y-1/2 pointer-events-none" />
+      <div className="absolute bottom-[10%] left-[10%] w-[500px] h-[500px] bg-[#4fd1c5]/5 blur-[120px] rounded-full pointer-events-none" />
 
 
       {/* --- HAND AND ROTATING TEXT (CTA) --- */}
@@ -817,7 +822,7 @@ function CTAAndStatsSection() {
           style={{ transform: "translateZ(0)", transformStyle: "preserve-3d" }}
         >
            {/* Fallback glow if image is missing */}
-           <div className="absolute w-40 h-40 md:w-80 md:h-80 bg-[#00D4AA]/10 blur-3xl rounded-full" />
+           <div className="absolute w-40 h-40 md:w-80 md:h-80 bg-[#4fd1c5]/10 blur-3xl rounded-full" />
            <div className="relative translate-y-8 sm:translate-y-12 md:translate-y-16 flex flex-col justify-end">
              <motion.img 
                initial={{ opacity: 0, y: -150 }}
@@ -826,7 +831,7 @@ function CTAAndStatsSection() {
                transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
                src="/images/placeholder-hand.png" 
                alt="Hand Placeholder" 
-               className="w-56 sm:w-72 md:w-[22rem] lg:w-[26rem] h-auto object-contain drop-shadow-[0_0_40px_rgba(0,212,170,0.3)] block relative"
+               className="w-56 sm:w-72 md:w-[22rem] lg:w-[26rem] h-auto object-contain drop-shadow-[0_0_40px_rgba(79,209,197,0.3)] block relative"
                style={{ 
                  WebkitMaskImage: "radial-gradient(100% 100% at 50% 100%, black 50%, transparent 100%)", 
                  maskImage: "radial-gradient(100% 100% at 50% 100%, black 50%, transparent 100%)" 
@@ -856,7 +861,7 @@ function CTAAndStatsSection() {
                 className="absolute text-4xl sm:text-5xl md:text-6xl lg:text-[5rem] font-black text-white lowercase select-none tracking-tight transition-colors duration-300"
                 style={{
                   transform: `rotateY(${i * (360 / characters.length)}deg) translateZ(clamp(140px, 30vw, 320px))`,
-                  textShadow: "1px 1px 0 #1B9981, -1px -1px 0 #1B9981, 1px -1px 0 #1B9981, -1px 1px 0 #1B9981, 0 1px 0 #1B9981, 0 -1px 0 #1B9981, 1px 0 0 #1B9981, -1px 0 0 #1B9981, 0 0 15px rgba(0, 212, 170, 0.9), 0 0 40px rgba(0, 212, 170, 0.4)"
+                  textShadow: "1px 1px 0 #2a9d8f, -1px -1px 0 #2a9d8f, 1px -1px 0 #2a9d8f, -1px 1px 0 #2a9d8f, 0 1px 0 #2a9d8f, 0 -1px 0 #2a9d8f, 1px 0 0 #2a9d8f, -1px 0 0 #2a9d8f, 0 0 15px rgba(79, 209, 197, 0.9), 0 0 40px rgba(79, 209, 197, 0.4)"
                 }}
               >
                 {char === " " ? "\u00A0" : char}
@@ -876,7 +881,7 @@ function CTAAndStatsSection() {
             animate={isInView ? "visible" : "hidden"}
             className="text-3xl md:text-4xl lg:text-5xl font-black leading-[1.15] md:leading-[1.1] tracking-tight text-slate-900 dark:text-white drop-shadow-md"
           >
-            Kesiapan Teknologi Nyata <br className="hidden md:block" /> Untuk <span className="text-[#1B9981] dark:text-[#00D4AA]">Indonesia Inklusif</span>
+            Kesiapan Teknologi Nyata <br className="hidden md:block" /> Untuk <span className="text-[#2a9d8f] dark:text-[#4fd1c5]">Indonesia Inklusif</span>
           </motion.h2>
         </div>
 
@@ -892,7 +897,7 @@ function CTAAndStatsSection() {
             className="bg-white dark:bg-[#141414] border border-black/5 dark:border-white/5 rounded-[2rem] p-8 flex flex-col items-center justify-center text-center shadow-xl transition-colors duration-300"
           >
             <h3 className="text-5xl font-bold mb-2">{stat1}+</h3>
-            <h4 className="text-xs font-bold text-[#1B9981] dark:text-[#00D4AA] tracking-widest uppercase mb-4">Juta</h4>
+            <h4 className="text-xs font-bold text-[#2a9d8f] dark:text-[#4fd1c5] tracking-widest uppercase mb-4">Juta</h4>
             <p className="text-xs text-black/60 dark:text-white/50 leading-relaxed font-medium transition-colors duration-300">Penyandang disabilitas di Indonesia yang membutuhkan akses setara</p>
           </motion.div>
 
@@ -906,7 +911,7 @@ function CTAAndStatsSection() {
             className="bg-white dark:bg-[#141414] border border-black/5 dark:border-white/5 rounded-[2rem] p-8 flex flex-col items-center justify-center text-center shadow-xl transition-colors duration-300"
           >
             <h3 className="text-5xl font-bold mb-2">{stat2}</h3>
-            <h4 className="text-xs font-bold text-[#1B9981] dark:text-[#00D4AA] tracking-widest uppercase mb-4">Pilar</h4>
+            <h4 className="text-xs font-bold text-[#2a9d8f] dark:text-[#4fd1c5] tracking-widest uppercase mb-4">Pilar</h4>
             <p className="text-xs text-black/60 dark:text-white/50 leading-relaxed font-medium transition-colors duration-300">Modul AI cerdas terintegrasi dalam satu platform</p>
           </motion.div>
 
@@ -920,7 +925,7 @@ function CTAAndStatsSection() {
             className="bg-white dark:bg-[#141414] border border-black/5 dark:border-white/5 rounded-[2rem] p-8 flex flex-col items-center justify-center text-center shadow-xl transition-colors duration-300"
           >
             <h3 className="text-5xl font-bold mb-2">{stat3}%</h3>
-            <h4 className="text-xs font-bold text-[#1B9981] dark:text-[#00D4AA] tracking-widest uppercase mb-4">Akurasi</h4>
+            <h4 className="text-xs font-bold text-[#2a9d8f] dark:text-[#4fd1c5] tracking-widest uppercase mb-4">Akurasi</h4>
             <p className="text-xs text-black/60 dark:text-white/50 leading-relaxed font-medium transition-colors duration-300">Keberhasilan deteksi alfabet BISINDO on-device</p>
           </motion.div>
 
@@ -934,7 +939,7 @@ function CTAAndStatsSection() {
             className="bg-white dark:bg-[#141414] border border-black/5 dark:border-white/5 rounded-[2rem] p-8 flex flex-col items-center justify-center text-center shadow-xl transition-colors duration-300"
           >
             <h3 className="text-5xl font-bold mb-2">&lt; {stat4}</h3>
-            <h4 className="text-xs font-bold text-[#1B9981] dark:text-[#00D4AA] tracking-widest uppercase mb-4">Detik</h4>
+            <h4 className="text-xs font-bold text-[#2a9d8f] dark:text-[#4fd1c5] tracking-widest uppercase mb-4">Detik</h4>
             <p className="text-xs text-black/60 dark:text-white/50 leading-relaxed font-medium transition-colors duration-300">Latensi transmisi darurat SOS ke Command Center</p>
           </motion.div>
         </div>
@@ -948,8 +953,8 @@ const impactGalleryData = [
     id: "tunarungu",
     title: "Tunarungu & Wicara",
     description: "Percakapan dua arah langsung dengan penerjemah suara-ke-teks BiSAPA.\nEdukasi bahasa isyarat BISINDO interaktif bersama BiPINTAR.",
-    color: "bg-[#FF0055]",
-    accent: "text-[#FF0055]",
+    color: "bg-gradient-to-br from-rose-500 to-rose-700 dark:from-rose-800 dark:to-rose-950",
+    accent: "text-rose-600 dark:text-rose-400",
     mainImg: "/images/tunarungu-main.jpg",
     sideImgs: [
       "/images/tunarungu-1.jpg",
@@ -962,8 +967,8 @@ const impactGalleryData = [
     id: "tunanetra",
     title: "Tunanetra & Low Vision",
     description: "Navigasi trotoar aman dengan radar deteksi rintangan spasial BiJALAN.\nAkses baca dokumen cetak dan surat kabar mandiri lewat suara BiBACA.",
-    color: "bg-[#00D4AA]",
-    accent: "text-[#00D4AA]",
+    color: "bg-gradient-to-br from-[#2a9d8f] to-[#1e7b6d] dark:from-[#1e7b6d] dark:to-[#0f4038]",
+    accent: "text-[#2a9d8f] dark:text-[#4fd1c5]",
     mainImg: "/images/tunanetra-main.jpg",
     sideImgs: [
       "/images/tunanetra-1.jpg",
@@ -976,8 +981,8 @@ const impactGalleryData = [
     id: "tunadaksa",
     title: "Tunadaksa & Pengguna Kursi Roda",
     description: "Perlindungan darurat satu sentuhan dengan pemancar lokasi GPS BiSAFE.\nPemetaan jalur ramah kursi roda dan rintangan fasilitas di BiPANTAU.",
-    color: "bg-[#38BDF8]",
-    accent: "text-[#38BDF8]",
+    color: "bg-gradient-to-br from-sky-500 to-sky-700 dark:from-sky-800 dark:to-sky-950",
+    accent: "text-sky-600 dark:text-sky-400",
     mainImg: "/images/tunadaksa-main.jpg",
     sideImgs: [
       "/images/tunadaksa-1.jpg",
@@ -1150,26 +1155,26 @@ function ShowcaseSection() {
       {/* Right side vertical text */}
       <div className="absolute top-1/2 right-[-2%] md:right-[2%] -translate-y-1/2 z-0 pointer-events-none select-none">
         <div className="flex flex-col items-end leading-[0.82] text-right">
-          <span className="text-[6rem] sm:text-[8rem] md:text-[12rem] lg:text-[16rem] xl:text-[18rem] font-black text-[#1B9981]/[0.05] dark:text-[#1B9981]/[0.12] tracking-tighter transition-colors duration-300" style={{ WebkitTextStroke: "1px rgba(27,153,129,0.08)" }}>di</span>
-          <span className="text-[6rem] sm:text-[8rem] md:text-[12rem] lg:text-[16rem] xl:text-[18rem] font-black text-[#1B9981]/[0.05] dark:text-[#1B9981]/[0.12] tracking-tighter transition-colors duration-300" style={{ WebkitTextStroke: "1px rgba(27,153,129,0.08)" }}>BI</span>
-          <span className="text-[6rem] sm:text-[8rem] md:text-[12rem] lg:text-[16rem] xl:text-[18rem] font-black text-[#1B9981]/[0.05] dark:text-[#1B9981]/[0.12] tracking-tighter transition-colors duration-300" style={{ WebkitTextStroke: "1px rgba(27,153,129,0.08)" }}>SA</span>
+          <span className="text-[6rem] sm:text-[8rem] md:text-[12rem] lg:text-[16rem] xl:text-[18rem] font-black text-[#2a9d8f]/[0.05] dark:text-[#2a9d8f]/[0.12] tracking-tighter transition-colors duration-300" style={{ WebkitTextStroke: "1px rgba(42,157,143,0.08)" }}>di</span>
+          <span className="text-[6rem] sm:text-[8rem] md:text-[12rem] lg:text-[16rem] xl:text-[18rem] font-black text-[#2a9d8f]/[0.05] dark:text-[#2a9d8f]/[0.12] tracking-tighter transition-colors duration-300" style={{ WebkitTextStroke: "1px rgba(42,157,143,0.08)" }}>BI</span>
+          <span className="text-[6rem] sm:text-[8rem] md:text-[12rem] lg:text-[16rem] xl:text-[18rem] font-black text-[#2a9d8f]/[0.05] dark:text-[#2a9d8f]/[0.12] tracking-tighter transition-colors duration-300" style={{ WebkitTextStroke: "1px rgba(42,157,143,0.08)" }}>SA</span>
         </div>
       </div>
       
       {/* Left side faint text */}
       <div className="absolute top-[8%] left-[-4%] md:left-[0%] z-0 pointer-events-none select-none">
         <div className="flex flex-col items-start leading-[0.82]">
-          <span className="text-[5rem] sm:text-[7rem] md:text-[10rem] lg:text-[14rem] xl:text-[16rem] font-black text-[#1B9981]/[0.03] dark:text-[#1B9981]/[0.07] tracking-tighter transition-colors duration-300" style={{ WebkitTextStroke: "1px rgba(27,153,129,0.04)" }}>li</span>
-          <span className="text-[5rem] sm:text-[7rem] md:text-[10rem] lg:text-[14rem] xl:text-[16rem] font-black text-[#1B9981]/[0.03] dark:text-[#1B9981]/[0.07] tracking-tighter transition-colors duration-300" style={{ WebkitTextStroke: "1px rgba(27,153,129,0.04)" }}>ta</span>
-          <span className="text-[5rem] sm:text-[7rem] md:text-[10rem] lg:text-[14rem] xl:text-[16rem] font-black text-[#1B9981]/[0.03] dark:text-[#1B9981]/[0.07] tracking-tighter transition-colors duration-300" style={{ WebkitTextStroke: "1px rgba(27,153,129,0.04)" }}>s</span>
+          <span className="text-[5rem] sm:text-[7rem] md:text-[10rem] lg:text-[14rem] xl:text-[16rem] font-black text-[#2a9d8f]/[0.03] dark:text-[#2a9d8f]/[0.07] tracking-tighter transition-colors duration-300" style={{ WebkitTextStroke: "1px rgba(42,157,143,0.04)" }}>li</span>
+          <span className="text-[5rem] sm:text-[7rem] md:text-[10rem] lg:text-[14rem] xl:text-[16rem] font-black text-[#2a9d8f]/[0.03] dark:text-[#2a9d8f]/[0.07] tracking-tighter transition-colors duration-300" style={{ WebkitTextStroke: "1px rgba(42,157,143,0.04)" }}>ta</span>
+          <span className="text-[5rem] sm:text-[7rem] md:text-[10rem] lg:text-[14rem] xl:text-[16rem] font-black text-[#2a9d8f]/[0.03] dark:text-[#2a9d8f]/[0.07] tracking-tighter transition-colors duration-300" style={{ WebkitTextStroke: "1px rgba(42,157,143,0.04)" }}>s</span>
         </div>
       </div>
 
       {/* === GLOW EFFECTS (Green Background Gradient) === */}
       {/* Main wide green backdrop */}
-      <div className="absolute top-[45%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90vw] max-w-[1200px] h-[400px] sm:h-[600px] md:h-[800px] bg-[#1B9981]/30 dark:bg-[#00D4AA]/20 blur-[100px] sm:blur-[150px] md:blur-[200px] rounded-[100%] pointer-events-none transition-colors duration-300 z-0" />
+      <div className="absolute top-[45%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90vw] max-w-[1200px] h-[400px] sm:h-[600px] md:h-[800px] bg-[#2a9d8f]/30 dark:bg-[#4fd1c5]/20 blur-[100px] sm:blur-[150px] md:blur-[200px] rounded-[100%] pointer-events-none transition-colors duration-300 z-0" />
       {/* Core intense bright glow in the center */}
-      <div className="absolute top-[50%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] sm:w-[500px] h-[300px] sm:h-[500px] bg-[#1B9981]/40 dark:bg-[#00D4AA]/30 blur-[100px] sm:blur-[140px] rounded-full pointer-events-none transition-colors duration-300 z-0" />
+      <div className="absolute top-[50%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] sm:w-[500px] h-[300px] sm:h-[500px] bg-[#2a9d8f]/40 dark:bg-[#4fd1c5]/30 blur-[100px] sm:blur-[140px] rounded-full pointer-events-none transition-colors duration-300 z-0" />
 
       {/* === LAPTOP SCENE === */}
       {/* Container allows laptop image to span almost full width, pulled up to overlap previous section */}
@@ -1221,7 +1226,7 @@ function Footer() {
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/logo/logo.png" alt="diBISAlitas" className="w-8 h-8 object-contain" />
             <span className="text-lg font-black text-slate-900 dark:text-white transition-colors duration-300">
-              di<span className="text-[#1B9981]">BISA</span>litas
+              di<span className="text-[#2a9d8f]">BISA</span>litas
             </span>
           </div>
           <p className="text-xs text-slate-500 leading-relaxed max-w-sm">
@@ -1281,7 +1286,7 @@ function SplashScreen({ onComplete }: { onComplete: () => void }) {
       <div
         className="absolute w-[600px] h-[600px] rounded-full pointer-events-none opacity-30"
         style={{
-          background: "radial-gradient(circle, rgba(27,153,129,0.6) 0%, transparent 70%)",
+          background: "radial-gradient(circle, rgba(42,157,143,0.6) 0%, transparent 70%)",
         }}
       />
 
@@ -1289,7 +1294,7 @@ function SplashScreen({ onComplete }: { onComplete: () => void }) {
       <div
         className="absolute inset-0 pointer-events-none opacity-[0.05]"
         style={{
-          backgroundImage: "radial-gradient(circle, rgba(27,153,129,0.9) 1px, transparent 1px)",
+          backgroundImage: "radial-gradient(circle, rgba(42,157,143,0.9) 1px, transparent 1px)",
           backgroundSize: "36px 36px",
         }}
       />
@@ -1309,9 +1314,9 @@ function SplashScreen({ onComplete }: { onComplete: () => void }) {
 
           {/* Bracket + BISA group */}
           <div className="relative mx-4 sm:mx-6 flex items-center justify-center">
-            <span className="text-[#1B9981] font-light text-4xl sm:text-5xl md:text-6xl">[</span>
-            <span className="text-[#1B9981] font-black px-2 text-4xl sm:text-5xl md:text-6xl">BISA</span>
-            <span className="text-[#1B9981] font-light text-4xl sm:text-5xl md:text-6xl">]</span>
+            <span className="text-[#2a9d8f] font-light text-4xl sm:text-5xl md:text-6xl">[</span>
+            <span className="text-[#2a9d8f] font-black px-2 text-4xl sm:text-5xl md:text-6xl">BISA</span>
+            <span className="text-[#2a9d8f] font-light text-4xl sm:text-5xl md:text-6xl">]</span>
 
             {/* Scanner line */}
             <motion.div
@@ -1326,7 +1331,7 @@ function SplashScreen({ onComplete }: { onComplete: () => void }) {
                 ease: "easeInOut",
                 repeat: Infinity,
               }}
-              className="absolute top-0 bottom-0 w-[3px] bg-[#00D4AA] shadow-[0_0_16px_4px_rgba(0,212,170,0.8)] z-20"
+              className="absolute top-0 bottom-0 w-[3px] bg-[#4fd1c5] shadow-[0_0_16px_4px_rgba(79,209,197,0.8)] z-20"
             />
           </div>
 
@@ -1346,7 +1351,7 @@ function SplashScreen({ onComplete }: { onComplete: () => void }) {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3, duration: 0.5 }}
-          className="text-[#00D4AA] text-xs sm:text-sm font-bold tracking-[0.25em] uppercase mb-8"
+          className="text-[#4fd1c5] text-xs sm:text-sm font-bold tracking-[0.25em] uppercase mb-8"
         >
           Ekosistem Aksesibilitas Cerdas
         </motion.p>
@@ -1359,7 +1364,7 @@ function SplashScreen({ onComplete }: { onComplete: () => void }) {
             transition={{ duration: 2.5, ease: [0.22, 1, 0.36, 1] }}
             className="h-full rounded-full"
             style={{
-              background: "linear-gradient(90deg, #1B9981, #00D4AA, #38BDF8)",
+              background: "linear-gradient(90deg, #2a9d8f, #4fd1c5, #38BDF8)",
             }}
           />
         </div>
@@ -1390,7 +1395,7 @@ export default function LandingPage() {
         {showSplash && <SplashScreen onComplete={() => setShowSplash(false)} />}
       </AnimatePresence>
 
-      <div className="min-h-screen bg-[#FDFEFE] dark:bg-[#050505] text-slate-800 dark:text-slate-100 selection:bg-[#1B9981]/20 transition-colors duration-300">
+      <div className="min-h-screen bg-[#FDFEFE] dark:bg-[#050505] text-slate-800 dark:text-slate-100 selection:bg-[#2a9d8f]/20 transition-colors duration-300">
         <Navbar />
         <HeroSection />
         <AboutProjectSection />

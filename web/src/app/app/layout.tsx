@@ -23,7 +23,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
           {/* Skip to content — hanya tampil saat di-focus via keyboard */}
           <a
             href="#main-content"
-            className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:bg-[#1B9981] focus:text-white focus:px-4 focus:py-2 focus:rounded-xl focus:font-bold focus:text-sm focus:shadow-lg"
+            className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:bg-[#2a9d8f] focus:text-white focus:px-4 focus:py-2 focus:rounded-xl focus:font-bold focus:text-sm focus:shadow-lg"
           >
             Loncat ke konten utama
           </a>
@@ -82,7 +82,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
 
                 {/* Bola Hijau Melayang */}
                 <div 
-                  className="absolute top-[-26px] w-[52px] h-[52px] rounded-full bg-gradient-to-br from-[#1B9981] to-[#00D4AA] shadow-[0_4px_12px_rgba(0,184,148,0.4)] z-0 pointer-events-none"
+                  className="absolute top-[-26px] w-[52px] h-[52px] rounded-full bg-gradient-to-br from-[#2a9d8f] to-[#4fd1c5] shadow-[0_4px_12px_rgba(0,184,148,0.4)] z-0 pointer-events-none"
                   style={{ 
                     left: `calc(10% + 20% * ${visualIndex})`, 
                     transform: 'translateX(-50%)',
@@ -135,7 +135,7 @@ function NavItem({ href, icon, label, isActive }: {
       </div>
       <span className={`
         tracking-tight z-20 mt-0.5 whitespace-nowrap
-        ${isActive ? "text-[12px] font-bold text-[#1B9981] translate-y-0" : "text-[10px] font-medium text-slate-500 translate-y-0"}
+        ${isActive ? "text-[12px] font-bold text-[#2a9d8f] translate-y-0" : "text-[10px] font-medium text-slate-500 translate-y-0"}
       `} style={{
         transition: isActive 
           ? 'all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) 0.15s' 

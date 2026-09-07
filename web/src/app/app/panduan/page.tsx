@@ -80,7 +80,7 @@ const ONBOARDING_SLIDES = [
     id: 0,
     title: "Selamat Datang di diBISAlitas",
     description: "Ekosistem Aksesibilitas Cerdas yang memberikan kemandirian penuh tanpa batas untuk setiap orang.",
-    color: "bg-[#1B9981]/10",
+    color: "bg-[#2a9d8f]/10",
     icon: <LogoAnimation />,
     visual: "/splashscreen/splashscreen.png"
   },
@@ -158,7 +158,7 @@ export default function PanduanPage() {
       <div className="absolute top-6 right-6 z-20">
         <button 
           onClick={handleFinish}
-          className="text-slate-500 font-semibold text-sm hover:text-[#1B9981] transition-colors"
+          className="text-slate-500 font-semibold text-sm hover:text-[#2a9d8f] transition-colors"
         >
           Lewati
         </button>
@@ -200,7 +200,7 @@ export default function PanduanPage() {
               key={slide.id}
               className={`h-2 rounded-full transition-all duration-500 ${
                 currentSlide === slide.id 
-                  ? "w-10 bg-[#1B9981]" 
+                  ? "w-10 bg-[#2a9d8f]" 
                   : "w-2 bg-slate-300"
               }`}
             />
@@ -210,7 +210,7 @@ export default function PanduanPage() {
         {/* Tombol Utama */}
         <button
           onClick={handleNext}
-          className="w-full py-4 bg-[#1B9981] hover:bg-[#168C74] text-white rounded-2xl font-bold text-lg shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2"
+          className="w-full py-4 bg-[#2a9d8f] hover:bg-[#1e7b6d] text-white rounded-2xl font-bold text-lg shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2"
         >
           {currentSlide === ONBOARDING_SLIDES.length - 1 ? (
             <>

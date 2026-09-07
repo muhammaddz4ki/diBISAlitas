@@ -52,7 +52,7 @@ export default function HijaiyahSignWebScreen() {
                   TERDETEKSI
                 </span>
                 <h2 
-                  className="text-[80px] leading-none font-bold text-[#1B9981] mb-2 drop-shadow-md"
+                  className="text-[80px] leading-none font-bold text-[#2a9d8f] mb-2 drop-shadow-md"
                   style={{ fontFamily: "Arial, sans-serif" }} // Standard Arabic Font Fallback
                 >
                   {detectionResult.label.arabic}
@@ -62,7 +62,7 @@ export default function HijaiyahSignWebScreen() {
                 </h3>
                 <div className="flex items-center gap-2 mt-5 bg-[#f4f6fc] border border-white shadow-[inset_2px_2px_5px_rgba(0,0,0,0.05),_inset_-3px_-3px_7px_rgba(255,255,255,1)] px-5 py-2 rounded-full">
                   <span className="text-[11px] font-bold text-slate-500 uppercase tracking-widest">Akurasi</span>
-                  <span className="text-[13px] font-black text-[#1B9981]">
+                  <span className="text-[13px] font-black text-[#2a9d8f]">
                     {(detectionResult.score * 100).toFixed(1)}%
                   </span>
                 </div>
@@ -75,8 +75,8 @@ export default function HijaiyahSignWebScreen() {
                 <div className="flex items-center gap-3">
                   {isModelLoading && (
                     <span className="relative flex h-3 w-3">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#1B9981] opacity-75"></span>
-                      <span className="relative inline-flex rounded-full h-3 w-3 bg-[#00D4AA]"></span>
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#2a9d8f] opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-3 w-3 bg-[#4fd1c5]"></span>
                     </span>
                   )}
                   <h3 className="text-lg font-black text-slate-800 text-3d">

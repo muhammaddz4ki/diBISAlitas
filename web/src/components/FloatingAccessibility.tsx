@@ -19,13 +19,15 @@ import {
   Sun,
   Moon,
   Activity,
+  ChevronRight,
+  Pointer
 } from "lucide-react";
 import { useTheme } from "@/lib/ThemeContext";
 
 export default function FloatingAccessibility() {
   const { theme, setTheme, reduceMotion, setReduceMotion, highContrast, setHighContrast } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
-  const [fontSizeIndex, setFontSizeIndex] = useState(0); // 0: Normal, 1: Besar (115%), 2: Sangat Besar (130%)
+  const [fontSizeIndex, setFontSizeIndex] = useState(0);
   const [dyslexiaMode, setDyslexiaMode] = useState(false);
   const [grayscaleMode, setGrayscaleMode] = useState(false);
   const [highlightLinks, setHighlightLinks] = useState(false);
@@ -35,7 +37,6 @@ export default function FloatingAccessibility() {
 
   const panelRef = useRef<HTMLDivElement>(null);
 
-  // Initialize from localStorage
   useEffect(() => {
     if (typeof window === "undefined") return;
 
@@ -55,7 +56,6 @@ export default function FloatingAccessibility() {
     setHighlightLinks(savedLinks);
     setHapticFeedback(localStorage.getItem("a11y_haptic") === "1");
 
-    // Apply to DOM
     applyDomClasses({
       font: Number(savedFont || 0),
       rm: savedRM,
@@ -64,7 +64,6 @@ export default function FloatingAccessibility() {
       links: savedLinks,
     });
 
-    // Keyboard shortcut: Alt + A
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.altKey && (e.key === "a" || e.key === "A")) {
         e.preventDefault();
@@ -73,20 +72,18 @@ export default function FloatingAccessibility() {
     };
     window.addEventListener("keydown", handleKeyDown);
     
-    // Global Video Auto-Pauser for Reduce Motion
     const updateVideos = (rmState: boolean) => {
       const videos = document.querySelectorAll('video');
       videos.forEach(video => {
         if (rmState) {
           video.pause();
         } else {
-          // Only play if it has autoPlay
           if (video.autoplay) video.play().catch(() => {});
         }
       });
     };
     
-    updateVideos(savedRM); // Initial check
+    updateVideos(savedRM);
 
     const observer = new MutationObserver(() => {
       if (document.documentElement.classList.contains("a11y-reduce")) {
@@ -102,26 +99,13 @@ export default function FloatingAccessibility() {
     };
   }, []);
 
-  const applyDomClasses = ({
-    font,
-    rm,
-    dyslexia,
-    gray,
-    links,
-  }: {
-    font: number;
-    rm: boolean;
-    dyslexia: boolean;
-    gray: boolean;
-    links: boolean;
-  }) => {
+  const applyDomClasses = ({ font, rm, dyslexia, gray, links }: { font: number; rm: boolean; dyslexia: boolean; gray: boolean; links: boolean; }) => {
     if (typeof document === "undefined") return;
     const scales = [1, 1.15, 1.3];
     const scale = scales[font] ?? 1;
 
     (document.body.style as CSSStyleDeclaration & { zoom?: string }).zoom = String(scale);
     
-    // High contrast is handled by ThemeContext
     document.documentElement.classList.toggle("a11y-reduce", rm);
     document.documentElement.classList.toggle("a11y-dyslexia", dyslexia);
     document.documentElement.classList.toggle("a11y-grayscale", gray);
@@ -135,86 +119,45 @@ export default function FloatingAccessibility() {
   const handleFontChange = (idx: number) => {
     setFontSizeIndex(idx);
     localStorage.setItem("a11y_font", String(idx));
-    applyDomClasses({
-      font: idx,
-      rm: reduceMotion,
-      dyslexia: dyslexiaMode,
-      gray: grayscaleMode,
-      links: highlightLinks,
-    });
+    applyDomClasses({ font: idx, rm: reduceMotion, dyslexia: dyslexiaMode, gray: grayscaleMode, links: highlightLinks });
   };
 
   const toggleHighContrast = () => {
     const next = !highContrast;
-    setHighContrast(next); // Uses ThemeContext
-
-    // Still need to trigger re-render of layout/filters if needed
-    applyDomClasses({
-      font: fontSizeIndex,
-      rm: reduceMotion,
-      dyslexia: dyslexiaMode,
-      gray: grayscaleMode,
-      links: highlightLinks,
-    });
+    setHighContrast(next);
+    applyDomClasses({ font: fontSizeIndex, rm: reduceMotion, dyslexia: dyslexiaMode, gray: grayscaleMode, links: highlightLinks });
   };
 
   const toggleReduceMotion = () => {
     const next = !reduceMotion;
     setReduceMotion(next);
-
-    // Pause/Play videos immediately
     const videos = document.querySelectorAll('video');
     videos.forEach(video => {
       if (next) video.pause();
       else if (video.autoplay) video.play().catch(() => {});
     });
-
-    applyDomClasses({
-      font: fontSizeIndex,
-      rm: next,
-      dyslexia: dyslexiaMode,
-      gray: grayscaleMode,
-      links: highlightLinks,
-    });
+    applyDomClasses({ font: fontSizeIndex, rm: next, dyslexia: dyslexiaMode, gray: grayscaleMode, links: highlightLinks });
   };
 
   const toggleDyslexia = () => {
     const next = !dyslexiaMode;
     setDyslexiaMode(next);
     localStorage.setItem("a11y_dyslexia", next ? "1" : "0");
-    applyDomClasses({
-      font: fontSizeIndex,
-      rm: reduceMotion,
-      dyslexia: next,
-      gray: grayscaleMode,
-      links: highlightLinks,
-    });
+    applyDomClasses({ font: fontSizeIndex, rm: reduceMotion, dyslexia: next, gray: grayscaleMode, links: highlightLinks });
   };
 
   const toggleGrayscale = () => {
     const next = !grayscaleMode;
     setGrayscaleMode(next);
     localStorage.setItem("a11y_gray", next ? "1" : "0");
-    applyDomClasses({
-      font: fontSizeIndex,
-      rm: reduceMotion,
-      dyslexia: dyslexiaMode,
-      gray: next,
-      links: highlightLinks,
-    });
+    applyDomClasses({ font: fontSizeIndex, rm: reduceMotion, dyslexia: dyslexiaMode, gray: next, links: highlightLinks });
   };
 
   const toggleHighlightLinks = () => {
     const next = !highlightLinks;
     setHighlightLinks(next);
     localStorage.setItem("a11y_links", next ? "1" : "0");
-    applyDomClasses({
-      font: fontSizeIndex,
-      rm: reduceMotion,
-      dyslexia: dyslexiaMode,
-      gray: grayscaleMode,
-      links: next,
-    });
+    applyDomClasses({ font: fontSizeIndex, rm: reduceMotion, dyslexia: dyslexiaMode, gray: grayscaleMode, links: next });
   };
 
   const toggleHapticFeedback = () => {
@@ -245,70 +188,67 @@ export default function FloatingAccessibility() {
       }
       setIsSpeaking(false);
     }
-    applyDomClasses({
-      font: 0,
-      rm: false,
-      dyslexia: false,
-      gray: false,
-      links: false,
-    });
+    applyDomClasses({ font: 0, rm: false, dyslexia: false, gray: false, links: false });
   };
 
-  // Text-to-speech overview
   const toggleSpeechReader = () => {
     if (typeof window === "undefined" || !("speechSynthesis" in window)) {
       alert("Browser Anda belum mendukung fitur Text-to-Speech.");
       return;
     }
-
     if (isSpeaking) {
       window.speechSynthesis.cancel();
       setIsSpeaking(false);
       return;
     }
-
     const title = document.title || "diBISAlitas";
     const mainHeading = document.querySelector("h1")?.textContent || "Selamat datang di diBISAlitas";
-    const speechText = `${title}. ${mainHeading}. Platform cerdas berbasis kecerdasan buatan untuk aksesibilitas dan kemandirian penyandang disabilitas di Indonesia. Anda dapat menggunakan tombol aksesibilitas untuk menyesuaikan ukuran teks, kontras warna, dan alat bantu lainnya.`;
-
+    const speechText = `${title}. ${mainHeading}. Platform cerdas berbasis kecerdasan buatan untuk aksesibilitas dan kemandirian penyandang disabilitas di Indonesia.`;
     const utterance = new SpeechSynthesisUtterance(speechText);
     utterance.lang = "id-ID";
     utterance.rate = 0.95;
     utterance.pitch = 1.0;
-
     utterance.onstart = () => setIsSpeaking(true);
     utterance.onend = () => setIsSpeaking(false);
     utterance.onerror = () => setIsSpeaking(false);
-
     window.speechSynthesis.speak(utterance);
   };
 
-  const activeCount =
-    (fontSizeIndex > 0 ? 1 : 0) +
-    (highContrast ? 1 : 0) +
-    (reduceMotion ? 1 : 0) +
-    (dyslexiaMode ? 1 : 0) +
-    (grayscaleMode ? 1 : 0) +
-    (highlightLinks ? 1 : 0) +
-    (hapticFeedback ? 1 : 0);
+  const activeCount = (fontSizeIndex > 0 ? 1 : 0) + (highContrast ? 1 : 0) + (reduceMotion ? 1 : 0) + (dyslexiaMode ? 1 : 0) + (grayscaleMode ? 1 : 0) + (highlightLinks ? 1 : 0) + (hapticFeedback ? 1 : 0);
+
+  const FeatureCard = ({ active, onClick, icon: Icon, title, subtitle, colorClass, shadowClass }: any) => {
+    return (
+      <button
+        onClick={onClick}
+        className="w-full flex items-center bg-white dark:bg-[#1f1f1f] rounded-[1.25rem] p-3 transition-all duration-300 hover:scale-[1.02] shadow-[0_8px_30px_rgba(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgba(0,0,0,0.3)] border border-slate-50 dark:border-white/5"
+      >
+        <div className={`w-[46px] h-[46px] rounded-[14px] flex items-center justify-center shrink-0 transition-all duration-500 ${active ? `${colorClass} text-white ${shadowClass}` : 'bg-slate-100 dark:bg-white/5 text-slate-400 dark:text-slate-500'}`}>
+          <Icon className="w-5 h-5" />
+        </div>
+        <div className="ml-3.5 text-left flex-1 pr-2">
+          <div className="text-sm font-bold text-slate-800 dark:text-slate-100 leading-tight">{title}</div>
+          <div className="text-[10px] font-semibold text-slate-400 dark:text-slate-500 mt-0.5 flex items-center gap-1">
+            <span className="w-1 h-1 rounded-full bg-slate-300 dark:bg-slate-600"></span>
+            {subtitle}
+          </div>
+        </div>
+        <div className={`w-11 h-6 rounded-full flex items-center p-1 transition-colors duration-300 shrink-0 shadow-inner ${active ? 'bg-[#2a9d8f]' : 'bg-rose-500'}`}>
+          <div className={`w-4 h-4 bg-white rounded-full shadow-sm transition-transform duration-300 ${active ? 'translate-x-5' : 'translate-x-0'}`} />
+        </div>
+      </button>
+    );
+  };
 
   return (
     <div className="fixed bottom-6 right-6 z-[9999] font-sans">
-      {/* Dynamic Style Injector for robust accessibility filters */}
       <style dangerouslySetInnerHTML={{ __html: `
         .a11y-content-wrapper {
-          filter: ${
-            (highContrast && grayscaleMode) ? 'contrast(1.25) grayscale(100%)' :
-            highContrast ? 'contrast(1.25) saturate(1.2)' :
-            grayscaleMode ? 'grayscale(100%)' : 'none'
-          } !important;
+          filter: ${highContrast && grayscaleMode ? 'contrast(1.25) grayscale(100%)' : highContrast ? 'contrast(1.25) saturate(1.2)' : grayscaleMode ? 'grayscale(100%)' : 'none'} !important;
           transition: filter 0.3s ease !important;
         }
       `}} />
 
-      {/* Floating Action Button */}
       <div className="relative flex items-center justify-end">
-        {/* Tooltip on hover */}
         <AnimatePresence>
           {!isOpen && tooltipVisible && (
             <motion.div
@@ -329,19 +269,15 @@ export default function FloatingAccessibility() {
           onMouseLeave={() => setTooltipVisible(false)}
           whileHover={{ scale: 1.06 }}
           whileTap={{ scale: 0.94 }}
-          aria-label="Buka Pengaturan Aksesibilitas"
-          aria-expanded={isOpen}
-          className={`relative w-14 h-14 rounded-full flex items-center justify-center shadow-2xl transition-all duration-300 ${
+          className={`relative w-14 h-14 rounded-[1.25rem] flex items-center justify-center transition-all duration-500 ${
             isOpen
-              ? "bg-slate-900 text-white shadow-slate-900/30"
+              ? "bg-slate-900 dark:bg-slate-800 text-white shadow-[0_15px_30px_rgba(0,0,0,0.3),_inset_0_2px_4px_rgba(255,255,255,0.1)] border border-slate-700"
               : activeCount > 0
-              ? "bg-[#1B9981] text-white shadow-[#1B9981]/40 ring-4 ring-[#1B9981]/20 animate-pulse"
-              : "bg-gradient-to-tr from-[#1B9981] to-[#00D4AA] text-white shadow-[#1B9981]/30 hover:shadow-[#1B9981]/50"
+              ? "bg-[#2a9d8f] text-white shadow-[0_10px_25px_rgba(42,157,143,0.5)] ring-4 ring-[#2a9d8f]/20 animate-pulse border border-[#1e7b6d]"
+              : "bg-gradient-to-tr from-[#2a9d8f] to-[#4fd1c5] text-white shadow-[0_10px_25px_rgba(42,157,143,0.4)] hover:shadow-[0_15px_35px_rgba(42,157,143,0.5)] border border-white/20"
           }`}
         >
-          {isOpen ? (
-            <X className="w-6 h-6" />
-          ) : (
+          {isOpen ? <X className="w-6 h-6" /> : (
             <>
               <Accessibility className="w-7 h-7" />
               {activeCount > 0 && (
@@ -354,7 +290,6 @@ export default function FloatingAccessibility() {
         </motion.button>
       </div>
 
-      {/* Popover Panel */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -363,249 +298,102 @@ export default function FloatingAccessibility() {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
             transition={{ type: "spring", damping: 25, stiffness: 350 }}
-            className="absolute bottom-16 right-0 w-[340px] sm:w-[380px] bg-white/95 dark:bg-[#0a0a0a]/95 backdrop-blur-xl text-slate-800 dark:text-slate-100 rounded-3xl shadow-[0_20px_70px_rgba(0,0,0,0.15)] dark:shadow-[0_20px_70px_rgba(0,0,0,0.5)] border border-slate-200/50 dark:border-white/10 overflow-hidden"
+            className="absolute bottom-20 right-0 w-[calc(100vw-48px)] sm:w-[400px] bg-[#f4f7f9] dark:bg-[#0f0f0f] text-slate-800 dark:text-slate-100 rounded-[1.5rem] shadow-[0_30px_100px_rgba(0,0,0,0.15)] dark:shadow-[0_30px_100px_rgba(0,0,0,0.8)] border border-white/80 dark:border-white/5 overflow-hidden ring-1 ring-slate-900/5"
           >
             {/* Header */}
-            <div className="bg-gradient-to-r from-[#1B9981] to-[#00D4AA] p-5 text-white flex items-center justify-between">
-              <div className="flex items-center gap-2.5">
-                <div className="w-9 h-9 rounded-xl bg-white/20 backdrop-blur-md flex items-center justify-center">
-                  <SlidersHorizontal className="w-5 h-5 text-white" />
+            <div className="bg-white dark:bg-[#1a1a1a] p-5 pb-4 flex items-center justify-between border-b border-slate-100 dark:border-white/5">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-[14px] bg-gradient-to-br from-[#2a9d8f] to-[#4fd1c5] shadow-[0_6px_15px_rgba(42,157,143,0.3)] flex items-center justify-center text-white">
+                  <SlidersHorizontal className="w-5 h-5" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-base leading-tight">Aksesibilitas</h3>
-                  <p className="text-white/80 text-xs">Sesuaikan kenyamanan tampilan</p>
+                  <h3 className="font-bold text-base leading-tight text-slate-800 dark:text-white">Aksesibilitas</h3>
+                  <p className="text-slate-400 dark:text-slate-500 text-[11px] font-medium">Sesuaikan pengalaman UI/UX</p>
                 </div>
               </div>
-              <button
-                onClick={handleReset}
-                title="Reset Semua Pengaturan"
-                className="px-2.5 py-1.5 rounded-lg bg-white/15 hover:bg-white/25 transition-colors text-white text-xs font-semibold flex items-center gap-1.5 backdrop-blur-sm"
-              >
-                <RotateCcw className="w-3.5 h-3.5" />
-                <span>Reset</span>
-              </button>
             </div>
 
-            {/* Content Options */}
-            <div className="p-5 space-y-4 max-h-[440px] overflow-y-auto">
-              {/* Mode Tema Tampilan */}
+            {/* Content List */}
+            <div className="p-4 space-y-3.5 max-h-[500px] overflow-y-auto custom-scrollbar">
+              
+              {/* Tema Layar */}
               <div className="space-y-2">
-                <label className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
-                  <Sun className="w-3.5 h-3.5 text-[#1B9981]" />
-                  Tema Tampilan
-                </label>
-                <div className="grid grid-cols-2 gap-2">
-                  <button
-                    onClick={() => setTheme("light")}
-                    className={`p-2.5 rounded-xl border text-center transition-all flex items-center justify-center gap-2 ${
-                      theme === "light"
-                        ? "bg-[#1B9981]/10 border-[#1B9981] text-[#1B9981] font-bold shadow-sm"
-                        : "bg-slate-50 dark:bg-white/5 border-slate-200 dark:border-white/10 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/10 font-medium"
-                    }`}
-                  >
-                    <Sun className="w-4 h-4 text-amber-500" />
-                    <span className="text-xs">Terang</span>
+                <label className="text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 pl-2">Tema Layar</label>
+                <div className="grid grid-cols-2 gap-3">
+                  <button onClick={() => setTheme("light")} className={`flex items-center justify-center gap-2.5 p-2.5 rounded-full border transition-all duration-300 hover:-translate-y-0.5 ${theme === "light" ? "bg-gradient-to-br from-amber-400 to-orange-500 border-transparent shadow-[0_8px_20px_rgba(245,158,11,0.4)]" : "bg-white dark:bg-[#1f1f1f] border-slate-100 dark:border-white/5 shadow-[0_6px_15px_rgba(0,0,0,0.04)] dark:shadow-[0_6px_15px_rgba(0,0,0,0.3)]"}`}>
+                    <Sun className={`w-4 h-4 ${theme === "light" ? "text-white" : "text-amber-500"}`} />
+                    <span className={`text-xs font-bold ${theme === "light" ? "text-white" : "text-slate-700 dark:text-slate-200"}`}>Terang</span>
                   </button>
-                  <button
-                    onClick={() => setTheme("dark")}
-                    className={`p-2.5 rounded-xl border text-center transition-all flex items-center justify-center gap-2 ${
-                      theme === "dark"
-                        ? "bg-[#1B9981]/10 border-[#1B9981] text-[#1B9981] font-bold shadow-sm"
-                        : "bg-slate-50 dark:bg-white/5 border-slate-200 dark:border-white/10 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/10 font-medium"
-                    }`}
-                  >
-                    <Moon className="w-4 h-4 text-sky-400" />
-                    <span className="text-xs">Gelap</span>
+                  <button onClick={() => setTheme("dark")} className={`flex items-center justify-center gap-2.5 p-2.5 rounded-full border transition-all duration-300 hover:-translate-y-0.5 ${theme === "dark" ? "bg-gradient-to-br from-blue-500 to-indigo-600 border-transparent shadow-[0_8px_20px_rgba(59,130,246,0.4)]" : "bg-white dark:bg-[#1f1f1f] border-slate-100 dark:border-white/5 shadow-[0_6px_15px_rgba(0,0,0,0.04)] dark:shadow-[0_6px_15px_rgba(0,0,0,0.3)]"}`}>
+                    <Moon className={`w-4 h-4 ${theme === "dark" ? "text-white" : "text-blue-500"}`} />
+                    <span className={`text-xs font-bold ${theme === "dark" ? "text-white" : "text-slate-700 dark:text-slate-200"}`}>Gelap</span>
                   </button>
                 </div>
               </div>
 
               {/* Ukuran Teks */}
               <div className="space-y-2">
-                <label className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
-                  <Type className="w-3.5 h-3.5 text-[#1B9981]" />
-                  Ukuran Teks
-                </label>
-                <div className="grid grid-cols-3 gap-2">
-                  {[
-                    { label: "100%", sub: "Normal" },
-                    { label: "115%", sub: "Besar" },
-                    { label: "130%", sub: "Ekstra" },
-                  ].map((lvl, idx) => (
-                    <button
-                      key={lvl.label}
-                      onClick={() => handleFontChange(idx)}
-                      className={`p-2.5 rounded-xl border text-center transition-all ${
-                        fontSizeIndex === idx
-                          ? "bg-[#1B9981]/10 border-[#1B9981] text-[#1B9981] font-bold shadow-sm"
-                          : "bg-slate-50 dark:bg-white/5 border-slate-200 dark:border-white/10 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/10 font-medium"
-                      }`}
-                    >
-                      <div className="text-sm">{lvl.label}</div>
-                      <div className="text-[10px] opacity-70">{lvl.sub}</div>
+                <label className="text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 pl-2">Ukuran Teks</label>
+                <div className="bg-white dark:bg-[#1a1a1a] p-1.5 rounded-[1.5rem] shadow-[0_8px_30px_rgba(0,0,0,0.03)] border border-slate-100 dark:border-white/5 flex">
+                  {[{l: "100%", s: "Normal"}, {l: "115%", s: "Besar"}, {l: "130%", s: "Ekstra"}].map((lvl, idx) => (
+                    <button key={lvl.l} onClick={() => handleFontChange(idx)} className={`flex-1 py-2 rounded-2xl transition-all duration-300 ${fontSizeIndex === idx ? "bg-gradient-to-br from-[#2a9d8f] to-[#4fd1c5] text-white shadow-[0_6px_15px_rgba(42,157,143,0.3)]" : "bg-transparent text-slate-500 hover:bg-slate-50 dark:hover:bg-white/5"}`}>
+                      <div className="text-sm font-bold">{lvl.l}</div>
+                      <div className={`text-[10px] font-medium ${fontSizeIndex === idx ? "text-white/80" : "text-slate-400"}`}>{lvl.s}</div>
                     </button>
                   ))}
                 </div>
               </div>
 
-              {/* Grid Toggle Features */}
-              <div className="space-y-2">
-                <label className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
-                  <Eye className="w-3.5 h-3.5 text-[#1B9981]" />
-                  Tampilan &amp; Visual
-                </label>
-                <div className="grid grid-cols-2 gap-2.5">
-                  {/* High Contrast */}
-                  <button
-                    onClick={toggleHighContrast}
-                    className={`p-3 rounded-2xl border text-left transition-all flex flex-col justify-between h-[84px] ${
-                      highContrast
-                        ? "bg-slate-900 border-slate-900 dark:bg-white dark:border-white text-white dark:text-black shadow-md"
-                        : "bg-slate-50 dark:bg-white/5 border-slate-200 dark:border-white/10 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/10"
-                    }`}
-                  >
-                    <div className="flex items-center justify-between w-full">
-                      <Contrast className={`w-4 h-4 ${highContrast ? "text-[#00D4AA]" : "text-slate-500 dark:text-slate-400"}`} />
-                      {highContrast && <Check className="w-3.5 h-3.5 text-[#00D4AA]" />}
-                    </div>
-                    <div>
-                      <div className="text-xs font-bold">Kontras Tinggi</div>
-                      <div className="text-[10px] opacity-70">Pertajam elemen</div>
-                    </div>
-                  </button>
+              {/* Visual Features */}
+              <div className="space-y-2.5 pt-2">
+                <label className="text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 pl-2">Bantuan Visual & Kognitif</label>
+                
+                <FeatureCard 
+                  active={highContrast} onClick={toggleHighContrast} icon={Contrast} 
+                  title="Kontras Tinggi" subtitle="Pertajam elemen UI" 
+                  colorClass="bg-gradient-to-br from-indigo-500 to-purple-600" shadowClass="shadow-[0_8px_20px_rgba(99,102,241,0.4)]" 
+                />
+                
+                <FeatureCard 
+                  active={reduceMotion} onClick={toggleReduceMotion} icon={ZapOff} 
+                  title="Kurangi Animasi" subtitle="Hentikan gerak UI" 
+                  colorClass="bg-gradient-to-br from-rose-400 to-red-500" shadowClass="shadow-[0_8px_20px_rgba(244,63,94,0.4)]" 
+                />
 
-                  {/* Reduce Motion */}
-                  <button
-                    onClick={toggleReduceMotion}
-                    className={`p-3 rounded-2xl border text-left transition-all flex flex-col justify-between h-[84px] ${
-                      reduceMotion
-                        ? "bg-[#1B9981] border-[#1B9981] text-white shadow-md"
-                        : "bg-slate-50 dark:bg-white/5 border-slate-200 dark:border-white/10 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/10"
-                    }`}
-                  >
-                    <div className="flex items-center justify-between w-full">
-                      <ZapOff className={`w-4 h-4 ${reduceMotion ? "text-white" : "text-slate-500 dark:text-slate-400"}`} />
-                      {reduceMotion && <Check className="w-3.5 h-3.5 text-white" />}
-                    </div>
-                    <div>
-                      <div className="text-xs font-bold">Kurangi Animasi</div>
-                      <div className="text-[10px] opacity-70">Cegah pusing</div>
-                    </div>
-                  </button>
+                <FeatureCard 
+                  active={dyslexiaMode} onClick={toggleDyslexia} icon={BookOpen} 
+                  title="Mode Disleksia" subtitle="Spasi & font khusus" 
+                  colorClass="bg-gradient-to-br from-amber-400 to-orange-500" shadowClass="shadow-[0_8px_20px_rgba(245,158,11,0.4)]" 
+                />
 
-                  {/* Dyslexia Mode */}
-                  <button
-                    onClick={toggleDyslexia}
-                    className={`p-3 rounded-2xl border text-left transition-all flex flex-col justify-between h-[84px] ${
-                      dyslexiaMode
-                        ? "bg-amber-600 border-amber-600 text-white shadow-md"
-                        : "bg-slate-50 dark:bg-white/5 border-slate-200 dark:border-white/10 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/10"
-                    }`}
-                  >
-                    <div className="flex items-center justify-between w-full">
-                      <BookOpen className={`w-4 h-4 ${dyslexiaMode ? "text-amber-200" : "text-slate-500 dark:text-slate-400"}`} />
-                      {dyslexiaMode && <Check className="w-3.5 h-3.5 text-amber-200" />}
-                    </div>
-                    <div>
-                      <div className="text-xs font-bold">Mode Disleksia</div>
-                      <div className="text-[10px] opacity-70">Spasi &amp; huruf lebar</div>
-                    </div>
-                  </button>
+                <FeatureCard 
+                  active={grayscaleMode} onClick={toggleGrayscale} icon={Sparkles} 
+                  title="Mode Monokrom" subtitle="Tampilan Hitam-Putih" 
+                  colorClass="bg-gradient-to-br from-slate-500 to-slate-700" shadowClass="shadow-[0_8px_20px_rgba(100,116,139,0.4)]" 
+                />
+                
+                <FeatureCard 
+                  active={highlightLinks} onClick={toggleHighlightLinks} icon={Pointer} 
+                  title="Sorot Tautan" subtitle="Garis bawahi link" 
+                  colorClass="bg-gradient-to-br from-cyan-400 to-blue-500" shadowClass="shadow-[0_8px_20px_rgba(6,182,212,0.4)]" 
+                />
 
-                  {/* Grayscale Mode */}
-                  <button
-                    onClick={toggleGrayscale}
-                    className={`p-3 rounded-2xl border text-left transition-all flex flex-col justify-between h-[84px] ${
-                      grayscaleMode
-                        ? "bg-slate-700 border-slate-700 text-white shadow-md"
-                        : "bg-slate-50 dark:bg-white/5 border-slate-200 dark:border-white/10 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/10"
-                    }`}
-                  >
-                    <div className="flex items-center justify-between w-full">
-                      <Sparkles className={`w-4 h-4 ${grayscaleMode ? "text-slate-300" : "text-slate-500 dark:text-slate-400"}`} />
-                      {grayscaleMode && <Check className="w-3.5 h-3.5 text-slate-300" />}
-                    </div>
-                    <div>
-                      <div className="text-xs font-bold">Monokrom</div>
-                      <div className="text-[10px] opacity-70">Hitam putih</div>
-                    </div>
-                  </button>
-
-                  {/* Haptic Feedback */}
-                  <button
-                    onClick={toggleHapticFeedback}
-                    className={`p-3 rounded-2xl border text-left transition-all flex flex-col justify-between h-[84px] ${
-                      hapticFeedback
-                        ? "bg-[#1B9981] border-[#1B9981] text-white shadow-md"
-                        : "bg-slate-50 dark:bg-white/5 border-slate-200 dark:border-white/10 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/10"
-                    }`}
-                  >
-                    <div className="flex items-center justify-between w-full">
-                      <Activity className={`w-4 h-4 ${hapticFeedback ? "text-white" : "text-slate-500 dark:text-slate-400"}`} />
-                      {hapticFeedback && <Check className="w-3.5 h-3.5 text-white" />}
-                    </div>
-                    <div>
-                      <div className="text-xs font-bold">Getar (Haptic)</div>
-                      <div className="text-[10px] opacity-70">Umpan balik raba</div>
-                    </div>
-                  </button>
-                </div>
+                <FeatureCard 
+                  active={hapticFeedback} onClick={toggleHapticFeedback} icon={Activity} 
+                  title="Getar (Haptic)" subtitle="Umpan balik saat tekan" 
+                  colorClass="bg-gradient-to-br from-emerald-400 to-teal-500" shadowClass="shadow-[0_8px_20px_rgba(16,185,129,0.4)]" 
+                />
               </div>
 
-              {/* Text to Speech & Highlight Links */}
-              <div className="space-y-2 pt-1 border-t border-slate-100 dark:border-white/10">
-                <button
-                  onClick={toggleSpeechReader}
-                  className={`w-full p-3 rounded-2xl border flex items-center justify-between transition-all ${
-                    isSpeaking
-                      ? "bg-rose-500 border-rose-500 text-white shadow-lg animate-pulse"
-                      : "bg-slate-50 dark:bg-white/5 border-slate-200 dark:border-white/10 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/10"
-                  }`}
-                >
-                  <div className="flex items-center gap-3">
-                    <div
-                      className={`w-8 h-8 rounded-xl flex items-center justify-center ${
-                        isSpeaking ? "bg-white/20 text-white" : "bg-[#1B9981]/10 text-[#1B9981]"
-                      }`}
-                    >
-                      {isSpeaking ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
-                    </div>
-                    <div className="text-left">
-                      <div className="text-xs font-bold">
-                        {isSpeaking ? "Hentikan Suara" : "Bacakan Ringkasan Layar"}
-                      </div>
-                      <div className="text-[10px] opacity-70">Text-to-Speech Bahasa Indonesia</div>
-                    </div>
-                  </div>
-                  <span className="text-[11px] font-bold px-2 py-1 rounded-lg bg-white/20">
-                    {isSpeaking ? "Aktif" : "Putar"}
-                  </span>
-                </button>
-
-                <button
-                  onClick={toggleHighlightLinks}
-                  className={`w-full p-2.5 rounded-xl border flex items-center justify-between transition-all text-xs font-semibold ${
-                    highlightLinks
-                      ? "bg-[#1B9981]/15 border-[#1B9981] text-[#1B9981]"
-                      : "bg-slate-50 dark:bg-white/5 border-slate-200 dark:border-white/10 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/10"
-                  }`}
-                >
-                  <span>Garis Bawahi &amp; Sorot Tautan</span>
-                  <div
-                    className={`w-4 h-4 rounded flex items-center justify-center ${
-                      highlightLinks ? "bg-[#1B9981] text-white" : "border border-slate-300 dark:border-slate-600"
-                    }`}
-                  >
-                    {highlightLinks && <Check className="w-3 h-3" />}
-                  </div>
-                </button>
+              {/* Text to Speech */}
+              <div className="pt-2">
+                <FeatureCard 
+                  active={isSpeaking} onClick={toggleSpeechReader} icon={isSpeaking ? VolumeX : Volume2} 
+                  title={isSpeaking ? "Hentikan Suara" : "Pembaca Layar"} subtitle="Text-to-Speech AI" 
+                  colorClass="bg-gradient-to-br from-fuchsia-500 to-pink-600" shadowClass="shadow-[0_8px_20px_rgba(217,70,239,0.4)] animate-pulse" 
+                />
               </div>
-            </div>
 
-            {/* Footer info */}
-            <div className="bg-slate-50/50 dark:bg-transparent px-5 py-3 border-t border-slate-100 dark:border-white/10 flex items-center justify-between text-[11px] text-slate-500 dark:text-slate-400">
-              <span>Shortcut: <kbd className="px-1.5 py-0.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-white/10 rounded font-mono text-[10px] text-slate-700 dark:text-slate-300">Alt + A</kbd></span>
-              <span className="text-[#1B9981] font-semibold">diBISAlitas A11y Engine</span>
             </div>
           </motion.div>
         )}

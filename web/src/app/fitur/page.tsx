@@ -55,16 +55,16 @@ const DETAILED_FEATURES = [
     description:
       "Pusat kendali dan dasbor analitik berbasis web untuk memetakan jalur ramah disabilitas, mendeteksi rintangan jalan rusak atau guiding block terhalang secara cepat dan transparan.",
     videoSrc: "/video/peta.mp4",
-    bgGlow: "bg-[#1B9981]/10 dark:bg-[#1B9981]/30",
-    badgeBg: "bg-[#1B9981]/10 dark:bg-[#1B9981]/30",
-    badgeBorder: "border-[#1B9981]/20 dark:border-[#1B9981]/40",
-    badgeText: "text-[#1B9981] dark:text-[#00D4AA]",
-    highlightText: "text-[#1B9981] dark:text-[#00D4AA]",
-    buttonBg: "bg-[#1B9981] hover:bg-[#168C74]",
-    buttonShadow: "shadow-[#1B9981]/30 hover:shadow-[#1B9981]/50",
-    indicatorColor: "bg-[#1B9981]",
+    bgGlow: "bg-[#2a9d8f]/10 dark:bg-[#2a9d8f]/30",
+    badgeBg: "bg-[#2a9d8f]/10 dark:bg-[#2a9d8f]/30",
+    badgeBorder: "border-[#2a9d8f]/20 dark:border-[#2a9d8f]/40",
+    badgeText: "text-[#2a9d8f] dark:text-[#4fd1c5]",
+    highlightText: "text-[#2a9d8f] dark:text-[#4fd1c5]",
+    buttonBg: "bg-[#2a9d8f] hover:bg-[#1e7b6d]",
+    buttonShadow: "shadow-[#2a9d8f]/30 hover:shadow-[#2a9d8f]/50",
+    indicatorColor: "bg-[#2a9d8f]",
     tabActiveBg: "bg-slate-900 dark:bg-white text-white dark:text-slate-900",
-    tabInactiveBg: "bg-white dark:bg-slate-900/50 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-800 hover:border-[#1B9981]/50",
+    tabInactiveBg: "bg-white dark:bg-slate-900/50 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-800 hover:border-[#2a9d8f]/50",
     href: "/fitur/bipantau",
   },
   {
@@ -79,16 +79,16 @@ const DETAILED_FEATURES = [
     description:
       "Menghilangkan sekat komunikasi antara Tunarungu dan masyarakat umum. Memanfaatkan Computer Vision on-device (ONNX) untuk membaca gestur tangan BISINDO secara real-time ke teks/audio.",
     videoSrc: "/video/bisapa.mp4",
-    bgGlow: "bg-amber-500/10 dark:bg-amber-600/30",
-    badgeBg: "bg-amber-500/10 dark:bg-amber-900/30",
-    badgeBorder: "border-amber-500/20 dark:border-amber-700/40",
-    badgeText: "text-amber-600 dark:text-amber-500",
-    highlightText: "text-amber-600 dark:text-amber-500",
-    buttonBg: "bg-amber-500 hover:bg-amber-600",
-    buttonShadow: "shadow-amber-500/30 hover:shadow-amber-500/50",
-    indicatorColor: "bg-amber-500",
+    bgGlow: "bg-blue-500/10 dark:bg-blue-600/30",
+    badgeBg: "bg-blue-500/10 dark:bg-blue-900/30",
+    badgeBorder: "border-blue-500/20 dark:border-blue-700/40",
+    badgeText: "text-blue-600 dark:text-blue-500",
+    highlightText: "text-blue-600 dark:text-blue-500",
+    buttonBg: "bg-blue-500 hover:bg-blue-600",
+    buttonShadow: "shadow-blue-500/30 hover:shadow-blue-500/50",
+    indicatorColor: "bg-blue-500",
     tabActiveBg: "bg-slate-900 dark:bg-white text-white dark:text-slate-900",
-    tabInactiveBg: "bg-white dark:bg-slate-900/50 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-800 hover:border-amber-500/50",
+    tabInactiveBg: "bg-white dark:bg-slate-900/50 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-800 hover:border-blue-500/50",
     href: "/fitur/bisapa",
   },
   {
@@ -127,16 +127,16 @@ const DETAILED_FEATURES = [
     description:
       "Platform belajar interaktif dengan animasi gestur GIF, kuis gamifikasi, sistem EXP, dan lencana prestasi. Membantu siapa saja menguasai bahasa isyarat BISINDO secara menyenangkan.",
     videoSrc: "/video/bipintar.mp4",
-    bgGlow: "bg-emerald-600/10 dark:bg-emerald-700/30",
-    badgeBg: "bg-emerald-600/10 dark:bg-emerald-900/30",
-    badgeBorder: "border-emerald-600/20 dark:border-emerald-700/40",
-    badgeText: "text-emerald-600 dark:text-emerald-400",
-    highlightText: "text-emerald-600 dark:text-emerald-500",
-    buttonBg: "bg-emerald-600 hover:bg-emerald-700",
-    buttonShadow: "shadow-emerald-600/30 hover:shadow-emerald-600/50",
-    indicatorColor: "bg-emerald-500",
+    bgGlow: "bg-orange-600/10 dark:bg-orange-700/30",
+    badgeBg: "bg-orange-600/10 dark:bg-orange-900/30",
+    badgeBorder: "border-orange-600/20 dark:border-orange-700/40",
+    badgeText: "text-orange-600 dark:text-orange-400",
+    highlightText: "text-orange-600 dark:text-orange-500",
+    buttonBg: "bg-orange-600 hover:bg-orange-700",
+    buttonShadow: "shadow-orange-600/30 hover:shadow-orange-600/50",
+    indicatorColor: "bg-orange-500",
     tabActiveBg: "bg-slate-900 dark:bg-white text-white dark:text-slate-900",
-    tabInactiveBg: "bg-white dark:bg-slate-900/50 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-800 hover:border-emerald-500/50",
+    tabInactiveBg: "bg-white dark:bg-slate-900/50 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-800 hover:border-orange-500/50",
     href: "/fitur/bipintar",
   },
   {
@@ -151,16 +151,16 @@ const DETAILED_FEATURES = [
     description:
       "Mata kedua bagi Tunanetra saat berjalan di trotoar. Kamera smartphone mendeteksi rintangan di depan pengguna, lalu memberikan peringatan audio dan getaran haptic terarah.",
     videoSrc: "/video/bijalan.mp4",
-    bgGlow: "bg-sky-600/10 dark:bg-sky-700/30",
-    badgeBg: "bg-sky-600/10 dark:bg-sky-900/30",
-    badgeBorder: "border-sky-600/20 dark:border-sky-700/40",
-    badgeText: "text-sky-600 dark:text-sky-400",
-    highlightText: "text-sky-600 dark:text-sky-500",
-    buttonBg: "bg-sky-600 hover:bg-sky-700",
-    buttonShadow: "shadow-sky-600/30 hover:shadow-sky-600/50",
-    indicatorColor: "bg-sky-500",
+    bgGlow: "bg-[#2a9d8f]/10 dark:bg-[#2a9d8f]/30",
+    badgeBg: "bg-[#2a9d8f]/10 dark:bg-[#2a9d8f]/30",
+    badgeBorder: "border-[#2a9d8f]/20 dark:border-[#2a9d8f]/40",
+    badgeText: "text-[#2a9d8f] dark:text-[#4fd1c5]",
+    highlightText: "text-[#2a9d8f] dark:text-[#4fd1c5]",
+    buttonBg: "bg-[#2a9d8f] hover:bg-[#1e7b6d]",
+    buttonShadow: "shadow-[#2a9d8f]/30 hover:shadow-[#2a9d8f]/50",
+    indicatorColor: "bg-[#2a9d8f]",
     tabActiveBg: "bg-slate-900 dark:bg-white text-white dark:text-slate-900",
-    tabInactiveBg: "bg-white dark:bg-slate-900/50 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-800 hover:border-sky-500/50",
+    tabInactiveBg: "bg-white dark:bg-slate-900/50 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-800 hover:border-[#2a9d8f]/50",
     href: "/fitur/bijalan",
   },
 ];
@@ -170,7 +170,7 @@ export default function FiturOverviewPage() {
   const current = DETAILED_FEATURES.find((f) => f.key === selected) || DETAILED_FEATURES[0];
 
   return (
-    <div className="min-h-screen bg-[#FDFEFE] dark:bg-black text-slate-800 dark:text-slate-100 selection:bg-[#1B9981]/20 transition-colors duration-300">
+    <div className="min-h-screen bg-[#FDFEFE] dark:bg-black text-slate-800 dark:text-slate-100 selection:bg-[#2a9d8f]/20 transition-colors duration-300">
       <Navbar />
 
       {/* Dynamic Background Glow tied to selected feature */}
@@ -190,24 +190,14 @@ export default function FiturOverviewPage() {
       {/* Hero Header */}
       <section className="pt-32 pb-8 px-4 sm:px-6 relative z-10">
         <div className="max-w-7xl mx-auto text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#1B9981]/10 dark:bg-[#1B9981]/20 border border-[#1B9981]/20 text-[#1B9981] dark:text-[#00D4AA] text-xs font-bold uppercase tracking-wider mb-6"
-          >
-            <Sparkles className="w-3.5 h-3.5" />
-            Teknologi Aksesibilitas Terintegrasi
-          </motion.div>
-
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
             className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.15]"
           >
-            6 Pilar Ekosistem Cerdas <br />
-            <span className="text-[#1B9981] dark:text-[#00D4AA]">diBISAlitas AI</span>
+            6 Pilar Ekosistem Cerdas
+            <span className={`block mt-3 sm:mt-4 ${current.highlightText} transition-colors duration-300`}>diBISAlitas AI</span>
           </motion.h1>
         </div>
       </section>
@@ -312,7 +302,7 @@ export default function FiturOverviewPage() {
       {/* Ecosystem Synergy Section */}
       <section className="py-20 px-4 sm:px-6">
         <div className="max-w-7xl mx-auto bg-slate-900 dark:bg-[#0F172A] rounded-[2.5rem] p-8 md:p-12 lg:p-16 text-white relative overflow-hidden border border-slate-800 shadow-[0_20px_60px_rgba(0,0,0,0.2)]">
-          <div className="absolute top-1/2 left-1/4 w-96 h-96 bg-[#1B9981]/20 rounded-full blur-[120px] pointer-events-none -translate-y-1/2" />
+          <div className="absolute top-1/2 left-1/4 w-96 h-96 bg-[#2a9d8f]/20 rounded-full blur-[120px] pointer-events-none -translate-y-1/2" />
 
           <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             {/* Left: Phone Mockup */}
@@ -342,7 +332,7 @@ export default function FiturOverviewPage() {
 
             {/* Right: Info */}
             <div className="lg:col-span-7 space-y-6 order-1 lg:order-2">
-              <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 text-[#00D4AA] text-xs font-bold uppercase tracking-wider border border-white/10">
+              <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 text-[#4fd1c5] text-xs font-bold uppercase tracking-wider border border-white/10">
                 <Layers className="w-3.5 h-3.5" /> Sinergi Ekosistem
               </span>
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-black leading-tight text-white">
@@ -356,7 +346,7 @@ export default function FiturOverviewPage() {
               <div className="pt-4 flex flex-wrap gap-4">
                 <Link
                   href="/demo"
-                  className="px-7 py-3.5 rounded-full bg-[#00D4AA] text-slate-950 font-extrabold text-sm hover:bg-[#00D4AA]/90 transition-all shadow-[0_0_20px_rgba(0,212,170,0.3)] flex items-center gap-2"
+                  className="px-7 py-3.5 rounded-full bg-[#4fd1c5] text-slate-950 font-extrabold text-sm hover:bg-[#4fd1c5]/90 transition-all shadow-[0_0_20px_rgba(79,209,197,0.3)] flex items-center gap-2"
                 >
                   <Zap className="w-4 h-4 fill-current" />
                   Jelajahi Demo Hub

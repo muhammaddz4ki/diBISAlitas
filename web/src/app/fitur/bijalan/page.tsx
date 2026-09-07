@@ -16,24 +16,24 @@ import Navbar from "@/components/Navbar";
 
 export default function BiJalanDetailPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-sky-50/60 dark:from-black dark:to-sky-950/20 text-slate-800 dark:text-slate-200 selection:bg-sky-500/20">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-50/60 dark:from-black dark:to-[#0f4038]/20 text-slate-800 dark:text-slate-200 selection:bg-[#2a9d8f]/20">
       <Navbar />
 
       {/* Hero */}
       <section className="pt-32 pb-16 px-4 sm:px-6 relative overflow-visible">
-        <div className="absolute top-10 left-1/2 -translate-x-1/2 w-[400px] h-[200px]  bg-sky-500/10 dark:bg-sky-500/20  blur-3xl rounded-full pointer-events-none" />
+        <div className="absolute top-10 left-1/2 -translate-x-1/2 w-[400px] h-[200px]  bg-[#2a9d8f]/10 dark:bg-[#2a9d8f]/20  blur-3xl rounded-full pointer-events-none" />
 
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center min-h-[60vh]">
             {/* Left: Info */}
             <div className="lg:col-span-7 space-y-6 relative z-10">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-sky-500/10 dark:bg-sky-500/20 border border-sky-500/20 dark:border-sky-500/30 text-sky-600 dark:text-sky-400 text-xs font-bold uppercase tracking-wider">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#2a9d8f]/10 dark:bg-[#2a9d8f]/20 border border-[#2a9d8f]/20 dark:border-[#2a9d8f]/30 text-[#1e7b6d] dark:text-[#4fd1c5] text-xs font-bold uppercase tracking-wider">
                 <Navigation className="w-4 h-4" /> Spatial Vision & Haptic Guidance
               </div>
 
               <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight text-slate-900 dark:text-white leading-[1.05]">
                 BiJALAN: Navigasi Spasial <br />
-                <span className="text-sky-600 dark:text-sky-500">Mata Kedua</span> Tunanetra
+                <span className="text-[#1e7b6d] dark:text-[#2a9d8f]">Mata Kedua</span> Tunanetra
               </h1>
 
               <p className="text-slate-600 dark:text-slate-300 text-base sm:text-lg lg:text-xl leading-relaxed max-w-2xl font-light">
@@ -43,7 +43,7 @@ export default function BiJalanDetailPage() {
               <div className="flex flex-wrap gap-4 pt-2">
                 <Link
                   href="/app/bijalan"
-                  className="px-8 py-4 rounded-full bg-sky-600 text-white font-extrabold text-sm hover:bg-sky-700 transition-all shadow-lg shadow-sky-600/20 flex items-center gap-2"
+                  className="px-8 py-4 rounded-full bg-[#1e7b6d] text-white font-extrabold text-sm hover:bg-[#1e7b6d] transition-all shadow-lg shadow-[#1e7b6d]/20 flex items-center gap-2"
                 >
                   <Zap className="w-4 h-4 fill-current" />
                   Buka Kamera BiJALAN
@@ -105,7 +105,7 @@ export default function BiJalanDetailPage() {
               className="order-2 lg:order-1 relative flex items-center justify-center lg:justify-start"
               style={{ perspective: "1200px" }}
             >
-              <div className="absolute w-[40%] h-[60%]  bg-sky-500/10 dark:bg-sky-500/15  blur-[70px] rounded-full top-1/2 left-[40%] -translate-x-1/2 -translate-y-1/2" />
+              <div className="absolute w-[40%] h-[60%]  bg-[#2a9d8f]/10 dark:bg-[#2a9d8f]/15  blur-[70px] rounded-full top-1/2 left-[40%] -translate-x-1/2 -translate-y-1/2" />
               
               {/* Fade out mask effect matching landing page */}
               <div 
@@ -122,7 +122,7 @@ export default function BiJalanDetailPage() {
                 <span className="text-slate-500 dark:text-slate-400 font-medium text-[10px] sm:text-xs text-center px-4 absolute top-4 z-10 w-full">Screenshot: Radar Spasial AI</span>
                 <img src="/images/bijalan-screen1.jpg" alt="BiJALAN Radar Scanner" className="absolute inset-0 w-full h-full object-cover" onError={(e) => (e.currentTarget.style.display = 'none')} />
                 
-                <div className="absolute inset-0 bg-gradient-to-br from-slate-100 via-slate-200 to-sky-500/20 dark:from-[#0a0e17] dark:via-[#111827] dark:to-sky-500/30 -z-10" />
+                <div className="absolute inset-0 bg-gradient-to-br from-slate-100 via-slate-200 to-[#2a9d8f]/20 dark:from-[#0a0e17] dark:via-[#111827] dark:to-[#2a9d8f]/30 -z-10" />
                 <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent pointer-events-none" />
               </div>
             </motion.div>
@@ -139,7 +139,7 @@ export default function BiJalanDetailPage() {
               </span>
               <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.5rem] font-black leading-[1.05] tracking-tight text-slate-900 dark:text-white">
                 Identifikasi Bahaya <br />
-                <em className="font-black italic text-sky-600 dark:text-sky-500">
+                <em className="font-black italic text-[#1e7b6d] dark:text-[#2a9d8f]">
                   dan panduan suara akurat.
                 </em>
               </h2>
@@ -163,7 +163,7 @@ export default function BiJalanDetailPage() {
           <div className="flex flex-wrap justify-center gap-4">
             <Link
               href="/app/bijalan"
-              className="px-8 py-4 rounded-full bg-sky-600 text-white font-extrabold text-sm hover:bg-sky-700 shadow-lg shadow-sky-600/20 hover:shadow-sky-600/40 transition-all"
+              className="px-8 py-4 rounded-full bg-[#1e7b6d] text-white font-extrabold text-sm hover:bg-[#1e7b6d] shadow-lg shadow-[#1e7b6d]/20 hover:shadow-[#1e7b6d]/40 transition-all"
             >
               Buka BiJALAN
             </Link>

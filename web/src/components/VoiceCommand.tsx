@@ -238,7 +238,7 @@ export default function VoiceCommand() {
         onClick={() => setShowHelp(true)}
         aria-label="Panduan perintah suara"
         title="Panduan perintah suara"
-        className="absolute bottom-[168px] right-6 z-[100] w-10 h-10 rounded-full bg-gradient-to-br from-[#1B9981] to-[#00D4AA] shadow-[0_4px_12px_rgba(27,153,129,0.3)] flex items-center justify-center text-white hover:scale-105 active:scale-90 transition-all border-2 border-white/20"
+        className="absolute bottom-[168px] right-6 z-[100] w-10 h-10 rounded-full bg-gradient-to-br from-[#2a9d8f] to-[#4fd1c5] shadow-[0_4px_12px_rgba(42,157,143,0.3)] flex items-center justify-center text-white hover:scale-105 active:scale-90 transition-all border-2 border-white/20"
       >
         <HelpCircle className="w-5 h-5" strokeWidth={2.5} />
       </button>
@@ -251,7 +251,7 @@ export default function VoiceCommand() {
         className={`absolute bottom-[110px] right-6 w-12 h-12 rounded-full shadow-3d shadow-3d-active z-[100] flex items-center justify-center transition-all duration-300 border-2
           ${listening 
             ? "bg-gradient-to-br from-rose-500 to-rose-700 border-rose-400" 
-            : "bg-gradient-to-br from-[#1B9981] to-[#00D4AA] border-[#00B894] hover:scale-105"}`}
+            : "bg-gradient-to-br from-[#2a9d8f] to-[#4fd1c5] border-[#00B894] hover:scale-105"}`}
       >
         {listening && !reduceMotion && (
           <span className="absolute inset-0 rounded-full bg-rose-400 animate-ping opacity-75" />
@@ -294,7 +294,7 @@ export default function VoiceCommand() {
             {/* Header */}
             <div className="flex items-center justify-between shrink-0 px-6 py-5 border-b border-slate-200 shadow-[0_4px_10px_rgba(0,0,0,0.02)] z-10 bg-[#f4f6fc] rounded-t-[28px]">
               <div className="flex items-center gap-3">
-                <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-[#00B894] to-[#1B9981] flex items-center justify-center bubble-3d text-white shrink-0">
+                <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-[#00B894] to-[#2a9d8f] flex items-center justify-center bubble-3d text-white shrink-0">
                   <Mic className="w-5 h-5 text-white drop-shadow-md" strokeWidth={2.5} />
                 </div>
                 <div>
@@ -319,7 +319,7 @@ export default function VoiceCommand() {
               <div className="flex flex-col gap-0 divide-y divide-slate-200">
                 {HELP_ITEMS.map((it) => (
                   <div key={it.w} className="flex items-center gap-3.5 py-3 first:pt-0 last:pb-0">
-                    <span className="shrink-0 px-3 py-1.5 rounded-xl bg-[#f4f6fc] text-[#1B9981] font-bold text-[12px] min-w-[85px] text-center shadow-[2px_2px_5px_rgba(0,0,0,0.08),_-2px_-2px_5px_rgba(255,255,255,1)] border border-slate-200">
+                    <span className="shrink-0 px-3 py-1.5 rounded-xl bg-[#f4f6fc] text-[#2a9d8f] font-bold text-[12px] min-w-[85px] text-center shadow-[2px_2px_5px_rgba(0,0,0,0.08),_-2px_-2px_5px_rgba(255,255,255,1)] border border-slate-200">
                       &ldquo;{it.w}&rdquo;
                     </span>
                     <span className="text-[13px] text-slate-600 font-medium">{it.d}</span>
@@ -331,7 +331,7 @@ export default function VoiceCommand() {
             {/* Listen button */}
             <button
               onClick={speakGuide}
-              className="mt-5 w-full py-3.5 rounded-[18px] bg-gradient-to-r from-[#1B9981] to-[#00D4AA] text-white font-black text-[14px] flex items-center justify-center gap-2 active:scale-[0.97] transition-all shadow-[0_6px_16px_rgba(27,153,129,0.3)]"
+              className="mt-5 w-full py-3.5 rounded-[18px] bg-gradient-to-r from-[#2a9d8f] to-[#4fd1c5] text-white font-black text-[14px] flex items-center justify-center gap-2 active:scale-[0.97] transition-all shadow-[0_6px_16px_rgba(42,157,143,0.3)]"
             >
               <Volume2 className="w-5 h-5 drop-shadow-sm" /> Dengarkan Panduan
             </button>

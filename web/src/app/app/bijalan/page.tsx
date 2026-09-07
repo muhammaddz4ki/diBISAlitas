@@ -12,7 +12,7 @@ const BijalanCameraDetector = dynamic(
   {
     ssr: false, loading: () => (
       <div className="w-full h-[400px] bg-slate-100 animate-pulse flex flex-col items-center justify-center">
-        <div className="w-10 h-10 border-4 border-[#1B9981]/30 border-t-[#1B9981] rounded-full animate-spin mb-4" />
+        <div className="w-10 h-10 border-4 border-[#2a9d8f]/30 border-t-[#2a9d8f] rounded-full animate-spin mb-4" />
         <p className="text-slate-400 font-medium text-[13px]">Menyiapkan Kamera AI...</p>
       </div>
     )
@@ -31,13 +31,13 @@ const itemVariants: Variants = {
 
 export default function BijalanScreen() {
   return (
-    <div className="min-h-[100dvh] bg-[#f4f6fc] selection:bg-[#1B9981]/20 flex flex-col pb-4 relative overflow-x-hidden">
+    <div className="min-h-[100dvh] bg-[#f4f6fc] selection:bg-[#2a9d8f]/20 flex flex-col pb-4 relative overflow-x-hidden">
 
       {/* Header — Sticky 3D Neumorphism */}
       <div className="sticky top-0 z-50 px-6 pt-5 pb-5 bg-[#f4f6fc]/95 backdrop-blur-xl border-b border-white shadow-3d rounded-b-[2rem] shrink-0 mb-4">
         <div className="flex items-start justify-between">
           <div className="flex items-center gap-3.5">
-            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#1B9981] to-[#00D4AA] flex items-center justify-center shrink-0 bubble-3d text-white">
+            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#2a9d8f] to-[#4fd1c5] flex items-center justify-center shrink-0 bubble-3d text-white">
               <Navigation className="w-7 h-7 text-white drop-shadow-md" strokeWidth={2.5} />
             </div>
             <div>
@@ -54,7 +54,7 @@ export default function BijalanScreen() {
             aria-label="Kembali"
             className="w-10 h-10 flex items-center justify-center rounded-full bg-[#f4f6fc] shadow-[inset_2px_2px_5px_rgba(0,0,0,0.05),_inset_-3px_-3px_7px_rgba(255,255,255,1)] border border-white active:scale-95 transition-transform shrink-0 mt-2"
           >
-            <ArrowLeft className="w-4 h-4 text-[#1B9981]" strokeWidth={3} />
+            <ArrowLeft className="w-4 h-4 text-[#2a9d8f]" strokeWidth={3} />
           </Link>
         </div>
       </div>
@@ -92,7 +92,7 @@ export default function BijalanScreen() {
             <div className="flex flex-col items-center">
 
               <div className="w-14 h-14 bg-[#f4f6fc] rounded-full flex items-center justify-center mb-4 shadow-[inset_2px_2px_5px_rgba(0,0,0,0.05),_inset_-3px_-3px_7px_rgba(255,255,255,1)] border border-white">
-                <Volume2 className="w-7 h-7 text-[#1B9981] drop-shadow-sm" strokeWidth={2.5} />
+                <Volume2 className="w-7 h-7 text-[#2a9d8f] drop-shadow-sm" strokeWidth={2.5} />
               </div>
 
               <div className="text-center space-y-2 mb-6">
@@ -106,10 +106,10 @@ export default function BijalanScreen() {
 
               <div className="w-full bg-[#f4f6fc] border border-white rounded-[20px] p-4 flex items-center justify-center gap-3 shadow-[inset_2px_2px_5px_rgba(0,0,0,0.05),_inset_-3px_-3px_7px_rgba(255,255,255,1)]">
                 <div className="relative flex h-3 w-3">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#1B9981] opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-3 w-3 bg-[#00D4AA]"></span>
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#2a9d8f] opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-3 w-3 bg-[#4fd1c5]"></span>
                 </div>
-                <span className="text-[13px] font-black text-[#1B9981] tracking-wide">
+                <span className="text-[13px] font-black text-[#2a9d8f] tracking-wide">
                   Mendeteksi Rintangan...
                 </span>
               </div>

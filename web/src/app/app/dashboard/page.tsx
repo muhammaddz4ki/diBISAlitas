@@ -175,7 +175,7 @@ export default function DashboardPage() {
   if (isLoading) {
     return (
       <div className="min-h-full bg-white flex items-center justify-center">
-        <div className="w-8 h-8 border-4 border-[#1B9981]/30 border-t-[#1B9981] rounded-full animate-spin"></div>
+        <div className="w-8 h-8 border-4 border-[#2a9d8f]/30 border-t-[#2a9d8f] rounded-full animate-spin"></div>
       </div>
     );
   }
@@ -185,14 +185,14 @@ export default function DashboardPage() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="relative min-h-full bg-[#f4f6fc] selection:bg-[#1B9981]/20"
+      className="relative min-h-full bg-[#f4f6fc] selection:bg-[#2a9d8f]/20"
     >
       {/* Header — Sticky 3D Neumorphism */}
       <div className="sticky top-0 z-50 px-6 pt-5 pb-5 bg-[#f4f6fc]/95 backdrop-blur-xl border-b border-white shadow-3d rounded-b-[2rem] shrink-0 mb-4">
         <div className="flex justify-between items-center gap-3">
           <div className="flex items-center gap-3.5 min-w-0 flex-1">
             {/* Avatar */}
-            <div className="w-[52px] h-[52px] rounded-2xl bg-gradient-to-br from-[#00B894] to-[#00D4AA] flex items-center justify-center bubble-3d text-white">
+            <div className="w-[52px] h-[52px] rounded-2xl bg-gradient-to-br from-[#00B894] to-[#4fd1c5] flex items-center justify-center bubble-3d text-white">
               <span className="text-[20px] font-black text-white drop-shadow-md">{userEmail ? userEmail.charAt(0).toUpperCase() : "U"}</span>
             </div>
             <div className="min-w-0 flex-1">
@@ -203,14 +203,14 @@ export default function DashboardPage() {
               <div className="mt-3 flex flex-col gap-1.5 relative z-0 w-full max-w-[180px]">
                 <div className="flex items-center justify-between text-[11px] font-extrabold text-slate-500 w-full">
                   <span className="uppercase tracking-wider truncate mr-2">Poin Tantangan</span>
-                  <span className="text-[#1B9981] shrink-0">{myScore} <span className="text-slate-400">/ {topScore >= 1000 ? (topScore/1000).toFixed(1).replace('.0','') + 'k' : topScore}</span></span>
+                  <span className="text-[#2a9d8f] shrink-0">{myScore} <span className="text-slate-400">/ {topScore >= 1000 ? (topScore/1000).toFixed(1).replace('.0','') + 'k' : topScore}</span></span>
                 </div>
                 <div className="w-full h-[12px] bg-white rounded-full overflow-visible shadow-[inset_1px_1px_3px_rgba(0,0,0,0.1)] relative border border-slate-100">
                   <div 
-                    className="absolute top-0 left-0 h-full bg-gradient-to-r from-[#00D4AA] to-[#1B9981] rounded-full shadow-[0_2px_5px_rgba(27,153,129,0.4)] transition-all duration-1000 ease-out min-w-[12px]" 
+                    className="absolute top-0 left-0 h-full bg-gradient-to-r from-[#4fd1c5] to-[#2a9d8f] rounded-full shadow-[0_2px_5px_rgba(42,157,143,0.4)] transition-all duration-1000 ease-out min-w-[12px]" 
                     style={{ width: `${Math.min(100, Math.max(0, (myScore / topScore) * 100))}%` }} 
                   >
-                    <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[16px] h-[16px] bg-white border-[3px] border-[#1B9981] rounded-full shadow-md transform translate-x-1/2"></div>
+                    <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[16px] h-[16px] bg-white border-[3px] border-[#2a9d8f] rounded-full shadow-md transform translate-x-1/2"></div>
                   </div>
                 </div>
               </div>
@@ -252,7 +252,7 @@ export default function DashboardPage() {
             >
               <div className="px-4 py-3 border-b border-slate-100 flex items-center justify-between sticky top-0 bg-white">
                 <span className="font-bold text-[14px]">Notifikasi</span>
-                <Link href="/app/komunitas" onClick={() => setShowNotif(false)} className="text-[12px] font-bold text-[#1B9981]">
+                <Link href="/app/komunitas" onClick={() => setShowNotif(false)} className="text-[12px] font-bold text-[#2a9d8f]">
                   Lihat semua
                 </Link>
               </div>
@@ -294,7 +294,7 @@ export default function DashboardPage() {
         >
           <div className="flex items-center justify-between px-1 mb-2 mt-2">
             <h2 className="text-[17px] font-bold text-slate-800 tracking-tight text-3d">Layanan Utama</h2>
-            <span className="text-[11px] font-bold text-[#1B9981] bg-transparent shadow-3d px-3 py-1.5 rounded-full tracking-wide">5 LAYANAN</span>
+            <span className="text-[11px] font-bold text-[#2a9d8f] bg-transparent shadow-3d px-3 py-1.5 rounded-full tracking-wide">5 LAYANAN</span>
           </div>
 
           <FeatureCard
@@ -326,8 +326,8 @@ export default function DashboardPage() {
             title="BiJALAN"
             desc="Navigasi Arah Jalan"
             icon={<Navigation className="w-[26px] h-[26px] text-white drop-shadow-md" strokeWidth={2.5} />}
-            bg="bg-gradient-to-br from-[#1B9981] to-[#00D4AA]"
-            buttonColor="text-[#1B9981] bg-[#1B9981]/10 shadow-inner"
+            bg="bg-gradient-to-br from-[#2a9d8f] to-[#4fd1c5]"
+            buttonColor="text-[#2a9d8f] bg-[#2a9d8f]/10 shadow-inner"
           />
           <FeatureCard
             href="/app/bibaca"
@@ -363,7 +363,7 @@ export default function DashboardPage() {
               >
                 <ChevronRight className="w-4 h-4 text-slate-600" />
               </button>
-              <Link href="/app/bipintar" className="ml-2 text-[13px] font-bold text-[#1B9981] flex items-center gap-1 hover:gap-1.5 transition-all text-3d shadow-3d px-3 py-1 rounded-full">
+              <Link href="/app/bipintar" className="ml-2 text-[13px] font-bold text-[#2a9d8f] flex items-center gap-1 hover:gap-1.5 transition-all text-3d shadow-3d px-3 py-1 rounded-full">
                 Lihat Semua <ArrowRight className="w-3.5 h-3.5" />
               </Link>
             </div>
@@ -403,7 +403,7 @@ export default function DashboardPage() {
         >
           <div className="flex items-center justify-between px-1 mb-3">
             <h2 className="text-[17px] font-bold text-slate-800 tracking-tight text-3d">Info Komunitas</h2>
-            <Link href="/app/komunitas" className="text-[13px] font-bold text-[#1B9981] flex items-center gap-1 hover:gap-1.5 transition-all text-3d shadow-3d px-3 py-1 rounded-full">
+            <Link href="/app/komunitas" className="text-[13px] font-bold text-[#2a9d8f] flex items-center gap-1 hover:gap-1.5 transition-all text-3d shadow-3d px-3 py-1 rounded-full">
               Lihat Semua Forum <Users className="w-3.5 h-3.5" />
             </Link>
           </div>
@@ -537,7 +537,7 @@ function CourseCard({ title, category, duration, image }: { title: string; categ
           </div>
         </div>
         <div className="px-1 mb-2">
-          <span className="inline-block px-2 py-0.5 bg-[#f4f6fc] border border-white shadow-[inset_2px_2px_4px_rgba(0,0,0,0.05),_inset_-2px_-2px_4px_rgba(255,255,255,1)] text-[#1B9981] text-[9px] font-extrabold rounded-md uppercase tracking-wider">
+          <span className="inline-block px-2 py-0.5 bg-[#f4f6fc] border border-white shadow-[inset_2px_2px_4px_rgba(0,0,0,0.05),_inset_-2px_-2px_4px_rgba(255,255,255,1)] text-[#2a9d8f] text-[9px] font-extrabold rounded-md uppercase tracking-wider">
             {category}
           </span>
         </div>

@@ -30,7 +30,8 @@ export const FEATURES_LIST = [
     badge: "Darurat & SOS",
     desc: "Panic Button satu sentuhan dengan transmisi GPS presisi ke sistem Cloud.",
     icon: ShieldAlert,
-    color: "text-red-600 dark:text-red-400 bg-red-500/10 border-red-500/20",
+    gradient: "bg-gradient-to-br from-rose-400 to-red-500",
+    shadow: "shadow-[0_8px_20px_rgba(244,63,94,0.4)]",
     hoverBg: "hover:bg-red-500/5",
     href: "/fitur/bisafe",
   },
@@ -40,8 +41,9 @@ export const FEATURES_LIST = [
     badge: "Smart City",
     desc: "Command center monitoring rintangan kota dan penanganan insiden real-time.",
     icon: BarChart,
-    color: "text-[#1B9981] dark:text-[#2DD4BF] bg-[#1B9981]/10 border-[#1B9981]/20",
-    hoverBg: "hover:bg-[#1B9981]/5",
+    gradient: "bg-gradient-to-br from-[#2a9d8f] to-[#4fd1c5]",
+    shadow: "shadow-[0_8px_20px_rgba(42,157,143,0.4)]",
+    hoverBg: "hover:bg-[#2a9d8f]/5",
     href: "/fitur/bipantau",
   },
   {
@@ -50,7 +52,8 @@ export const FEATURES_LIST = [
     badge: "Bahasa Isyarat AI",
     desc: "Penerjemah gestur BISINDO real-time dua arah ke teks dan suara natural.",
     icon: MessageCircle,
-    color: "text-blue-600 dark:text-blue-400 bg-blue-500/10 border-blue-500/20",
+    gradient: "bg-gradient-to-br from-blue-400 to-blue-600",
+    shadow: "shadow-[0_8px_20px_rgba(59,130,246,0.4)]",
     hoverBg: "hover:bg-blue-500/5",
     href: "/fitur/bisapa",
   },
@@ -60,7 +63,8 @@ export const FEATURES_LIST = [
     badge: "OCR & Vision",
     desc: "Pemindai dokumen cerdas berbasis Computer Vision menjadi audio jernih.",
     icon: BookOpen,
-    color: "text-purple-600 dark:text-purple-400 bg-purple-500/10 border-purple-500/20",
+    gradient: "bg-gradient-to-br from-purple-400 to-purple-600",
+    shadow: "shadow-[0_8px_20px_rgba(168,85,247,0.4)]",
     hoverBg: "hover:bg-purple-500/5",
     href: "/fitur/bibaca",
   },
@@ -70,7 +74,8 @@ export const FEATURES_LIST = [
     badge: "E-Learning Inklusif",
     desc: "Modul gamifikasi pembelajaran BISINDO dan Hijaiyah berbasis interaktif.",
     icon: GraduationCap,
-    color: "text-orange-600 dark:text-orange-400 bg-orange-500/10 border-orange-500/20",
+    gradient: "bg-gradient-to-br from-amber-400 to-orange-500",
+    shadow: "shadow-[0_8px_20px_rgba(245,158,11,0.4)]",
     hoverBg: "hover:bg-orange-500/5",
     href: "/fitur/bipintar",
   },
@@ -80,8 +85,9 @@ export const FEATURES_LIST = [
     badge: "Navigasi & Haptic",
     desc: "Deteksi rintangan jalan secara visual dengan umpan balik getaran terarah.",
     icon: Navigation,
-    color: "text-sky-600 dark:text-sky-400 bg-sky-500/10 border-sky-500/20",
-    hoverBg: "hover:bg-sky-500/5",
+    gradient: "bg-gradient-to-br from-[#2a9d8f] to-[#1e7b6d]",
+    shadow: "shadow-[0_8px_20px_rgba(42,157,143,0.4)]",
+    hoverBg: "hover:bg-[#2a9d8f]/5",
     href: "/fitur/bijalan",
   },
 ];
@@ -92,7 +98,8 @@ export const DEMO_LIST = [
     badge: "Langsung Tanpa Login",
     desc: "Jelajahi seluruh modul di HP/Web secara instan dengan akun tamu demo.",
     icon: Smartphone,
-    color: "text-[#1B9981] dark:text-[#2DD4BF] bg-[#1B9981]/10 border-[#1B9981]/20",
+    gradient: "bg-gradient-to-br from-[#2a9d8f] to-[#4fd1c5]",
+    shadow: "shadow-[0_8px_20px_rgba(42,157,143,0.4)]",
     href: "/demo#app-demo",
   },
   {
@@ -100,7 +107,8 @@ export const DEMO_LIST = [
     badge: "Command Center",
     desc: "Pantau peta rintangan aksesibilitas kota dan verifikasi laporan warga.",
     icon: LayoutDashboard,
-    color: "text-blue-600 dark:text-blue-400 bg-blue-500/10 border-blue-500/20",
+    gradient: "bg-gradient-to-br from-blue-400 to-blue-600",
+    shadow: "shadow-[0_8px_20px_rgba(59,130,246,0.4)]",
     href: "/demo#pantau-demo",
   },
 ];
@@ -123,17 +131,17 @@ export default function Navbar() {
     setActiveDropdown(null);
   }, [pathname]);
 
-  const isSolid = scrolled || highContrast;
+  const isSolid = scrolled || highContrast || mobileOpen;
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed left-1/2 -translate-x-1/2 z-50 transition-all duration-500 w-[96%] xl:w-full max-w-6xl ${
         isSolid
-          ? "bg-white/90 dark:bg-[#090e17]/90 backdrop-blur-xl shadow-[0_4px_30px_rgba(0,0,0,0.06)] dark:shadow-[0_4px_30px_rgba(0,0,0,0.4)] border-b border-slate-100 dark:border-slate-800/80 py-3"
-          : "bg-transparent py-4"
+          ? `top-4 bg-white/70 dark:bg-[#0a0a0a]/70 backdrop-blur-2xl shadow-[0_20px_50px_rgba(0,0,0,0.08),_inset_0_2px_4px_rgba(255,255,255,0.5)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.6),_inset_0_2px_4px_rgba(255,255,255,0.05)] border border-white/50 dark:border-white/10 ${mobileOpen ? 'rounded-[1.5rem]' : 'rounded-[1.5rem] lg:rounded-full'} py-2 px-3 sm:px-5 overflow-hidden lg:overflow-visible`
+          : "top-4 bg-transparent py-4 px-3 sm:px-5"
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between">
+      <div className="flex items-center justify-between w-full">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2.5 group z-10">
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -144,7 +152,7 @@ export default function Navbar() {
           />
           <div className="flex flex-col">
             <span className="text-xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-none">
-              di<span className="text-[#1B9981]">BISA</span>litas
+              di<span className="text-[#2a9d8f]">BISA</span>litas
             </span>
             <span className="text-[10px] font-semibold text-slate-400 dark:text-slate-500 tracking-wider">
               AI INCLUSIVITY PLATFORM
@@ -153,19 +161,19 @@ export default function Navbar() {
         </Link>
 
         {/* Desktop Navigation Links */}
-        <nav className="hidden lg:flex items-center gap-1 xl:gap-2">
+        <nav className="hidden lg:flex items-center p-1.5 rounded-2xl bg-slate-50/80 dark:bg-white/[0.02] border border-slate-200/50 dark:border-white/[0.05] backdrop-blur-md shadow-sm dark:shadow-none gap-0.5">
           <Link
             href="/"
-            className={`relative px-3.5 py-2 rounded-xl text-sm font-semibold transition-colors ${
+            className={`relative px-4 py-2 rounded-xl text-sm transition-all duration-300 ${
               pathname === "/"
-                ? "text-[#1B9981] font-bold"
-                : "text-slate-600 dark:text-slate-300 hover:text-[#1B9981] dark:hover:text-[#00D4AA]"
+                ? "text-[#2a9d8f] font-bold"
+                : "text-slate-600 dark:text-slate-300 font-medium hover:text-[#2a9d8f] dark:hover:text-[#4fd1c5] hover:bg-slate-100 dark:hover:bg-white/[0.04]"
             }`}
           >
             {pathname === "/" && (
               <motion.span
                 layoutId="navbar-active-pill"
-                className="absolute inset-0 rounded-xl bg-[#1B9981]/10 dark:bg-[#1B9981]/20"
+                className="absolute inset-0 rounded-xl bg-white dark:bg-white/10 shadow-[0_2px_10px_rgba(0,0,0,0.04)] dark:shadow-none border border-slate-200/50 dark:border-white/5"
                 transition={{ type: "spring", stiffness: 380, damping: 32 }}
               />
             )}
@@ -180,23 +188,23 @@ export default function Navbar() {
           >
             <Link
               href="/fitur"
-              className={`relative px-3.5 py-2 rounded-xl text-sm font-semibold transition-colors flex items-center gap-1.5 ${
+              className={`relative px-4 py-2 rounded-xl text-sm transition-all duration-300 flex items-center gap-1.5 ${
                 pathname.startsWith("/fitur")
-                  ? "text-[#1B9981] font-bold"
-                  : "text-slate-600 dark:text-slate-300 hover:text-[#1B9981] dark:hover:text-[#00D4AA]"
-              }`}
+                  ? "text-[#2a9d8f] font-bold"
+                  : "text-slate-600 dark:text-slate-300 font-medium hover:text-[#2a9d8f] dark:hover:text-[#4fd1c5] hover:bg-slate-100 dark:hover:bg-white/[0.04]"
+            }`}
             >
               {pathname.startsWith("/fitur") && (
                 <motion.span
                   layoutId="navbar-active-pill"
-                  className="absolute inset-0 rounded-xl bg-[#1B9981]/10 dark:bg-[#1B9981]/20"
+                  className="absolute inset-0 rounded-xl bg-white dark:bg-white/10 shadow-[0_2px_10px_rgba(0,0,0,0.04)] dark:shadow-none border border-slate-200/50 dark:border-white/5"
                   transition={{ type: "spring", stiffness: 380, damping: 32 }}
                 />
               )}
               <span className="relative z-10">Fitur</span>
               <ChevronDown
-                className={`relative z-10 w-4 h-4 transition-transform duration-200 ${
-                  activeDropdown === "fitur" ? "rotate-180 text-[#1B9981]" : ""
+                className={`relative z-10 w-4 h-4 transition-transform duration-300 ${
+                  activeDropdown === "fitur" ? "rotate-180 text-[#2a9d8f]" : ""
                 }`}
               />
             </Link>
@@ -204,58 +212,59 @@ export default function Navbar() {
             {/* Dropdown Menu */}
             <AnimatePresence>
               {activeDropdown === "fitur" && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10, scale: 0.98 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={{ opacity: 0, y: 10, scale: 0.98 }}
-                  transition={{ duration: 0.18, ease: "easeOut" }}
-                  className="absolute top-full left-1/2 -translate-x-1/2 mt-1 w-[680px] bg-white dark:bg-[#0F172A] rounded-3xl p-5 shadow-[0_20px_60px_rgba(0,0,0,0.14)] dark:shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-slate-100 dark:border-slate-800 grid grid-cols-2 gap-2.5 z-50"
-                >
-                  <div className="col-span-2 pb-2 mb-1 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
-                    <div>
-                      <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
+                <>
+                  <div className="absolute top-full left-0 w-full h-6" /> {/* Invisible bridge */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 15, scale: 0.97 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: 10, scale: 0.97 }}
+                    transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+                    className="absolute top-full left-1/2 -translate-x-1/2 mt-4 w-[740px] bg-white/95 dark:bg-[#0a0a0a]/95 backdrop-blur-3xl rounded-[1.5rem] p-6 shadow-[0_30px_100px_rgba(0,0,0,0.12)] dark:shadow-[0_30px_100px_rgba(0,0,0,0.8)] border border-white/60 dark:border-white/10 grid grid-cols-2 gap-4 z-50"
+                  >
+                    <div className="col-span-2 mb-3 px-4 py-3 bg-white dark:bg-[#1f1f1f] rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.06)] dark:shadow-[0_8px_30px_rgba(0,0,0,0.4)] border border-slate-50 dark:border-white/5 flex items-center justify-between">
+                      <h4 className="text-[11px] font-black uppercase tracking-[0.15em] text-slate-500 dark:text-slate-400">
                         6 Pilar Ekosistem Cerdas
                       </h4>
-                    </div>
-                    <Link
-                      href="/fitur"
-                      className="text-xs font-bold text-[#1B9981] dark:text-[#00D4AA] hover:text-[#168C74] flex items-center gap-1"
-                    >
-                      <span>Lihat Ringkasan Fitur</span>
-                      <ArrowRight className="w-3.5 h-3.5" />
-                    </Link>
-                  </div>
-
-                  {FEATURES_LIST.map((f) => {
-                    const Icon = f.icon;
-                    return (
                       <Link
-                        key={f.slug}
-                        href={f.href}
-                        className={`p-3 rounded-2xl border border-transparent transition-all flex items-start gap-3.5 ${f.hoverBg} dark:hover:bg-slate-800/80 hover:border-slate-200/80 dark:hover:border-slate-700/80 group`}
+                        href="/fitur"
+                        className="text-xs font-bold text-[#2a9d8f] dark:text-[#4fd1c5] hover:text-[#1e7b6d] flex items-center gap-1 group bg-[#2a9d8f]/10 dark:bg-[#2a9d8f]/20 px-3 py-1.5 rounded-full transition-colors"
                       >
-                        <div
-                          className={`w-11 h-11 rounded-2xl flex items-center justify-center shrink-0 border ${f.color} shadow-sm group-hover:scale-105 transition-transform`}
-                        >
-                          <Icon className="w-5 h-5" />
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-center gap-2 mb-0.5">
-                            <span className="font-bold text-sm text-slate-900 dark:text-white group-hover:text-[#1B9981] dark:group-hover:text-[#00D4AA] transition-colors">
-                              {f.name}
-                            </span>
-                            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
-                              {f.badge}
-                            </span>
-                          </div>
-                          <p className="text-xs text-slate-500 dark:text-slate-400 line-clamp-2 leading-relaxed">
-                            {f.desc}
-                          </p>
-                        </div>
+                        <span>Lihat Ringkasan Fitur</span>
+                        <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
                       </Link>
-                    );
-                  })}
-                </motion.div>
+                    </div>
+
+                    {FEATURES_LIST.map((f) => {
+                      const Icon = f.icon;
+                      return (
+                        <Link
+                          key={f.slug}
+                          href={f.href}
+                          className="p-3 bg-white dark:bg-[#1f1f1f] rounded-[1.25rem] shadow-[0_8px_30px_rgba(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgba(0,0,0,0.3)] border border-slate-50 dark:border-white/5 flex items-start gap-4 transition-transform hover:scale-[1.02] group"
+                        >
+                          <div
+                            className={`w-11 h-11 rounded-[14px] flex items-center justify-center shrink-0 text-white ${f.gradient} ${f.shadow} group-hover:scale-110 transition-transform duration-300`}
+                          >
+                            <Icon className="w-5 h-5" />
+                          </div>
+                          <div className="flex-1 min-w-0 pt-0.5">
+                            <div className="flex items-center gap-2 mb-1">
+                              <span className="font-extrabold text-sm text-slate-900 dark:text-white group-hover:text-[#2a9d8f] dark:group-hover:text-[#4fd1c5] transition-colors">
+                                {f.name}
+                              </span>
+                              <span className="text-[9px] font-bold px-2 py-0.5 rounded-full bg-slate-100 dark:bg-white/5 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-white/10">
+                                {f.badge}
+                              </span>
+                            </div>
+                            <p className="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400/80 line-clamp-2 leading-relaxed">
+                              {f.desc}
+                            </p>
+                          </div>
+                        </Link>
+                      );
+                    })}
+                  </motion.div>
+                </>
               )}
             </AnimatePresence>
           </div>
@@ -268,26 +277,26 @@ export default function Navbar() {
           >
             <Link
               href="/demo"
-              className={`relative px-3.5 py-2 rounded-xl text-sm font-semibold transition-colors flex items-center gap-1.5 ${
+              className={`relative px-4 py-2 rounded-xl text-sm transition-all duration-300 flex items-center gap-1.5 ${
                 pathname === "/demo"
-                  ? "text-[#1B9981] font-bold"
-                  : "text-slate-600 dark:text-slate-300 hover:text-[#1B9981] dark:hover:text-[#00D4AA]"
+                  ? "text-[#2a9d8f] font-bold"
+                  : "text-slate-600 dark:text-slate-300 font-medium hover:text-[#2a9d8f] dark:hover:text-[#4fd1c5] hover:bg-slate-100 dark:hover:bg-white/[0.04]"
               }`}
             >
               {pathname === "/demo" && (
                 <motion.span
                   layoutId="navbar-active-pill"
-                  className="absolute inset-0 rounded-xl bg-[#1B9981]/10 dark:bg-[#1B9981]/20"
+                  className="absolute inset-0 rounded-xl bg-white dark:bg-white/10 shadow-[0_2px_10px_rgba(0,0,0,0.04)] dark:shadow-none border border-slate-200/50 dark:border-white/5"
                   transition={{ type: "spring", stiffness: 380, damping: 32 }}
                 />
               )}
               <span className="relative z-10 flex items-center gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-[#1B9981] animate-pulse" />
+                <span className="w-1.5 h-1.5 rounded-full bg-[#2a9d8f] animate-pulse" />
                 Demo
               </span>
               <ChevronDown
-                className={`relative z-10 w-4 h-4 transition-transform duration-200 ${
-                  activeDropdown === "demo" ? "rotate-180 text-[#1B9981]" : ""
+                className={`relative z-10 w-4 h-4 transition-transform duration-300 ${
+                  activeDropdown === "demo" ? "rotate-180 text-[#2a9d8f]" : ""
                 }`}
               />
             </Link>
@@ -295,82 +304,74 @@ export default function Navbar() {
             {/* Dropdown Menu */}
             <AnimatePresence>
               {activeDropdown === "demo" && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10, scale: 0.98 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={{ opacity: 0, y: 10, scale: 0.98 }}
-                  transition={{ duration: 0.18, ease: "easeOut" }}
-                  className="absolute top-full left-1/2 -translate-x-1/2 mt-1 w-[400px] bg-white dark:bg-[#0F172A] rounded-3xl p-4 shadow-[0_20px_60px_rgba(0,0,0,0.14)] dark:shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-slate-100 dark:border-slate-800 flex flex-col gap-2 z-50"
-                >
-                  <div className="pb-2 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
-                    <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
-                      Pusat Akses Demo
-                    </h4>
-                    <Link
-                      href="/demo"
-                      className="text-xs font-bold text-[#1B9981] dark:text-[#00D4AA] flex items-center gap-1"
-                    >
-                      Buka Demo Hub <ArrowRight className="w-3 h-3" />
-                    </Link>
-                  </div>
-
-                  {DEMO_LIST.map((d, i) => {
-                    const Icon = d.icon;
-                    return (
+                <>
+                  <div className="absolute top-full left-0 w-full h-6" /> {/* Invisible bridge */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 15, scale: 0.97 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: 10, scale: 0.97 }}
+                    transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+                    className="absolute top-full left-1/2 -translate-x-1/2 mt-4 w-[420px] bg-white/95 dark:bg-[#0a0a0a]/95 backdrop-blur-3xl rounded-[1.5rem] p-5 shadow-[0_30px_100px_rgba(0,0,0,0.12)] dark:shadow-[0_30px_100px_rgba(0,0,0,0.8)] border border-white/60 dark:border-white/10 flex flex-col gap-3 z-50"
+                  >
+                    <div className="mb-3 px-4 py-3 bg-white dark:bg-[#1f1f1f] rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.06)] dark:shadow-[0_8px_30px_rgba(0,0,0,0.4)] border border-slate-50 dark:border-white/5 flex items-center justify-between">
+                      <h4 className="text-[11px] font-black uppercase tracking-[0.15em] text-slate-500 dark:text-slate-400">
+                        Pusat Akses Demo
+                      </h4>
                       <Link
-                        key={i}
-                        href={d.href}
-                        className="p-3 rounded-2xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-all flex items-start gap-3 group border border-transparent hover:border-slate-200 dark:hover:border-slate-700"
+                        href="/demo"
+                        className="text-xs font-bold text-[#2a9d8f] dark:text-[#4fd1c5] flex items-center gap-1 group bg-[#2a9d8f]/10 dark:bg-[#2a9d8f]/20 px-3 py-1.5 rounded-full transition-colors"
                       >
-                        <div
-                          className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${d.color}`}
-                        >
-                          <Icon className="w-5 h-5" />
-                        </div>
-                        <div>
-                          <div className="flex items-center gap-2">
-                            <span className="font-bold text-sm text-slate-900 dark:text-white group-hover:text-[#1B9981] dark:group-hover:text-[#00D4AA] transition-colors">
-                              {d.title}
-                            </span>
-                          </div>
-                          <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5 leading-relaxed">
-                            {d.desc}
-                          </p>
-                        </div>
+                        Buka Demo Hub <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
                       </Link>
-                    );
-                  })}
-                </motion.div>
+                    </div>
+
+                    {DEMO_LIST.map((d, i) => {
+                      const Icon = d.icon;
+                      return (
+                        <Link
+                          key={i}
+                          href={d.href}
+                          className="p-3 bg-white dark:bg-[#1f1f1f] rounded-[1.25rem] shadow-[0_8px_30px_rgba(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgba(0,0,0,0.3)] border border-slate-50 dark:border-white/5 flex items-start gap-4 transition-transform hover:scale-[1.02] group"
+                        >
+                          <div
+                            className={`w-11 h-11 rounded-[14px] flex items-center justify-center shrink-0 text-white ${d.gradient} ${d.shadow} group-hover:scale-110 transition-transform duration-300`}
+                          >
+                            <Icon className="w-5 h-5" />
+                          </div>
+                          <div>
+                            <div className="flex items-center gap-2">
+                              <span className="font-extrabold text-sm text-slate-900 dark:text-white group-hover:text-[#2a9d8f] dark:group-hover:text-[#4fd1c5] transition-colors">
+                                {d.title}
+                              </span>
+                            </div>
+                            <p className="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400/80 mt-1 leading-relaxed">
+                              {d.desc}
+                            </p>
+                          </div>
+                        </Link>
+                      );
+                    })}
+                  </motion.div>
+                </>
               )}
             </AnimatePresence>
           </div>
-          <Link
-            href="/#statistik"
-            className="px-3.5 py-2 rounded-xl text-sm font-semibold text-slate-600 dark:text-slate-300 hover:text-[#1B9981] dark:hover:text-[#00D4AA] transition-colors"
-          >
-            Statistik
-          </Link>
-          <Link
-            href="/#dampak"
-            className="px-3.5 py-2 rounded-xl text-sm font-semibold text-slate-600 dark:text-slate-300 hover:text-[#1B9981] dark:hover:text-[#00D4AA] transition-colors"
-          >
-            Dampak
-          </Link>
+          
+
         </nav>
 
-        {/* CTA Actions & Theme Toggle */}
         <div className="hidden lg:flex items-center gap-3">
           <ThemeToggle />
           <Link
             href="/demo"
-            className="px-4 py-2.5 rounded-full text-xs font-bold text-[#1B9981] dark:text-[#00D4AA] bg-[#1B9981]/10 hover:bg-[#1B9981]/20 transition-all border border-[#1B9981]/20 flex items-center gap-1.5"
+            className="px-5 py-2.5 rounded-full text-xs font-bold text-slate-700 dark:text-slate-200 bg-white dark:bg-[#1f1f1f] border border-slate-100 dark:border-white/5 shadow-[0_6px_15px_rgba(0,0,0,0.06)] dark:shadow-[0_6px_15px_rgba(0,0,0,0.3)] hover:shadow-[0_8px_25px_rgba(0,0,0,0.08)] hover:-translate-y-0.5 transition-all duration-300 flex items-center gap-1.5"
           >
-            <Zap className="w-3.5 h-3.5 fill-current" />
+            <Zap className="w-3.5 h-3.5" />
             Coba Demo Gratis
           </Link>
           <Link
             href="/app/login"
-            className="px-5 py-2.5 rounded-full bg-[#1B9981] text-white text-xs font-bold hover:bg-[#168C74] transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5 flex items-center gap-1.5"
+            className="px-6 py-2.5 rounded-full bg-gradient-to-br from-[#2a9d8f] to-[#4fd1c5] text-white text-xs font-bold hover:shadow-[0_10px_30px_rgba(42,157,143,0.5)] hover:-translate-y-0.5 transition-all duration-300 shadow-[0_8px_20px_rgba(42,157,143,0.4)] flex items-center gap-1.5"
           >
             Masuk / Daftar
             <ArrowRight className="w-3.5 h-3.5" />
@@ -383,7 +384,7 @@ export default function Navbar() {
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label="Menu Navigasi Mobile"
-            className="w-11 h-11 rounded-2xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 flex items-center justify-center hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
+            className="w-11 h-11 rounded-[14px] bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 flex items-center justify-center hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
           >
             {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
@@ -397,47 +398,48 @@ export default function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="lg:hidden bg-white dark:bg-[#090e17] border-b border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden"
+            className="lg:hidden mt-2 bg-transparent overflow-y-auto max-h-[75vh] custom-scrollbar"
           >
-            <div className="px-6 py-6 space-y-4 max-h-[80vh] overflow-y-auto">
+            <div className="pt-4 pb-6 px-1 space-y-6">
+              {/* Beranda Link */}
               <Link
                 href="/"
-                className="block py-2 text-base font-bold text-slate-800 dark:text-slate-100 hover:text-[#1B9981] dark:hover:text-[#00D4AA]"
+                className="block px-3 py-2 text-base font-bold text-slate-800 dark:text-slate-100 hover:text-[#2a9d8f] dark:hover:text-[#4fd1c5]"
               >
                 Beranda
               </Link>
 
-              {/* Fitur Accordion */}
-              <div className="border-t border-slate-100 dark:border-slate-800 pt-3">
-                <div className="flex items-center justify-between py-2 text-base font-bold text-slate-800 dark:text-slate-100">
+              {/* Fitur Section */}
+              <div className="space-y-3">
+                <div className="flex items-center justify-between px-3 text-base font-bold text-slate-800 dark:text-slate-100">
                   <span>Pilihan Fitur Unggulan</span>
                   <Link
                     href="/fitur"
-                    className="text-xs font-semibold text-[#1B9981] dark:text-[#00D4AA]"
+                    className="text-[11px] font-semibold text-[#2a9d8f] dark:text-[#4fd1c5]"
                   >
                     Lihat Semua
                   </Link>
                 </div>
-                <div className="grid grid-cols-1 gap-2 mt-2">
+                <div className="grid grid-cols-1 gap-2.5">
                   {FEATURES_LIST.map((f) => {
                     const Icon = f.icon;
                     return (
                       <Link
                         key={f.slug}
                         href={f.href}
-                        className="p-3 rounded-xl bg-slate-50 dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center gap-3 border border-transparent dark:border-slate-800"
+                        className="p-3 bg-white dark:bg-[#1f1f1f] rounded-[1.25rem] shadow-[0_8px_30px_rgba(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgba(0,0,0,0.3)] border border-slate-50 dark:border-white/5 flex items-center gap-4 transition-transform hover:scale-[1.02]"
                       >
                         <div
-                          className={`w-9 h-9 rounded-xl flex items-center justify-center ${f.color}`}
+                          className={`w-11 h-11 rounded-[14px] flex items-center justify-center text-white ${f.gradient} ${f.shadow}`}
                         >
-                          <Icon className="w-4 h-4" />
+                          <Icon className="w-5 h-5" />
                         </div>
                         <div>
-                          <div className="font-bold text-xs text-slate-900 dark:text-white">
+                          <div className="font-bold text-sm text-slate-900 dark:text-white">
                             {f.name}
                           </div>
-                          <div className="text-[10px] text-slate-500 dark:text-slate-400">
-                            {f.badge}
+                          <div className="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5">
+                            {f.desc.slice(0, 45)}...
                           </div>
                         </div>
                       </Link>
@@ -447,54 +449,44 @@ export default function Navbar() {
               </div>
 
               {/* Demo Section Mobile */}
-              <div className="border-t border-slate-100 dark:border-slate-800 pt-3 space-y-2">
-                <div className="text-base font-bold text-slate-800 dark:text-slate-100">Akses Demo</div>
-                <div className="grid grid-cols-1 gap-2">
-                  <Link
-                    href="/demo#app-demo"
-                    className="p-3 rounded-xl bg-[#1B9981]/10 text-[#1B9981] dark:text-[#00D4AA] font-bold text-xs flex items-center justify-between border border-[#1B9981]/20"
-                  >
-                    <span>Demo Aplikasi (Tanpa Login)</span>
-                    <ArrowRight className="w-4 h-4" />
-                  </Link>
-                  <Link
-                    href="/demo#pantau-demo"
-                    className="p-3 rounded-xl bg-blue-50 dark:bg-blue-950/40 text-blue-700 dark:text-blue-300 font-bold text-xs flex items-center justify-between border border-blue-100 dark:border-blue-900"
-                  >
-                    <span>Demo Dashboard BiPANTAU</span>
-                    <ArrowRight className="w-4 h-4" />
-                  </Link>
+              <div className="space-y-3 pt-2 border-t border-slate-200 dark:border-white/10">
+                <div className="px-3 text-base font-bold text-slate-800 dark:text-slate-100">Akses Demo</div>
+                <div className="grid grid-cols-1 gap-2.5">
+                  {DEMO_LIST.map((d, i) => {
+                    const Icon = d.icon;
+                    return (
+                      <Link
+                        key={i}
+                        href={d.href}
+                        className="p-3 bg-white dark:bg-[#1f1f1f] rounded-[1.25rem] shadow-[0_8px_30px_rgba(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgba(0,0,0,0.3)] border border-slate-50 dark:border-white/5 flex items-center gap-4 transition-transform hover:scale-[1.02]"
+                      >
+                        <div
+                          className={`w-11 h-11 rounded-[14px] flex items-center justify-center text-white ${d.gradient} ${d.shadow}`}
+                        >
+                          <Icon className="w-5 h-5" />
+                        </div>
+                        <div>
+                          <div className="font-bold text-sm text-slate-900 dark:text-white">
+                            {d.title}
+                          </div>
+                        </div>
+                      </Link>
+                    );
+                  })}
                 </div>
               </div>
 
-              <div className="border-t border-slate-100 dark:border-slate-800 pt-3 space-y-2">
+              <div className="pt-4 border-t border-slate-200 dark:border-white/10 space-y-3 px-1">
                 <Link
                   href="/#video-demo"
                   onClick={() => setMobileOpen(false)}
-                  className="block py-2 text-sm font-semibold text-slate-600 dark:text-slate-300 hover:text-[#1B9981] dark:hover:text-[#00D4AA]"
+                  className="block py-2 text-sm font-semibold text-slate-600 dark:text-slate-300 hover:text-[#2a9d8f] dark:hover:text-[#4fd1c5] text-center"
                 >
-                  Video Demo Aplikasi
+                  Tonton Video Demo
                 </Link>
-                <Link
-                  href="/#statistik"
-                  onClick={() => setMobileOpen(false)}
-                  className="block py-2 text-sm font-semibold text-slate-600 dark:text-slate-300 hover:text-[#1B9981] dark:hover:text-[#00D4AA]"
-                >
-                  Statistik Riset
-                </Link>
-                <Link
-                  href="/#dampak"
-                  onClick={() => setMobileOpen(false)}
-                  className="block py-2 text-sm font-semibold text-slate-600 dark:text-slate-300 hover:text-[#1B9981] dark:hover:text-[#00D4AA]"
-                >
-                  Dampak Komunitas
-                </Link>
-              </div>
-
-              <div className="pt-2">
                 <Link
                   href="/app/login"
-                  className="block w-full py-3.5 text-center bg-[#1B9981] text-white font-bold rounded-2xl text-sm shadow-md"
+                  className="block w-full py-3.5 text-center bg-gradient-to-br from-[#2a9d8f] to-[#4fd1c5] text-white font-bold rounded-2xl text-sm shadow-[0_8px_20px_rgba(42,157,143,0.3)]"
                 >
                   Masuk / Daftar Akun
                 </Link>

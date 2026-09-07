@@ -20,18 +20,18 @@ export default function DemoHubPage() {
   const { theme } = useTheme();
 
   return (
-    <div className="min-h-screen bg-[#FDFEFE] dark:bg-black text-slate-800 dark:text-slate-100 selection:bg-[#1B9981]/20 transition-colors duration-300 overflow-hidden">
+    <div className="min-h-screen bg-[#FDFEFE] dark:bg-black text-slate-800 dark:text-slate-100 selection:bg-[#2a9d8f]/20 transition-colors duration-300 overflow-hidden">
       <Navbar />
 
       {/* Hero Header */}
       <section className="pt-32 pb-10 px-4 sm:px-6 relative overflow-visible">
-        <div className="absolute top-16 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-gradient-to-tr from-[#1B9981]/15 via-[#00D4AA]/10 to-transparent blur-3xl rounded-full pointer-events-none" />
+        <div className="absolute top-16 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-gradient-to-tr from-[#2a9d8f]/15 via-[#4fd1c5]/10 to-transparent blur-3xl rounded-full pointer-events-none" />
 
         <div className="max-w-7xl mx-auto text-center relative z-10 space-y-4">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#1B9981]/10 dark:bg-[#1B9981]/20 border border-[#1B9981]/20 text-[#1B9981] dark:text-[#00D4AA] text-xs font-bold uppercase tracking-wider"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#2a9d8f]/10 dark:bg-[#2a9d8f]/20 border border-[#2a9d8f]/20 text-[#2a9d8f] dark:text-[#4fd1c5] text-xs font-bold uppercase tracking-wider"
           >
             <Unlock className="w-3.5 h-3.5" /> Akses Demo Instan Tanpa Hambatan
           </motion.div>
@@ -43,7 +43,7 @@ export default function DemoHubPage() {
             className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight text-slate-900 dark:text-white leading-[1.15]"
           >
             Pusat Demo Ekosistem <br />
-            <span className="text-[#1B9981] dark:text-[#00D4AA]">diBISAlitas Platform</span>
+            <span className="text-[#2a9d8f] dark:text-[#4fd1c5]">diBISAlitas Platform</span>
           </motion.h1>
 
           <motion.p 
@@ -70,7 +70,7 @@ export default function DemoHubPage() {
             className="flex flex-col space-y-6 lg:pr-8 justify-center order-2 lg:order-1"
           >
             <div className="flex items-center gap-3">
-              <span className="px-3.5 py-1.5 rounded-full bg-[#1B9981]/10 dark:bg-[#1B9981]/20 text-[#1B9981] dark:text-[#00D4AA] text-xs font-bold uppercase tracking-wider flex items-center gap-1.5">
+              <span className="px-3.5 py-1.5 rounded-full bg-[#2a9d8f]/10 dark:bg-[#2a9d8f]/20 text-[#2a9d8f] dark:text-[#4fd1c5] text-xs font-bold uppercase tracking-wider flex items-center gap-1.5">
                 <Smartphone className="w-4 h-4" /> Mode Pengguna (Tamu Demo)
               </span>
               <span className="text-[11px] font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/50 px-2.5 py-1 rounded-lg">
@@ -80,7 +80,7 @@ export default function DemoHubPage() {
             
             <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.5rem] font-black leading-[1.05] tracking-tight">
               Demo Aplikasi <br/>
-              <em className="font-black italic text-[#1B9981] dark:text-[#00D4AA]">
+              <em className="font-black italic text-[#2a9d8f] dark:text-[#4fd1c5]">
                 diBISAlitas
               </em>
             </h2>
@@ -95,7 +95,7 @@ export default function DemoHubPage() {
               </div>
               <div className="grid grid-cols-2 gap-3 max-w-lg">
                 {[
-                  { name: "Dashboard Utama", href: "/app/dashboard?demo=true", color: "text-[#1B9981] dark:text-[#00D4AA]" },
+                  { name: "Dashboard Utama", href: "/app/dashboard?demo=true", color: "text-[#2a9d8f] dark:text-[#4fd1c5]" },
                   { name: "BiSAPA AI Camera", href: "/app/bisapa", color: "text-emerald-600 dark:text-emerald-400" },
                   { name: "BiBACA OCR", href: "/app/bibaca", color: "text-emerald-600 dark:text-emerald-400" },
                   { name: "BiSAFE Panic", href: "/app/bisafe", color: "text-emerald-600 dark:text-emerald-400" },
@@ -103,10 +103,10 @@ export default function DemoHubPage() {
                   <Link
                     key={idx}
                     href={m.href}
-                    className="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/60 hover:border-[#1B9981]/50 dark:hover:border-[#1B9981]/50 shadow-sm hover:shadow-md transition-all flex items-center justify-between group"
+                    className="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/60 hover:border-[#2a9d8f]/50 dark:hover:border-[#2a9d8f]/50 shadow-sm hover:shadow-md transition-all flex items-center justify-between group"
                   >
                     <span className={`text-xs font-bold ${m.color}`}>{m.name}</span>
-                    <ArrowRight className="w-3.5 h-3.5 text-slate-400 group-hover:text-[#1B9981] group-hover:translate-x-0.5 transition-transform" />
+                    <ArrowRight className="w-3.5 h-3.5 text-slate-400 group-hover:text-[#2a9d8f] group-hover:translate-x-0.5 transition-transform" />
                   </Link>
                 ))}
               </div>
@@ -115,7 +115,7 @@ export default function DemoHubPage() {
             <div className="pt-6">
               <Link
                 href="/app/dashboard?demo=true"
-                className="inline-flex py-4 px-8 rounded-full bg-[#1B9981] text-white font-extrabold text-sm hover:bg-[#168C74] transition-all shadow-[0_0_20px_rgba(27,153,129,0.3)] hover:shadow-[0_0_30px_rgba(27,153,129,0.5)] items-center justify-center gap-2"
+                className="inline-flex py-4 px-8 rounded-full bg-[#2a9d8f] text-white font-extrabold text-sm hover:bg-[#1e7b6d] transition-all shadow-[0_0_20px_rgba(42,157,143,0.3)] hover:shadow-[0_0_30px_rgba(42,157,143,0.5)] items-center justify-center gap-2"
               >
                 <Zap className="w-4 h-4 fill-current" />
                 <span>Buka Aplikasi Utama (Tanpa Login)</span>
@@ -132,7 +132,7 @@ export default function DemoHubPage() {
             className="relative flex items-center justify-center lg:justify-end order-1 lg:order-2"
             style={{ perspective: "1200px" }}
           >
-            <div className="absolute w-[40%] h-[60%] bg-[#1B9981]/10 dark:bg-[#00D4AA]/15 blur-[80px] rounded-full top-1/2 left-[60%] -translate-x-1/2 -translate-y-1/2" />
+            <div className="absolute w-[40%] h-[60%] bg-[#2a9d8f]/10 dark:bg-[#4fd1c5]/15 blur-[80px] rounded-full top-1/2 left-[60%] -translate-x-1/2 -translate-y-1/2" />
             
             <div 
               className="relative w-[270px] sm:w-[310px] lg:w-[340px] aspect-[9/18.5] bg-slate-200 dark:bg-[#0a0a0a] rounded-[1.75rem] md:rounded-[2.25rem] border-[6px] md:border-[8px] border-slate-300 dark:border-[#1a1a1a] overflow-hidden flex flex-col items-center justify-center group transform-gpu preserve-3d transition-colors duration-300"

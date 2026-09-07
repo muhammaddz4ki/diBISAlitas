@@ -37,7 +37,7 @@ const PetaMapComponent = dynamic(() => import("./PetaMapComponent"), {
   loading: () => (
     <div className="w-full h-full bg-slate-50/50 rounded-[20px] animate-pulse flex items-center justify-center min-h-[400px] border border-slate-100">
       <div className="flex flex-col items-center gap-4">
-        <div className="w-10 h-10 border-4 border-[#1B9981]/30 border-t-[#1B9981] rounded-full animate-spin" />
+        <div className="w-10 h-10 border-4 border-[#2a9d8f]/30 border-t-[#2a9d8f] rounded-full animate-spin" />
         <p className="text-slate-500 font-medium text-[13px] tracking-wide">Memuat Peta...</p>
       </div>
     </div>
@@ -99,11 +99,11 @@ export default function PetaPage() {
   };
 
   return (
-    <div className="min-h-full bg-[#f4f6fc] selection:bg-[#1B9981]/20 flex flex-col">
+    <div className="min-h-full bg-[#f4f6fc] selection:bg-[#2a9d8f]/20 flex flex-col">
       {/* Header — Sticky 3D Neumorphism */}
       <div className="sticky top-0 z-50 px-6 pt-5 pb-5 bg-[#f4f6fc]/95 backdrop-blur-xl border-b border-white shadow-3d rounded-b-[2rem] shrink-0 mb-4">
         <div className="flex items-center gap-3.5">
-          <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#00B894] to-[#00D4AA] flex items-center justify-center shrink-0 bubble-3d text-white">
+          <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#00B894] to-[#4fd1c5] flex items-center justify-center shrink-0 bubble-3d text-white">
             <MapPin className="w-7 h-7 text-white drop-shadow-md" strokeWidth={2.5} />
           </div>
           <div>
@@ -147,7 +147,7 @@ export default function PetaPage() {
                 >
                   <div className="flex items-start justify-between gap-3">
                     <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#1B9981] to-[#00D4AA] flex items-center justify-center shrink-0 shadow-3d icon-3d">
+                      <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#2a9d8f] to-[#4fd1c5] flex items-center justify-center shrink-0 shadow-3d icon-3d">
                         <MapPin className="w-5 h-5 text-white drop-shadow-md" />
                       </div>
                       <div>
@@ -159,7 +159,7 @@ export default function PetaPage() {
                       </div>
                     </div>
                     <div className="bg-[#f4f6fc] px-3 py-1.5 rounded-full shadow-[inset_2px_2px_5px_rgba(0,0,0,0.05),_inset_-3px_-3px_7px_rgba(255,255,255,1)] border border-white flex items-center gap-1.5 shrink-0">
-                      <Calendar className="w-3 h-3 text-[#1B9981]" />
+                      <Calendar className="w-3 h-3 text-[#2a9d8f]" />
                       <span className="text-[10px] font-bold text-slate-600">{formatDate(r.createdAt)}</span>
                     </div>
                   </div>
@@ -193,7 +193,7 @@ export default function PetaPage() {
                       className={`w-full sm:w-auto px-5 py-2.5 rounded-[16px] text-[13px] font-bold flex items-center justify-center gap-2 transition-all ${
                         confirmedIds[r.id] 
                           ? "bg-slate-100 text-slate-400 border border-slate-200" 
-                          : "bg-gradient-to-br from-[#1B9981] to-[#00D4AA] text-white shadow-3d shadow-3d-active icon-3d"
+                          : "bg-gradient-to-br from-[#2a9d8f] to-[#4fd1c5] text-white shadow-3d shadow-3d-active icon-3d"
                       }`}
                     >
                       <ThumbsUp className={`w-4 h-4 ${confirmedIds[r.id] ? "" : "drop-shadow-md"}`} /> 

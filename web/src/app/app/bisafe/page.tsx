@@ -61,7 +61,7 @@ export default function BiSafePage() {
   }, []);
 
   return (
-    <div className={`min-h-full bg-[#f4f6fc] ${colorfulMode ? "selection:bg-rose-500/20" : "selection:bg-[#1B9981]/20"} flex flex-col`}>
+    <div className={`min-h-full bg-[#f4f6fc] ${colorfulMode ? "selection:bg-rose-500/20" : "selection:bg-[#2a9d8f]/20"} flex flex-col`}>
       {/* Header — Sticky 3D Neumorphism */}
       <div className="sticky top-0 z-50 px-6 pt-5 pb-5 bg-[#f4f6fc]/95 backdrop-blur-xl border-b border-white shadow-3d rounded-b-[2rem] shrink-0 mb-4">
         <div className="flex items-center gap-3.5">
@@ -226,7 +226,7 @@ function DaruratTab() {
         {/* Glow Element */}
         <div 
           className={`absolute inset-0 rounded-full blur-2xl opacity-60 transition-colors duration-500 ${
-            status === "success" ? "bg-[#1B9981]" : "bg-rose-500"
+            status === "success" ? "bg-[#2a9d8f]" : "bg-rose-500"
           }`} 
         />
         
@@ -239,7 +239,7 @@ function DaruratTab() {
           onTouchEnd={cancelPress}
           className={`relative z-10 w-56 h-56 sm:w-64 sm:h-64 rounded-full flex flex-col items-center justify-center transition-all duration-500 ease-out outline-none shadow-3d shadow-3d-active overflow-hidden
             ${status === "success"
-              ? "bg-gradient-to-br from-[#1B9981] to-[#00D4AA]"
+              ? "bg-gradient-to-br from-[#2a9d8f] to-[#4fd1c5]"
               : "bg-gradient-to-br from-rose-500 to-rose-700"
             }`}
         >

@@ -105,11 +105,11 @@ export default function KomunitasPage() {
   };
 
   return (
-    <div className="min-h-full bg-[#f4f6fc] selection:bg-[#1B9981]/20">
+    <div className="min-h-full bg-[#f4f6fc] selection:bg-[#2a9d8f]/20">
       {/* Header — Sticky 3D Neumorphism */}
       <div className="sticky top-0 z-50 px-6 pt-5 pb-5 bg-[#f4f6fc]/95 backdrop-blur-xl border-b border-white shadow-3d rounded-b-[2rem] shrink-0 mb-4">
         <div className="flex items-center gap-3.5">
-          <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#00B894] to-[#00D4AA] flex items-center justify-center shrink-0 bubble-3d text-white">
+          <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#00B894] to-[#4fd1c5] flex items-center justify-center shrink-0 bubble-3d text-white">
             <Megaphone className="w-7 h-7 text-white drop-shadow-md" strokeWidth={2.5} />
           </div>
           <div>
@@ -132,7 +132,7 @@ export default function KomunitasPage() {
               <p className="text-slate-400 text-[12px] font-medium mt-1 text-3d">Tantangan Isyarat Hijaiyah</p>
             </div>
             <Link href="/app/ranking" className="w-10 h-10 rounded-[14px] flex items-center justify-center shadow-3d shadow-3d-hover shadow-3d-active shrink-0 transition-transform">
-              <ChevronRight className="w-5 h-5 text-[#1B9981]" strokeWidth={3} />
+              <ChevronRight className="w-5 h-5 text-[#2a9d8f]" strokeWidth={3} />
             </Link>
           </div>
 
@@ -171,7 +171,7 @@ export default function KomunitasPage() {
                     <span className="flex-1 min-w-0 text-[15px] font-bold text-slate-700 truncate text-3d">
                       {entry.userName}
                     </span>
-                    <span className="text-[15px] font-black text-[#1B9981] shrink-0 text-3d">{entry.score}</span>
+                    <span className="text-[15px] font-black text-[#2a9d8f] shrink-0 text-3d">{entry.score}</span>
                   </div>
                 );
               })}

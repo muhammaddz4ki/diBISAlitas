@@ -22,24 +22,24 @@ import Navbar from "@/components/Navbar";
 
 export default function BiPantauDetailPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-emerald-50/60 dark:from-black dark:to-[#1B9981]/20 text-slate-800 dark:text-slate-200 selection:bg-[#1B9981]/20">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-emerald-50/60 dark:from-black dark:to-[#2a9d8f]/20 text-slate-800 dark:text-slate-200 selection:bg-[#2a9d8f]/20">
       <Navbar />
 
       {/* Hero */}
       <section className="pt-32 pb-16 px-4 sm:px-6 relative overflow-visible">
-        <div className="absolute top-10 left-1/2 -translate-x-1/2 w-[400px] h-[200px]  bg-[#1B9981]/10 dark:bg-[#1B9981]/20  blur-3xl rounded-full pointer-events-none" />
+        <div className="absolute top-10 left-1/2 -translate-x-1/2 w-[400px] h-[200px]  bg-[#2a9d8f]/10 dark:bg-[#2a9d8f]/20  blur-3xl rounded-full pointer-events-none" />
 
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center min-h-[60vh]">
             {/* Left: Info */}
             <div className="lg:col-span-7 space-y-6 relative z-10">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#1B9981]/10 dark:bg-[#1B9981]/20 border border-[#1B9981]/20 dark:border-[#1B9981]/30 text-[#1B9981] dark:text-[#2DD4BF] text-xs font-bold uppercase tracking-wider">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#2a9d8f]/10 dark:bg-[#2a9d8f]/20 border border-[#2a9d8f]/20 dark:border-[#2a9d8f]/30 text-[#2a9d8f] dark:text-[#2DD4BF] text-xs font-bold uppercase tracking-wider">
                 <BarChart className="w-4 h-4" /> Command Center &amp; Analisis GIS Kota
               </div>
 
               <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight text-slate-900 dark:text-white leading-[1.05]">
                 BiPANTAU: Manajemen <br />
-                <span className="text-[#1B9981] dark:text-[#2DD4BF]">Aksesibilitas Kota</span> Terpadu
+                <span className="text-[#2a9d8f] dark:text-[#2DD4BF]">Aksesibilitas Kota</span> Terpadu
               </h1>
 
               <p className="text-slate-600 dark:text-slate-300 text-base sm:text-lg lg:text-xl leading-relaxed max-w-2xl font-light">
@@ -49,7 +49,7 @@ export default function BiPantauDetailPage() {
               <div className="flex flex-wrap gap-4 pt-2">
                 <Link
                   href="/admin/rintangan?demo=true"
-                  className="px-8 py-4 rounded-full bg-[#1B9981] text-white font-extrabold text-sm hover:bg-[#168C74] transition-all shadow-lg shadow-[#1B9981]/20 flex items-center gap-2"
+                  className="px-8 py-4 rounded-full bg-[#2a9d8f] text-white font-extrabold text-sm hover:bg-[#1e7b6d] transition-all shadow-lg shadow-[#2a9d8f]/20 flex items-center gap-2"
                 >
                   <Zap className="w-4 h-4 fill-current" />
                   Buka Dashboard BiPANTAU
@@ -110,7 +110,7 @@ export default function BiPantauDetailPage() {
               className="order-2 lg:order-1 relative flex items-center justify-center lg:justify-start"
               style={{ perspective: "1200px" }}
             >
-              <div className="absolute w-[40%] h-[60%]  bg-[#1B9981]/10 dark:bg-[#1B9981]/15  blur-[70px] rounded-full top-1/2 left-[40%] -translate-x-1/2 -translate-y-1/2" />
+              <div className="absolute w-[40%] h-[60%]  bg-[#2a9d8f]/10 dark:bg-[#2a9d8f]/15  blur-[70px] rounded-full top-1/2 left-[40%] -translate-x-1/2 -translate-y-1/2" />
               <div 
                 className="relative w-[270px] sm:w-[310px] lg:w-[340px] aspect-[9/18.5] mx-auto bg-slate-200 dark:bg-[#0a0a0a] rounded-[1.75rem] md:rounded-[2.25rem] border-[6px] md:border-[8px] border-slate-300 dark:border-[#1a1a1a] overflow-hidden flex flex-col items-center justify-center group transform-gpu preserve-3d transition-colors duration-300"
                 style={{
@@ -125,7 +125,7 @@ export default function BiPantauDetailPage() {
                 <span className="text-slate-400 dark:text-slate-600 font-medium text-xs text-center px-4">Screenshot: Peta Pengguna (Mobile)</span>
                 <img src="/images/bipantau-mobile-map.jpg" alt="BiPANTAU Mobile Map" className="absolute inset-0 w-full h-full object-cover" onError={(e) => (e.currentTarget.style.display = 'none')} />
                 
-                <div className="absolute inset-0 bg-gradient-to-br from-slate-100 via-slate-200 to-[#1B9981]/20 dark:from-[#0a0e17] dark:via-[#111827] dark:to-[#1B9981]/30 -z-10" />
+                <div className="absolute inset-0 bg-gradient-to-br from-slate-100 via-slate-200 to-[#2a9d8f]/20 dark:from-[#0a0e17] dark:via-[#111827] dark:to-[#2a9d8f]/30 -z-10" />
                 <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent pointer-events-none" />
               </div>
             </motion.div>
@@ -142,7 +142,7 @@ export default function BiPantauDetailPage() {
               </span>
               <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.5rem] font-black leading-[1.05] tracking-tight text-slate-900 dark:text-white">
                 Navigasi Kota <br />
-                <em className="font-black italic text-[#1B9981] dark:text-[#2DD4BF]">
+                <em className="font-black italic text-[#2a9d8f] dark:text-[#2DD4BF]">
                   tanpa hambatan tak terduga.
                 </em>
               </h2>
@@ -170,7 +170,7 @@ export default function BiPantauDetailPage() {
               </span>
               <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.5rem] font-black leading-[1.05] tracking-tight text-slate-900 dark:text-white">
                 Laporkan Rintangan{" "}
-                <em className="font-black italic text-[#1B9981] dark:text-[#2DD4BF]">
+                <em className="font-black italic text-[#2a9d8f] dark:text-[#2DD4BF]">
                   dengan bukti foto langsung.
                 </em>
               </h2>
@@ -187,7 +187,7 @@ export default function BiPantauDetailPage() {
               className="relative flex items-center justify-center lg:justify-end"
               style={{ perspective: "1200px" }}
             >
-              <div className="absolute w-[40%] h-[60%]  bg-[#1B9981]/10 dark:bg-[#1B9981]/15  blur-[70px] rounded-full top-1/2 left-[60%] -translate-x-1/2 -translate-y-1/2" />
+              <div className="absolute w-[40%] h-[60%]  bg-[#2a9d8f]/10 dark:bg-[#2a9d8f]/15  blur-[70px] rounded-full top-1/2 left-[60%] -translate-x-1/2 -translate-y-1/2" />
               <div 
                 className="relative w-[270px] sm:w-[310px] lg:w-[340px] aspect-[9/18.5] mx-auto bg-slate-200 dark:bg-[#0a0a0a] rounded-[1.75rem] md:rounded-[2.25rem] border-[6px] md:border-[8px] border-slate-300 dark:border-[#1a1a1a] overflow-hidden flex flex-col items-center justify-center group transform-gpu preserve-3d transition-colors duration-300"
                 style={{
@@ -202,7 +202,7 @@ export default function BiPantauDetailPage() {
                 <span className="text-slate-400 dark:text-slate-600 font-medium text-xs text-center px-4">Screenshot: Tambah Laporan (Mobile)</span>
                 <img src="/images/bipantau-mobile-report.jpg" alt="BiPANTAU Report Screen" className="absolute inset-0 w-full h-full object-cover" onError={(e) => (e.currentTarget.style.display = 'none')} />
                 
-                <div className="absolute inset-0 bg-gradient-to-bl from-slate-100 via-slate-200 to-[#1B9981]/20 dark:from-[#0a0e17] dark:via-[#111827] dark:to-[#1B9981]/30 -z-10" />
+                <div className="absolute inset-0 bg-gradient-to-bl from-slate-100 via-slate-200 to-[#2a9d8f]/20 dark:from-[#0a0e17] dark:via-[#111827] dark:to-[#2a9d8f]/30 -z-10" />
                 <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent pointer-events-none" />
               </div>
             </motion.div>
@@ -219,7 +219,7 @@ export default function BiPantauDetailPage() {
             </span>
             <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.5rem] font-black leading-[1.05] tracking-tight text-slate-900 dark:text-white">
               Tinjauan Makro Kota <br />
-              <em className="font-black italic text-[#1B9981] dark:text-[#2DD4BF]">
+              <em className="font-black italic text-[#2a9d8f] dark:text-[#2DD4BF]">
                 pada satu layar dashboard komprehensif.
               </em>
             </h2>
@@ -236,7 +236,7 @@ export default function BiPantauDetailPage() {
             className="flex justify-center relative z-10 w-full"
             style={{ perspective: "1500px" }}
           >
-            <div className="absolute w-[80%] h-[80%] bg-[#1B9981]/15 dark:bg-[#1B9981]/20 blur-[120px] rounded-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
+            <div className="absolute w-[80%] h-[80%] bg-[#2a9d8f]/15 dark:bg-[#2a9d8f]/20 blur-[120px] rounded-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
             
             {/* Laptop Screen Mockup Frame */}
             <div 
@@ -254,7 +254,7 @@ export default function BiPantauDetailPage() {
               </span>
               <img src="/images/bipantau-laptop.jpg" alt="BiPANTAU Admin Dashboard" className="absolute inset-0 w-full h-full object-cover" onError={(e) => (e.currentTarget.style.display = 'none')} />
               
-              <div className="absolute inset-0 bg-gradient-to-tr from-slate-100 via-slate-200 to-[#1B9981]/10 dark:from-[#0a0e17] dark:via-[#111827] dark:to-[#1B9981]/20 -z-10" />
+              <div className="absolute inset-0 bg-gradient-to-tr from-slate-100 via-slate-200 to-[#2a9d8f]/10 dark:from-[#0a0e17] dark:via-[#111827] dark:to-[#2a9d8f]/20 -z-10" />
               <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent pointer-events-none z-10" />
             </div>
           </motion.div>
@@ -273,7 +273,7 @@ export default function BiPantauDetailPage() {
           <div className="flex flex-wrap justify-center gap-4">
             <Link
               href="/admin/rintangan?demo=true"
-              className="px-8 py-4 rounded-full bg-[#1B9981] text-white font-extrabold text-sm hover:bg-[#168C74] shadow-lg shadow-[#1B9981]/20 hover:shadow-[#1B9981]/40 transition-all"
+              className="px-8 py-4 rounded-full bg-[#2a9d8f] text-white font-extrabold text-sm hover:bg-[#1e7b6d] shadow-lg shadow-[#2a9d8f]/20 hover:shadow-[#2a9d8f]/40 transition-all"
             >
               Masuk Dashboard Admin
             </Link>

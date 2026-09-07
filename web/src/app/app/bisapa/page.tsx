@@ -133,7 +133,7 @@ export default function BiSapaPage() {
 
   return (
     <div 
-      className={`flex flex-col flex-1 w-full h-full bg-[#f4f6fc] font-sans ${colorfulMode ? "selection:bg-sky-500/20" : "selection:bg-[#1B9981]/20"}`}
+      className={`flex flex-col flex-1 w-full h-full bg-[#f4f6fc] font-sans ${colorfulMode ? "selection:bg-sky-500/20" : "selection:bg-[#2a9d8f]/20"}`}
       onClick={() => {
         if (showCustomKeyboard) setShowCustomKeyboard(false);
       }}

@@ -217,12 +217,12 @@ export default function PetaMapComponent({ reports, onDetailClick }: PetaMapProp
                     </div>
                   </div>
                   <div className="flex items-center justify-between mt-1 pt-2 border-t border-slate-100">
-                    <div className="bg-[#1B9981]/10 text-[#1B9981] px-2 py-0.5 rounded-md text-[10px] font-bold">
+                    <div className="bg-[#2a9d8f]/10 text-[#2a9d8f] px-2 py-0.5 rounded-md text-[10px] font-bold">
                       {formatDate(r.createdAt)}
                     </div>
                     <button
                       onClick={() => onDetailClick(r.id)}
-                      className="bg-[#1B9981] hover:bg-[#00D4AA] text-white text-[10px] font-bold px-3 py-1.5 rounded-lg flex items-center gap-1 shadow-sm active:scale-95 transition-all"
+                      className="bg-[#2a9d8f] hover:bg-[#4fd1c5] text-white text-[10px] font-bold px-3 py-1.5 rounded-lg flex items-center gap-1 shadow-sm active:scale-95 transition-all"
                     >
                       Detail <ChevronRight className="w-3 h-3" />
                     </button>

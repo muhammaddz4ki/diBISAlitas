@@ -21,10 +21,10 @@ export default function BisindoSignWebScreen() {
   );
 
   // Menentukan warna aksen berdasarkan tipe deteksi (Kata vs Huruf)
-  const brandColor = detectionResult?.label.isWord ? "#0984E3" : "#1B9981";
+  const brandColor = detectionResult?.label.isWord ? "#0984E3" : "#2a9d8f";
 
   return (
-    <div className="min-h-screen bg-slate-900 flex items-center justify-center font-sans selection:bg-[#1B9981]/20">
+    <div className="min-h-screen bg-slate-900 flex items-center justify-center font-sans selection:bg-[#2a9d8f]/20">
       <div className="w-full max-w-[450px] h-screen sm:h-[850px] bg-black sm:rounded-[2.5rem] sm:shadow-2xl relative overflow-hidden flex flex-col sm:border-[8px] sm:border-slate-900">
 
         {/* Modul Kamera Terisolasi (berada di lapisan paling bawah) */}
@@ -113,7 +113,7 @@ export default function BisindoSignWebScreen() {
                 >
                   {isModelLoading ? (
                     <>
-                      <div className="w-10 h-10 border-4 border-[#1B9981]/20 border-t-[#1B9981] rounded-full animate-spin mb-4 shadow-sm" />
+                      <div className="w-10 h-10 border-4 border-[#2a9d8f]/20 border-t-[#2a9d8f] rounded-full animate-spin mb-4 shadow-sm" />
                       <span className="text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-1 text-3d">
                         Sistem AI
                       </span>
@@ -124,8 +124,8 @@ export default function BisindoSignWebScreen() {
                   ) : (
                     <>
                       <div className="relative flex h-10 w-10 items-center justify-center mb-3">
-                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#1B9981] opacity-40"></span>
-                        <Scan className="relative w-6 h-6 text-[#1B9981] drop-shadow-md" strokeWidth={2.5} />
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#2a9d8f] opacity-40"></span>
+                        <Scan className="relative w-6 h-6 text-[#2a9d8f] drop-shadow-md" strokeWidth={2.5} />
                       </div>
                       <span className="text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-1 text-3d">
                         Status

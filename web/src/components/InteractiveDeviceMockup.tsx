@@ -145,7 +145,7 @@ export default function InteractiveDeviceMockup({
             onClick={() => setPlayMode("video")}
             className={`px-3 py-1 rounded-full transition-all flex items-center gap-1.5 ${
               playMode === "video"
-                ? "bg-white dark:bg-[#1B9981] text-slate-900 dark:text-white shadow-xs"
+                ? "bg-white dark:bg-[#2a9d8f] text-slate-900 dark:text-white shadow-xs"
                 : "text-slate-500 hover:text-slate-900 dark:hover:text-white"
             }`}
           >
@@ -157,7 +157,7 @@ export default function InteractiveDeviceMockup({
             onClick={() => setPlayMode("interactive")}
             className={`px-3 py-1 rounded-full transition-all flex items-center gap-1.5 ${
               playMode === "interactive"
-                ? "bg-white dark:bg-[#1B9981] text-slate-900 dark:text-white shadow-xs"
+                ? "bg-white dark:bg-[#2a9d8f] text-slate-900 dark:text-white shadow-xs"
                 : "text-slate-500 hover:text-slate-900 dark:hover:text-white"
             }`}
           >
@@ -172,7 +172,7 @@ export default function InteractiveDeviceMockup({
         {/* Dynamic Island Pill with camera lens */}
         <div className="absolute top-5 left-1/2 -translate-x-1/2 w-28 h-5 bg-black rounded-full z-40 flex items-center justify-between px-3 shadow-sm border border-white/10">
           <span className="w-2 h-2 rounded-full bg-slate-800" />
-          <span className="w-1.5 h-1.5 rounded-full bg-[#1B9981]" />
+          <span className="w-1.5 h-1.5 rounded-full bg-[#2a9d8f]" />
         </div>
 
         {/* Screen Display Container */}
@@ -183,7 +183,7 @@ export default function InteractiveDeviceMockup({
             <div className="flex items-center gap-1.5 text-[10px]">
               <span>5G</span>
               <span className="w-4 h-2 border border-slate-400 rounded-sm p-0.5 flex">
-                <span className="h-full w-3/4 bg-[#1B9981] rounded-2xs" />
+                <span className="h-full w-3/4 bg-[#2a9d8f] rounded-2xs" />
               </span>
             </div>
           </div>
@@ -205,7 +205,7 @@ export default function InteractiveDeviceMockup({
                   <div className="text-[10px] font-bold text-white uppercase tracking-wider">
                     {activeFeature === "bipantau" ? "Peta GIS" : activeFeature} Live
                   </div>
-                  <span className="w-2 h-2 rounded-full bg-[#1B9981] animate-pulse" />
+                  <span className="w-2 h-2 rounded-full bg-[#2a9d8f] animate-pulse" />
                 </div>
               </div>
             ) : (
@@ -317,12 +317,12 @@ export default function InteractiveDeviceMockup({
                   {/* Top Bar */}
                   <div className="flex items-center justify-between pb-1 border-b border-slate-200">
                     <div className="flex items-center gap-2">
-                      <div className="w-7 h-7 rounded-xl bg-[#1B9981] flex items-center justify-center text-white font-black text-xs">
+                      <div className="w-7 h-7 rounded-xl bg-[#2a9d8f] flex items-center justify-center text-white font-black text-xs">
                         <BarChart className="w-4 h-4" />
                       </div>
                       <div>
                         <h4 className="font-extrabold text-xs text-slate-900 leading-tight">BiPANTAU Live</h4>
-                        <p className="text-[9px] text-[#1B9981] font-semibold">Command Center Pemda</p>
+                        <p className="text-[9px] text-[#2a9d8f] font-semibold">Command Center Pemda</p>
                       </div>
                     </div>
                     <span className="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 text-[9px] font-bold">
@@ -335,11 +335,11 @@ export default function InteractiveDeviceMockup({
                     <div
                       className="absolute inset-0 opacity-20"
                       style={{
-                        backgroundImage: "radial-gradient(circle, #00D4AA 1px, transparent 1px)",
+                        backgroundImage: "radial-gradient(circle, #4fd1c5 1px, transparent 1px)",
                         backgroundSize: "14px 14px",
                       }}
                     />
-                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 rounded-full border border-[#00D4AA]/40 animate-ping" />
+                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 rounded-full border border-[#4fd1c5]/40 animate-ping" />
 
                     <div className="absolute top-3 left-4 flex items-center gap-1 bg-rose-500 text-white text-[8px] font-bold px-1.5 py-0.5 rounded-md shadow-md animate-bounce">
                       <AlertTriangle className="w-2.5 h-2.5" /> Guiding Block Rusak
@@ -350,7 +350,7 @@ export default function InteractiveDeviceMockup({
 
                     <div className="relative z-10 flex items-center justify-between text-[9px] text-slate-300">
                       <span>Kawasan Sudirman - Thamrin</span>
-                      <span className="font-mono text-[#00D4AA]">Akurasi GIS 99.2%</span>
+                      <span className="font-mono text-[#4fd1c5]">Akurasi GIS 99.2%</span>
                     </div>
                   </div>
 
@@ -376,9 +376,9 @@ export default function InteractiveDeviceMockup({
                   </div>
 
                   {/* Action */}
-                  <div className="bg-[#1B9981]/10 rounded-xl p-2 border border-[#1B9981]/20 flex items-center justify-between text-[10px] font-bold text-[#1B9981]">
+                  <div className="bg-[#2a9d8f]/10 rounded-xl p-2 border border-[#2a9d8f]/20 flex items-center justify-between text-[10px] font-bold text-[#2a9d8f]">
                     <span>Moderasi Otomatis AI</span>
-                    <span className="bg-[#1B9981] text-white px-2 py-0.5 rounded-lg text-[9px]">Aktif</span>
+                    <span className="bg-[#2a9d8f] text-white px-2 py-0.5 rounded-lg text-[9px]">Aktif</span>
                   </div>
                 </motion.div>
               )}
@@ -557,12 +557,12 @@ export default function InteractiveDeviceMockup({
                   {/* Top Bar */}
                   <div className="flex items-center justify-between pb-1 border-b border-emerald-100">
                     <div className="flex items-center gap-2">
-                      <div className="w-7 h-7 rounded-xl bg-[#1B9981] flex items-center justify-center text-white font-black text-xs">
+                      <div className="w-7 h-7 rounded-xl bg-[#2a9d8f] flex items-center justify-center text-white font-black text-xs">
                         <GraduationCap className="w-4 h-4" />
                       </div>
                       <div>
                         <h4 className="font-extrabold text-xs text-slate-900 leading-tight">BiPINTAR Isyarat</h4>
-                        <p className="text-[9px] text-[#1B9981] font-semibold">ONNX YOLOv8 Vision</p>
+                        <p className="text-[9px] text-[#2a9d8f] font-semibold">ONNX YOLOv8 Vision</p>
                       </div>
                     </div>
                     <span className="px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 text-[9px] font-extrabold flex items-center gap-1">
@@ -579,9 +579,9 @@ export default function InteractiveDeviceMockup({
                     </div>
 
                     {/* Hand Bounding Box Target */}
-                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-24 rounded-2xl border-2 border-dashed border-[#00D4AA] flex flex-col items-center justify-center bg-[#00D4AA]/10">
-                      <Hand className="w-8 h-8 text-[#00D4AA] animate-pulse mb-1" />
-                      <span className="text-[9px] font-black bg-[#00D4AA] text-slate-950 px-1.5 py-0.2 rounded font-mono">
+                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-24 rounded-2xl border-2 border-dashed border-[#4fd1c5] flex flex-col items-center justify-center bg-[#4fd1c5]/10">
+                      <Hand className="w-8 h-8 text-[#4fd1c5] animate-pulse mb-1" />
+                      <span className="text-[9px] font-black bg-[#4fd1c5] text-slate-950 px-1.5 py-0.2 rounded font-mono">
                         Huruf '{pintarGesture.letter}' ({pintarGesture.conf}%)
                       </span>
                     </div>
@@ -681,7 +681,7 @@ export default function InteractiveDeviceMockup({
           <div className="h-12 bg-white/95 backdrop-blur-md border-t border-slate-200 px-4 flex items-center justify-around z-30 shadow-lg">
             {[
               { key: "bisafe" as FeatureKey, icon: ShieldAlert, color: "text-rose-500" },
-              { key: "bipantau" as FeatureKey, icon: BarChart, color: "text-[#1B9981]" },
+              { key: "bipantau" as FeatureKey, icon: BarChart, color: "text-[#2a9d8f]" },
               { key: "bisapa" as FeatureKey, icon: MessageCircle, color: "text-sky-500" },
               { key: "bibaca" as FeatureKey, icon: BookOpen, color: "text-purple-500" },
               { key: "bipintar" as FeatureKey, icon: GraduationCap, color: "text-emerald-500" },

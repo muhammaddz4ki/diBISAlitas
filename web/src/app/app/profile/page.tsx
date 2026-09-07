@@ -151,7 +151,7 @@ export default function ProfilePage() {
   if (loading) {
     return (
       <div className="min-h-[500px] flex items-center justify-center bg-white">
-        <div className="w-8 h-8 border-4 border-[#1B9981]/30 border-t-[#1B9981] rounded-full animate-spin"></div>
+        <div className="w-8 h-8 border-4 border-[#2a9d8f]/30 border-t-[#2a9d8f] rounded-full animate-spin"></div>
       </div>
     );
   }
@@ -159,7 +159,7 @@ export default function ProfilePage() {
   const initial = (user?.displayName || "Pengguna").charAt(0).toUpperCase() || "P";
 
   return (
-    <div className="min-h-full bg-[#f4f6fc] selection:bg-[#1B9981]/20 flex flex-col relative">
+    <div className="min-h-full bg-[#f4f6fc] selection:bg-[#2a9d8f]/20 flex flex-col relative">
 
       {/* Minimalist iOS-like Toast */}
       <AnimatePresence>
@@ -188,10 +188,10 @@ export default function ProfilePage() {
       <div className="sticky top-0 z-50 px-6 pt-5 pb-5 bg-[#f4f6fc]/95 backdrop-blur-xl border-b border-white shadow-3d rounded-b-[2rem] shrink-0 mb-4">
         <div className="flex items-center gap-3.5">
           <div className="relative shrink-0">
-            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#00B894] to-[#00D4AA] flex items-center justify-center shadow-[0_4px_8px_rgba(0,184,148,0.3)] border border-white bubble-3d">
+            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#00B894] to-[#4fd1c5] flex items-center justify-center shadow-[0_4px_8px_rgba(0,184,148,0.3)] border border-white bubble-3d">
               <span className="text-[22px] font-black text-white drop-shadow-md">{initial}</span>
             </div>
-            <div className="absolute -bottom-1.5 -right-1.5 w-6 h-6 bg-gradient-to-br from-[#1B9981] to-[#00D4AA] rounded-lg shadow-sm border-[1.5px] border-white flex items-center justify-center">
+            <div className="absolute -bottom-1.5 -right-1.5 w-6 h-6 bg-gradient-to-br from-[#2a9d8f] to-[#4fd1c5] rounded-lg shadow-sm border-[1.5px] border-white flex items-center justify-center">
               <ShieldCheck className="w-3 h-3 text-white drop-shadow-md" strokeWidth={3} />
             </div>
           </div>
@@ -224,7 +224,7 @@ export default function ProfilePage() {
                   type="text"
                   value={displayName}
                   onChange={(e) => setDisplayName(e.target.value)}
-                  className="w-full bg-[#f4f6fc] border border-white rounded-[16px] px-4 py-3.5 text-slate-800 font-semibold text-[14px] focus:outline-none focus:ring-2 focus:ring-[#1B9981]/30 transition-all placeholder:text-slate-400 placeholder:font-medium shadow-[inset_3px_3px_8px_rgba(0,0,0,0.05),_inset_-4px_-4px_10px_rgba(255,255,255,1)]"
+                  className="w-full bg-[#f4f6fc] border border-white rounded-[16px] px-4 py-3.5 text-slate-800 font-semibold text-[14px] focus:outline-none focus:ring-2 focus:ring-[#2a9d8f]/30 transition-all placeholder:text-slate-400 placeholder:font-medium shadow-[inset_3px_3px_8px_rgba(0,0,0,0.05),_inset_-4px_-4px_10px_rgba(255,255,255,1)]"
                   placeholder="Masukkan nama lengkap"
                 />
               </div>
@@ -236,7 +236,7 @@ export default function ProfilePage() {
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full bg-[#f4f6fc] border border-white rounded-[16px] px-4 py-3.5 text-slate-800 font-semibold text-[14px] focus:outline-none focus:ring-2 focus:ring-[#1B9981]/30 transition-all placeholder:text-slate-400 placeholder:font-medium shadow-[inset_3px_3px_8px_rgba(0,0,0,0.05),_inset_-4px_-4px_10px_rgba(255,255,255,1)]"
+                  className="w-full bg-[#f4f6fc] border border-white rounded-[16px] px-4 py-3.5 text-slate-800 font-semibold text-[14px] focus:outline-none focus:ring-2 focus:ring-[#2a9d8f]/30 transition-all placeholder:text-slate-400 placeholder:font-medium shadow-[inset_3px_3px_8px_rgba(0,0,0,0.05),_inset_-4px_-4px_10px_rgba(255,255,255,1)]"
                   placeholder="Masukkan email aktif"
                 />
               </div>
@@ -253,7 +253,7 @@ export default function ProfilePage() {
                     type={showOldPassword ? "text" : "password"}
                     value={oldPassword}
                     onChange={(e) => setOldPassword(e.target.value)}
-                    className="w-full bg-[#f4f6fc] border border-white rounded-[16px] pl-4 pr-12 py-3.5 text-slate-800 font-semibold text-[14px] focus:outline-none focus:ring-2 focus:ring-[#1B9981]/30 transition-all placeholder:text-slate-300 shadow-[inset_3px_3px_8px_rgba(0,0,0,0.05),_inset_-4px_-4px_10px_rgba(255,255,255,1)]"
+                    className="w-full bg-[#f4f6fc] border border-white rounded-[16px] pl-4 pr-12 py-3.5 text-slate-800 font-semibold text-[14px] focus:outline-none focus:ring-2 focus:ring-[#2a9d8f]/30 transition-all placeholder:text-slate-300 shadow-[inset_3px_3px_8px_rgba(0,0,0,0.05),_inset_-4px_-4px_10px_rgba(255,255,255,1)]"
                     placeholder="••••••••"
                   />
                   <button
@@ -277,7 +277,7 @@ export default function ProfilePage() {
                     type={showNewPassword ? "text" : "password"}
                     value={newPassword}
                     onChange={(e) => setNewPassword(e.target.value)}
-                    className="w-full bg-[#f4f6fc] border border-white rounded-[16px] pl-4 pr-12 py-3.5 text-slate-800 font-semibold text-[14px] focus:outline-none focus:ring-2 focus:ring-[#1B9981]/30 transition-all placeholder:text-slate-400 placeholder:font-medium shadow-[inset_3px_3px_8px_rgba(0,0,0,0.05),_inset_-4px_-4px_10px_rgba(255,255,255,1)]"
+                    className="w-full bg-[#f4f6fc] border border-white rounded-[16px] pl-4 pr-12 py-3.5 text-slate-800 font-semibold text-[14px] focus:outline-none focus:ring-2 focus:ring-[#2a9d8f]/30 transition-all placeholder:text-slate-400 placeholder:font-medium shadow-[inset_3px_3px_8px_rgba(0,0,0,0.05),_inset_-4px_-4px_10px_rgba(255,255,255,1)]"
                     placeholder="Kosongkan jika tidak diganti"
                   />
                   <button
@@ -294,7 +294,7 @@ export default function ProfilePage() {
                 <button
                   type="submit"
                   disabled={saving}
-                  className="w-full bg-gradient-to-br from-[#1B9981] to-[#00D4AA] border-2 border-white disabled:opacity-50 text-white font-bold py-3.5 px-6 rounded-[16px] flex items-center justify-center gap-2 shadow-3d shadow-3d-hover shadow-3d-active transition-all duration-300 disabled:shadow-none -webkit-tap-highlight-color-transparent icon-3d"
+                  className="w-full bg-gradient-to-br from-[#2a9d8f] to-[#4fd1c5] border-2 border-white disabled:opacity-50 text-white font-bold py-3.5 px-6 rounded-[16px] flex items-center justify-center gap-2 shadow-3d shadow-3d-hover shadow-3d-active transition-all duration-300 disabled:shadow-none -webkit-tap-highlight-color-transparent icon-3d"
                 >
                   {saving ? (
                     <div className="w-5 h-5 border-[3px] border-white/30 border-t-white rounded-full animate-spin"></div>
@@ -319,7 +319,7 @@ export default function ProfilePage() {
             <div className="bg-transparent border border-white rounded-[24px] shadow-3d p-4 mb-4">
               <div className="flex items-center gap-4 mb-4">
                 <div className="w-14 h-14 rounded-[18px] bg-transparent shadow-[inset_2px_2px_5px_rgba(0,0,0,0.05),_inset_-3px_-3px_7px_rgba(255,255,255,1)] border border-white flex items-center justify-center shrink-0">
-                  <Type className="w-6 h-6 text-[#1B9981]" strokeWidth={2.5} />
+                  <Type className="w-6 h-6 text-[#2a9d8f]" strokeWidth={2.5} />
                 </div>
                 <div className="flex-1">
                   <p className="font-bold text-slate-800 text-[16px] tracking-tight mb-0.5 text-3d">Ukuran Teks</p>
@@ -335,7 +335,7 @@ export default function ProfilePage() {
                     aria-label={`Ukuran teks ${label}`}
                     className={`py-2.5 rounded-[16px] text-[13px] font-bold border transition-all ${
                       a11y.fontLevel === i
-                        ? "bg-gradient-to-br from-[#1B9981] to-[#00D4AA] text-white border-white shadow-3d icon-3d"
+                        ? "bg-gradient-to-br from-[#2a9d8f] to-[#4fd1c5] text-white border-white shadow-3d icon-3d"
                         : "bg-transparent text-slate-500 border-white shadow-3d shadow-3d-hover shadow-3d-active"
                     }`}
                   >
@@ -353,14 +353,14 @@ export default function ProfilePage() {
                 aria-label={a11y.highContrast ? "Nonaktifkan kontras tinggi" : "Aktifkan kontras tinggi"}
                 className="w-full flex items-center gap-4 p-4 transition-colors outline-none group rounded-[24px] shadow-3d-active"
               >
-                <div className={`w-14 h-14 rounded-[18px] flex items-center justify-center shrink-0 border border-white transition-all ${a11y.highContrast ? "bg-gradient-to-br from-[#1B9981] to-[#00D4AA] shadow-3d icon-3d" : "bg-transparent shadow-[inset_2px_2px_5px_rgba(0,0,0,0.05),_inset_-3px_-3px_7px_rgba(255,255,255,1)]"}`}>
+                <div className={`w-14 h-14 rounded-[18px] flex items-center justify-center shrink-0 border border-white transition-all ${a11y.highContrast ? "bg-gradient-to-br from-[#2a9d8f] to-[#4fd1c5] shadow-3d icon-3d" : "bg-transparent shadow-[inset_2px_2px_5px_rgba(0,0,0,0.05),_inset_-3px_-3px_7px_rgba(255,255,255,1)]"}`}>
                   <Contrast className={`w-6 h-6 ${a11y.highContrast ? "text-white" : "text-slate-400"}`} strokeWidth={2.5} />
                 </div>
                 <div className="flex-1 text-left py-0.5">
                   <p className="font-bold text-slate-800 text-[16px] tracking-tight mb-0.5 text-3d">Kontras Tinggi</p>
                   <p className="text-[12px] text-slate-500 leading-snug text-3d">{a11y.highContrast ? "Aktif — warna & teks dipertegas" : "Nonaktif — ketuk untuk mengaktifkan"}</p>
                 </div>
-                <div className={`relative w-[52px] h-[32px] rounded-full transition-all duration-300 shrink-0 border border-white ${a11y.highContrast ? "bg-gradient-to-br from-[#1B9981] to-[#00D4AA] shadow-[inset_2px_2px_5px_rgba(0,0,0,0.2)]" : "bg-[#f4f6fc] shadow-[inset_3px_3px_8px_rgba(0,0,0,0.05),_inset_-4px_-4px_10px_rgba(255,255,255,1)]"}`} aria-hidden="true">
+                <div className={`relative w-[52px] h-[32px] rounded-full transition-all duration-300 shrink-0 border border-white ${a11y.highContrast ? "bg-gradient-to-br from-[#2a9d8f] to-[#4fd1c5] shadow-[inset_2px_2px_5px_rgba(0,0,0,0.2)]" : "bg-[#f4f6fc] shadow-[inset_3px_3px_8px_rgba(0,0,0,0.05),_inset_-4px_-4px_10px_rgba(255,255,255,1)]"}`} aria-hidden="true">
                   <div className={`absolute top-1 w-[22px] h-[22px] rounded-full transition-transform duration-300 ${a11y.highContrast ? "translate-x-6 bg-white shadow-sm" : "translate-x-1 bg-slate-300 shadow-inner"}`} />
                 </div>
               </button>
@@ -374,14 +374,14 @@ export default function ProfilePage() {
                 aria-label={a11y.reduceMotion ? "Aktifkan kembali animasi" : "Kurangi animasi"}
                 className="w-full flex items-center gap-4 p-4 transition-colors outline-none group rounded-[24px] shadow-3d-active"
               >
-                <div className={`w-14 h-14 rounded-[18px] flex items-center justify-center shrink-0 border border-white transition-all ${a11y.reduceMotion ? "bg-gradient-to-br from-[#1B9981] to-[#00D4AA] shadow-3d icon-3d" : "bg-transparent shadow-[inset_2px_2px_5px_rgba(0,0,0,0.05),_inset_-3px_-3px_7px_rgba(255,255,255,1)]"}`}>
+                <div className={`w-14 h-14 rounded-[18px] flex items-center justify-center shrink-0 border border-white transition-all ${a11y.reduceMotion ? "bg-gradient-to-br from-[#2a9d8f] to-[#4fd1c5] shadow-3d icon-3d" : "bg-transparent shadow-[inset_2px_2px_5px_rgba(0,0,0,0.05),_inset_-3px_-3px_7px_rgba(255,255,255,1)]"}`}>
                   <Sparkles className={`w-6 h-6 ${a11y.reduceMotion ? "text-white" : "text-slate-400"}`} strokeWidth={2.5} />
                 </div>
                 <div className="flex-1 text-left py-0.5">
                   <p className="font-bold text-slate-800 text-[16px] tracking-tight mb-0.5 text-3d">Kurangi Animasi</p>
                   <p className="text-[12px] text-slate-500 leading-snug text-3d">{a11y.reduceMotion ? "Aktif — animasi diminimalkan" : "Nonaktif — ketuk untuk mengurangi gerak"}</p>
                 </div>
-                <div className={`relative w-[52px] h-[32px] rounded-full transition-all duration-300 shrink-0 border border-white ${a11y.reduceMotion ? "bg-gradient-to-br from-[#1B9981] to-[#00D4AA] shadow-[inset_2px_2px_5px_rgba(0,0,0,0.2)]" : "bg-[#f4f6fc] shadow-[inset_3px_3px_8px_rgba(0,0,0,0.05),_inset_-4px_-4px_10px_rgba(255,255,255,1)]"}`} aria-hidden="true">
+                <div className={`relative w-[52px] h-[32px] rounded-full transition-all duration-300 shrink-0 border border-white ${a11y.reduceMotion ? "bg-gradient-to-br from-[#2a9d8f] to-[#4fd1c5] shadow-[inset_2px_2px_5px_rgba(0,0,0,0.2)]" : "bg-[#f4f6fc] shadow-[inset_3px_3px_8px_rgba(0,0,0,0.05),_inset_-4px_-4px_10px_rgba(255,255,255,1)]"}`} aria-hidden="true">
                   <div className={`absolute top-1 w-[22px] h-[22px] rounded-full transition-transform duration-300 ${a11y.reduceMotion ? "translate-x-6 bg-white shadow-sm" : "translate-x-1 bg-slate-300 shadow-inner"}`} />
                 </div>
               </button>
@@ -395,14 +395,14 @@ export default function ProfilePage() {
                 aria-label={a11y.hapticFeedback ? "Nonaktifkan getaran" : "Aktifkan getaran"}
                 className="w-full flex items-center gap-4 p-4 transition-colors outline-none group rounded-[24px] shadow-3d-active"
               >
-                <div className={`w-14 h-14 rounded-[18px] flex items-center justify-center shrink-0 border border-white transition-all ${a11y.hapticFeedback ? "bg-gradient-to-br from-[#1B9981] to-[#00D4AA] shadow-3d icon-3d" : "bg-transparent shadow-[inset_2px_2px_5px_rgba(0,0,0,0.05),_inset_-3px_-3px_7px_rgba(255,255,255,1)]"}`}>
+                <div className={`w-14 h-14 rounded-[18px] flex items-center justify-center shrink-0 border border-white transition-all ${a11y.hapticFeedback ? "bg-gradient-to-br from-[#2a9d8f] to-[#4fd1c5] shadow-3d icon-3d" : "bg-transparent shadow-[inset_2px_2px_5px_rgba(0,0,0,0.05),_inset_-3px_-3px_7px_rgba(255,255,255,1)]"}`}>
                   <Activity className={`w-6 h-6 ${a11y.hapticFeedback ? "text-white" : "text-slate-400"}`} strokeWidth={2.5} />
                 </div>
                 <div className="flex-1 text-left py-0.5">
                   <p className="font-bold text-slate-800 text-[16px] tracking-tight mb-0.5 text-3d">Efek Getar (Haptic)</p>
                   <p className="text-[12px] text-slate-500 leading-snug text-3d">{a11y.hapticFeedback ? "Aktif — bergetar saat disentuh" : "Nonaktif — ketuk untuk mengaktifkan getaran"}</p>
                 </div>
-                <div className={`relative w-[52px] h-[32px] rounded-full transition-all duration-300 shrink-0 border border-white ${a11y.hapticFeedback ? "bg-gradient-to-br from-[#1B9981] to-[#00D4AA] shadow-[inset_2px_2px_5px_rgba(0,0,0,0.2)]" : "bg-[#f4f6fc] shadow-[inset_3px_3px_8px_rgba(0,0,0,0.05),_inset_-4px_-4px_10px_rgba(255,255,255,1)]"}`} aria-hidden="true">
+                <div className={`relative w-[52px] h-[32px] rounded-full transition-all duration-300 shrink-0 border border-white ${a11y.hapticFeedback ? "bg-gradient-to-br from-[#2a9d8f] to-[#4fd1c5] shadow-[inset_2px_2px_5px_rgba(0,0,0,0.2)]" : "bg-[#f4f6fc] shadow-[inset_3px_3px_8px_rgba(0,0,0,0.05),_inset_-4px_-4px_10px_rgba(255,255,255,1)]"}`} aria-hidden="true">
                   <div className={`absolute top-1 w-[22px] h-[22px] rounded-full transition-transform duration-300 ${a11y.hapticFeedback ? "translate-x-6 bg-white shadow-sm" : "translate-x-1 bg-slate-300 shadow-inner"}`} />
                 </div>
               </button>
@@ -424,7 +424,7 @@ export default function ProfilePage() {
                 className="w-full flex items-center gap-4 p-4 transition-colors -webkit-tap-highlight-color-transparent outline-none rounded-[24px] shadow-3d-active"
               >
                 {/* Icon */}
-                <div className={`w-14 h-14 rounded-[18px] flex items-center justify-center border border-white transition-all shrink-0 ${talkback.isEnabled ? "bg-gradient-to-br from-[#1B9981] to-[#00D4AA] shadow-3d icon-3d" : "bg-transparent shadow-[inset_2px_2px_5px_rgba(0,0,0,0.05),_inset_-3px_-3px_7px_rgba(255,255,255,1)]"
+                <div className={`w-14 h-14 rounded-[18px] flex items-center justify-center border border-white transition-all shrink-0 ${talkback.isEnabled ? "bg-gradient-to-br from-[#2a9d8f] to-[#4fd1c5] shadow-3d icon-3d" : "bg-transparent shadow-[inset_2px_2px_5px_rgba(0,0,0,0.05),_inset_-3px_-3px_7px_rgba(255,255,255,1)]"
                   }`}>
                   {talkback.isEnabled
                     ? <Volume2 className="w-6 h-6 text-white" strokeWidth={2.5} />
@@ -445,7 +445,7 @@ export default function ProfilePage() {
 
                 {/* iOS-Style Toggle Switch */}
                 <div
-                  className={`relative w-[52px] h-[32px] rounded-full transition-all duration-300 shrink-0 border border-white ${talkback.isEnabled ? "bg-gradient-to-br from-[#1B9981] to-[#00D4AA] shadow-[inset_2px_2px_5px_rgba(0,0,0,0.2)]" : "bg-[#f4f6fc] shadow-[inset_3px_3px_8px_rgba(0,0,0,0.05),_inset_-4px_-4px_10px_rgba(255,255,255,1)]"
+                  className={`relative w-[52px] h-[32px] rounded-full transition-all duration-300 shrink-0 border border-white ${talkback.isEnabled ? "bg-gradient-to-br from-[#2a9d8f] to-[#4fd1c5] shadow-[inset_2px_2px_5px_rgba(0,0,0,0.2)]" : "bg-[#f4f6fc] shadow-[inset_3px_3px_8px_rgba(0,0,0,0.05),_inset_-4px_-4px_10px_rgba(255,255,255,1)]"
                     }`}
                   aria-hidden="true"
                 >
@@ -463,11 +463,11 @@ export default function ProfilePage() {
                     initial={{ height: 0, opacity: 0 }}
                     animate={{ height: "auto", opacity: 1 }}
                     exit={{ height: 0, opacity: 0 }}
-                    className="overflow-hidden bg-[#1B9981]/5 border-t border-[#1B9981]/10"
+                    className="overflow-hidden bg-[#2a9d8f]/5 border-t border-[#2a9d8f]/10"
                   >
                     <div className="px-4 py-3 flex items-center gap-2.5">
-                      <span className="w-2 h-2 bg-[#1B9981] rounded-full animate-pulse shadow-[0_0_8px_rgba(27,153,129,0.6)] shrink-0"></span>
-                      <p className="text-[11px] font-bold tracking-wide text-[#1B9981]">
+                      <span className="w-2 h-2 bg-[#2a9d8f] rounded-full animate-pulse shadow-[0_0_8px_rgba(42,157,143,0.6)] shrink-0"></span>
+                      <p className="text-[11px] font-bold tracking-wide text-[#2a9d8f]">
                         Arahkan kursor/sentuh elemen layar untuk mendengarkan.
                       </p>
                     </div>

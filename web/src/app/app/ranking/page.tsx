@@ -29,15 +29,15 @@ export default function RankingPage() {
   const podiumRank = [2, 1, 3];
 
   const podiumColors = [
-    "from-[#1B9981] to-[#00D4AA]",
+    "from-[#2a9d8f] to-[#4fd1c5]",
     "from-amber-400 to-yellow-300",
-    "from-[#1B9981]/60 to-[#00D4AA]/60"
+    "from-[#2a9d8f]/60 to-[#4fd1c5]/60"
   ];
 
   const avatarRings = [
-    "border-[#00D4AA]",
+    "border-[#4fd1c5]",
     "border-amber-400",
-    "border-[#00D4AA]/60"
+    "border-[#4fd1c5]/60"
   ];
 
   const podiumH = ["h-[100px]", "h-[140px]", "h-[75px]"];
@@ -49,12 +49,12 @@ export default function RankingPage() {
   ];
 
   return (
-    <div className="min-h-full flex flex-col bg-[#1B9981]">
+    <div className="min-h-full flex flex-col bg-[#2a9d8f]">
 
       {/* Header — Sticky 3D Neumorphism (same as other pages) */}
       <div className="sticky top-0 z-50 px-5 pt-5 pb-5 bg-[#f4f6fc]/95 backdrop-blur-xl border-b border-white shadow-3d rounded-b-[2rem] shrink-0">
         <div className="flex items-center gap-3">
-          <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#1B9981] to-[#00D4AA] flex items-center justify-center shrink-0 bubble-3d text-white">
+          <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#2a9d8f] to-[#4fd1c5] flex items-center justify-center shrink-0 bubble-3d text-white">
             <Trophy className="w-7 h-7 text-white drop-shadow-md" strokeWidth={2.5} />
           </div>
           
@@ -78,7 +78,7 @@ export default function RankingPage() {
       </div>
 
       {/* ===== GREEN BG — covers everything below header ===== */}
-      <div className="flex-1 relative bg-gradient-to-b from-[#1B9981] via-[#00B894] to-[#00D4AA] overflow-hidden">
+      <div className="flex-1 relative bg-gradient-to-b from-[#2a9d8f] via-[#00B894] to-[#4fd1c5] overflow-hidden">
 
         {/* Decorative circles */}
         <div className="absolute top-[-40px] left-[-40px] w-[160px] h-[160px] rounded-full bg-white/5" />
@@ -103,7 +103,7 @@ export default function RankingPage() {
                     <div
                       className={`${avatarSizes[i]} rounded-full flex items-center justify-center overflow-hidden border-[3px] ${avatarRings[i]} bg-white shadow-lg`}
                     >
-                      <span className={`font-black ${podiumRank[i] === 1 ? "text-amber-500" : "text-[#1B9981]"}`}>
+                      <span className={`font-black ${podiumRank[i] === 1 ? "text-amber-500" : "text-[#2a9d8f]"}`}>
                         {entry.userName.charAt(0).toUpperCase()}
                       </span>
                     </div>
@@ -150,7 +150,7 @@ export default function RankingPage() {
           ) : entries.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-16 text-center px-8">
               <div className="w-20 h-20 rounded-full shadow-[inset_3px_3px_8px_rgba(0,0,0,0.05),_inset_-4px_-4px_10px_rgba(255,255,255,1)] border border-white flex items-center justify-center mb-4">
-                <Trophy className="w-9 h-9 text-[#1B9981]" strokeWidth={1.8} />
+                <Trophy className="w-9 h-9 text-[#2a9d8f]" strokeWidth={1.8} />
               </div>
               <h3 className="font-bold text-slate-800 text-[16px] mb-1 text-3d">Belum ada skor</h3>
               <p className="text-slate-400 text-[13px] max-w-[240px] leading-relaxed text-3d">
@@ -158,7 +158,7 @@ export default function RankingPage() {
               </p>
               <Link
                 href="/app/bipintar/quiz"
-                className="mt-5 px-6 py-3 rounded-2xl bg-[#1B9981] text-white font-bold text-[14px] active:scale-95 transition-transform shadow-[0_8px_16px_rgba(27,153,129,0.3)]"
+                className="mt-5 px-6 py-3 rounded-2xl bg-[#2a9d8f] text-white font-bold text-[14px] active:scale-95 transition-transform shadow-[0_8px_16px_rgba(42,157,143,0.3)]"
               >
                 Main Sekarang
               </Link>
@@ -169,7 +169,7 @@ export default function RankingPage() {
               <div className="px-5 pt-6 pb-5">
                 <Link
                   href="/app/bipintar/quiz"
-                  className="w-full flex items-center justify-center gap-2.5 py-4 rounded-[20px] bg-gradient-to-r from-[#1B9981] to-[#00D4AA] text-white font-black text-[15px] active:scale-[0.97] transition-all shadow-[0_8px_20px_rgba(27,153,129,0.35)]"
+                  className="w-full flex items-center justify-center gap-2.5 py-4 rounded-[20px] bg-gradient-to-r from-[#2a9d8f] to-[#4fd1c5] text-white font-black text-[15px] active:scale-[0.97] transition-all shadow-[0_8px_20px_rgba(42,157,143,0.35)]"
                 >
                   <Medal className="w-5 h-5 drop-shadow-sm" /> Ikut Tantangan
                 </Link>
@@ -190,7 +190,7 @@ export default function RankingPage() {
                     const rankBadgeColor = rank === 1
                       ? "bg-gradient-to-br from-amber-400 to-yellow-300 text-white"
                       : rank === 2
-                      ? "bg-gradient-to-br from-[#1B9981] to-[#00D4AA] text-white"
+                      ? "bg-gradient-to-br from-[#2a9d8f] to-[#4fd1c5] text-white"
                       : rank === 3
                       ? "bg-gradient-to-br from-[#7dd3c0] to-[#a7e8d8] text-white"
                       : "bg-[#f4f6fc] text-slate-400";
@@ -227,7 +227,7 @@ export default function RankingPage() {
                             : "bg-gradient-to-br from-slate-100 to-slate-50"
                         }`}>
                           <span className={`text-[15px] font-black ${
-                            rank === 1 ? "text-amber-500" : isTop3 ? "text-[#1B9981]" : "text-slate-400"
+                            rank === 1 ? "text-amber-500" : isTop3 ? "text-[#2a9d8f]" : "text-slate-400"
                           }`}>
                             {entry.userName.charAt(0).toUpperCase()}
                           </span>
@@ -253,7 +253,7 @@ export default function RankingPage() {
 
                         {/* Score */}
                         <div className="flex flex-col items-end shrink-0">
-                          <span className={`text-[16px] font-black ${rank === 1 ? "text-amber-500" : "text-[#1B9981]"}`}>
+                          <span className={`text-[16px] font-black ${rank === 1 ? "text-amber-500" : "text-[#2a9d8f]"}`}>
                             {entry.score.toLocaleString()}
                           </span>
                           <span className="text-[9px] font-bold text-slate-400 uppercase tracking-wider">poin</span>

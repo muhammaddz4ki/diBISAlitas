@@ -132,7 +132,7 @@ export default function BiPintarPage() {
         <section>
           <div className="flex items-center justify-between px-1 mb-3.5">
             <h2 className="font-extrabold text-slate-800 text-[17px] tracking-tight text-3d">Kelas &amp; Materi Pelatihan</h2>
-            <BookOpen className="w-5 h-5 text-[#1B9981] drop-shadow-sm" strokeWidth={2.5} />
+            <BookOpen className="w-5 h-5 text-[#2a9d8f] drop-shadow-sm" strokeWidth={2.5} />
           </div>
 
           {isLoading ? (
@@ -185,14 +185,14 @@ export default function BiPintarPage() {
                     </div>
 
                     <div className="flex flex-col justify-center flex-1 h-full py-1 min-w-0">
-                      <div className="inline-block px-2.5 py-1 bg-[#f4f6fc] border border-white shadow-[inset_2px_2px_4px_rgba(0,0,0,0.05),_inset_-2px_-2px_4px_rgba(255,255,255,1)] text-[#1B9981] text-[10px] font-extrabold rounded-md uppercase tracking-wider mb-2 w-max">
+                      <div className="inline-block px-2.5 py-1 bg-[#f4f6fc] border border-white shadow-[inset_2px_2px_4px_rgba(0,0,0,0.05),_inset_-2px_-2px_4px_rgba(255,255,255,1)] text-[#2a9d8f] text-[10px] font-extrabold rounded-md uppercase tracking-wider mb-2 w-max">
                         {course.category || "Umum"}
                       </div>
                       <h3 className="font-bold text-slate-800 text-[15px] leading-snug line-clamp-2 mb-2 group-active:text-slate-600 transition-colors text-3d">
                         {course.title || "Kursus Tanpa Judul"}
                       </h3>
                       <div className="flex items-center gap-1.5 text-slate-500 text-[11px] font-bold mt-auto">
-                        <Clock className="w-3.5 h-3.5 text-[#1B9981]" />
+                        <Clock className="w-3.5 h-3.5 text-[#2a9d8f]" />
                         <span>{course.duration || "Fleksibel"}</span>
                       </div>
                     </div>
@@ -214,7 +214,7 @@ export default function BiPintarPage() {
             {
               label: "Isyarat Hijaiyah",
               onClick: () => { setShowQuizModal(false); router.push("/app/bipintar/quiz?mode=hijaiyah"); },
-              color: "text-[#1B9981]",
+              color: "text-[#2a9d8f]",
               bgGradient: "bg-gradient-to-b from-[#2dd4bf] to-[#0f766e]",
               iconNode: <span className="text-[28px] font-bold font-serif leading-none relative top-[-3px] drop-shadow-md">ع</span>
             },

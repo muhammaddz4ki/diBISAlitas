@@ -14,7 +14,7 @@ export default function MobileMockupSection() {
             Aksesibilitas dalam Genggaman
           </span>
           <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-black text-slate-900 dark:text-white leading-[1.1]">
-            Pengalaman <span className="text-[#1B9981] dark:text-[#00D4AA] block mt-1 md:mt-2">Mobile</span>
+            Pengalaman <span className="text-[#2a9d8f] dark:text-[#4fd1c5] block mt-1 md:mt-2">Mobile</span>
           </h2>
         </div>
       </div>
@@ -87,7 +87,7 @@ function PhoneMockup({ id }: { id: string }) {
       {/* Screen Content Placeholder */}
       <div className="relative w-full h-full bg-slate-100 dark:bg-[#0a0a0a] overflow-hidden rounded-[1.8rem] md:rounded-[2.2rem]">
         {/* Placeholder Glow */}
-        <div className="absolute top-[20%] left-[20%] w-[100px] h-[100px] bg-[#1B9981]/20 blur-3xl rounded-full" />
+        <div className="absolute top-[20%] left-[20%] w-[100px] h-[100px] bg-[#2a9d8f]/20 blur-3xl rounded-full" />
         
         {/* Replace this img src with actual screenshot paths later */}
         <img 
