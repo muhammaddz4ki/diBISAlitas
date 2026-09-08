@@ -29,18 +29,10 @@ export default function DemoHubPage() {
       <div className="absolute bottom-[-5%] left-[15%] w-[400px] md:w-[700px] h-[400px] md:h-[600px] bg-teal-500/25 dark:bg-teal-500/10 blur-[100px] md:blur-[150px] rounded-full pointer-events-none -z-10" />
 
       {/* Hero Header */}
-      <section className="pt-32 pb-10 px-4 sm:px-6 relative overflow-visible">
+      <section className="pt-44 pb-10 px-4 sm:px-6 relative overflow-visible">
         <div className="absolute top-16 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-gradient-to-tr from-[#2a9d8f]/15 via-[#4fd1c5]/10 to-transparent blur-3xl rounded-full pointer-events-none" />
 
         <div className="max-w-7xl mx-auto text-center relative z-10 space-y-4">
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#2a9d8f]/10 dark:bg-[#2a9d8f]/20 border border-[#2a9d8f]/20 text-[#2a9d8f] dark:text-[#4fd1c5] text-xs font-bold uppercase tracking-wider"
-          >
-            <Unlock className="w-3.5 h-3.5" /> Akses Demo Instan Tanpa Hambatan
-          </motion.div>
-
           <motion.h1 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
