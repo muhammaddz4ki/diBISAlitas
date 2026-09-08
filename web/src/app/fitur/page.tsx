@@ -12,7 +12,8 @@ import {
   BookOpen,
   Gamepad2,
   Navigation,
-  Layers
+  Layers,
+  ArrowRight
 } from "lucide-react";
 import Navbar from "@/components/Navbar";
 
@@ -166,201 +167,209 @@ const DETAILED_FEATURES = [
 ];
 
 export default function FiturOverviewPage() {
-  const [selected, setSelected] = useState<FeatureKey>("bisafe");
-  const current = DETAILED_FEATURES.find((f) => f.key === selected) || DETAILED_FEATURES[0];
+  const [activeIndex, setActiveIndex] = useState(0);
+  const activeFeature = DETAILED_FEATURES[activeIndex];
+  const ActiveIcon = activeFeature.icon;
+
+  const featureTheme = [
+    { gradient: "from-rose-500 to-rose-700", textGradient: "from-rose-500 to-rose-700 dark:from-rose-400 dark:to-rose-300" },
+    { gradient: "from-[#2a9d8f] to-[#1e7b6d]", textGradient: "from-[#2a9d8f] to-[#1e7b6d] dark:from-[#4fd1c5] dark:to-[#2a9d8f]" },
+    { gradient: "from-blue-500 to-blue-700", textGradient: "from-blue-500 to-blue-700 dark:from-blue-400 dark:to-blue-300" },
+    { gradient: "from-purple-500 to-purple-700", textGradient: "from-purple-500 to-purple-700 dark:from-purple-400 dark:to-purple-300" },
+    { gradient: "from-orange-500 to-orange-700", textGradient: "from-orange-500 to-orange-700 dark:from-orange-400 dark:to-orange-300" },
+    { gradient: "from-[#2a9d8f] to-[#1e7b6d]", textGradient: "from-[#2a9d8f] to-[#1e7b6d] dark:from-[#4fd1c5] dark:to-[#2a9d8f]" },
+  ];
+
+  const theme = featureTheme[activeIndex];
 
   return (
-    <div className="min-h-screen bg-[#FDFEFE] dark:bg-black text-slate-800 dark:text-slate-100 selection:bg-[#2a9d8f]/20 transition-colors duration-300">
+    <div className="min-h-screen bg-slate-50 dark:bg-[#050505] text-slate-800 dark:text-slate-100 selection:bg-[#2a9d8f]/20 transition-colors duration-300">
       <Navbar />
 
-      {/* Dynamic Background Glow tied to selected feature */}
-      <div className="absolute top-0 inset-x-0 h-screen overflow-hidden pointer-events-none z-0">
+      <section id="fitur-showcase" className="relative min-h-screen pt-20 flex items-center overflow-hidden transition-colors duration-300">
+        {/* Dynamic Background Glow based on active pillar */}
         <AnimatePresence mode="wait">
           <motion.div
-            key={current.key}
+            key={activeFeature.key + "-bg"}
             initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+            animate={{ opacity: 0.15 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.7 }}
-            className={`absolute top-20 left-1/2 -translate-x-1/2 w-[800px] h-[400px] ${current.bgGlow} blur-[100px] rounded-full`}
+            transition={{ duration: 1 }}
+            className={`absolute inset-0 bg-gradient-to-br ${theme.gradient} dark:opacity-20 opacity-10`}
           />
         </AnimatePresence>
-      </div>
+        
+        {/* Radial blur background */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] md:w-[800px] h-[600px] md:h-[800px] rounded-full blur-[120px] bg-black/5 dark:bg-white/5 pointer-events-none" />
 
-      {/* Hero Header */}
-      <section className="pt-32 pb-8 px-4 sm:px-6 relative z-10">
-        <div className="max-w-7xl mx-auto text-center">
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.15]"
-          >
-            6 Pilar Ekosistem Cerdas
-            <span className={`block mt-3 sm:mt-4 ${current.highlightText} transition-colors duration-300`}>diBISAlitas AI</span>
-          </motion.h1>
-        </div>
-      </section>
+        <div className="max-w-[1100px] xl:max-w-[1200px] w-full mx-auto px-4 sm:px-6 relative z-10 h-full flex flex-col lg:grid lg:grid-cols-[1.1fr_1fr_1fr] gap-8 lg:gap-2 xl:gap-4 items-center justify-between py-12 lg:py-0">
+          
+          {/* LEFT COLUMN: Main Typography & Stats */}
+          <div className="flex flex-col justify-center w-full mt-4 lg:mt-0 z-20 text-center lg:text-left items-center lg:items-start">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+            >
+              <h2 className="text-3xl sm:text-4xl lg:text-[2.75rem] xl:text-[3.25rem] font-light leading-[1.15] tracking-tight text-slate-900 dark:text-white mb-8 lg:mb-10">
+                {activeFeature.titlePart1} <br className="hidden lg:block" />
+                <span className="font-semibold">{activeFeature.titleHighlight}</span> <br className="hidden lg:block"/> {activeFeature.titlePart2}
+              </h2>
+            </motion.div>
 
-      {/* Feature Tabs Nav */}
-      <section className="px-4 sm:px-6 relative z-20 pb-12">
-        <div className="flex flex-wrap justify-center gap-3 max-w-4xl mx-auto">
-          {DETAILED_FEATURES.map((feat) => {
-            const isActive = selected === feat.key;
-            return (
-              <button
-                key={feat.key}
-                onClick={() => setSelected(feat.key)}
-                className={`flex items-center gap-2.5 px-5 py-2.5 rounded-xl border text-sm font-bold transition-all ${
-                  isActive 
-                    ? feat.tabActiveBg + " border-transparent shadow-lg scale-105" 
-                    : feat.tabInactiveBg + " hover:scale-105 shadow-sm hover:shadow-md"
-                }`}
+            {/* Stat Cards mimicking the left bottom cards in the reference */}
+            <div className="flex gap-4">
+              <motion.div
+                key="stat1"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="bg-white dark:bg-white/5 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-[1.5rem] p-4 sm:p-5 flex flex-col items-center text-center w-[130px] sm:w-[150px] shadow-xl dark:shadow-none"
               >
-                <div className={`w-2.5 h-2.5 rounded-full ${feat.indicatorColor}`} />
-                {feat.title}
-              </button>
-            );
-          })}
-        </div>
-      </section>
-
-      {/* Feature Content (Matches bisafe/page.tsx hero exactly) */}
-      <section className="pb-24 px-4 sm:px-6 relative z-10 min-h-[500px]">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={current.key}
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: 20 }}
-            transition={{ duration: 0.4, ease: "easeOut" }}
-            className="max-w-7xl mx-auto"
-          >
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-              {/* Left: Info */}
-              <div className="lg:col-span-7 space-y-6">
-                <div className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full ${current.badgeBg} border ${current.badgeBorder} ${current.badgeText} text-xs font-bold uppercase tracking-wider`}>
-                  <current.icon className="w-4 h-4" /> {current.badge}
-                </div>
-
-                <h2 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tight text-slate-900 dark:text-white leading-[1.1]">
-                  {current.titlePart1} <br className="hidden md:block" />
-                  <span className={current.highlightText}>{current.titleHighlight}</span> {current.titlePart2}
-                </h2>
-
-                <p className="text-slate-600 dark:text-slate-400 text-base sm:text-lg leading-relaxed">
-                  {current.description}
+                <h4 className={`text-2xl sm:text-3xl font-black bg-clip-text text-transparent bg-gradient-to-r ${theme.textGradient}`}>
+                  6+
+                </h4>
+                <p className="text-slate-800 dark:text-white/80 font-bold text-[10px] sm:text-xs uppercase tracking-wider mt-1 mb-2">PILAR CERDAS</p>
+                <p className="text-slate-500 dark:text-white/40 text-[8px] sm:text-[9px] leading-relaxed line-clamp-3 font-medium">
+                  Modul AI terintegrasi dalam satu platform ekosistem.
                 </p>
+              </motion.div>
 
-                <div className="flex flex-wrap gap-4 pt-2">
-                  <Link
-                    href="/demo"
-                    className={`px-7 py-3.5 rounded-full ${current.buttonBg} text-white font-extrabold text-sm transition-all shadow-lg ${current.buttonShadow} flex items-center gap-2`}
-                  >
-                    <Zap className="w-4 h-4 fill-current" />
-                    Coba Demo {current.title}
-                  </Link>
-                  <Link
-                    href={current.href}
-                    className="px-7 py-3.5 rounded-full bg-white dark:bg-[#1a1a1a] border-2 border-slate-200 dark:border-slate-800 text-slate-800 dark:text-white font-extrabold text-sm transition-all hover:bg-slate-50 dark:hover:bg-slate-900 shadow-sm flex items-center gap-2"
-                  >
-                    Detail Fitur
-                  </Link>
-                </div>
-              </div>
-
-              {/* Right: Video Mockup */}
-              <div className="lg:col-span-5 flex justify-center" style={{ perspective: "1200px" }}>
-                <div 
-                  className="relative w-[270px] sm:w-[310px] lg:w-[340px] aspect-[9/18.5] mx-auto bg-slate-200 dark:bg-[#0a0a0a] rounded-[1.75rem] md:rounded-[2.25rem] border-[6px] md:border-[8px] border-slate-300 dark:border-[#1a1a1a] overflow-hidden flex flex-col items-center justify-center group transform-gpu preserve-3d transition-colors duration-300"
-                  style={{
-                    transform: "rotateY(-18deg) rotateX(5deg) rotateZ(2deg)",
-                    boxShadow: "20px 30px 60px rgba(0,0,0,0.15), 8px 12px 25px rgba(0,0,0,0.08)",
-                    WebkitMaskImage: "linear-gradient(to left, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 50%, rgba(0,0,0,0.5) 80%, rgba(0,0,0,0) 100%), linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 60%, rgba(0,0,0,0.3) 85%, rgba(0,0,0,0) 100%)",
-                    WebkitMaskComposite: "destination-in",
-                    maskImage: "linear-gradient(to left, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 50%, rgba(0,0,0,0.5) 80%, rgba(0,0,0,0) 100%), linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 60%, rgba(0,0,0,0.3) 85%, rgba(0,0,0,0) 100%)",
-                    maskComposite: "intersect",
-                  }}
-                >
-                  <video
-                    key={current.videoSrc}
-                    src={current.videoSrc}
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                    className="absolute inset-0 w-full h-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent pointer-events-none" />
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        </AnimatePresence>
-      </section>
-
-      {/* Ecosystem Synergy Section */}
-      <section className="py-20 px-4 sm:px-6">
-        <div className="max-w-7xl mx-auto bg-slate-900 dark:bg-[#0F172A] rounded-[2.5rem] p-8 md:p-12 lg:p-16 text-white relative overflow-hidden border border-slate-800 shadow-[0_20px_60px_rgba(0,0,0,0.2)]">
-          <div className="absolute top-1/2 left-1/4 w-96 h-96 bg-[#2a9d8f]/20 rounded-full blur-[120px] pointer-events-none -translate-y-1/2" />
-
-          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            {/* Left: Phone Mockup */}
-            <div className="lg:col-span-5 flex justify-center order-2 lg:order-1" style={{ perspective: "1200px" }}>
-              <div 
-                className="relative w-[240px] sm:w-[280px] lg:w-[320px] aspect-[9/18.5] mx-auto bg-slate-800 rounded-[1.75rem] md:rounded-[2.25rem] border-[6px] md:border-[8px] border-slate-700 overflow-hidden flex flex-col items-center justify-center group transform-gpu preserve-3d transition-colors duration-300"
-                style={{
-                  transform: "rotateY(18deg) rotateX(5deg) rotateZ(-2deg)",
-                  boxShadow: "-20px 30px 60px rgba(0,0,0,0.4), -8px 12px 25px rgba(0,0,0,0.2)",
-                  WebkitMaskImage: "linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 50%, rgba(0,0,0,0.5) 80%, rgba(0,0,0,0) 100%), linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 60%, rgba(0,0,0,0.3) 85%, rgba(0,0,0,0) 100%)",
-                  WebkitMaskComposite: "destination-in",
-                  maskImage: "linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 50%, rgba(0,0,0,0.5) 80%, rgba(0,0,0,0) 100%), linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 60%, rgba(0,0,0,0.3) 85%, rgba(0,0,0,0) 100%)",
-                  maskComposite: "intersect",
-                }}
+              <motion.div
+                key="stat2"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1 }}
+                className="bg-white dark:bg-white/5 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-[1.5rem] p-4 sm:p-5 flex flex-col items-center text-center w-[130px] sm:w-[150px] shadow-xl dark:shadow-none"
               >
+                <h4 className={`text-2xl sm:text-3xl font-black bg-clip-text text-transparent bg-gradient-to-r ${theme.textGradient}`}>
+                  24/7
+                </h4>
+                <p className="text-slate-800 dark:text-white/80 font-bold text-[10px] sm:text-xs uppercase tracking-wider mt-1 mb-2">SINKRONISASI</p>
+                <p className="text-slate-500 dark:text-white/40 text-[8px] sm:text-[9px] leading-relaxed line-clamp-3 font-medium">
+                  Terhubung tanpa henti antara pengguna dan Command Center.
+                </p>
+              </motion.div>
+            </div>
+          </div>
+
+          {/* CENTER COLUMN: 3D Phone Video Mockup */}
+          <div className="relative w-full h-[400px] sm:h-[450px] lg:h-[500px] xl:h-[550px] flex justify-center items-center pointer-events-none z-10 my-4 lg:my-0">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeFeature.key + "-phone"}
+                initial={{ opacity: 0, scale: 0.85, filter: "blur(10px)" }}
+                animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+                exit={{ opacity: 0, scale: 0.85, filter: "blur(10px)" }}
+                transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+                className="absolute z-20 w-[170px] h-[350px] sm:w-[200px] sm:h-[410px] lg:w-[230px] lg:h-[470px] xl:w-[250px] xl:h-[510px] rounded-[1.5rem] sm:rounded-[1.75rem] lg:rounded-[2rem] bg-black border-[6px] lg:border-[8px] border-slate-800 dark:border-[#1f2022] shadow-[0_30px_60px_rgba(0,0,0,0.3),inset_0_0_20px_rgba(255,255,255,0.1)] overflow-hidden"
+                style={{ transformPerspective: 1000 }}
+              >
+                {/* iPhone Notch */}
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[40%] h-[16px] lg:h-[20px] bg-slate-800 dark:bg-[#1f2022] rounded-b-[10px] lg:rounded-b-[14px] z-30 flex justify-center items-center">
+                  <div className="w-[30%] h-[3px] lg:h-[4px] bg-white/10 rounded-full mt-0.5 lg:mt-1" />
+                </div>
+                
                 <video
-                  src="/video/peta.mp4"
+                  key={activeFeature.videoSrc}
+                  src={activeFeature.videoSrc}
                   autoPlay
                   loop
                   muted
                   playsInline
-                  className="absolute inset-0 w-full h-full object-cover"
+                  className="w-full h-full object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-tl from-transparent via-white/5 to-transparent pointer-events-none" />
-              </div>
-            </div>
+                
+                {/* Screen Glare */}
+                <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-transparent z-40 pointer-events-none mix-blend-overlay" />
+              </motion.div>
+            </AnimatePresence>
 
-            {/* Right: Info */}
-            <div className="lg:col-span-7 space-y-6 order-1 lg:order-2">
-              <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 text-[#4fd1c5] text-xs font-bold uppercase tracking-wider border border-white/10">
-                <Layers className="w-3.5 h-3.5" /> Sinergi Ekosistem
-              </span>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-black leading-tight text-white">
-                Semua Fitur Saling Terhubung <br />
-                Dalam Satu Sinkronisasi Real-Time
-              </h2>
-              <p className="text-slate-300 text-sm sm:text-base md:text-lg leading-relaxed">
-                Ketika pengguna mendeteksi rintangan jalan dengan <strong>BiJALAN</strong> atau menekan tombol darurat <strong>BiSAFE</strong>, data langsung tersinkronisasi ke <strong>BiPANTAU</strong> untuk ditindaklanjuti relawan dan pengelola kota. Semua berjalan tanpa batas antar perangkat.
-              </p>
+            {/* Central Intense Glow */}
+            <AnimatePresence mode="wait">
+               <motion.div
+                 key={activeFeature.key + "-centerglow"}
+                 initial={{ opacity: 0, scale: 0.5 }}
+                 animate={{ opacity: 1, scale: 1 }}
+                 exit={{ opacity: 0, scale: 0.5 }}
+                 transition={{ duration: 0.8 }}
+                 className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[250px] h-[350px] sm:w-[300px] sm:h-[400px] lg:w-[350px] lg:h-[500px] bg-gradient-to-br ${theme.gradient} blur-[80px] sm:blur-[100px] opacity-40 dark:opacity-60 z-0 rounded-full`}
+               />
+            </AnimatePresence>
+          </div>
 
-              <div className="pt-4 flex flex-wrap gap-4">
+          {/* RIGHT COLUMN: Feature Details Card & Selector */}
+          <div className="flex flex-col items-center lg:items-end justify-center w-full z-20 gap-3 lg:gap-4">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeFeature.key + "-detailcard"}
+                initial={{ opacity: 0, x: 40 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -20 }}
+                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                className="bg-white dark:bg-white/5 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-[1.5rem] lg:rounded-[2rem] p-5 lg:p-7 flex flex-col items-center text-center w-full max-w-[280px] lg:max-w-[300px] shadow-[0_20px_40px_rgba(0,0,0,0.1)] dark:shadow-[0_20px_40px_rgba(0,0,0,0.3)] mx-auto lg:mr-0"
+              >
+                {/* Floating icon at the top of the card */}
+                <div className="w-16 h-16 lg:w-20 lg:h-20 rounded-[1.25rem] lg:rounded-[1.75rem] bg-white dark:bg-[#050505] p-1 -mt-12 lg:-mt-16 mb-3 lg:mb-4 shadow-xl border border-slate-100 dark:border-white/5">
+                   <div className={`w-full h-full rounded-xl lg:rounded-[1.25rem] bg-gradient-to-br ${theme.gradient} flex items-center justify-center relative shadow-inner`}>
+                      <ActiveIcon className="w-7 h-7 lg:w-9 lg:h-9 text-white drop-shadow-md" />
+                   </div>
+                </div>
+
+                <h3 className={`text-xl lg:text-2xl font-black bg-clip-text text-transparent bg-gradient-to-r ${theme.textGradient} mb-1`}>
+                  {activeFeature.title}
+                </h3>
+                
+
+
+                <h4 className="text-[10px] sm:text-xs uppercase tracking-widest font-bold text-slate-500 dark:text-slate-400 mb-2">
+                  {activeFeature.badge}
+                </h4>
+                
+                <p className="text-slate-600 dark:text-white/60 text-xs sm:text-[13px] leading-relaxed font-medium mb-6 line-clamp-3 lg:line-clamp-4">
+                  {activeFeature.description}
+                </p>
+
                 <Link
-                  href="/demo"
-                  className="px-7 py-3.5 rounded-full bg-[#4fd1c5] text-slate-950 font-extrabold text-sm hover:bg-[#4fd1c5]/90 transition-all shadow-[0_0_20px_rgba(79,209,197,0.3)] flex items-center gap-2"
+                  href={activeFeature.href}
+                  className="w-full py-3 lg:py-3.5 rounded-full bg-slate-900 dark:bg-white text-white dark:text-black text-[11px] lg:text-xs font-bold hover:bg-slate-800 dark:hover:bg-slate-200 transition-all flex items-center justify-center gap-2 group shadow-md"
                 >
-                  <Zap className="w-4 h-4 fill-current" />
-                  Jelajahi Demo Hub
+                  Lihat Detail Fitur
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </Link>
-                <Link
-                  href="/app/login"
-                  className="px-7 py-3.5 rounded-full bg-white/10 border border-white/20 text-white font-bold text-sm hover:bg-white/20 transition-all"
-                >
-                  Daftar Akun Pengguna
-                </Link>
-              </div>
+              </motion.div>
+            </AnimatePresence>
+
+            {/* Mini Phones Selector Fixed Under Card */}
+            <div className="flex gap-2 bg-white/70 dark:bg-black/40 backdrop-blur-md p-2 lg:p-2.5 rounded-[1.25rem] border border-slate-200 dark:border-white/10 w-full max-w-[280px] lg:max-w-[300px] shadow-[0_20px_40px_rgba(0,0,0,0.1)] dark:shadow-[0_20px_40px_rgba(0,0,0,0.3)] mx-auto lg:mr-0 z-30">
+              {DETAILED_FEATURES.map((feat, i) => {
+                const isActive = i === activeIndex;
+                return (
+                  <button
+                    key={feat.key + "-selector"}
+                    onClick={() => setActiveIndex(i)}
+                    className={`relative flex-1 aspect-[1/2.2] rounded-md lg:rounded-lg overflow-hidden transition-all duration-300 border-[1.5px] ${
+                      isActive ? 'border-slate-800 dark:border-white scale-[1.03] shadow-md z-10' : 'border-transparent hover:border-slate-400 dark:hover:border-white/50 opacity-60 hover:opacity-100'
+                    }`}
+                  >
+                    <video
+                      src={feat.videoSrc}
+                      className="w-full h-full object-cover"
+                      muted
+                      playsInline
+                      loop
+                      autoPlay
+                    />
+                    <div className="absolute inset-0 bg-black/20 dark:bg-black/40" />
+                  </button>
+                );
+              })}
             </div>
           </div>
+
         </div>
+
+
+
       </section>
     </div>
   );
