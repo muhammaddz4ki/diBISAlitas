@@ -161,7 +161,7 @@ export default function Navbar() {
         </Link>
 
         {/* Desktop Navigation Links */}
-        <nav className="hidden lg:flex items-center p-1.5 rounded-2xl bg-slate-50/80 dark:bg-white/[0.02] border border-slate-200/50 dark:border-white/[0.05] backdrop-blur-md shadow-sm dark:shadow-none gap-0.5">
+        <nav className="hidden lg:flex items-center p-1.5 gap-0.5">
           <Link
             href="/"
             className={`relative px-4 py-2 rounded-xl text-sm transition-all duration-300 ${
@@ -173,7 +173,7 @@ export default function Navbar() {
             {pathname === "/" && (
               <motion.span
                 layoutId="navbar-active-pill"
-                className="absolute inset-0 rounded-xl bg-white dark:bg-white/10 shadow-[0_2px_10px_rgba(0,0,0,0.04)] dark:shadow-none border border-slate-200/50 dark:border-white/5"
+                className="absolute inset-0 rounded-xl bg-white/70 dark:bg-white/10 backdrop-blur-md shadow-sm dark:shadow-none border border-slate-200/60 dark:border-white/5"
                 transition={{ type: "spring", stiffness: 380, damping: 32 }}
               />
             )}
@@ -197,7 +197,7 @@ export default function Navbar() {
               {pathname.startsWith("/fitur") && (
                 <motion.span
                   layoutId="navbar-active-pill"
-                  className="absolute inset-0 rounded-xl bg-white dark:bg-white/10 shadow-[0_2px_10px_rgba(0,0,0,0.04)] dark:shadow-none border border-slate-200/50 dark:border-white/5"
+                  className="absolute inset-0 rounded-xl bg-white/70 dark:bg-white/10 backdrop-blur-md shadow-sm dark:shadow-none border border-slate-200/60 dark:border-white/5"
                   transition={{ type: "spring", stiffness: 380, damping: 32 }}
                 />
               )}
@@ -286,7 +286,7 @@ export default function Navbar() {
               {pathname === "/demo" && (
                 <motion.span
                   layoutId="navbar-active-pill"
-                  className="absolute inset-0 rounded-xl bg-white dark:bg-white/10 shadow-[0_2px_10px_rgba(0,0,0,0.04)] dark:shadow-none border border-slate-200/50 dark:border-white/5"
+                  className="absolute inset-0 rounded-xl bg-white/70 dark:bg-white/10 backdrop-blur-md shadow-sm dark:shadow-none border border-slate-200/60 dark:border-white/5"
                   transition={{ type: "spring", stiffness: 380, damping: 32 }}
                 />
               )}
@@ -366,7 +366,6 @@ export default function Navbar() {
             href="/demo"
             className="px-5 py-2.5 rounded-full text-xs font-bold text-slate-700 dark:text-slate-200 bg-white dark:bg-[#1f1f1f] border border-slate-100 dark:border-white/5 shadow-[0_6px_15px_rgba(0,0,0,0.06)] dark:shadow-[0_6px_15px_rgba(0,0,0,0.3)] hover:shadow-[0_8px_25px_rgba(0,0,0,0.08)] hover:-translate-y-0.5 transition-all duration-300 flex items-center gap-1.5"
           >
-            <Zap className="w-3.5 h-3.5" />
             Coba Demo Gratis
           </Link>
           <Link

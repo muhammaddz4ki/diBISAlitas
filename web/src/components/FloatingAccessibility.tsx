@@ -298,10 +298,10 @@ export default function FloatingAccessibility() {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
             transition={{ type: "spring", damping: 25, stiffness: 350 }}
-            className="absolute bottom-20 right-0 w-[calc(100vw-48px)] sm:w-[400px] bg-[#f4f7f9] dark:bg-[#0f0f0f] text-slate-800 dark:text-slate-100 rounded-[1.5rem] shadow-[0_30px_100px_rgba(0,0,0,0.15)] dark:shadow-[0_30px_100px_rgba(0,0,0,0.8)] border border-white/80 dark:border-white/5 overflow-hidden ring-1 ring-slate-900/5"
+            className="absolute bottom-20 right-0 w-[calc(100vw-48px)] sm:w-[400px] max-h-[calc(100vh-110px)] sm:max-h-[calc(100vh-130px)] flex flex-col bg-[#f4f7f9] dark:bg-[#0f0f0f] text-slate-800 dark:text-slate-100 rounded-[1.5rem] shadow-[0_30px_100px_rgba(0,0,0,0.15)] dark:shadow-[0_30px_100px_rgba(0,0,0,0.8)] border border-white/80 dark:border-white/5 overflow-hidden ring-1 ring-slate-900/5"
           >
             {/* Header */}
-            <div className="bg-white dark:bg-[#1a1a1a] p-5 pb-4 flex items-center justify-between border-b border-slate-100 dark:border-white/5">
+            <div className="shrink-0 bg-white dark:bg-[#1a1a1a] p-5 pb-4 flex items-center justify-between border-b border-slate-100 dark:border-white/5">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-[14px] bg-gradient-to-br from-[#2a9d8f] to-[#4fd1c5] shadow-[0_6px_15px_rgba(42,157,143,0.3)] flex items-center justify-center text-white">
                   <SlidersHorizontal className="w-5 h-5" />
@@ -314,7 +314,7 @@ export default function FloatingAccessibility() {
             </div>
 
             {/* Content List */}
-            <div className="p-4 space-y-3.5 max-h-[500px] overflow-y-auto custom-scrollbar">
+            <div className="flex-1 p-4 space-y-3.5 overflow-y-auto custom-scrollbar">
               
               {/* Tema Layar */}
               <div className="space-y-2">

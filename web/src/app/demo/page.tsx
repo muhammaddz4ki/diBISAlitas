@@ -20,8 +20,13 @@ export default function DemoHubPage() {
   const { theme } = useTheme();
 
   return (
-    <div className="min-h-screen bg-[#FDFEFE] dark:bg-black text-slate-800 dark:text-slate-100 selection:bg-[#2a9d8f]/20 transition-colors duration-300 overflow-hidden">
+    <div className="min-h-screen bg-[#FDFEFE] dark:bg-black text-slate-800 dark:text-slate-100 selection:bg-[#2a9d8f]/20 transition-colors duration-300 overflow-hidden relative z-0">
       <Navbar />
+
+      {/* Background Ambient Gradients */}
+      <div className="absolute top-[-10%] left-[-10%] w-[400px] md:w-[600px] h-[400px] md:h-[600px] bg-[#2a9d8f]/30 dark:bg-[#2a9d8f]/15 blur-[100px] md:blur-[150px] rounded-full pointer-events-none -z-10" />
+      <div className="absolute top-[35%] right-[-5%] w-[500px] md:w-[800px] h-[500px] md:h-[800px] bg-[#4fd1c5]/25 dark:bg-[#4fd1c5]/10 blur-[120px] md:blur-[180px] rounded-full pointer-events-none -z-10" />
+      <div className="absolute bottom-[-5%] left-[15%] w-[400px] md:w-[700px] h-[400px] md:h-[600px] bg-teal-500/25 dark:bg-teal-500/10 blur-[100px] md:blur-[150px] rounded-full pointer-events-none -z-10" />
 
       {/* Hero Header */}
       <section className="pt-32 pb-10 px-4 sm:px-6 relative overflow-visible">
@@ -73,7 +78,7 @@ export default function DemoHubPage() {
               <span className="px-3.5 py-1.5 rounded-full bg-[#2a9d8f]/10 dark:bg-[#2a9d8f]/20 text-[#2a9d8f] dark:text-[#4fd1c5] text-xs font-bold uppercase tracking-wider flex items-center gap-1.5">
                 <Smartphone className="w-4 h-4" /> Mode Pengguna (Tamu Demo)
               </span>
-              <span className="text-[11px] font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/50 px-2.5 py-1 rounded-lg">
+              <span className="text-[11px] font-bold text-teal-600 dark:text-teal-400 bg-teal-50 dark:bg-teal-950/50 px-2.5 py-1 rounded-lg">
                 Tanpa Perlu Login
               </span>
             </div>
@@ -96,9 +101,9 @@ export default function DemoHubPage() {
               <div className="grid grid-cols-2 gap-3 max-w-lg">
                 {[
                   { name: "Dashboard Utama", href: "/app/dashboard?demo=true", color: "text-[#2a9d8f] dark:text-[#4fd1c5]" },
-                  { name: "BiSAPA AI Camera", href: "/app/bisapa", color: "text-emerald-600 dark:text-emerald-400" },
-                  { name: "BiBACA OCR", href: "/app/bibaca", color: "text-emerald-600 dark:text-emerald-400" },
-                  { name: "BiSAFE Panic", href: "/app/bisafe", color: "text-emerald-600 dark:text-emerald-400" },
+                  { name: "BiSAPA AI Camera", href: "/app/bisapa", color: "text-teal-600 dark:text-teal-400" },
+                  { name: "BiBACA OCR", href: "/app/bibaca", color: "text-teal-600 dark:text-teal-400" },
+                  { name: "BiSAFE Panic", href: "/app/bisafe", color: "text-teal-600 dark:text-teal-400" },
                 ].map((m, idx) => (
                   <Link
                     key={idx}
@@ -172,7 +177,7 @@ export default function DemoHubPage() {
             className="relative flex items-center justify-center lg:justify-start"
             style={{ perspective: "1200px" }}
           >
-            <div className="absolute w-[90%] h-[90%] bg-emerald-500/10 dark:bg-emerald-500/15 blur-[100px] rounded-full top-1/2 left-[40%] -translate-x-1/2 -translate-y-1/2" />
+            <div className="absolute w-[90%] h-[90%] bg-teal-500/10 dark:bg-teal-500/15 blur-[100px] rounded-full top-1/2 left-[40%] -translate-x-1/2 -translate-y-1/2" />
             
             <div 
               className="relative w-full max-w-[720px]"
@@ -199,7 +204,7 @@ export default function DemoHubPage() {
                   className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300`}
                   onError={(e) => { e.currentTarget.style.display = 'none'; }}
                 />
-                <div className="absolute inset-0 bg-gradient-to-br from-slate-100 via-slate-200 to-emerald-500/20 dark:from-[#0a0e17] dark:via-[#111827] dark:to-emerald-500/30 -z-10" />
+                <div className="absolute inset-0 bg-gradient-to-br from-slate-100 via-slate-200 to-teal-500/20 dark:from-[#0a0e17] dark:via-[#111827] dark:to-teal-500/30 -z-10" />
                 <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent pointer-events-none" />
               </div>
               <div className="w-[60%] mx-auto h-[4px] md:h-[6px] bg-slate-300 dark:bg-[#1a1a1a] rounded-b-xl transition-colors duration-300" />
@@ -215,18 +220,18 @@ export default function DemoHubPage() {
             className="flex flex-col space-y-6 lg:pl-4 justify-center"
           >
             <div className="flex items-center gap-3">
-              <span className="px-3.5 py-1.5 rounded-full bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 border border-emerald-100 dark:border-emerald-800/50">
+              <span className="px-3.5 py-1.5 rounded-full bg-teal-50 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 border border-teal-100 dark:border-teal-800/50">
                 <LayoutDashboard className="w-4 h-4" /> Command Center Pemda
               </span>
-              <span className="text-[11px] font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/30 px-2.5 py-1 rounded-lg flex items-center gap-1">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+              <span className="text-[11px] font-bold text-teal-600 dark:text-teal-400 bg-teal-50 dark:bg-teal-900/30 px-2.5 py-1 rounded-lg flex items-center gap-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-teal-500 animate-pulse" />
                 Live GIS
               </span>
             </div>
             
             <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.5rem] font-black leading-[1.05] tracking-tight">
               Dashboard <br/>
-              <em className="font-black italic text-emerald-600 dark:text-emerald-500">
+              <em className="font-black italic text-teal-600 dark:text-teal-500">
                 BiPANTAU Admin
               </em>
             </h2>
@@ -242,7 +247,7 @@ export default function DemoHubPage() {
                 "Riwayat audit status kelayakan fasilitas publik",
               ].map((hl, i) => (
                 <div key={i} className="flex items-center gap-3 text-sm text-slate-600 dark:text-slate-300">
-                  <CheckCircle2 className="w-5 h-5 text-emerald-500 shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 text-teal-500 shrink-0" />
                   <span>{hl}</span>
                 </div>
               ))}
@@ -251,7 +256,7 @@ export default function DemoHubPage() {
             <div className="pt-6 flex flex-wrap gap-4">
               <Link
                 href="/admin/rintangan?demo=true"
-                className="inline-flex py-4 px-8 rounded-full bg-emerald-600 text-white font-extrabold text-sm hover:bg-emerald-700 transition-all shadow-[0_0_20px_rgba(16,185,129,0.3)] hover:shadow-[0_0_30px_rgba(16,185,129,0.5)] items-center justify-center gap-2"
+                className="inline-flex py-4 px-8 rounded-full bg-teal-600 text-white font-extrabold text-sm hover:bg-teal-700 transition-all shadow-[0_0_20px_rgba(20,184,166,0.3)] hover:shadow-[0_0_30px_rgba(20,184,166,0.5)] items-center justify-center gap-2"
               >
                 <span>Masuk Dashboard BiPANTAU</span>
                 <ExternalLink className="w-4 h-4" />

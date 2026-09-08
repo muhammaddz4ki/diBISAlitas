@@ -377,23 +377,23 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
         {/* Demo Mode Notice Banner */}
         {isDemo && (
-          <div className="mx-4 sm:mx-6 lg:mx-8 mt-4 p-4 sm:p-5 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex flex-col md:flex-row items-start md:items-center justify-between gap-3 text-amber-900 dark:text-amber-200">
-            <div className="flex items-center gap-3">
-              <span className="px-3 py-1 rounded-xl bg-amber-500 text-white font-extrabold text-xs shrink-0 tracking-wider">
+          <div className="mx-4 sm:mx-6 lg:mx-8 mt-4 p-4 sm:p-5 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 lg:gap-6 text-amber-900">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 flex-1">
+              <span className="px-3 py-1.5 rounded-xl bg-amber-500 text-white font-extrabold text-xs sm:text-sm shrink-0 tracking-wider">
                 MODE DEMO (PANTAU ONLY)
               </span>
               <div>
-                <p className="text-xs sm:text-sm font-extrabold leading-tight">
+                <p className="text-sm sm:text-base font-extrabold leading-tight">
                   Simulasi Eksplorasi Command Center BiPANTAU
                 </p>
-                <p className="text-[11px] text-amber-700 dark:text-amber-300 mt-0.5 leading-relaxed">
+                <p className="text-xs sm:text-sm text-amber-700 mt-1 leading-relaxed max-w-3xl">
                   Anda dapat memantau seluruh peta GIS, riwayat hotspot, dan laporan masuk. Operasi modifikasi data (CRUD) dinonaktifkan untuk menjaga keamanan data simulasi.
                 </p>
               </div>
             </div>
             <Link
               href="/demo"
-              className="px-4 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-extrabold text-xs transition-colors shrink-0 shadow-sm"
+              className="w-full lg:w-auto text-center px-5 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-extrabold text-sm transition-colors shrink-0 shadow-sm"
             >
               Kembali ke Pusat Demo
             </Link>
