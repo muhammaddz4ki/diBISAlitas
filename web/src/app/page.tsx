@@ -161,7 +161,7 @@ function HeroSection() {
            initial={{ opacity: 0, y: 20 }}
            animate={{ opacity: 1, y: 0 }}
            transition={{ delay: 0.6, duration: 0.6 }}
-           className="flex flex-wrap items-center justify-center gap-4 mb-4 md:mb-8 relative z-20 pointer-events-auto"
+           className="flex flex-wrap items-center justify-center gap-4 mb-4 md:mb-8 relative z-40 pointer-events-auto"
         >
            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
              <Link
@@ -174,7 +174,7 @@ function HeroSection() {
            </motion.div>
            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
              <Link
-               href="#fitur"
+               href="/fitur"
                className="px-8 py-4 rounded-full bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-slate-700 dark:text-white font-bold text-sm hover:bg-slate-200 dark:hover:bg-white/10 transition-colors backdrop-blur-md flex items-center gap-2"
              >
                Jelajahi Fitur
@@ -187,7 +187,7 @@ function HeroSection() {
            initial={{ opacity: 0, y: 40 }}
            animate={{ opacity: 1, y: 0 }}
            transition={{ duration: 1, delay: 0.8, ease: [0.22, 1, 0.36, 1] }}
-           className="relative w-full max-w-7xl mx-auto flex justify-center mt-[-3rem] md:mt-[-5rem] lg:mt-[-8rem] z-30 pointer-events-none px-2 sm:px-6"
+           className="relative w-full max-w-7xl mx-auto flex justify-center mt-[-1.5rem] md:mt-[-3rem] lg:mt-[-5rem] z-30 pointer-events-none px-2 sm:px-6"
         >
           {/* Faux Fabric effects behind image */}
           <div className="absolute top-[20%] left-[10%] w-[400px] h-[400px] bg-gradient-to-r from-[#2a9d8f] to-[#4fd1c5] blur-[80px] opacity-10 dark:opacity-20 transform -rotate-12 rounded-[100%]" />
