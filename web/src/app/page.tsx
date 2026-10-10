@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useTheme } from "@/lib/ThemeContext";
 import Link from "next/link";
+import Image from "next/image";
 import { motion, useInView, useScroll, useTransform, AnimatePresence, Variants, LayoutGroup, useMotionValue, useSpring } from "framer-motion";
 import {
   ShieldAlert,
@@ -1034,7 +1035,7 @@ function ImpactSection() {
                 transition={{ duration: 0.85, ease: [0.32, 0.72, 0, 1] }}
                 className="order-1 hidden md:block w-[100px] lg:w-[140px] xl:w-[180px] h-[220px] lg:h-[300px] xl:h-[380px] rounded-xl lg:rounded-2xl overflow-hidden grayscale brightness-50 flex-shrink-0 relative"
               >
-                <img src={activeItem.sideImgs[0]} alt="" className="w-full h-full object-cover" />
+                <Image src={activeItem.sideImgs[0]} alt="" fill sizes="(max-width: 768px) 100px, 200px" className="object-cover" priority />
                 <div className="absolute inset-0 bg-black/40" />
               </motion.div>
 
@@ -1048,7 +1049,7 @@ function ImpactSection() {
                 transition={{ duration: 0.85, ease: [0.32, 0.72, 0, 1] }}
                 className="order-2 w-[80px] sm:w-[120px] md:w-[150px] lg:w-[180px] xl:w-[240px] h-[220px] sm:h-[280px] md:h-[320px] lg:h-[400px] xl:h-[480px] rounded-xl sm:rounded-2xl lg:rounded-3xl overflow-hidden grayscale brightness-75 flex-shrink-0 relative"
               >
-                <img src={activeItem.sideImgs[1]} alt="" className="w-full h-full object-cover" />
+                <Image src={activeItem.sideImgs[1]} alt="" fill sizes="(max-width: 768px) 150px, 250px" className="object-cover" priority />
                 <div className="absolute inset-0 bg-black/20" />
               </motion.div>
 
@@ -1062,7 +1063,7 @@ function ImpactSection() {
                 transition={{ duration: 0.85, ease: [0.32, 0.72, 0, 1] }}
                 className="order-4 w-[80px] sm:w-[120px] md:w-[150px] lg:w-[180px] xl:w-[240px] h-[220px] sm:h-[280px] md:h-[320px] lg:h-[400px] xl:h-[480px] rounded-xl sm:rounded-2xl lg:rounded-3xl overflow-hidden grayscale brightness-75 flex-shrink-0 relative"
               >
-                <img src={activeItem.sideImgs[2]} alt="" className="w-full h-full object-cover" />
+                <Image src={activeItem.sideImgs[2]} alt="" fill sizes="(max-width: 768px) 150px, 250px" className="object-cover" priority />
                 <div className="absolute inset-0 bg-black/20" />
               </motion.div>
 
@@ -1076,7 +1077,7 @@ function ImpactSection() {
                 transition={{ duration: 0.85, ease: [0.32, 0.72, 0, 1] }}
                 className="order-5 hidden md:block w-[100px] lg:w-[140px] xl:w-[180px] h-[220px] lg:h-[300px] xl:h-[380px] rounded-xl lg:rounded-2xl overflow-hidden grayscale brightness-50 flex-shrink-0 relative"
               >
-                <img src={activeItem.sideImgs[3]} alt="" className="w-full h-full object-cover" />
+                <Image src={activeItem.sideImgs[3]} alt="" fill sizes="(max-width: 768px) 100px, 200px" className="object-cover" priority />
                 <div className="absolute inset-0 bg-black/40" />
               </motion.div>
             </AnimatePresence>
@@ -1100,7 +1101,7 @@ function ImpactSection() {
                 >
                   {/* Image Top Half */}
                   <div className="w-full h-[50%] md:h-[55%] rounded-[1.25rem] md:rounded-[1.5rem] lg:rounded-[2rem] overflow-hidden bg-black/20 relative">
-                    <img src={activeItem.mainImg} alt={activeItem.title} className="w-full h-full object-cover" />
+                    <Image src={activeItem.mainImg} alt={activeItem.title} fill sizes="(max-width: 768px) 300px, 500px" className="object-cover" priority />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                   </div>
                   
