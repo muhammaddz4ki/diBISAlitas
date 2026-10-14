@@ -76,12 +76,9 @@ export default function BiBacaDetailPage() {
                   maskComposite: "intersect"
                 }}
               >
-                <video
-                  src="/video/bibaca.mp4"
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
+                <img
+                  src="/video/bibaca.gif"
+                  alt="Demo BiBACA"
                   className="absolute inset-0 w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent pointer-events-none" />

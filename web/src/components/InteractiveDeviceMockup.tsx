@@ -127,12 +127,12 @@ export default function InteractiveDeviceMockup({
   const [playMode, setPlayMode] = useState<"video" | "interactive">("video");
 
   const videoMap: Record<FeatureKey, string> = {
-    bisafe: "/video/bisafe.mp4",
-    bipantau: "/video/peta.mp4",
-    bisapa: "/video/bisapa.mp4",
-    bibaca: "/video/bibaca.mp4",
-    bipintar: "/video/bipintar.mp4",
-    bijalan: "/video/bijalan.mp4",
+    bisafe: "/video/bisafe.gif",
+    bipantau: "/video/peta.gif",
+    bisapa: "/video/bisapa.gif",
+    bibaca: "/video/bibaca.gif",
+    bipintar: "/video/bipintar.gif",
+    bijalan: "/video/bijalan.gif",
   };
 
   return (
@@ -150,7 +150,7 @@ export default function InteractiveDeviceMockup({
             }`}
           >
             <Play className="w-3 h-3 fill-current" />
-            <span>Video Demo</span>
+            <span>Demo GIF</span>
           </button>
           <button
             type="button"
@@ -192,13 +192,10 @@ export default function InteractiveDeviceMockup({
           <div className="flex-1 relative overflow-hidden flex flex-col bg-[#0a0f1d]">
             {playMode === "video" ? (
               <div className="relative w-full h-full flex items-center justify-center bg-black">
-                <video
+                <img
                   key={activeFeature}
                   src={videoMap[activeFeature]}
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
+                  alt={`${activeFeature} demo`}
                   className="w-full h-full object-cover"
                 />
                 <div className="absolute bottom-3 left-3 right-3 bg-slate-900/80 backdrop-blur-md rounded-xl p-2 border border-white/10 flex items-center justify-between">

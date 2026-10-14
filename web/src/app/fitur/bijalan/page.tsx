@@ -77,12 +77,9 @@ export default function BiJalanDetailPage() {
                   maskComposite: "intersect"
                 }}
               >
-                <video
-                  src="/video/bijalan.mp4"
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
+                <img
+                  src="/video/bijalan.gif"
+                  alt="Demo BiJALAN"
                   className="absolute inset-0 w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent pointer-events-none" />

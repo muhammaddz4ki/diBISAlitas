@@ -198,12 +198,9 @@ export default function BiPintarDetailPage() {
                     maskComposite: "intersect"
                   }}
                  >
-                    <video
-                      src="/video/bipintar.mp4"
-                      autoPlay
-                      loop
-                      muted
-                      playsInline
+                    <img
+                      src="/video/bipintar.gif"
+                      alt="Demo BiPINTAR"
                       className="absolute inset-0 w-full h-full object-cover"
                     />
                  </div>

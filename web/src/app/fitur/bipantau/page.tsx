@@ -83,12 +83,9 @@ export default function BiPantauDetailPage() {
                   maskComposite: "intersect",
                 }}
               >
-                <video
-                  src="/video/peta.mp4"
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
+                <img
+                  src="/video/peta.gif"
+                  alt="Demo BiPANTAU"
                   className="absolute inset-0 w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent pointer-events-none" />

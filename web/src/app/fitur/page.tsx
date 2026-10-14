@@ -31,7 +31,7 @@ const DETAILED_FEATURES = [
     titlePart2: "Tanpa Jeda",
     description:
       "BiSAFE dirancang sebagai garis pertahanan pertama bagi penyandang disabilitas saat menghadapi kondisi krisis, ancaman fisik, kecelakaan, atau disorientasi spasial di ruang publik.",
-    videoSrc: "/video/bisafe.mp4",
+    videoSrc: "/video/bisafe.gif",
     bgGlow: "bg-rose-500/10 dark:bg-rose-600/30",
     badgeBg: "bg-rose-500/10 dark:bg-rose-600/20",
     badgeBorder: "border-rose-500/20 dark:border-rose-600/30",
@@ -55,7 +55,7 @@ const DETAILED_FEATURES = [
     titlePart2: "Real-Time",
     description:
       "Pusat kendali dan dasbor analitik berbasis web untuk memetakan jalur ramah disabilitas, mendeteksi rintangan jalan rusak atau guiding block terhalang secara cepat dan transparan.",
-    videoSrc: "/video/peta.mp4",
+    videoSrc: "/video/peta.gif",
     bgGlow: "bg-[#2a9d8f]/10 dark:bg-[#2a9d8f]/30",
     badgeBg: "bg-[#2a9d8f]/10 dark:bg-[#2a9d8f]/30",
     badgeBorder: "border-[#2a9d8f]/20 dark:border-[#2a9d8f]/40",
@@ -79,7 +79,7 @@ const DETAILED_FEATURES = [
     titlePart2: "& Web Speech",
     description:
       "Menghilangkan sekat komunikasi antara Tunarungu dan masyarakat umum. Memanfaatkan Computer Vision on-device (ONNX) untuk membaca gestur tangan BISINDO secara real-time ke teks/audio.",
-    videoSrc: "/video/bisapa.mp4",
+    videoSrc: "/video/bisapa.gif",
     bgGlow: "bg-blue-500/10 dark:bg-blue-600/30",
     badgeBg: "bg-blue-500/10 dark:bg-blue-900/30",
     badgeBorder: "border-blue-500/20 dark:border-blue-700/40",
@@ -103,7 +103,7 @@ const DETAILED_FEATURES = [
     titlePart2: "Natural",
     description:
       "Memberikan kemandirian membaca bagi Tunanetra dan penyandang Disleksia. Cukup arahkan kamera ke buku atau papan petunjuk jalan, sistem akan membacakannya secara otomatis.",
-    videoSrc: "/video/bibaca.mp4",
+    videoSrc: "/video/bibaca.gif",
     bgGlow: "bg-purple-600/10 dark:bg-purple-700/30",
     badgeBg: "bg-purple-600/10 dark:bg-purple-900/30",
     badgeBorder: "border-purple-600/20 dark:border-purple-700/40",
@@ -127,7 +127,7 @@ const DETAILED_FEATURES = [
     titlePart2: "Inklusif",
     description:
       "Platform belajar interaktif dengan animasi gestur GIF, kuis gamifikasi, sistem EXP, dan lencana prestasi. Membantu siapa saja menguasai bahasa isyarat BISINDO secara menyenangkan.",
-    videoSrc: "/video/bipintar.mp4",
+    videoSrc: "/video/bipintar.gif",
     bgGlow: "bg-orange-600/10 dark:bg-orange-700/30",
     badgeBg: "bg-orange-600/10 dark:bg-orange-900/30",
     badgeBorder: "border-orange-600/20 dark:border-orange-700/40",
@@ -151,7 +151,7 @@ const DETAILED_FEATURES = [
     titlePart2: "Kamera",
     description:
       "Mata kedua bagi Tunanetra saat berjalan di trotoar. Kamera smartphone mendeteksi rintangan di depan pengguna, lalu memberikan peringatan audio dan getaran haptic terarah.",
-    videoSrc: "/video/bijalan.mp4",
+    videoSrc: "/video/bijalan.gif",
     bgGlow: "bg-[#2a9d8f]/10 dark:bg-[#2a9d8f]/30",
     badgeBg: "bg-[#2a9d8f]/10 dark:bg-[#2a9d8f]/30",
     badgeBorder: "border-[#2a9d8f]/20 dark:border-[#2a9d8f]/40",
@@ -269,13 +269,10 @@ export default function FiturOverviewPage() {
                   <div className="w-[30%] h-[3px] lg:h-[4px] bg-white/10 rounded-full mt-0.5 lg:mt-1" />
                 </div>
                 
-                <video
+                <img
                   key={activeFeature.videoSrc}
                   src={activeFeature.videoSrc}
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
+                  alt={activeFeature.title}
                   className="w-full h-full object-cover"
                 />
                 
@@ -351,13 +348,10 @@ export default function FiturOverviewPage() {
                       isActive ? 'border-slate-800 dark:border-white scale-[1.03] shadow-md z-10' : 'border-transparent hover:border-slate-400 dark:hover:border-white/50 opacity-60 hover:opacity-100'
                     }`}
                   >
-                    <video
+                    <img
                       src={feat.videoSrc}
+                      alt={feat.title}
                       className="w-full h-full object-cover"
-                      muted
-                      playsInline
-                      loop
-                      autoPlay
                     />
                     <div className="absolute inset-0 bg-black/20 dark:bg-black/40" />
                   </button>

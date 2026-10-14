@@ -78,12 +78,9 @@ export default function BiSafeDetailPage() {
                   maskComposite: "intersect",
                 }}
               >
-                <video
-                  src="/video/bisafe.mp4"
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
+                <img
+                  src="/video/bisafe.gif"
+                  alt="Demo BiSAFE"
                   className="absolute inset-0 w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent pointer-events-none" />

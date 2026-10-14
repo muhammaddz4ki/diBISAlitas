@@ -358,7 +358,7 @@ const pillars: Pillar[] = [
     gradient: "from-rose-500 to-rose-700 dark:from-rose-800 dark:to-rose-950",
     textGradient: "from-rose-500 to-rose-700 dark:from-rose-400 dark:to-rose-300",
     accent: "text-rose-100",
-    video: "bisafe.mp4",
+    video: "bisafe.gif",
     hoverBorder: "hover:border-rose-500/50 dark:hover:border-rose-400/50",
     hoverText: "group-hover:text-rose-600 dark:group-hover:text-rose-400",
     glass1Title: "Respons Secepat Kilat",
@@ -379,7 +379,7 @@ const pillars: Pillar[] = [
     gradient: "from-[#2a9d8f] to-[#1e7b6d] dark:from-[#1e7b6d] dark:to-[#0f4038]",
     textGradient: "from-[#2a9d8f] to-[#1e7b6d] dark:from-[#2a9d8f] dark:to-[#4fd1c5]",
     accent: "text-[#8FEAD4]",
-    video: "peta.mp4",
+    video: "peta.gif",
     hoverBorder: "hover:border-[#2a9d8f]/50 dark:hover:border-[#4fd1c5]/50",
     hoverText: "group-hover:text-[#2a9d8f] dark:group-hover:text-[#4fd1c5]",
     glass1Title: "Pantauan Real-time",
@@ -400,7 +400,7 @@ const pillars: Pillar[] = [
     gradient: "from-blue-500 to-blue-700 dark:from-blue-800 dark:to-blue-950",
     textGradient: "from-blue-500 to-blue-700 dark:from-blue-400 dark:to-blue-300",
     accent: "text-blue-100",
-    video: "bisapa.mp4",
+    video: "bisapa.gif",
     hoverBorder: "hover:border-blue-500/50 dark:hover:border-blue-400/50",
     hoverText: "group-hover:text-blue-600 dark:group-hover:text-blue-400",
     glass1Title: "Komunikasi Tanpa Batas",
@@ -421,7 +421,7 @@ const pillars: Pillar[] = [
     gradient: "from-purple-500 to-purple-700 dark:from-purple-800 dark:to-purple-950",
     textGradient: "from-purple-500 to-purple-700 dark:from-purple-400 dark:to-purple-300",
     accent: "text-purple-100",
-    video: "bibaca.mp4",
+    video: "bibaca.gif",
     hoverBorder: "hover:border-purple-500/50 dark:hover:border-purple-400/50",
     hoverText: "group-hover:text-purple-600 dark:group-hover:text-purple-400",
     glass1Title: "Dunia dalam Suara",
@@ -442,7 +442,7 @@ const pillars: Pillar[] = [
     gradient: "from-orange-500 to-orange-700 dark:from-orange-800 dark:to-orange-950",
     textGradient: "from-orange-500 to-orange-700 dark:from-orange-400 dark:to-orange-300",
     accent: "text-orange-100",
-    video: "bipintar.mp4",
+    video: "bipintar.gif",
     hoverBorder: "hover:border-orange-500/50 dark:hover:border-orange-400/50",
     hoverText: "group-hover:text-orange-600 dark:group-hover:text-orange-400",
     glass1Title: "Belajar Sambil Bermain",
@@ -463,7 +463,7 @@ const pillars: Pillar[] = [
     gradient: "from-[#2a9d8f] to-[#1e7b6d] dark:from-[#1e7b6d] dark:to-[#0f4038]",
     textGradient: "from-[#2a9d8f] to-[#1e7b6d] dark:from-[#2a9d8f] dark:to-[#4fd1c5]",
     accent: "text-[#4fd1c5]",
-    video: "bijalan.mp4",
+    video: "bijalan.gif",
     hoverBorder: "hover:border-[#2a9d8f]/50 dark:hover:border-[#4fd1c5]/50",
     hoverText: "group-hover:text-[#2a9d8f] dark:group-hover:text-[#4fd1c5]",
     glass1Title: "Navigasi Lebih Cerdas",
@@ -603,13 +603,10 @@ function BentoFeaturesSection() {
                     <div className="w-[30%] h-[2px] md:h-[4px] bg-black/50 rounded-full mt-1" />
                   </div>
                   
-                  <video
+                  <img
                     key={activePillar.video}
                     src={`/video/${activePillar.video}`}
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
+                    alt={activePillar.title}
                     className="w-full h-full object-cover rounded-[1.2rem] md:rounded-[2rem]"
                   />
                   

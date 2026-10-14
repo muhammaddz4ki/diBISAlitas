@@ -80,12 +80,9 @@ export default function BiSapaDetailPage() {
                   maskComposite: "intersect",
                 }}
               >
-                <video
-                  src="/video/bisapa.mp4"
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
+                <img
+                  src="/video/bisapa.gif"
+                  alt="Demo BiSAPA"
                   className="absolute inset-0 w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent pointer-events-none" />
