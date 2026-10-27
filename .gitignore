@@ -1,5 +1,7 @@
 # Dependencies
 node_modules/
+.venv/
+venv/
 .pnp
 .pnp.js
 
@@ -45,7 +47,6 @@ web/scripts/README.md
 
 # Flowcharts and Diagram Generators (Excluded from GitHub)
 scripts/generate_flowcharts/
-scripts/
 *flowchart*
 *flowchard*
 *userflow*
