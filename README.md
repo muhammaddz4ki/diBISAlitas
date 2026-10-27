@@ -89,6 +89,11 @@ diBISAlitas/
 - **Pembaca Suara Layar Ringkas**: Pembacaan ringkasan konten situs menggunakan Web Speech Synthesis.
 - **Navigasi Keyboard**: Indikator fokus visual yang memenuhi standar WCAG (Web Content Accessibility Guidelines).
 
+### H. Asisten 3D BISINDO (Rian POLMAN) & Studio CMS Pengembang
+- **Karakter 3D Clay Inklusif (Rian)**: Asisten 3D setengah badan (*waist-up*) bergaya clay Pixar/Memoji mengenakan jas almamater biru royal resmi **Politeknik Manufaktur Bandung (POLMAN)** dengan efek *3D mouse parallax tilt*.
+- **Portal Super Admin / Studio Isyarat (`/admin/studio-isyarat`)**: CMS khusus pengembang untuk mengunggah bahan video rekaman HP orang asli meragakan isyarat, yang otomatis diekstrak menjadi peragaan 3D.
+- **Sinkronisasi Dinamis**: Setiap kosakata baru yang diunggah otomatis tersinkronisasi ke Kamus biPINTAR dan Floating Widget tanpa perlu mengubah source code (*no hardcoding*).
+
 ---
 
 ## 4. Arsitektur Teknologi
@@ -150,7 +155,23 @@ npm run start
 
 ---
 
-## 6. Privasi dan Keamanan Data
+## 6. Akses & Kredensial Super Admin
+
+Panel pengelolaan developer dan administrasi sistem dapat diakses melalui portal berikut:
+
+| Keterangan | Informasi Akses |
+| :--- | :--- |
+| **URL Portal Login** | `http://localhost:3000/admin/login` |
+| **Email Super Admin** | `superadmin@dibisalitas.id` |
+| **Kata Sandi (Password)** | `SuperAdmin2026!` |
+| **Akses Cepat (Mode Demo)** | `http://localhost:3000/admin/dashboard?demo=true` |
+| **Menu Studio 3D Isyarat** | `http://localhost:3000/admin/studio-isyarat` |
+
+> **Catatan Pengembang:** Menu **Studio 3D Isyarat** digunakan untuk mengunggah bahan rekaman video bahasa isyarat dari kamera HP. Data yang diunggah otomatis tersimpan di Firestore `bisindo_dictionary` dan langsung dialirkan secara *real-time* ke **Kamus biPINTAR** serta **Floating Accessibility Widget** tanpa perlu *hardcode*.
+
+---
+
+## 7. Privasi dan Keamanan Data
 
 - **Pemrosesan Gambar Lokal**: Seluruh *frame* video kamera yang digunakan untuk deteksi isyarat BiPINTAR dan deteksi rintangan BiJALAN diproses langsung di peramban pengguna. Tidak ada data citra kamera yang ditransmisikan ke server eksternal demi menjaga privasi pengguna secara mutlak.
 - **Kepatuhan Standar Aksesibilitas**: Arsitektur antarmuka dibangun dengan memperhatikan rasio kontras, semantik HTML5, aksesibilitas keyboard (fokus visual), dan dukungan *screen reader*.

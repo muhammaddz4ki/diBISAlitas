@@ -46,6 +46,7 @@ export default function RootLayout({
   return (
     <html
       lang="id"
+      data-scroll-behavior="smooth"
       suppressHydrationWarning
       className={`${jakarta.variable} ${geistMono.variable} ${playfair.variable} h-full antialiased`}
     >
@@ -60,3 +61,4 @@ export default function RootLayout({
     </html>
   );
 }
+

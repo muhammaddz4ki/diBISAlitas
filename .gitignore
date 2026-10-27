@@ -1,0 +1,57 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Build Outputs
+.next/
+out/
+build/
+dist/
+.vercel
+.firebase/
+firebase-debug.log*
+web/firebase-debug.log*
+
+# Environment and Local Configs
+.env
+.env*.local
+*.pem
+
+# IDE and OS
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.iml
+
+# Hardware (Excluded from GitHub)
+hardware/
+
+# Documentation & Proposals (Excluded from GitHub)
+docs/
+*.docx
+PROPOSAL*.md
+ARCHITECTURE.md
+AUDIT_REPORT.md
+Prompt*.md
+STATUS*.md
+*.original.*
+CLAUDE.md
+AGENTS.md
+web/CLAUDE.md
+web/AGENTS.md
+web/scripts/README.md
+
+# Flowcharts and Diagram Generators (Excluded from GitHub)
+scripts/generate_flowcharts/
+scripts/
+*flowchart*
+*flowchard*
+*userflow*
+
+# Mobile / Flutter
+mobile/
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies

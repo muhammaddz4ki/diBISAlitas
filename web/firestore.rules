@@ -99,6 +99,12 @@ service cloud.firestore {
       allow write: if isAdmin();
     }
 
+    // ── bisindo_dictionary ── (kamus & pustaka aset 3D isyarat; baca publik, tulis admin)
+    match /bisindo_dictionary/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
     // ── quiz_scores (BiPINTAR — Tantangan Isyarat / leaderboard) ──
     // Papan peringkat: setiap pengguna terautentikasi boleh membaca.
     // Menulis HANYA baris miliknya sendiri (data.userId == uid). Hapus oleh admin.

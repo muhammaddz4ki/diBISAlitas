@@ -20,9 +20,20 @@ import {
   Moon,
   Activity,
   ChevronRight,
-  Pointer
+  Pointer,
+  Hand,
+  Pause,
+  Play,
+  Square,
+  Palette,
+  ChevronUp,
+  ChevronDown,
+  Send
 } from "lucide-react";
 import { useTheme } from "@/lib/ThemeContext";
+import Bisindo3DCharacter, { AvatarModelId } from "@/components/Bisindo3DCharacter";
+import { subscribeBisindoItems } from "@/lib/bisindoService";
+import { BisindoItem } from "@/lib/types";
 
 export default function FloatingAccessibility() {
   const { theme, setTheme, reduceMotion, setReduceMotion, highContrast, setHighContrast } = useTheme();
@@ -34,11 +45,25 @@ export default function FloatingAccessibility() {
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [tooltipVisible, setTooltipVisible] = useState(false);
   const [hapticFeedback, setHapticFeedback] = useState(false);
+  const [bisindo3dOpen, setBisindo3dOpen] = useState(false);
+  const [bisindoSign, setBisindoSign] = useState("salam");
+  const [bisindoAutoPlay, setBisindoAutoPlay] = useState(true);
+  const [bisindoInput, setBisindoInput] = useState("");
+  const [bisindoSpeed, setBisindoSpeed] = useState(1.0);
+  const [jacketColor, setJacketColor] = useState<"blue" | "dark" | "mustard">("blue");
+  const [avatarModel, setAvatarModel] = useState<AvatarModelId>("rian");
+  const [showAvatarMenu, setShowAvatarMenu] = useState(false);
+  const [showWordDrawer, setShowWordDrawer] = useState(false);
+  const [dbVocab, setDbVocab] = useState<BisindoItem[]>([]);
 
   const panelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
+
+    const unsubBisindo = subscribeBisindoItems((items) => {
+      setDbVocab(items);
+    });
 
     const savedFont = localStorage.getItem("a11y_font");
     const savedRM = localStorage.getItem("a11y_rm") === "1";
@@ -96,6 +121,7 @@ export default function FloatingAccessibility() {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
       observer.disconnect();
+      unsubBisindo();
     };
   }, []);
 
@@ -214,7 +240,107 @@ export default function FloatingAccessibility() {
     window.speechSynthesis.speak(utterance);
   };
 
-  const activeCount = (fontSizeIndex > 0 ? 1 : 0) + (highContrast ? 1 : 0) + (reduceMotion ? 1 : 0) + (dyslexiaMode ? 1 : 0) + (grayscaleMode ? 1 : 0) + (highlightLinks ? 1 : 0) + (hapticFeedback ? 1 : 0);
+  const activeCount = (fontSizeIndex > 0 ? 1 : 0) + (highContrast ? 1 : 0) + (reduceMotion ? 1 : 0) + (dyslexiaMode ? 1 : 0) + (grayscaleMode ? 1 : 0) + (highlightLinks ? 1 : 0) + (hapticFeedback ? 1 : 0) + (bisindo3dOpen ? 1 : 0);
+
+  const SIGN_LABELS: Record<string, { label: string; icon: string }> = {
+    salam: { label: "Salam diBISAlitas", icon: "✨" },
+    dada: { label: "Salam diBISAlitas", icon: "✨" },
+    halo: { label: "Halo / Selamat Datang", icon: "👋" },
+    terima_kasih: { label: "Terima Kasih", icon: "🙏" },
+    sama_sama: { label: "Sama-sama", icon: "🤝" },
+    bisa: { label: "Pasti BISA!", icon: "💪" },
+    tolong: { label: "Tolong / Bantuan", icon: "🤲" },
+    ya: { label: "Ya (Setuju)", icon: "✅" },
+    tidak: { label: "Tidak (Menolak)", icon: "❌" },
+    A: { label: "Huruf A", icon: "🔤" },
+    B: { label: "Huruf B", icon: "🔤" },
+    C: { label: "Huruf C", icon: "🔤" },
+    idle: { label: "Siap Mendengar", icon: "👂" },
+  };
+
+  const BISINDO_VOCAB = [
+    { word: "Salam", sign: "salam" },
+    { word: "Halo", sign: "halo" },
+    { word: "Terima Kasih", sign: "terima_kasih" },
+    { word: "Pasti BISA!", sign: "bisa" },
+    { word: "Tolong", sign: "tolong" },
+    { word: "Ya (Setuju)", sign: "ya" },
+    { word: "Sama-sama", sign: "sama_sama" },
+    { word: "A", sign: "A" },
+    { word: "B", sign: "B" },
+    { word: "C", sign: "C" },
+  ];
+
+  const activeVocabList = React.useMemo(() => {
+    if (dbVocab.length > 0) {
+      return dbVocab.map((v) => ({ word: v.word, sign: v.id }));
+    }
+    return BISINDO_VOCAB;
+  }, [dbVocab]);
+
+  const cycleSpeed = () => {
+    const speeds = [0.75, 1.0, 1.5, 2.0];
+    const nextIdx = (speeds.indexOf(bisindoSpeed) + 1) % speeds.length;
+    setBisindoSpeed(speeds[nextIdx]);
+  };
+
+  const handleBisindoWordClick = (sign: string) => {
+    setBisindoAutoPlay(false);
+    setBisindoSign(sign);
+  };
+
+  const handleBisindoTextSubmit = () => {
+    if (!bisindoInput.trim()) return;
+    setBisindoAutoPlay(false);
+    const textLower = bisindoInput.trim().toLowerCase();
+
+    // Check dynamic Firestore items first
+    const matchedDb = dbVocab.find(
+      (v) =>
+        textLower === v.word.toLowerCase() ||
+        textLower.includes(v.word.toLowerCase()) ||
+        v.word.toLowerCase().includes(textLower)
+    );
+    if (matchedDb) {
+      setBisindoSign(matchedDb.id);
+      setBisindoInput("");
+      return;
+    }
+    
+    if (textLower.includes("halo") || textLower.includes("hai")) {
+      setBisindoSign("halo");
+    } else if (textLower.includes("makasih") || textLower.includes("terima")) {
+      setBisindoSign("terima_kasih");
+    } else if (textLower.includes("bisa")) {
+      setBisindoSign("bisa");
+    } else if (textLower.includes("tolong") || textLower.includes("bantu")) {
+      setBisindoSign("tolong");
+    } else if (textLower.includes("ya") || textLower.includes("oke") || textLower.includes("siap") || textLower.includes("betul")) {
+      setBisindoSign("ya");
+    } else if (textLower.includes("sama") || textLower.includes("kembali")) {
+      setBisindoSign("sama_sama");
+    } else if (textLower.includes("salam")) {
+      setBisindoSign("salam");
+    } else {
+      // Spell letters
+      const letters = bisindoInput.toUpperCase().split("");
+      let i = 0;
+      const playNext = () => {
+        if (i < letters.length) {
+          const letter = letters[i];
+          if (["A","B","C"].includes(letter)) {
+            setBisindoSign(letter);
+          }
+          i++;
+          setTimeout(playNext, 1200 / bisindoSpeed);
+        } else {
+          setBisindoSign("salam");
+        }
+      };
+      playNext();
+    }
+    setBisindoInput("");
+  };
 
   const FeatureCard = ({ active, onClick, icon: Icon, title, subtitle, colorClass, shadowClass }: any) => {
     return (
@@ -394,6 +520,234 @@ export default function FloatingAccessibility() {
                 />
               </div>
 
+              {/* BISINDO 3D */}
+              <div className="space-y-2 pt-2">
+                <label className="text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 pl-2">Bahasa Isyarat 3D</label>
+                <FeatureCard
+                  active={bisindo3dOpen} 
+                  onClick={() => {
+                    const next = !bisindo3dOpen;
+                    setBisindo3dOpen(next);
+                    if (next) setIsOpen(false);
+                  }} 
+                  icon={Hand}
+                  title="BISINDO 3D Avatar" 
+                  subtitle="Asisten isyarat 3D interaktif"
+                  colorClass="bg-gradient-to-br from-blue-500 to-indigo-600" 
+                  shadowClass="shadow-[0_8px_20px_rgba(59,130,246,0.4)]"
+                />
+              </div>
+
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* ===== BISINDO 3D Floating Smartphone Overlay ("muncul kayaa hpp") ===== */}
+      <AnimatePresence>
+        {bisindo3dOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: 70, scale: 0.88 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 70, scale: 0.88 }}
+            transition={{ type: "spring", damping: 24, stiffness: 280 }}
+            className="fixed bottom-24 right-4 sm:right-8 z-[9998] w-[310px] sm:w-[335px] h-[525px] rounded-[34px] overflow-hidden bg-gradient-to-b from-[#f8fafc] via-[#edf2f7] to-[#d9e2ec] border-[3px] border-white/95 shadow-[0_25px_80px_rgba(0,0,0,0.32)] flex flex-col select-none"
+            id="bisindo-3d-panel"
+          >
+            {/* Top Phone Speaker Pill Notch */}
+            <div className="absolute top-2.5 left-1/2 -translate-x-1/2 w-16 h-1 rounded-full bg-slate-300/80 z-50 pointer-events-none" />
+
+            {/* Top Close Button (Round white button with 'X' like user reference) */}
+            <button
+              onClick={() => setBisindo3dOpen(false)}
+              className="absolute top-4 left-4 z-40 w-10 h-10 rounded-full bg-white text-slate-800 shadow-[0_4px_16px_rgba(0,0,0,0.15)] flex items-center justify-center hover:scale-105 active:scale-95 transition-all border border-slate-100 cursor-pointer"
+              aria-label="Tutup Asisten 3D"
+            >
+              <X className="w-5 h-5 stroke-[2.5]" />
+            </button>
+
+            {/* Top Right Avatar Switcher (Rian POLMAN, Budi, Nadia) */}
+            <div className="absolute top-4 right-4 z-40 flex items-center gap-1.5">
+              <div className="relative">
+                <button
+                  onClick={() => setShowAvatarMenu(!showAvatarMenu)}
+                  className="px-3 py-1.5 rounded-full bg-white/95 backdrop-blur-md shadow-sm text-[11px] font-bold text-slate-700 flex items-center gap-1.5 border border-white/80 hover:bg-white transition-all cursor-pointer"
+                  title="Pilih Model Karakter 3D"
+                >
+                  <span>{avatarModel === "rian" ? "🧑‍🎓 Rian (POLMAN)" : avatarModel === "budi" ? "🧢 Budi" : "👩 Nadia"}</span>
+                  <ChevronDown className="w-3 h-3 text-slate-500" />
+                </button>
+
+                {showAvatarMenu && (
+                  <div className="absolute top-full right-0 mt-1.5 p-1.5 bg-white/98 backdrop-blur-xl rounded-2xl shadow-xl border border-slate-200/80 flex flex-col gap-1 z-50 min-w-[175px]">
+                    <div className="px-2 py-1 text-[9px] font-bold text-slate-400 uppercase tracking-wider">Karakter 3D BISINDO</div>
+                    <button
+                      onClick={() => { setAvatarModel("rian"); setShowAvatarMenu(false); }}
+                      className={`px-2.5 py-1.5 text-xs font-semibold rounded-xl text-left flex items-center gap-2 transition-all cursor-pointer ${
+                        avatarModel === "rian" ? "bg-blue-600 text-white shadow-sm" : "hover:bg-slate-100 text-slate-700"
+                      }`}
+                    >
+                      <span className="text-base">🧑‍🎓</span>
+                      <div>
+                        <div className="font-bold leading-tight">Rian (POLMAN)</div>
+                        <div className={`text-[9px] ${avatarModel === "rian" ? "text-blue-100" : "text-slate-400"}`}>Almamater POLMAN Bandung</div>
+                      </div>
+                    </button>
+                    <button
+                      onClick={() => { setAvatarModel("budi"); setShowAvatarMenu(false); }}
+                      className={`px-2.5 py-1.5 text-xs font-semibold rounded-xl text-left flex items-center gap-2 transition-all cursor-pointer ${
+                        avatarModel === "budi" ? "bg-blue-600 text-white shadow-sm" : "hover:bg-slate-100 text-slate-700"
+                      }`}
+                    >
+                      <span className="text-base">🧢</span>
+                      <div>
+                        <div className="font-bold leading-tight">Budi</div>
+                        <div className={`text-[9px] ${avatarModel === "budi" ? "text-blue-100" : "text-slate-400"}`}>Casual Hoodie & Topi</div>
+                      </div>
+                    </button>
+                    <button
+                      onClick={() => { setAvatarModel("nadia"); setShowAvatarMenu(false); }}
+                      className={`px-2.5 py-1.5 text-xs font-semibold rounded-xl text-left flex items-center gap-2 transition-all cursor-pointer ${
+                        avatarModel === "nadia" ? "bg-blue-600 text-white shadow-sm" : "hover:bg-slate-100 text-slate-700"
+                      }`}
+                    >
+                      <span className="text-base">👩</span>
+                      <div>
+                        <div className="font-bold leading-tight">Nadia</div>
+                        <div className={`text-[9px] ${avatarModel === "nadia" ? "text-blue-100" : "text-slate-400"}`}>Cardigan & Anting Emas</div>
+                      </div>
+                    </button>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Subtitle Badge at Top Center (Current Sign Word) */}
+            <div className="absolute top-16 left-0 right-0 z-30 flex justify-center pointer-events-none px-4">
+              <motion.div
+                key={bisindoSign}
+                initial={{ opacity: 0, y: -8, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                className="px-3.5 py-1 rounded-full bg-white/92 backdrop-blur-md shadow-sm border border-white/80 text-slate-800 text-xs font-bold flex items-center gap-1.5"
+              >
+                <span>{SIGN_LABELS[bisindoSign]?.icon || "🤟"}</span>
+                <span>
+                  {SIGN_LABELS[bisindoSign]?.label ||
+                    dbVocab.find((v) => v.id === bisindoSign)?.word ||
+                    bisindoSign}
+                </span>
+              </motion.div>
+            </div>
+
+            {/* 3D Character Canvas (Fills the phone viewport) */}
+            <div className="relative flex-1 w-full h-full overflow-hidden">
+              <Bisindo3DCharacter
+                isAnimating={bisindoAutoPlay}
+                currentSign={bisindoSign}
+                speed={bisindoSpeed}
+                avatarModel={avatarModel}
+                jacketColor={jacketColor}
+                onSignChange={(newSign) => setBisindoSign(newSign)}
+              />
+            </div>
+
+            {/* Floating Controls Overlay at Bottom (EXACTLY like user reference photo!) */}
+            <div className="absolute bottom-4 left-0 right-0 z-40 px-4 flex flex-col items-center gap-2">
+              {/* White Frosted Glass Pill with 3 Teal Buttons */}
+              <div className="w-full max-w-[275px] bg-white/88 backdrop-blur-md rounded-2xl px-4 py-2.5 border border-white/90 shadow-[0_8px_30px_rgba(0,0,0,0.12)] flex items-center justify-around">
+                {/* 1. Pause/Play Button (Teal round button with || or ▶) */}
+                <button
+                  onClick={() => setBisindoAutoPlay(!bisindoAutoPlay)}
+                  className="w-11 h-11 rounded-full bg-[#40b59f] hover:bg-[#349e89] text-white flex items-center justify-center border-2 border-white shadow-md transition-all active:scale-90 cursor-pointer"
+                  title={bisindoAutoPlay ? "Jeda Animasi" : "Lanjutkan Animasi"}
+                  aria-label="Pause or Play"
+                >
+                  {bisindoAutoPlay ? (
+                    <Pause className="w-5 h-5 fill-white stroke-none" />
+                  ) : (
+                    <Play className="w-5 h-5 fill-white stroke-none ml-0.5" />
+                  )}
+                </button>
+
+                {/* 2. Stop / Reset Button (Teal round button with rounded square) */}
+                <button
+                  onClick={() => {
+                    setBisindoAutoPlay(false);
+                    setBisindoSign("salam");
+                  }}
+                  className="w-11 h-11 rounded-full bg-[#40b59f] hover:bg-[#349e89] text-white flex items-center justify-center border-2 border-white shadow-md transition-all active:scale-90 cursor-pointer"
+                  title="Hentikan / Pose Salam"
+                  aria-label="Stop"
+                >
+                  <Square className="w-4 h-4 fill-white stroke-none rounded-sm" />
+                </button>
+
+                {/* 3. Speed Badge Button (Teal round button with speed e.g. 1.0) */}
+                <button
+                  onClick={cycleSpeed}
+                  className="w-11 h-11 rounded-full bg-[#40b59f] hover:bg-[#349e89] text-white flex items-center justify-center border-2 border-white shadow-md transition-all active:scale-90 font-bold text-xs cursor-pointer"
+                  title="Atur Kecepatan Gerak"
+                  aria-label="Speed"
+                >
+                  {bisindoSpeed}x
+                </button>
+              </div>
+
+              {/* Toggle Vocabulary / Text Drawer */}
+              <button
+                onClick={() => setShowWordDrawer(!showWordDrawer)}
+                className="px-3 py-1 rounded-full bg-white/90 backdrop-blur-sm text-[10px] font-semibold text-slate-700 shadow-sm border border-white/70 flex items-center gap-1 hover:bg-white transition-all cursor-pointer"
+              >
+                <span>{showWordDrawer ? "Tutup Pilihan Kata" : "Pilihan Kata & Teks"}</span>
+                {showWordDrawer ? <ChevronDown className="w-3 h-3" /> : <ChevronUp className="w-3 h-3" />}
+              </button>
+
+              {/* Expandable Word Drawer */}
+              <AnimatePresence>
+                {showWordDrawer && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: "auto" }}
+                    exit={{ opacity: 0, height: 0 }}
+                    className="w-full bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl rounded-2xl p-3 border border-white/80 dark:border-white/10 shadow-xl space-y-2 overflow-hidden"
+                  >
+                    {/* Text Input */}
+                    <div className="flex gap-1.5">
+                      <input
+                        type="text"
+                        value={bisindoInput}
+                        onChange={(e) => setBisindoInput(e.target.value)}
+                        onKeyDown={(e) => e.key === "Enter" && handleBisindoTextSubmit()}
+                        placeholder="Ketik teks untuk dieja..."
+                        className="flex-1 px-2.5 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs text-slate-800 dark:text-slate-200 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#3db59b]"
+                      />
+                      <button
+                        onClick={handleBisindoTextSubmit}
+                        className="px-2.5 py-1.5 rounded-lg bg-[#3db59b] hover:bg-[#329f87] text-white text-xs font-bold transition-colors shadow-sm cursor-pointer"
+                      >
+                        <Send className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+
+                    {/* Quick Vocabulary Chips */}
+                    <div className="flex flex-wrap gap-1 max-h-24 overflow-y-auto custom-scrollbar">
+                      {activeVocabList.map((item) => (
+                        <button
+                          key={item.sign}
+                          onClick={() => handleBisindoWordClick(item.sign)}
+                          className={`px-2 py-0.5 rounded-full text-[10px] font-semibold border transition-all cursor-pointer ${
+                            bisindoSign === item.sign
+                              ? "bg-[#3db59b] text-white border-[#3db59b] shadow-sm"
+                              : "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:border-[#3db59b]"
+                          }`}
+                        >
+                          {item.word}
+                        </button>
+                      ))}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
           </motion.div>
         )}

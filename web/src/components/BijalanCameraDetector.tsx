@@ -1,16 +1,18 @@
 "use client";
 
 import React, { useEffect, useRef } from "react";
-import { AlertTriangle, Compass, ArrowLeft, ArrowRight, ArrowUp } from "lucide-react";
+import { AlertTriangle, Compass, ArrowLeft, ArrowRight, ArrowUp, Bluetooth } from "lucide-react";
 import { useBijalanCamera } from "../hooks/useBijalanCamera";
 import { useBijalanDetection } from "../hooks/useBijalanDetection";
 import { useBijalanTTS } from "../hooks/useBijalanTTS";
+import { useBluetoothDistanceSensor } from "../hooks/useBluetoothDistanceSensor";
 import { computeBijalanGuidance } from "../utils/bijalanYoloInference";
 
 export default function BijalanCameraDetector() {
   const { videoRef, canvasRef, startCamera, stopCamera } = useBijalanCamera();
   const { detections, isModelLoading, detectFrame } = useBijalanDetection(videoRef);
   const { speakDetections, cancelTTS, baseSpeed, setBaseSpeed } = useBijalanTTS();
+  const { distanceCm, isConnected, isConnecting, errorMessage, connect, disconnect } = useBluetoothDistanceSensor();
   const animationFrameId = useRef<number>(0);
 
   // Mulai kamera saat komponen dimount
@@ -44,12 +46,12 @@ export default function BijalanCameraDetector() {
     };
   }, [isModelLoading, detectFrame, canvasRef, videoRef]);
 
-  // Handle TTS
+  // Handle TTS dan Fusi Sensor Jarak (termasuk pemicu fail-safe)
   useEffect(() => {
-    if (detections.length > 0) {
-      speakDetections(detections);
+    if (detections.length > 0 || (distanceCm !== null && distanceCm < 80)) {
+      speakDetections(detections, distanceCm);
     }
-  }, [detections, speakDetections]);
+  }, [detections, distanceCm, speakDetections]);
 
   return (
     <div className="relative w-full h-[60vh] bg-black rounded-3xl overflow-hidden shadow-2xl ring-4 ring-[#00B894]/20 flex flex-col justify-center items-center">
@@ -108,6 +110,39 @@ export default function BijalanCameraDetector() {
         </div>
       )}
 
+      {/* Tombol Hubungkan Sensor Fisik BLE */}
+      <div className="absolute top-4 left-4 z-20">
+        <button
+          onClick={isConnected ? disconnect : connect}
+          disabled={isConnecting}
+          className={`px-3 py-2 rounded-2xl flex items-center gap-2 text-xs font-bold transition-all shadow-lg backdrop-blur-md border ${
+            isConnected
+              ? "bg-emerald-600/90 text-white border-emerald-400"
+              : "bg-white/85 text-slate-800 border-white/60 hover:bg-white"
+          }`}
+          aria-label={
+            isConnected
+              ? `Sensor jarak terhubung, jarak ${distanceCm ?? "--"} cm. Klik untuk memutuskan.`
+              : "Hubungkan modul sensor jarak fisik Bluetooth."
+          }
+        >
+          <Bluetooth
+            className={`w-4 h-4 ${
+              isConnected ? "text-white animate-pulse" : "text-[#2a9d8f]"
+            }`}
+          />
+          <span>
+            {isConnecting
+              ? "Mencari..."
+              : isConnected
+              ? distanceCm !== null
+                ? `${distanceCm} cm`
+                : "Sensor Aktif"
+              : "Sensor BLE"}
+          </span>
+        </button>
+      </div>
+
       {/* Slider Kecepatan Suara */}
       <div className="absolute top-4 right-4 z-20">
         <div className="bg-white/80 backdrop-blur-md px-4 py-3 rounded-2xl shadow-lg flex flex-col gap-2 items-center border border-white/50">
@@ -129,40 +164,65 @@ export default function BijalanCameraDetector() {
       {/* HUD Panduan (rintangan prioritas + arah + level jarak) */}
       {!isModelLoading && (() => {
         const g = computeBijalanGuidance(detections);
-        const accent = !g.hasObstacle
+        
+        // Cek apakah ada pemicu fail safe (sensor fisik < 80cm tapi visi belum deteksi)
+        const isFailSafe = !g.hasObstacle && distanceCm !== null && distanceCm < 80;
+
+        const effectiveHasObstacle = g.hasObstacle || isFailSafe;
+        const effectiveLevel = isFailSafe 
+          ? 2 
+          : (g.hasObstacle && g.direction === "depan" && distanceCm !== null)
+            ? (distanceCm < 80 ? 2 : distanceCm < 180 ? 1 : 0)
+            : g.level;
+
+        const accent = !effectiveHasObstacle
           ? "#00B894"
-          : g.level === 2
+          : effectiveLevel === 2
             ? "#F43F5E"
-            : g.level === 1
+            : effectiveLevel === 1
               ? "#F59E0B"
               : "#00B894";
-        const title = g.hasObstacle
-          ? g.label.charAt(0).toUpperCase() + g.label.slice(1)
-          : "Rute Aman";
-        const jarak = g.level === 2 ? "Sangat dekat" : g.level === 1 ? "Dekat" : "Terpantau";
-        const subtitle = g.hasObstacle
-          ? `${jarak} · di ${g.direction}`
-          : "Kamera aktif memindai lingkungan.";
-        const Arrow = g.direction === "kiri" ? ArrowLeft : g.direction === "kanan" ? ArrowRight : ArrowUp;
-        const barPct = !g.hasObstacle ? 12 : ((g.level + 1) / 3) * 100;
+
+        const title = isFailSafe
+          ? "Rintangan Dekat!"
+          : g.hasObstacle
+            ? g.label.charAt(0).toUpperCase() + g.label.slice(1)
+            : "Rute Aman";
+
+        const jarak = effectiveLevel === 2 ? "Sangat dekat" : effectiveLevel === 1 ? "Dekat" : "Terpantau";
+        
+        let subtitle = "Kamera aktif memindai lingkungan.";
+        if (isFailSafe) {
+          subtitle = `Sensor mendeteksi halangan ${distanceCm} cm di depan.`;
+        } else if (g.hasObstacle) {
+          if (g.direction === "depan" && distanceCm !== null) {
+            subtitle = `${(distanceCm / 100).toFixed(1).replace(".", ",")} meter (ToF) · di depan`;
+          } else {
+            subtitle = `${jarak} · di ${g.direction}`;
+          }
+        }
+
+        const Arrow = isFailSafe ? ArrowUp : g.direction === "kiri" ? ArrowLeft : g.direction === "kanan" ? ArrowRight : ArrowUp;
+        const barPct = !effectiveHasObstacle ? 12 : ((effectiveLevel + 1) / 3) * 100;
+
         return (
           <div className="absolute bottom-4 left-4 right-4 z-20">
             <div className="bg-white rounded-3xl p-4" style={{ boxShadow: `0 14px 44px -8px ${accent}55` }}>
               <div className="flex items-center gap-3">
                 <div className="w-12 h-12 rounded-full flex items-center justify-center shrink-0" style={{ backgroundColor: `${accent}1f` }}>
-                  {g.hasObstacle ? (
+                  {effectiveHasObstacle ? (
                     <AlertTriangle className="w-6 h-6" style={{ color: accent }} />
                   ) : (
                     <Compass className="w-6 h-6" style={{ color: accent }} />
                   )}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="font-extrabold text-[16px] leading-tight truncate" style={{ color: g.hasObstacle ? accent : "#0f172a" }}>
+                  <p className="font-extrabold text-[16px] leading-tight truncate" style={{ color: effectiveHasObstacle ? accent : "#0f172a" }}>
                     {title}
                   </p>
                   <p className="text-slate-500 text-[12px] leading-snug">{subtitle}</p>
                 </div>
-                {g.hasObstacle && (
+                {effectiveHasObstacle && (
                   <div className="w-11 h-11 rounded-full flex items-center justify-center shrink-0" style={{ backgroundColor: `${accent}1f` }}>
                     <Arrow className="w-6 h-6" strokeWidth={2.5} style={{ color: accent }} />
                   </div>

@@ -1,4 +1,4 @@
-import { Timestamp } from "firebase/firestore";
+import { Timestamp, FieldValue } from "firebase/firestore";
 
 /**
  * Skema terpadu untuk dokumen koleksi `emergency_reports`.
@@ -28,3 +28,29 @@ export interface EmergencyReport {
   source?: string; // 'web_portal' | 'mobile'
   createdAt?: Timestamp | null;
 }
+
+/**
+ * Skema terpadu untuk koleksi `bisindo_dictionary`.
+ * Digunakan untuk manajemen materi isyarat 3D di Super Admin / Developer Studio
+ * dan konsumsi dinamis di biPINTAR, biSAPA, serta Floating 3D Widget.
+ */
+export type BisindoCategory = 'sapaan' | 'akademik' | 'darurat' | 'harian' | 'angka' | 'alfabet';
+export type BisindoDifficulty = 'mudah' | 'sedang' | 'sulit';
+export type BisindoGenerationStatus = 'raw_uploaded' | 'generating_3d' | 'ready' | 'failed';
+
+export interface BisindoItem {
+  id: string;               // slug: misal 'selamat-pagi'
+  word: string;             // 'Selamat Pagi'
+  category: BisindoCategory;
+  difficulty: BisindoDifficulty;
+  description?: string;     // Tips / petunjuk peragaan
+  videoRawUrl: string;      // Video asli rekaman kamera HP
+  asset3dUrl?: string;      // Aset animasi 3D hasil generate (Rian POLMAN)
+  thumbnailUrl?: string;    // Gambar cuplikan pose utama
+  poseKey?: string;         // 'terima_kasih' | 'salam' | 'ya' | 'bisa' | 'halo' | 'tolong'
+  status: BisindoGenerationStatus;
+  authorEmail?: string;
+  createdAt?: Timestamp | FieldValue | string | null;
+  updatedAt?: Timestamp | FieldValue | string | null;
+}
+

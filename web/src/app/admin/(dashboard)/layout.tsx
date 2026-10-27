@@ -3,7 +3,7 @@
 import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { Activity, AlertTriangle, GraduationCap, LogOut, ShieldAlert, Bell, Clock, History, Map, Megaphone, Settings, Menu, X } from "lucide-react";
+import { Activity, AlertTriangle, GraduationCap, LogOut, ShieldAlert, Bell, Clock, History, Map, Megaphone, Settings, Menu, X, Sparkles } from "lucide-react";
 import { auth, db } from "@/lib/firebase";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { collection, query, orderBy, limit, onSnapshot, doc, getDoc } from "firebase/firestore";
@@ -59,8 +59,11 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       try {
         const snap = await getDoc(doc(db, "users", user.uid));
         const data = snap.data();
-        // Terima dua skema: `isAdmin: true` (dari mobile) ATAU `role: "admin"` (dari web).
-        const isAdminUser = data?.isAdmin === true || data?.role === "admin";
+        // Terima dua skema: `isAdmin: true` (dari mobile) ATAU `role: "admin"` (dari web), serta email superadmin
+        const isAdminUser = 
+          user.email === "superadmin@dibisalitas.id" ||
+          data?.isAdmin === true || 
+          data?.role === "admin";
         if (isAdminUser) {
           setUserEmail(user.email);
           setIsChecking(false);
@@ -244,6 +247,11 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       title: "BiKELOLA",
       href: "/admin/bikelola",
       icon: <GraduationCap className="w-5 h-5" />
+    },
+    {
+      title: "Studio 3D Isyarat",
+      href: "/admin/studio-isyarat",
+      icon: <Sparkles className="w-5 h-5 text-amber-500" />
     },
     {
       title: "Pengaturan Profil",
