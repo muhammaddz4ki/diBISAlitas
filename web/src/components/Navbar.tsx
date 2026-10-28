@@ -21,6 +21,7 @@ import {
   Zap,
 } from "lucide-react";
 import ThemeToggle from "@/components/ThemeToggle";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { useTheme } from "@/lib/ThemeContext";
 
 export const FEATURES_LIST = [
@@ -143,18 +144,18 @@ export default function Navbar() {
     >
       <div className="flex items-center justify-between w-full">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2.5 group z-10">
+        <Link href="/" className="flex items-center gap-2.5 group z-10 notranslate" translate="no">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/logo/logo.png"
             alt="Logo diBISAlitas"
             className="w-9 h-9 object-contain group-hover:scale-105 transition-transform duration-300"
           />
-          <div className="flex flex-col">
-            <span className="text-xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-none">
+          <div className="flex flex-col notranslate" translate="no">
+            <span className="text-xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-none notranslate" translate="no">
               di<span className="text-[#2a9d8f]">BISA</span>litas
             </span>
-            <span className="text-[10px] font-semibold text-slate-400 dark:text-slate-500 tracking-wider">
+            <span className="text-[10px] font-semibold text-slate-400 dark:text-slate-500 tracking-wider notranslate" translate="no">
               AI INCLUSIVITY PLATFORM
             </span>
           </div>
@@ -249,7 +250,7 @@ export default function Navbar() {
                           </div>
                           <div className="flex-1 min-w-0 pt-0.5">
                             <div className="flex items-center gap-2 mb-1">
-                              <span className="font-extrabold text-sm text-slate-900 dark:text-white group-hover:text-[#2a9d8f] dark:group-hover:text-[#4fd1c5] transition-colors">
+                              <span className="font-extrabold text-sm text-slate-900 dark:text-white group-hover:text-[#2a9d8f] dark:group-hover:text-[#4fd1c5] transition-colors notranslate" translate="no">
                                 {f.name}
                               </span>
                               <span className="text-[9px] font-bold px-2 py-0.5 rounded-full bg-slate-100 dark:bg-white/5 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-white/10">
@@ -341,7 +342,11 @@ export default function Navbar() {
                           <div>
                             <div className="flex items-center gap-2">
                               <span className="font-extrabold text-sm text-slate-900 dark:text-white group-hover:text-[#2a9d8f] dark:group-hover:text-[#4fd1c5] transition-colors">
-                                {d.title}
+                                {d.title.includes("diBISAlitas") ? (
+                                  <>Demo Aplikasi <span className="notranslate" translate="no">diBISAlitas</span></>
+                                ) : (
+                                  <>Demo Dashboard <span className="notranslate" translate="no">BiPANTAU</span></>
+                                )}
                               </span>
                             </div>
                             <p className="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400/80 mt-1 leading-relaxed">
@@ -360,7 +365,8 @@ export default function Navbar() {
 
         </nav>
 
-        <div className="hidden lg:flex items-center gap-3">
+        <div className="hidden lg:flex items-center gap-2.5">
+          <LanguageSwitcher variant="pill" />
           <ThemeToggle />
           <Link
             href="/demo"
@@ -377,8 +383,9 @@ export default function Navbar() {
           </Link>
         </div>
 
-        {/* Mobile Hamburger Button & Theme Toggle */}
+        {/* Mobile Hamburger Button & Theme/Language Toggle */}
         <div className="lg:hidden flex items-center gap-2">
+          <LanguageSwitcher variant="compact" />
           <ThemeToggle />
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
@@ -434,7 +441,7 @@ export default function Navbar() {
                           <Icon className="w-5 h-5" />
                         </div>
                         <div>
-                          <div className="font-bold text-sm text-slate-900 dark:text-white">
+                          <div className="font-bold text-sm text-slate-900 dark:text-white notranslate" translate="no">
                             {f.name}
                           </div>
                           <div className="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5">
@@ -466,7 +473,11 @@ export default function Navbar() {
                         </div>
                         <div>
                           <div className="font-bold text-sm text-slate-900 dark:text-white">
-                            {d.title}
+                            {d.title.includes("diBISAlitas") ? (
+                              <>Demo Aplikasi <span className="notranslate" translate="no">diBISAlitas</span></>
+                            ) : (
+                              <>Demo Dashboard <span className="notranslate" translate="no">BiPANTAU</span></>
+                            )}
                           </div>
                         </div>
                       </Link>
@@ -476,6 +487,12 @@ export default function Navbar() {
               </div>
 
               <div className="pt-4 border-t border-slate-200 dark:border-white/10 space-y-3 px-1">
+                {/* Mobile Language Switcher Card */}
+                <div className="flex items-center justify-between p-3 rounded-2xl bg-white dark:bg-[#1f1f1f] border border-slate-100 dark:border-white/5 shadow-sm">
+                  <span className="text-xs font-bold text-slate-700 dark:text-slate-300">Pilih Bahasa / Language</span>
+                  <LanguageSwitcher variant="pill" showIcon={false} />
+                </div>
+
                 <Link
                   href="/#video-demo"
                   onClick={() => setMobileOpen(false)}

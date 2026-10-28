@@ -312,7 +312,7 @@ export default function FiturOverviewPage() {
                    </div>
                 </div>
 
-                <h3 className={`text-xl lg:text-2xl font-black bg-clip-text text-transparent bg-gradient-to-r ${theme.textGradient} mb-1`}>
+                <h3 className={`text-xl lg:text-2xl font-black bg-clip-text text-transparent bg-gradient-to-r ${theme.textGradient} mb-1 notranslate`} translate="no">
                   {activeFeature.title}
                 </h3>
                 

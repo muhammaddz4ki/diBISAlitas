@@ -122,7 +122,7 @@ function HeroSection() {
       
       {/* Giant faint background text */}
       <div className="absolute top-[40%] md:top-[45%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-full text-center pointer-events-none opacity-[0.03] dark:opacity-[0.05] flex flex-col justify-center items-center z-0">
-         <span className="text-[12rem] md:text-[22rem] font-black leading-none tracking-tighter text-[#2a9d8f] dark:text-[#4fd1c5]">diBISA</span>
+         <span className="text-[12rem] md:text-[22rem] font-black leading-none tracking-tighter text-[#2a9d8f] dark:text-[#4fd1c5] notranslate" translate="no">diBISA</span>
          <span className="text-[12rem] md:text-[22rem] font-black leading-none tracking-tighter text-[#2a9d8f] dark:text-[#4fd1c5]">litas</span>
       </div>
 
@@ -304,7 +304,7 @@ function AboutProjectSection() {
           </span>
           
           <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.5rem] font-black leading-[1.05] tracking-tight">
-            diBISAlitas adalah platform AI{" "}
+            <span className="notranslate" translate="no">diBISAlitas</span> adalah platform AI{" "}
             <em className="font-black italic text-[#2a9d8f] dark:text-[#4fd1c5]">
               yang mengubah hidup penyandang disabilitas.
             </em>
@@ -680,7 +680,7 @@ function BentoFeaturesSection() {
                       className={`w-7 h-7 sm:w-8 sm:h-8 transition-colors ${isActive ? "text-white" : `text-slate-400 dark:text-white/40 ${p.hoverText}`}`}
                       strokeWidth={1.5}
                     />
-                    <span className={`text-[10px] sm:text-xs font-bold uppercase tracking-wide leading-tight ${isActive ? "text-white/90" : "text-slate-500 dark:text-white/40"} text-center px-2 w-full break-words`}>
+                    <span className={`text-[10px] sm:text-xs font-bold uppercase tracking-wide leading-tight ${isActive ? "text-white/90" : "text-slate-500 dark:text-white/40"} text-center px-2 w-full break-words notranslate`} translate="no">
                       {p.title}
                     </span>
                   </button>
@@ -710,7 +710,7 @@ function BentoFeaturesSection() {
                 className="space-y-4 md:space-y-6 pt-1"
               >
                 <h3 className="text-3xl sm:text-4xl md:text-[2.8rem] font-black leading-[1.1] tracking-tight text-slate-900 dark:text-white line-clamp-3">
-                  {activePillar.title}
+                  <span className="notranslate" translate="no">{activePillar.title}</span>
                   <br />
                   <em className={`font-black italic bg-clip-text text-transparent bg-gradient-to-r ${activePillar.textGradient}`}>
                     {activePillar.tagline}
@@ -759,7 +759,7 @@ function BentoFeaturesSection() {
                         className={`w-6 h-6 md:w-8 md:h-8 transition-colors ${isActive ? "text-white" : `text-slate-400 dark:text-white/40 ${p.hoverText}`}`}
                         strokeWidth={1.5}
                       />
-                      <span className={`text-xs md:text-sm font-bold uppercase tracking-wider mt-1 ${isActive ? "text-white/90" : "text-slate-500 dark:text-white/40"}`}>
+                      <span className={`text-xs md:text-sm font-bold uppercase tracking-wider mt-1 ${isActive ? "text-white/90" : "text-slate-500 dark:text-white/40"} notranslate`} translate="no">
                         {p.title}
                       </span>
                       
@@ -1223,7 +1223,7 @@ function Footer() {
           <div className="flex items-center gap-2">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/logo/logo.png" alt="diBISAlitas" className="w-8 h-8 object-contain" />
-            <span className="text-lg font-black text-slate-900 dark:text-white transition-colors duration-300">
+            <span className="text-lg font-black text-slate-900 dark:text-white transition-colors duration-300 notranslate" translate="no">
               di<span className="text-[#2a9d8f]">BISA</span>litas
             </span>
           </div>
@@ -1234,12 +1234,12 @@ function Footer() {
 
         <div className="space-y-2 text-xs">
           <div className="font-bold text-slate-900 dark:text-white uppercase tracking-wider mb-2 transition-colors duration-300">Fitur Unggulan</div>
-          <div><Link href="/fitur/bisafe" className="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors duration-300">BiSAFE (Darurat SOS)</Link></div>
-          <div><Link href="/fitur/bipantau" className="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors duration-300">BiPANTAU (Command Center)</Link></div>
-          <div><Link href="/fitur/bisapa" className="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors duration-300">BiSAPA (Isyarat AI)</Link></div>
-          <div><Link href="/fitur/bibaca" className="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors duration-300">BiBACA (Smart OCR)</Link></div>
-          <div><Link href="/fitur/bipintar" className="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors duration-300">BiPINTAR (E-Learning)</Link></div>
-          <div><Link href="/fitur/bijalan" className="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors duration-300">BiJALAN (Navigasi Spasial)</Link></div>
+          <div><Link href="/fitur/bisafe" className="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors duration-300"><span className="notranslate" translate="no">BiSAFE</span> (Darurat SOS)</Link></div>
+          <div><Link href="/fitur/bipantau" className="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors duration-300"><span className="notranslate" translate="no">BiPANTAU</span> (Command Center)</Link></div>
+          <div><Link href="/fitur/bisapa" className="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors duration-300"><span className="notranslate" translate="no">BiSAPA</span> (Isyarat AI)</Link></div>
+          <div><Link href="/fitur/bibaca" className="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors duration-300"><span className="notranslate" translate="no">BiBACA</span> (Smart OCR)</Link></div>
+          <div><Link href="/fitur/bipintar" className="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors duration-300"><span className="notranslate" translate="no">BiPINTAR</span> (E-Learning)</Link></div>
+          <div><Link href="/fitur/bijalan" className="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors duration-300"><span className="notranslate" translate="no">BiJALAN</span> (Navigasi Spasial)</Link></div>
         </div>
 
         <div className="space-y-2 text-xs">
@@ -1252,7 +1252,7 @@ function Footer() {
       </div>
 
       <div className="max-w-7xl mx-auto pt-10 mt-10 border-t border-slate-200 dark:border-white/10 text-center text-xs text-slate-400 transition-colors duration-300">
-        Hak Cipta &copy; {new Date().getFullYear()} diBISAlitas Platform. Seluruh Hak Dilindungi.
+        Hak Cipta &copy; {new Date().getFullYear()} <span className="notranslate" translate="no">diBISAlitas</span> Platform. Seluruh Hak Dilindungi.
       </div>
     </footer>
   );

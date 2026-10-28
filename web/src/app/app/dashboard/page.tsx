@@ -9,6 +9,7 @@ import Link from "next/link";
 import { ShieldAlert, MessageCircle, BookOpen, Navigation, Bell, ChevronRight, ChevronLeft, PlayCircle, Clock, Users, Calendar, ArrowRight, Glasses, Info, Siren, AlertTriangle } from "lucide-react";
 import { motion, AnimatePresence, Variants } from "framer-motion";
 import { useAccessibility } from "@/lib/AccessibilityContext";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 
 // We will define variants dynamically inside components using the reduceMotion flag
 
@@ -217,19 +218,22 @@ export default function DashboardPage() {
             </div>
           </div>
 
-          {/* Notification Button */}
-          <button
-            onClick={openNotif}
-            aria-label="Notifikasi"
-            className="relative w-12 h-12 rounded-[20px] bg-transparent flex items-center justify-center shadow-3d shadow-3d-hover shadow-3d-active"
-          >
-            {unreadCount > 0 && (
-              <span className="absolute -top-1.5 -right-1.5 min-w-[20px] h-[20px] px-1 bg-gradient-to-br from-rose-400 to-rose-600 rounded-full border-2 border-white text-[10px] font-bold text-white flex items-center justify-center shadow-[0_4px_10px_rgba(244,63,94,0.5)]">
-                {unreadCount > 9 ? "9+" : unreadCount}
-              </span>
-            )}
-            <Bell className="w-5 h-5 text-slate-600" />
-          </button>
+          {/* Header Action Buttons: Language & Notifikasi */}
+          <div className="flex items-center gap-2 shrink-0">
+            <LanguageSwitcher variant="pill" />
+            <button
+              onClick={openNotif}
+              aria-label="Notifikasi"
+              className="relative w-12 h-12 rounded-[20px] bg-transparent flex items-center justify-center shadow-3d shadow-3d-hover shadow-3d-active"
+            >
+              {unreadCount > 0 && (
+                <span className="absolute -top-1.5 -right-1.5 min-w-[20px] h-[20px] px-1 bg-gradient-to-br from-rose-400 to-rose-600 rounded-full border-2 border-white text-[10px] font-bold text-white flex items-center justify-center shadow-[0_4px_10px_rgba(244,63,94,0.5)]">
+                  {unreadCount > 9 ? "9+" : unreadCount}
+                </span>
+              )}
+              <Bell className="w-5 h-5 text-slate-600" />
+            </button>
+          </div>
         </div>
       </div>
 

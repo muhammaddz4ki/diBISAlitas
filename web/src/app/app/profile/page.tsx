@@ -18,6 +18,7 @@ import { LogOut, Eye, EyeOff, Save, CheckCircle2, AlertCircle, Volume2, VolumeX,
 import { useTalkbackContext } from "@/lib/TalkbackContext";
 import { useAccessibility, FONT_LABELS } from "@/lib/AccessibilityContext";
 import { motion, AnimatePresence, Variants } from "framer-motion";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 
 const containerVariants: Variants = {
   hidden: { opacity: 0 },
@@ -186,19 +187,22 @@ export default function ProfilePage() {
 
       {/* Header — Sticky 3D Neumorphism */}
       <div className="sticky top-0 z-50 px-6 pt-5 pb-5 bg-[#f4f6fc]/95 backdrop-blur-xl border-b border-white shadow-3d rounded-b-[2rem] shrink-0 mb-4">
-        <div className="flex items-center gap-3.5">
-          <div className="relative shrink-0">
-            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#00B894] to-[#4fd1c5] flex items-center justify-center shadow-[0_4px_8px_rgba(0,184,148,0.3)] border border-white bubble-3d">
-              <span className="text-[22px] font-black text-white drop-shadow-md">{initial}</span>
+        <div className="flex items-center justify-between gap-3">
+          <div className="flex items-center gap-3.5 min-w-0">
+            <div className="relative shrink-0">
+              <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#00B894] to-[#4fd1c5] flex items-center justify-center shadow-[0_4px_8px_rgba(0,184,148,0.3)] border border-white bubble-3d">
+                <span className="text-[22px] font-black text-white drop-shadow-md">{initial}</span>
+              </div>
+              <div className="absolute -bottom-1.5 -right-1.5 w-6 h-6 bg-gradient-to-br from-[#2a9d8f] to-[#4fd1c5] rounded-lg shadow-sm border-[1.5px] border-white flex items-center justify-center">
+                <ShieldCheck className="w-3 h-3 text-white drop-shadow-md" strokeWidth={3} />
+              </div>
             </div>
-            <div className="absolute -bottom-1.5 -right-1.5 w-6 h-6 bg-gradient-to-br from-[#2a9d8f] to-[#4fd1c5] rounded-lg shadow-sm border-[1.5px] border-white flex items-center justify-center">
-              <ShieldCheck className="w-3 h-3 text-white drop-shadow-md" strokeWidth={3} />
+            <div className="min-w-0">
+              <h1 className="text-[24px] font-black text-slate-900 tracking-tight leading-tight text-3d truncate">{user?.displayName || "Pengguna"}</h1>
+              <p className="text-slate-500 text-[13px] font-medium mt-0.5 text-3d truncate">{user?.email}</p>
             </div>
           </div>
-          <div className="min-w-0">
-            <h1 className="text-[24px] font-black text-slate-900 tracking-tight leading-tight text-3d truncate">{user?.displayName || "Pengguna"}</h1>
-            <p className="text-slate-500 text-[13px] font-medium mt-0.5 text-3d truncate">{user?.email}</p>
-          </div>
+          <LanguageSwitcher variant="pill" className="shrink-0" />
         </div>
       </div>
 
@@ -313,6 +317,11 @@ export default function ProfilePage() {
           <motion.div variants={itemVariants} className="mb-2">
             <div className="flex items-center justify-between mb-4 px-2">
               <h2 className="text-[12px] font-extrabold text-slate-500 uppercase tracking-widest text-3d">Aksesibilitas</h2>
+            </div>
+
+            {/* Pengaturan Bahasa Aplikasi */}
+            <div className="mb-4">
+              <LanguageSwitcher variant="card" />
             </div>
 
             {/* Ukuran Teks */}

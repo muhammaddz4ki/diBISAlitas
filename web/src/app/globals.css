@@ -650,3 +650,87 @@ html.a11y-hc header {
 .animate-holo-grid {
   animation: holographicGrid 3s linear infinite;
 }
+
+/* ==========================================================================
+   Google Translate Seamless Engine Overrides (Automated Bilingual System)
+   ========================================================================== */
+
+/* 1. Sembunyikan SEMUA iframe & container banner toolbar Google Translate (versi lama & modern) */
+.goog-te-banner-frame,
+.goog-te-banner-frame.skiptranslate,
+iframe.goog-te-banner-frame,
+iframe.skiptranslate,
+body > .skiptranslate,
+body > iframe.skiptranslate,
+body > iframe[src*="translate.google"],
+body > iframe[id*=":1.container"],
+body > iframe[id*=":2.container"],
+body > div[id*=":1.container"],
+body > div[id*=":2.container"],
+.VIpgJd-ZVi9od-ORHb-Oxf5Fd,
+.VIpgJd-ZVi9od-ORHb,
+.VIpgJd-ZVi9od-aZ2wEe-wOHMyf,
+.VIpgJd-ZVi9od-SmfZ-Oxf5Fd,
+.VIpgJd-ZVi9od-xl07Ob-Oxf5Fd,
+[class*="VIpgJd-ZVi9od"],
+.goog-te-gadget-simple,
+.goog-te-gadget,
+#google_translate_element,
+#google_translate_element .goog-te-combo {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  height: 0px !important;
+  width: 0px !important;
+  max-height: 0px !important;
+  max-width: 0px !important;
+  position: absolute !important;
+  top: -9999px !important;
+  left: -9999px !important;
+  pointer-events: none !important;
+  z-index: -9999 !important;
+  clip: rect(0 0 0 0) !important;
+  overflow: hidden !important;
+}
+
+/* 2. Cegah pergeseran margin/top 40px pada body dan html yang dipaksakan Google Translate */
+html,
+body {
+  top: 0px !important;
+  position: static !important;
+  margin-top: 0px !important;
+  transform: none !important;
+}
+
+/* 3. Sembunyikan tooltip pop-up terjemahan saat teks di-hover */
+#goog-gt-tt,
+.goog-te-balloon-frame,
+.goog-tooltip,
+.goog-tooltip:hover {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* 4. Hapus highlight background kuning/abu-abu bawaan Google pada teks */
+.goog-text-highlight {
+  background-color: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+/* 5. Jaga font asli diBISAlitas (Plus Jakarta Sans) agar tidak ditimpa Google */
+font[style] {
+  background-color: transparent !important;
+  box-shadow: none !important;
+  color: inherit !important;
+  font-family: inherit !important;
+}
+
+/* 6. Lindungi nama brand dan keyword sistem dari penerjemahan literal */
+.notranslate,
+[translate="no"] {
+  transform: translateZ(0);
+}
+

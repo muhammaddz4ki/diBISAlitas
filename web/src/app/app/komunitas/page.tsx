@@ -5,6 +5,7 @@ import { collection, onSnapshot, query, orderBy, Timestamp } from "firebase/fire
 import { db } from "@/lib/firebase";
 import { Megaphone, Info, AlertTriangle, Siren, Clock, ChevronRight, Trophy, Crown, Medal } from "lucide-react";
 import { motion, AnimatePresence, Variants } from "framer-motion";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 import Link from "next/link";
 import { subscribeLeaderboard, QuizScoreEntry } from "@/lib/quizService";
 import ModalPortal from "@/components/ModalPortal";
@@ -108,14 +109,16 @@ export default function KomunitasPage() {
     <div className="min-h-full bg-[#f4f6fc] selection:bg-[#2a9d8f]/20">
       {/* Header — Sticky 3D Neumorphism */}
       <div className="sticky top-0 z-50 px-6 pt-5 pb-5 bg-[#f4f6fc]/95 backdrop-blur-xl border-b border-white shadow-3d rounded-b-[2rem] shrink-0 mb-4">
-        <div className="flex items-center gap-3.5">
-          <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#00B894] to-[#4fd1c5] flex items-center justify-center shrink-0 bubble-3d text-white">
-            <Megaphone className="w-7 h-7 text-white drop-shadow-md" strokeWidth={2.5} />
+        <div className="flex items-center justify-between gap-3">
+          <div className="flex items-center gap-3.5 min-w-0">
+            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#00B894] to-[#4fd1c5] flex items-center justify-center shrink-0 bubble-3d text-white">
+              <Megaphone className="w-7 h-7 text-white drop-shadow-md" strokeWidth={2.5} />
+            </div>
+            <div className="min-w-0">
+              <h1 className="text-[24px] font-black text-slate-900 tracking-tight leading-tight text-3d">Komunitas &amp; Info</h1>
+            </div>
           </div>
-          <div>
-
-            <h1 className="text-[24px] font-black text-slate-900 tracking-tight leading-tight text-3d">Komunitas &amp; Info</h1>
-          </div>
+          <LanguageSwitcher variant="pill" className="shrink-0" />
         </div>
       </div>
 

@@ -1,4 +1,5 @@
 "use client";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 
 import React, { useEffect, useRef } from "react";
 import Link from "next/link";
@@ -76,17 +77,19 @@ export default function BibacaScreen() {
     <div className={`min-h-[100dvh] bg-[#f4f6fc] ${tSelection} flex flex-col pb-4 relative overflow-x-hidden`}>
       <div className="sticky top-0 z-50 px-6 pt-5 pb-5 bg-[#f4f6fc]/95 backdrop-blur-xl border-b border-white shadow-3d rounded-b-[2rem] shrink-0 mb-4">
         <div className="flex items-start justify-between">
-          <div className="flex items-center gap-3.5">
-            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-purple-400 to-purple-600 flex items-center justify-center shrink-0 bubble-3d text-white">
-              <Glasses className="w-7 h-7 text-white drop-shadow-md" strokeWidth={2.5} />
+          <div className="flex items-center justify-between gap-3">
+            <div className="flex items-center gap-3.5 min-w-0">
+              <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-purple-400 to-purple-600 flex items-center justify-center shrink-0 bubble-3d text-white">
+                <Glasses className="w-7 h-7 text-white drop-shadow-md" strokeWidth={2.5} />
+              </div>
+              <div className="min-w-0">
+                <h1 className="text-[24px] font-black text-slate-800 tracking-tight leading-tight text-3d notranslate" translate="no">BiBACA</h1>
+                <p className="text-slate-500 text-[13px] leading-snug line-clamp-2 max-w-[190px] mt-0.5 text-3d">
+                  Pemindai Teks Pintar
+                </p>
+              </div>
             </div>
-            <div>
-
-              <h1 className="text-[24px] font-black text-slate-800 tracking-tight leading-tight text-3d">BiBACA</h1>
-              <p className="text-slate-500 text-[13px] leading-snug line-clamp-2 max-w-[240px] mt-0.5 text-3d">
-                Pemindai Teks Pintar
-              </p>
-            </div>
+            <LanguageSwitcher variant="pill" className="shrink-0" />
           </div>
           
           <Link

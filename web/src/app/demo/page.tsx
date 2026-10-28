@@ -40,7 +40,7 @@ export default function DemoHubPage() {
             className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight text-slate-900 dark:text-white leading-[1.15]"
           >
             Pusat Demo Ekosistem <br />
-            <span className="text-[#2a9d8f] dark:text-[#4fd1c5]">diBISAlitas Platform</span>
+            <span className="text-[#2a9d8f] dark:text-[#4fd1c5] notranslate" translate="no">diBISAlitas Platform</span>
           </motion.h1>
 
           <motion.p 
@@ -77,7 +77,7 @@ export default function DemoHubPage() {
             
             <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.5rem] font-black leading-[1.05] tracking-tight">
               Demo Aplikasi <br/>
-              <em className="font-black italic text-[#2a9d8f] dark:text-[#4fd1c5]">
+              <em className="font-black italic text-[#2a9d8f] dark:text-[#4fd1c5] notranslate" translate="no">
                 diBISAlitas
               </em>
             </h2>

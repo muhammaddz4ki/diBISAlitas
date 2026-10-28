@@ -11,6 +11,7 @@ import { Toaster, toast } from "react-hot-toast";
 import { motion } from "framer-motion";
 
 import { isAdminDemoMode } from "@/lib/adminDemoData";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -317,6 +318,12 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         </nav>
 
         <div className="p-4 border-t-2 border-white/50 space-y-3 whitespace-nowrap">
+          {/* Language Switcher */}
+          <div className="flex items-center justify-center lg:justify-between px-1 py-1">
+            <span className="hidden lg:group-hover:inline text-xs font-extrabold text-slate-500">Bahasa / Language</span>
+            <LanguageSwitcher variant="compact" />
+          </div>
+
           {/* Notifikasi Button */}
           <button
             onClick={() => {
@@ -373,14 +380,20 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
       {/* ── Main Content Area ── */}
       <main className="flex-1 h-full overflow-y-auto overflow-x-hidden relative min-w-0 lg:ml-[5.5rem] peer-hover:lg:ml-72 transition-all duration-300">
-        {/* Mobile Hamburger Button */}
-        <div className="lg:hidden p-4 sticky top-0 z-20 neo-page/80 backdrop-blur-sm">
+        {/* Desktop Top Right Language Switcher Pill */}
+        <div className="hidden lg:flex fixed top-4 right-8 z-30">
+          <LanguageSwitcher variant="pill" />
+        </div>
+
+        {/* Mobile Hamburger Button & Language Switcher */}
+        <div className="lg:hidden p-4 sticky top-0 z-20 neo-page/80 backdrop-blur-sm flex items-center justify-between">
           <button 
             onClick={() => setIsMobileMenuOpen(true)}
             className="p-3 w-12 h-12 flex items-center justify-center neo-flat text-slate-500 border-none"
           >
             <Menu className="w-6 h-6" />
           </button>
+          <LanguageSwitcher variant="compact" />
         </div>
 
         {/* Demo Mode Notice Banner */}

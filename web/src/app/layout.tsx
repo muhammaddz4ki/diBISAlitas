@@ -36,6 +36,7 @@ export const metadata: Metadata = {
 };
 
 import { ThemeProvider } from "@/lib/ThemeContext";
+import { LanguageProvider } from "@/lib/LanguageContext";
 import FloatingAccessibility from "@/components/FloatingAccessibility";
 
 export default function RootLayout({
@@ -51,12 +52,14 @@ export default function RootLayout({
       className={`${jakarta.variable} ${geistMono.variable} ${playfair.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-[#ffffff] dark:bg-black text-slate-800 dark:text-slate-100 transition-colors duration-300">
-        <ThemeProvider>
-          <div className="a11y-content-wrapper flex-1 flex flex-col">
-            {children}
-          </div>
-          <FloatingAccessibility />
-        </ThemeProvider>
+        <LanguageProvider>
+          <ThemeProvider>
+            <div className="a11y-content-wrapper flex-1 flex flex-col">
+              {children}
+            </div>
+            <FloatingAccessibility />
+          </ThemeProvider>
+        </LanguageProvider>
       </body>
     </html>
   );

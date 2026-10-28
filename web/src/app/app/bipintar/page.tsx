@@ -6,6 +6,7 @@ import { collection, onSnapshot, query } from "firebase/firestore";
 import { BookOpen, PlayCircle, Clock, Camera, Sparkles, ChevronRight, Trophy, GraduationCap, BarChart3, X, Hand } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { motion, Variants } from "framer-motion";
 import { useAccessibility } from "@/lib/AccessibilityContext";
 import ModalPortal from "@/components/ModalPortal";
@@ -61,17 +62,19 @@ export default function BiPintarPage() {
 
       {/* Header — Sticky 3D Neumorphism */}
       <div className="sticky top-0 z-50 px-6 pt-5 pb-5 bg-[#f4f6fc]/95 backdrop-blur-xl border-b border-white shadow-3d rounded-b-[2rem] shrink-0 mb-4">
-        <div className="flex items-center gap-3.5">
-          <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${themeGrad} flex items-center justify-center shrink-0 bubble-3d text-white`}>
-            <BookOpen className="w-7 h-7 text-white drop-shadow-md" strokeWidth={2.5} />
+        <div className="flex items-center justify-between gap-3">
+          <div className="flex items-center gap-3.5 min-w-0">
+            <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${themeGrad} flex items-center justify-center shrink-0 bubble-3d text-white`}>
+              <BookOpen className="w-7 h-7 text-white drop-shadow-md" strokeWidth={2.5} />
+            </div>
+            <div className="min-w-0">
+              <h1 className="text-[24px] font-black text-slate-900 tracking-tight leading-tight text-3d notranslate" translate="no">BiPINTAR</h1>
+              <p className="text-slate-500 text-[13px] leading-snug line-clamp-2 max-w-[190px] mt-0.5 text-3d">
+                Akses modul interaktif dan kelas keahlian untuk tingkatkan kompetensimu.
+              </p>
+            </div>
           </div>
-          <div>
-
-            <h1 className="text-[24px] font-black text-slate-900 tracking-tight leading-tight text-3d">BiPINTAR</h1>
-            <p className="text-slate-500 text-[13px] leading-snug line-clamp-2 max-w-[240px] mt-0.5 text-3d">
-              Akses modul interaktif dan kelas keahlian untuk tingkatkan kompetensimu.
-            </p>
-          </div>
+          <LanguageSwitcher variant="pill" className="shrink-0" />
         </div>
       </div>
 

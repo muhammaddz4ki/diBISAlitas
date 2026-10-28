@@ -31,6 +31,7 @@ import {
   Send
 } from "lucide-react";
 import { useTheme } from "@/lib/ThemeContext";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 import Bisindo3DCharacter, { AvatarModelId } from "@/components/Bisindo3DCharacter";
 import { subscribeBisindoItems } from "@/lib/bisindoService";
 import { BisindoItem } from "@/lib/types";
@@ -442,6 +443,9 @@ export default function FloatingAccessibility() {
             {/* Content List */}
             <div className="flex-1 p-4 space-y-3.5 overflow-y-auto custom-scrollbar">
               
+              {/* Bahasa Situs Web / Web Language */}
+              <LanguageSwitcher variant="card" />
+
               {/* Tema Layar */}
               <div className="space-y-2">
                 <label className="text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 pl-2">Tema Layar</label>
