@@ -6,7 +6,6 @@ import {
   DO_NOT_TRANSLATE_WHITELIST,
   BRAND_DICTIONARY,
   BRAND_NAME,
-  unmaskBrand,
 } from "@/lib/brandProtection";
 
 export { DO_NOT_TRANSLATE_WHITELIST, BRAND_DICTIONARY, BRAND_NAME };
@@ -94,77 +93,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
     return false;
   }, []);
 
-  // Active observer: Suppress Google banner & Proteksi Nama Merek diBISAlitas di Live DOM
-  useEffect(() => {
-    if (typeof window === "undefined") return;
 
-    const protectBrandInDom = () => {
-      const mistranslationRegex = /\b(can[- ]abilities|can[- ]ability|in[- ]abilities|in[- ]ability|at[- ]bisalitas|di[- ]bisalitas|dibisalitas|di[- ]bisa[- ]litas)\b/i;
-
-      // Scan and protect any occurrences of "diBISAlitas" mistranslations on live DOM
-      const walker = document.createTreeWalker(
-        document.body,
-        NodeFilter.SHOW_TEXT,
-        {
-          acceptNode: (node) => {
-            if (!node.nodeValue) return NodeFilter.FILTER_REJECT;
-            if (mistranslationRegex.test(node.nodeValue)) {
-              return NodeFilter.FILTER_ACCEPT;
-            }
-            return NodeFilter.FILTER_SKIP;
-          },
-        }
-      );
-
-      const nodesToFix: Text[] = [];
-      let current: Node | null;
-      while ((current = walker.nextNode())) {
-        nodesToFix.push(current as Text);
-      }
-
-      nodesToFix.forEach((textNode) => {
-        if (textNode.nodeValue) {
-          textNode.nodeValue = unmaskBrand(textNode.nodeValue);
-        }
-      });
-    };
-
-    const suppressBannerAndProtectBrand = () => {
-      if (document.body.style.top && document.body.style.top !== "0px") {
-        document.body.style.top = "0px";
-      }
-      if (document.body.style.position && document.body.style.position !== "static") {
-        document.body.style.position = "static";
-      }
-      const bannerElements = document.querySelectorAll<HTMLElement>(
-        'iframe.skiptranslate, .goog-te-banner-frame, [class*="VIpgJd-ZVi9od"], body > .skiptranslate'
-      );
-      bannerElements.forEach((el) => {
-        if (el.id !== "google_translate_element") {
-          el.style.setProperty("display", "none", "important");
-          el.style.setProperty("visibility", "hidden", "important");
-          el.style.setProperty("height", "0px", "important");
-          el.style.setProperty("width", "0px", "important");
-          el.style.setProperty("opacity", "0", "important");
-          el.style.setProperty("pointer-events", "none", "important");
-        }
-      });
-
-      protectBrandInDom();
-    };
-
-    suppressBannerAndProtectBrand();
-    const observer = new MutationObserver(suppressBannerAndProtectBrand);
-    observer.observe(document.body, {
-      attributes: true,
-      attributeFilter: ["style", "class"],
-      childList: true,
-      characterData: true,
-      subtree: true,
-    });
-
-    return () => observer.disconnect();
-  }, []);
 
   // Initialize Google Translate script
   useEffect(() => {

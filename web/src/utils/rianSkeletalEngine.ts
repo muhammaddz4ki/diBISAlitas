@@ -2,9 +2,11 @@
  * RIAN POLMAN 3D SKELETAL MOTION ENGINE
  * 
  * Modul kinematika tulang Mixamo 65-sendi untuk Avatar 3D Rian POLMAN.
- * Mengatur mapping sendi, interpolasi quaternion slerp halus (~200ms - 300ms),
- * pernapasan idle alami (idle breathing), mouse tilt parallax, dan pustaka
- * pose gestur BISINDO serta ejaan alfabet (fingerspelling).
+ * Mengatur mapping sendi, interpolasi quaternion slerp halus dengan peredaman
+ * dinamis (damping rate 7.0 - 9.0 * delta), secondary motion (follow-through)
+ * pada pergelangan tangan, pernapasan idle organik (breathing wave),
+ * responsivitas parallax lerp lembut (0.05), serta pustaka gestur BISINDO
+ * dan ejaan alfabet (fingerspelling).
  * 
  * ATURAN BAKU: Bebas emotikon Unicode di seluruh kode, komentar, dan string.
  */
@@ -165,41 +167,40 @@ function createFingerRotations(
   return result;
 }
 
-// Konfigurasi Bentuk Tangan Standar
+// Konfigurasi Bentuk Tangan Anatomis Rileks (Natural Curve)
 const FIST_CURL = -1.5;
-const NATURAL_CURL = -0.22;
 const OPEN_CURL = 0.05;
 
 /**
  * Pustaka Preset Pose Kinematika Tubuh Bagian Atas BISINDO Rian POLMAN
  */
 export const SKELETAL_POSE_LIBRARY: Record<string, BoneEulerAngles> = {
-  // 1. Pose Netral / Istirahat
+  // 1. Pose Netral / Istirahat Rileks (Jari melengkung lembut alami, bahu relaks)
   neutral: {
     [RIAN_BONES.SPINE]: [0, 0, 0],
     [RIAN_BONES.SPINE1]: [0.02, 0, 0],
     [RIAN_BONES.SPINE2]: [0.03, 0, 0],
     [RIAN_BONES.NECK]: [0.01, 0, 0],
     [RIAN_BONES.HEAD]: [0, 0, 0],
-    [RIAN_BONES.RIGHT_ARM]: [0.05, 0, -0.06],
-    [RIAN_BONES.RIGHT_FOREARM]: [-0.15, 0, 0.05],
+    [RIAN_BONES.RIGHT_ARM]: [0.04, 0, -0.06],
+    [RIAN_BONES.RIGHT_FOREARM]: [-0.18, 0, 0.05],
     [RIAN_BONES.RIGHT_HAND]: [0.05, 0.08, -0.05],
-    [RIAN_BONES.LEFT_ARM]: [0.05, 0, 0.06],
-    [RIAN_BONES.LEFT_FOREARM]: [-0.15, 0, -0.05],
+    [RIAN_BONES.LEFT_ARM]: [0.04, 0, 0.06],
+    [RIAN_BONES.LEFT_FOREARM]: [-0.18, 0, -0.05],
     [RIAN_BONES.LEFT_HAND]: [0.05, -0.08, 0.05],
     ...createFingerRotations("Right", {
-      thumb: [-0.15, -0.1, 0],
-      indexCurl: NATURAL_CURL,
-      middleCurl: NATURAL_CURL,
-      ringCurl: NATURAL_CURL,
-      pinkyCurl: NATURAL_CURL,
+      thumb: [-0.18, -0.12, 0.04],
+      indexCurl: -0.28,
+      middleCurl: -0.32,
+      ringCurl: -0.35,
+      pinkyCurl: -0.38,
     }),
     ...createFingerRotations("Left", {
-      thumb: [-0.15, 0.1, 0],
-      indexCurl: NATURAL_CURL,
-      middleCurl: NATURAL_CURL,
-      ringCurl: NATURAL_CURL,
-      pinkyCurl: NATURAL_CURL,
+      thumb: [-0.18, 0.12, -0.04],
+      indexCurl: -0.28,
+      middleCurl: -0.32,
+      ringCurl: -0.35,
+      pinkyCurl: -0.38,
     }),
   },
 
@@ -211,7 +212,7 @@ export const SKELETAL_POSE_LIBRARY: Record<string, BoneEulerAngles> = {
     [RIAN_BONES.RIGHT_ARM]: [-0.75, -0.22, 0.58],
     [RIAN_BONES.RIGHT_FOREARM]: [-1.45, -0.38, 0.48],
     [RIAN_BONES.RIGHT_HAND]: [0.28, 0.22, -0.18],
-    [RIAN_BONES.LEFT_ARM]: [0.06, 0, 0.08],
+    [RIAN_BONES.LEFT_ARM]: [0.05, 0, 0.06],
     [RIAN_BONES.LEFT_FOREARM]: [-0.18, 0, -0.05],
     [RIAN_BONES.LEFT_HAND]: [0.05, -0.08, 0.05],
     ...createFingerRotations("Right", {
@@ -222,11 +223,11 @@ export const SKELETAL_POSE_LIBRARY: Record<string, BoneEulerAngles> = {
       pinkyCurl: OPEN_CURL,
     }),
     ...createFingerRotations("Left", {
-      thumb: [-0.15, 0.1, 0],
-      indexCurl: NATURAL_CURL,
-      middleCurl: NATURAL_CURL,
-      ringCurl: NATURAL_CURL,
-      pinkyCurl: NATURAL_CURL,
+      thumb: [-0.18, 0.12, 0],
+      indexCurl: -0.28,
+      middleCurl: -0.32,
+      ringCurl: -0.35,
+      pinkyCurl: -0.38,
     }),
   },
 
@@ -501,7 +502,6 @@ SKELETAL_POSE_LIBRARY.idle = SKELETAL_POSE_LIBRARY.neutral;
 
 /**
  * Mengambil pose target berdasarkan kata atau huruf.
- * Jika huruf tunggal belum ada preset khusus, otomatis membuat pose fingerspelling rapi.
  */
 export function resolveSkeletalPose(signKey: string): BoneEulerAngles {
   const normalized = (signKey || "").trim();
@@ -538,6 +538,8 @@ export function resolveSkeletalPose(signKey: string): BoneEulerAngles {
 
 /**
  * Kelas Interpolator Kinematika untuk Karakter Rian 3D
+ * Dilengkapi peredaman dinamis (8.0 * delta), secondary motion follow-through,
+ * respirasi idle organik, dan parallax peredaman lerp lembut (0.05).
  */
 export class RianSkeletalController {
   private bonesMap: Map<string, THREE.Bone> = new Map();
@@ -546,6 +548,13 @@ export class RianSkeletalController {
   private targetQuaternions: Map<string, THREE.Quaternion> = new Map();
   private activeSignKey: string = "neutral";
 
+  // Koordinat parallax kursor internal dengan peredaman lerp lembut
+  private currentParallax: { x: number; y: number } = { x: 0, y: 0 };
+
+  // Buffer secondary motion (follow-through lag) untuk pergelangan tangan
+  private rightHandLagQ: THREE.Quaternion = new THREE.Quaternion();
+  private leftHandLagQ: THREE.Quaternion = new THREE.Quaternion();
+
   public constructor(bones: THREE.Bone[]) {
     bones.forEach((bone) => {
       this.bonesMap.set(bone.name, bone);
@@ -553,6 +562,12 @@ export class RianSkeletalController {
       this.currentQuaternions.set(bone.name, bone.quaternion.clone());
       this.targetQuaternions.set(bone.name, bone.quaternion.clone());
     });
+
+    const initRightHand = this.restQuaternions.get(RIAN_BONES.RIGHT_HAND);
+    if (initRightHand) this.rightHandLagQ.copy(initRightHand);
+
+    const initLeftHand = this.restQuaternions.get(RIAN_BONES.LEFT_HAND);
+    if (initLeftHand) this.leftHandLagQ.copy(initLeftHand);
 
     this.setTargetSign("neutral");
   }
@@ -587,8 +602,10 @@ export class RianSkeletalController {
   }
 
   /**
-   * Pembaruan per-frame menggunakan Quaternion Slerp halus (~200ms - 300ms)
-   * Dilengkapi mouse parallax tilt dan efek pernapasan alami (idle breathing).
+   * Pembaruan per-frame menggunakan Quaternion Slerp halus dengan peredaman (damping rate 7.0 - 9.0 * delta)
+   * Dilengkapi secondary motion follow-through pada pergelangan tangan,
+   * pernapasan idle organik menggunakan gelombang sinus Math.sin(time * 1.8),
+   * dan parallax lerp peredaman lembut (0.05).
    */
   public update(options: {
     deltaTime: number;
@@ -605,82 +622,130 @@ export class RianSkeletalController {
       clockTime = 0,
     } = options;
 
-    // Faktor konvergensi eksponensial independen frame rate (~200-300ms transitif)
-    const blendRate = 1 - Math.exp(-9.5 * speed * Math.min(deltaTime, 0.1));
+    const clampedDelta = Math.min(deltaTime, 0.1);
 
-    // 1. Slerp semua tulang ke target rotasi
+    // 1. Damping rate halus untuk sendi tubuh (8.2 * delta)
+    const dampingBody = 1 - Math.exp(-8.2 * speed * clampedDelta);
+
+    // Secondary motion: follow-through lag pergelangan tangan (laju slerp sedikit lebih santai ~6.4 * delta)
+    const dampingHand = 1 - Math.exp(-6.4 * speed * clampedDelta);
+
+    // Slerp semua tulang ke target rotasi
     this.bonesMap.forEach((bone, name) => {
       const currentQ = this.currentQuaternions.get(name);
       const targetQ = this.targetQuaternions.get(name);
 
-      if (currentQ && targetQ) {
-        currentQ.slerp(targetQ, blendRate);
-        bone.quaternion.copy(currentQ);
+      if (!currentQ || !targetQ) return;
+
+      if (name === RIAN_BONES.RIGHT_HAND) {
+        // Terapkan follow-through lag pada pergelangan tangan kanan
+        this.rightHandLagQ.slerp(targetQ, dampingHand);
+        currentQ.slerp(this.rightHandLagQ, dampingBody);
+      } else if (name === RIAN_BONES.LEFT_HAND) {
+        // Terapkan follow-through lag pada pergelangan tangan kiri
+        this.leftHandLagQ.slerp(targetQ, dampingHand);
+        currentQ.slerp(this.leftHandLagQ, dampingBody);
+      } else {
+        currentQ.slerp(targetQ, dampingBody);
       }
+
+      bone.quaternion.copy(currentQ);
     });
 
-    // 2. Parallax Kursor Mouse / Sentuhan Halus pada Leher dan Kepala
+    // 2. Responsivitas Mouse / Touch Parallax Halus (Peredaman Lerp Faktor 0.05 per frame)
+    // Menghasilkan pelacakan pandangan mata dan kepala yang mengalir anggun tanpa sentakan
+    const lerpFactor = Math.min(1.0, 0.05 * 60 * clampedDelta);
+    this.currentParallax.x += (mouseParallax.x - this.currentParallax.x) * lerpFactor;
+    this.currentParallax.y += (mouseParallax.y - this.currentParallax.y) * lerpFactor;
+
     const headBone = this.bonesMap.get(RIAN_BONES.HEAD);
     const neckBone = this.bonesMap.get(RIAN_BONES.NECK);
     const spine2Bone = this.bonesMap.get(RIAN_BONES.SPINE2);
 
     if (headBone) {
-      // Rotasi Y (menoleh kiri-kanan) dan X (mengangguk atas-bawah)
-      const targetYaw = mouseParallax.x * 0.28;
-      const targetPitch = -mouseParallax.y * 0.20;
-
+      const targetYaw = this.currentParallax.x * 0.26;
+      const targetPitch = -this.currentParallax.y * 0.18;
       const parallaxEuler = new THREE.Euler(targetPitch, targetYaw, 0, "YXZ");
-      const parallaxQ = new THREE.Quaternion().setFromEuler(parallaxEuler);
-      headBone.quaternion.multiply(parallaxQ);
+      headBone.quaternion.multiply(new THREE.Quaternion().setFromEuler(parallaxEuler));
     }
 
     if (neckBone) {
-      const neckParallax = new THREE.Euler(
-        -mouseParallax.y * 0.08,
-        mouseParallax.x * 0.12,
+      const neckEuler = new THREE.Euler(
+        -this.currentParallax.y * 0.08,
+        this.currentParallax.x * 0.12,
         0,
         "YXZ"
       );
-      neckBone.quaternion.multiply(new THREE.Quaternion().setFromEuler(neckParallax));
+      neckBone.quaternion.multiply(new THREE.Quaternion().setFromEuler(neckEuler));
     }
 
     if (spine2Bone) {
-      const spineParallax = new THREE.Euler(0, mouseParallax.x * 0.05, 0, "XYZ");
-      spine2Bone.quaternion.multiply(new THREE.Quaternion().setFromEuler(spineParallax));
+      const spineEuler = new THREE.Euler(0, this.currentParallax.x * 0.05, 0, "XYZ");
+      spine2Bone.quaternion.multiply(new THREE.Quaternion().setFromEuler(spineEuler));
     }
 
-    // 3. Efek Pernapasan Halus Alami (Idle Breathing)
+    // 3. Sistem Idle Organik (Pernapasan & Posisi Rileks)
+    // Siklus napas alami menggunakan Math.sin(clockTime * 1.8)
     if (enableBreathing) {
       const spine1Bone = this.bonesMap.get(RIAN_BONES.SPINE1);
+      const spine2Bone = this.bonesMap.get(RIAN_BONES.SPINE2);
+      const rightShoulder = this.bonesMap.get(RIAN_BONES.RIGHT_SHOULDER);
+      const leftShoulder = this.bonesMap.get(RIAN_BONES.LEFT_SHOULDER);
       const hipsBone = this.bonesMap.get(RIAN_BONES.HIPS);
 
-      const breathCycle = Math.sin(clockTime * 2.2);
-      const breathPitch = breathCycle * 0.016; // dada mengembang naik turun
+      const breathWave = Math.sin(clockTime * 1.8);
+
+      // Dada naik-turun dan membusung mikro (rotasi X sekitar 0.02 radian)
+      const chestPitch = breathWave * 0.02;
+      const chestEuler = new THREE.Euler(chestPitch, 0, 0, "XYZ");
+      const chestQ = new THREE.Quaternion().setFromEuler(chestEuler);
 
       if (spine1Bone) {
-        const breathEuler = new THREE.Euler(breathPitch, 0, 0, "XYZ");
-        spine1Bone.quaternion.multiply(new THREE.Quaternion().setFromEuler(breathEuler));
+        spine1Bone.quaternion.multiply(chestQ);
+      }
+      if (spine2Bone) {
+        const subtlePitch = new THREE.Euler(breathWave * 0.012, 0, 0, "XYZ");
+        spine2Bone.quaternion.multiply(new THREE.Quaternion().setFromEuler(subtlePitch));
       }
 
+      // Bahu/Clavicle terangkat sangat halus mengikuti tarikan napas
+      const shoulderLift = Math.max(0, breathWave) * 0.008;
+      if (rightShoulder) {
+        const rShoulderEuler = new THREE.Euler(0, 0, shoulderLift, "XYZ");
+        rightShoulder.quaternion.multiply(new THREE.Quaternion().setFromEuler(rShoulderEuler));
+      }
+      if (leftShoulder) {
+        const lShoulderEuler = new THREE.Euler(0, 0, -shoulderLift, "XYZ");
+        leftShoulder.quaternion.multiply(new THREE.Quaternion().setFromEuler(lShoulderEuler));
+      }
+
+      // Mikro pergeseran vertikal pinggul
       if (hipsBone) {
-        hipsBone.position.y = 0.95 + breathCycle * 0.003;
+        hipsBone.position.y = 0.95 + breathWave * 0.002;
       }
     }
 
-    // 4. Dinamika Gestur Spesifik (Lambaian Tangan pada "Halo", Anggukan pada "Bisa")
+    // 4. Dinamika Gestur Berkelanjutan (Lambaian Tangan pada "Halo", Anggukan Mantap pada "Bisa")
     const lowerSign = this.activeSignKey.toLowerCase().replace(/[-_ ]/g, "_");
 
     if (lowerSign === "halo") {
       const rightHandBone = this.bonesMap.get(RIAN_BONES.RIGHT_HAND);
+      const rightForeArmBone = this.bonesMap.get(RIAN_BONES.RIGHT_FOREARM);
+
       if (rightHandBone) {
-        const waveAngle = Math.sin(clockTime * 6.5 * speed) * 0.22;
+        const waveAngle = Math.sin(clockTime * 5.8 * speed) * 0.20;
         const waveEuler = new THREE.Euler(0, 0, waveAngle, "XYZ");
         rightHandBone.quaternion.multiply(new THREE.Quaternion().setFromEuler(waveEuler));
+      }
+      if (rightForeArmBone) {
+        const swayAngle = Math.sin(clockTime * 5.8 * speed) * 0.035;
+        const swayEuler = new THREE.Euler(0, swayAngle, 0, "XYZ");
+        rightForeArmBone.quaternion.multiply(new THREE.Quaternion().setFromEuler(swayEuler));
       }
     } else if (lowerSign === "bisa") {
       const headBone = this.bonesMap.get(RIAN_BONES.HEAD);
       if (headBone) {
-        const nodAngle = Math.max(0, Math.sin(clockTime * 4.2 * speed)) * 0.08;
+        const nodAngle = Math.max(0, Math.sin(clockTime * 3.8 * speed)) * 0.07;
         const nodEuler = new THREE.Euler(nodAngle, 0, 0, "XYZ");
         headBone.quaternion.multiply(new THREE.Quaternion().setFromEuler(nodEuler));
       }
@@ -688,13 +753,13 @@ export class RianSkeletalController {
       const headBone = this.bonesMap.get(RIAN_BONES.HEAD);
       const rightHandBone = this.bonesMap.get(RIAN_BONES.RIGHT_HAND);
       if (headBone) {
-        const shakeAngle = Math.sin(clockTime * 5.5 * speed) * 0.12;
+        const shakeAngle = Math.sin(clockTime * 5.2 * speed) * 0.11;
         headBone.quaternion.multiply(
           new THREE.Quaternion().setFromEuler(new THREE.Euler(0, shakeAngle, 0, "XYZ"))
         );
       }
       if (rightHandBone) {
-        const wagAngle = Math.sin(clockTime * 6.0 * speed) * 0.18;
+        const wagAngle = Math.sin(clockTime * 5.8 * speed) * 0.16;
         rightHandBone.quaternion.multiply(
           new THREE.Quaternion().setFromEuler(new THREE.Euler(0, 0, wagAngle, "XYZ"))
         );
@@ -706,4 +771,3 @@ export class RianSkeletalController {
     return this.activeSignKey;
   }
 }
-

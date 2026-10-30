@@ -1280,7 +1280,8 @@ function SplashScreen({ onComplete }: { onComplete: () => void }) {
       exit={{ opacity: 0 }}
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
       onClick={() => onCompleteRef.current()}
-      className="fixed inset-0 z-[99999] bg-[#0a0f1a] flex items-center justify-center overflow-hidden cursor-pointer select-none"
+      className="notranslate fixed inset-0 z-[99999] bg-[#0a0f1a] flex items-center justify-center overflow-hidden cursor-pointer select-none"
+      translate="no"
     >
       {/* Ambient glow */}
       <div
@@ -1299,24 +1300,25 @@ function SplashScreen({ onComplete }: { onComplete: () => void }) {
         }}
       />
 
-      <div className="relative z-10 flex flex-col items-center text-center px-4">
-        {/* Main Logo Text */}
-        <div className="flex items-center justify-center gap-0 text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-6">
+      <div className="notranslate relative z-10 flex flex-col items-center text-center px-4" translate="no">
+        {/* Main Logo Text - Dikunci permanen agar tidak diterjemahkan ke bahasa apa pun */}
+        <div className="notranslate flex items-center justify-center gap-0 text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-6" translate="no">
           {/* "di" */}
           <motion.span
             initial={{ opacity: 0, x: -15 }}
             animate={{ opacity: 0.7, x: 0 }}
             transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-            className="text-white"
+            className="notranslate text-white"
+            translate="no"
           >
             di
           </motion.span>
 
           {/* Bracket + BISA group */}
-          <div className="relative mx-4 sm:mx-6 flex items-center justify-center">
-            <span className="text-[#2a9d8f] font-light text-4xl sm:text-5xl md:text-6xl">[</span>
-            <span className="text-[#2a9d8f] font-black px-2 text-4xl sm:text-5xl md:text-6xl">BISA</span>
-            <span className="text-[#2a9d8f] font-light text-4xl sm:text-5xl md:text-6xl">]</span>
+          <div className="notranslate relative mx-4 sm:mx-6 flex items-center justify-center" translate="no">
+            <span className="notranslate text-[#2a9d8f] font-light text-4xl sm:text-5xl md:text-6xl" translate="no">[</span>
+            <span className="notranslate text-[#2a9d8f] font-black px-2 text-4xl sm:text-5xl md:text-6xl" translate="no">BISA</span>
+            <span className="notranslate text-[#2a9d8f] font-light text-4xl sm:text-5xl md:text-6xl" translate="no">]</span>
 
             {/* Scanner line */}
             <motion.div
@@ -1340,7 +1342,8 @@ function SplashScreen({ onComplete }: { onComplete: () => void }) {
             initial={{ opacity: 0, x: 15 }}
             animate={{ opacity: 0.7, x: 0 }}
             transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-            className="text-white"
+            className="notranslate text-white"
+            translate="no"
           >
             litas
           </motion.span>
@@ -1351,7 +1354,8 @@ function SplashScreen({ onComplete }: { onComplete: () => void }) {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3, duration: 0.5 }}
-          className="text-[#4fd1c5] text-xs sm:text-sm font-bold tracking-[0.25em] uppercase mb-8"
+          className="notranslate text-[#4fd1c5] text-xs sm:text-sm font-bold tracking-[0.25em] uppercase mb-8"
+          translate="no"
         >
           Ekosistem Aksesibilitas Cerdas
         </motion.p>
@@ -1374,7 +1378,8 @@ function SplashScreen({ onComplete }: { onComplete: () => void }) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.4, duration: 0.4 }}
-          className="text-slate-200 text-xs sm:text-sm font-semibold tracking-wider animate-pulse"
+          className="notranslate text-slate-200 text-xs sm:text-sm font-semibold tracking-wider animate-pulse"
+          translate="no"
         >
           Mempersiapkan Sistem...
         </motion.span>

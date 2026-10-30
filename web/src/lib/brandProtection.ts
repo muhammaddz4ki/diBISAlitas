@@ -36,6 +36,8 @@ export function unmaskBrand(text: string): string {
   result = result.replace(/__BRAND_DIBISALITAS__/gi, BRAND_NAME);
 
   // 2. Post-processing regex pengaman terhadap terjemahan harfiah Google Translate
+  result = result.replace(/\bin\s*\[\s*can\s*\]\s*litas\b/gi, BRAND_NAME);
+  result = result.replace(/\bin\s*can\s*litas\b/gi, BRAND_NAME);
   result = result.replace(/\bcan[- ]abilities\b/gi, BRAND_NAME);
   result = result.replace(/\bcan[- ]ability\b/gi, BRAND_NAME);
   result = result.replace(/\bin[- ]abilities\b/gi, BRAND_NAME);
@@ -53,6 +55,8 @@ export function unmaskBrand(text: string): string {
  */
 export const DO_NOT_TRANSLATE_WHITELIST: readonly string[] = [
   "diBISAlitas",
+  "di [BISA] litas",
+  "diBISA",
   "POLMAN",
   "POLMAN Bandung",
   "BISINDO",

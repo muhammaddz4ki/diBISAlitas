@@ -130,13 +130,12 @@ export default function Rian3DCanvas({
     sceneRef.current = scene;
 
     // 2. Camera: Komposisi Waist-Up Lega dengan Headroom Aman & Margin Sisi
-    // Jarak kamera z=2.35m dan FOV=36 memberi ruang pandang proporsional dari pinggang ke kepala
     const camera = new THREE.PerspectiveCamera(36, width / height, 0.1, 20);
     camera.position.set(0, 1.05, 2.35);
     camera.lookAt(0, 0.98, 0);
     cameraRef.current = camera;
 
-    // 3. WebGLRenderer
+    // 3. WebGLRenderer Fotorealistik (ACESFilmic + sRGB + Dynamic DevicePixelRatio)
     let renderer: THREE.WebGLRenderer;
     try {
       renderer = new THREE.WebGLRenderer({
@@ -162,24 +161,29 @@ export default function Rian3DCanvas({
       return;
     }
 
-    // 4. Pencahayaan Studio Tiga Titik Terkalibrasi
-    const ambientLight = new THREE.AmbientLight(0xffffff, 1.3);
+    // 4. Tata Cahaya Studio Tiga Titik Fotorealistik Terkalibrasi
+    // A. Ambient Light lembut (0.6 intensitas, warna netral kebiruan halus)
+    const ambientLight = new THREE.AmbientLight(0xf1f5f9, 0.6);
     scene.add(ambientLight);
 
-    const keyLight = new THREE.DirectionalLight(0xffffff, 2.2);
-    keyLight.position.set(1.8, 2.8, 2.4);
+    // B. Directional Key Light dari kanan depan-atas (1.4 intensitas, putih hangat)
+    const keyLight = new THREE.DirectionalLight(0xfffaf0, 1.4);
+    keyLight.position.set(1.6, 2.6, 2.2);
     scene.add(keyLight);
 
-    const fillLight = new THREE.DirectionalLight(0xdcfce7, 1.1);
-    fillLight.position.set(-1.8, 1.8, 1.8);
+    // C. Soft Fill Light dari kiri depan (0.8 intensitas, biru pastel lembut untuk aksen almamater)
+    const fillLight = new THREE.DirectionalLight(0xbae6fd, 0.8);
+    fillLight.position.set(-1.6, 1.6, 1.8);
     scene.add(fillLight);
 
-    const rimLight = new THREE.DirectionalLight(0x38bdf8, 1.6);
-    rimLight.position.set(0, 2.2, -2.2);
+    // D. Subtle Rim / Hair Light dari belakang atas (1.2 intensitas, memisahkan lekuk bahu & rambut dari background)
+    const rimLight = new THREE.DirectionalLight(0x7dd3fc, 1.2);
+    rimLight.position.set(0, 2.4, -2.0);
     scene.add(rimLight);
 
-    const chestFill = new THREE.PointLight(0xfff7ed, 0.5, 3.5);
-    chestFill.position.set(0, 1.0, 1.2);
+    // E. Subtle Lapel / Chest Bounce Light
+    const chestFill = new THREE.DirectionalLight(0xfff8ee, 0.35);
+    chestFill.position.set(0, 0.8, 1.6);
     scene.add(chestFill);
 
     // 5. Muat Model Rian Berkerangka (rian_rigged.glb)
@@ -250,7 +254,7 @@ export default function Rian3DCanvas({
       }
     );
 
-    // 6. Loop Animasi Utama (Render Loop)
+    // 6. Loop Animasi Utama (Render Loop berbasis THREE.Clock untuk 60 FPS mentah stabil)
     clockRef.current.start();
     const renderLoop = () => {
       animFrameIdRef.current = requestAnimationFrame(renderLoop);
