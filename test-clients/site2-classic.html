@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portal Informasi Kampus Inklusif — Politeknik Manufaktur Negeri Bandung</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: #f8fafc;
+      color: #1e293b;
+      line-height: 1.6;
+    }
+    .top-bar {
+      background: #0f172a;
+      color: #94a3b8;
+      font-size: 12px;
+      padding: 8px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .header {
+      background: #ffffff;
+      border-bottom: 2px solid #e2e8f0;
+      padding: 18px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .logo-badge {
+      width: 44px;
+      height: 44px;
+      background: #1e3a8a;
+      color: #ffffff;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 16px;
+    }
+    .brand-title {
+      font-size: 18px;
+      font-weight: 800;
+      color: #0f172a;
+      line-height: 1.2;
+    }
+    .brand-subtitle {
+      font-size: 12px;
+      color: #64748b;
+      font-weight: 500;
+    }
+    .container {
+      max-width: 960px;
+      margin: 36px auto 80px;
+      padding: 0 24px;
+    }
+    .article-header {
+      margin-bottom: 28px;
+    }
+    .tag {
+      display: inline-block;
+      padding: 4px 10px;
+      background: #eff6ff;
+      color: #1d4ed8;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    h1 {
+      font-size: 34px;
+      font-weight: 800;
+      color: #0f172a;
+      line-height: 1.25;
+      margin-bottom: 12px;
+    }
+    .meta {
+      font-size: 13px;
+      color: #64748b;
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      padding-bottom: 18px;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    .article-content {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 36px;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+      font-size: 16px;
+      color: #334155;
+    }
+    .article-content p {
+      margin-bottom: 20px;
+      line-height: 1.75;
+    }
+    .quote-box {
+      background: #f1f5f9;
+      border-left: 4px solid #1e3a8a;
+      padding: 16px 20px;
+      border-radius: 0 12px 12px 0;
+      font-style: italic;
+      color: #1e293b;
+      margin: 24px 0;
+    }
+    .action-panel {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-radius: 16px;
+      padding: 24px;
+      margin-top: 32px;
+    }
+    .action-panel h3 {
+      font-size: 16px;
+      font-weight: 700;
+      color: #1e3a8a;
+      margin-bottom: 8px;
+    }
+    .action-panel p {
+      font-size: 13px;
+      color: #475569;
+      margin-bottom: 16px;
+    }
+    .btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .btn {
+      background: #ffffff;
+      color: #1e3a8a;
+      border: 1px solid #cbd5e1;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn:hover {
+      background: #1e3a8a;
+      color: #ffffff;
+      border-color: #1e3a8a;
+    }
+    .footer {
+      background: #ffffff;
+      border-top: 1px solid #e2e8f0;
+      padding: 24px 32px;
+      text-align: center;
+      font-size: 13px;
+      color: #64748b;
+      margin-top: 60px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <span>Kementerian Pendidikan Tinggi, Sains, dan Teknologi RI</span>
+    <span>Portal Mahasiswa & Layanan Disabilitas Terpadu</span>
+  </div>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="brand">
+      <div class="logo-badge">POL</div>
+      <div>
+        <div class="brand-title">Politeknik Manufaktur Negeri Bandung</div>
+        <div class="brand-subtitle">Kampus Terbuka & Ramah Inklusivitas Disabilitas</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Container -->
+  <main class="container">
+    <div class="article-header">
+      <span class="tag">Pengumuman Akademik</span>
+      <h1>Integrasi Asisten Bahasa Isyarat 3D Rian POLMAN untuk Mendukung Kesetaraan Informasi Kampus</h1>
+      <div class="meta">
+        <span>Dipublikasikan: 30 Oktober 2026</span>
+        <span>•</span>
+        <span>Kategori: Aksesibilitas Kampus</span>
+        <span>•</span>
+        <span>Status: Aktif</span>
+      </div>
+    </div>
+
+    <!-- Article Content -->
+    <article class="article-content">
+      <p>
+        Dalam upaya mewujudkan lingkungan kampus yang ramah dan setara bagi seluruh sivitas akademika, 
+        Politeknik Manufaktur Negeri Bandung resmi mengintegrasikan teknologi <strong>diBISAlitas Widget 3D Rian</strong> 
+        ke seluruh portal resmi kampus.
+      </p>
+
+      <div class="quote-box">
+        "Aksesibilitas cerdas, kemandirian tanpa batas. Melalui inovasi avatar 3D Rian berjas almamater kebanggaan kami, seluruh pengumuman akademik kini dapat dipahami secara visual dan ramah oleh rekan mahasiswa Tuli dan Tunarungu."
+      </div>
+
+      <p>
+        Pengunjung dan mahasiswa dapat langsung berinteraksi dengan menekan tombol melayang di pojok kanan bawah atau memilih kalimat mana pun di halaman ini untuk diperagakan langsung dalam gestur BISINDO resmi.
+      </p>
+
+      <!-- Action Panel Test -->
+      <div class="action-panel">
+        <h3>Uji Komunikasi Widget (Site 2 - Light Mode Corporate)</h3>
+        <p>
+          Gunakan tombol di bawah untuk meminta Rian POLMAN memperagakan kalimat secara instan:
+        </p>
+        <div class="btn-row">
+          <button class="btn" onclick="signText('Selamat datang di Politeknik Manufaktur Negeri Bandung')">
+            Peragakan: "Selamat datang..."
+          </button>
+          <button class="btn" onclick="signText('Aksesibilitas cerdas kemandirian tanpa batas')">
+            Peragakan Slogan
+          </button>
+          <button class="btn" onclick="signText('Terima kasih banyak')">
+            Peragakan: "Terima kasih banyak"
+          </button>
+          <button class="btn" onclick="signText('Tolong bantu saya')">
+            Peragakan: "Tolong bantu saya"
+          </button>
+        </div>
+      </div>
+    </article>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    &copy; 2026 Politeknik Manufaktur Negeri Bandung — Kolaborasi Inovasi Inklusif diBISAlitas
+  </footer>
+
+  <!-- Injeksi Skrip Universal diBISAlitas 3D Rian POLMAN -->
+  <script src="http://localhost:3000/widget.js" data-position="bottom-right" data-server="http://localhost:3000" defer></script>
+
+  <script>
+    function signText(sentence) {
+      if (window.DiBISAWidget) {
+        window.DiBISAWidget.translate(sentence);
+      } else {
+        alert("Widget sedang memuat...");
+      }
+    }
+  </script>
+</body>
+</html>
+

@@ -476,19 +476,19 @@ export default function Bisindo3DApiPage() {
                 step: "01",
                 title: "Input Teks atau Suara",
                 desc: "Kirim teks, audio, atau stream video ke API endpoint kami.",
-                icon: "📝",
+                icon: BookOpen,
               },
               {
                 step: "02",
                 title: "AI Processing",
                 desc: "Model NLP & Computer Vision memproses input dan mencocokkan dengan dataset BISINDO.",
-                icon: "🧠",
+                icon: Brain,
               },
               {
                 step: "03",
                 title: "Animasi 3D Output",
                 desc: "Karakter 3D menampilkan isyarat dengan gerakan natural dan ekspresi wajah.",
-                icon: "🤟",
+                icon: Hand,
               },
             ].map((item, i) => (
               <motion.div
@@ -504,7 +504,7 @@ export default function Bisindo3DApiPage() {
                   <div className="hidden md:block absolute top-12 left-[60%] w-[80%] h-[2px] bg-gradient-to-r from-[#1B9981]/30 to-transparent" />
                 )}
 
-                <div className="text-4xl mb-4">{item.icon}</div>
+                <div className="w-14 h-14 mx-auto rounded-2xl bg-[#1B9981]/10 dark:bg-[#00D4AA]/15 flex items-center justify-center text-[#1B9981] dark:text-[#00D4AA] mb-4 shadow-sm"><item.icon className="w-7 h-7" /></div>
                 <div className="inline-block px-3 py-1 rounded-full bg-[#1B9981]/10 dark:bg-[#00D4AA]/20 text-[#1B9981] dark:text-[#00D4AA] text-xs font-bold mb-3">
                   Step {item.step}
                 </div>

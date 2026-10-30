@@ -31,6 +31,7 @@ import {
   CheckCircle2,
   Lock,
   Play,
+  Hand,
 } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import MobileMockupSection from "@/components/MobileMockupSection";
@@ -1386,14 +1387,144 @@ function SplashScreen({ onComplete }: { onComplete: () => void }) {
 ============================================ */
 export default function LandingPage() {
   const [showSplash, setShowSplash] = useState(true);
+  const [lastClickedText, setLastClickedText] = useState<string | null>(null);
+
+  // Global Click-to-Sign Interpreter Listener untuk Landing Page
+  useEffect(() => {
+    const handleGlobalClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      if (!target) return;
+
+      // 1. Abaikan klik pada tombol, link navigasi, input, atau panel asisten itu sendiri
+      if (
+        target.closest("button") ||
+        target.closest("a") ||
+        target.closest("input") ||
+        target.closest("textarea") ||
+        target.closest("select") ||
+        target.closest("nav") ||
+        target.closest("#bisindo-3d-panel") ||
+        target.closest("#a11y-panel") ||
+        target.closest(".floating-a11y-container") ||
+        target.closest(".no-translate-sign")
+      ) {
+        return;
+      }
+
+      // 2. Prioritaskan jika pengguna sedang memblok/menyeleksi teks tertentu
+      const selection = window.getSelection();
+      const selectedText = selection?.toString().trim();
+      if (selectedText && selectedText.length > 0 && selectedText.length < 160) {
+        setLastClickedText(selectedText);
+        window.dispatchEvent(
+          new CustomEvent("dibisalitas:translate-sign", {
+            detail: { text: selectedText },
+          })
+        );
+        return;
+      }
+
+      // 3. Ekstraksi teks dari elemen yang diklik (heading, paragraph, list, badge, span)
+      const textEl = target.closest(
+        "h1, h2, h3, h4, h5, h6, p, li, span, blockquote, dt, dd, b, strong, em"
+      ) as HTMLElement | null;
+
+      if (!textEl) return;
+
+      const fullText = (textEl.textContent || "").trim();
+      if (!fullText) return;
+
+      let textToSend = fullText;
+
+      // Jika teks elemen ringkas (misal judul / button text / badge <= 60 karakter), gunakan seluruhnya
+      if (fullText.length <= 60) {
+        textToSend = fullText;
+      } else {
+        // Jika paragraf panjang, coba deteksi kata yang tepat berada di bawah kursor
+        let clickedWord = "";
+        const doc = document as any;
+        if (doc.caretRangeFromPoint) {
+          const range = doc.caretRangeFromPoint(e.clientX, e.clientY);
+          if (range && range.startContainer.nodeType === Node.TEXT_NODE) {
+            const rawContent = range.startContainer.textContent || "";
+            const offset = range.startOffset;
+            const left = rawContent.slice(0, offset).search(/\S+$/);
+            const right = rawContent.slice(offset).search(/\s/);
+            if (left !== -1) {
+              const start = left;
+              const end = right === -1 ? rawContent.length : offset + right;
+              clickedWord = rawContent.slice(start, end).replace(/[^\w\s-]/g, "").trim();
+            }
+          }
+        }
+
+        if (clickedWord && clickedWord.length > 1) {
+          // Cari kalimat yang memuat kata tersebut
+          const sentences = fullText.split(/(?<=[.?!])\s+/);
+          const match = sentences.find((s) => s.includes(clickedWord));
+          if (match && match.length <= 80) {
+            textToSend = match.trim();
+          } else {
+            textToSend = clickedWord;
+          }
+        } else {
+          // Ambil kalimat pertama saja agar durasi peragaan pas
+          const firstSentence = fullText.split(/(?<=[.?!])\s+/)[0];
+          textToSend = (firstSentence || fullText).slice(0, 70).trim();
+        }
+      }
+
+      // Rapikan tanda kutip dan spasi
+      textToSend = textToSend.replace(/^[\"'“”‘«\s]+|[\"'“”’»\s]+$/g, "");
+
+      if (textToSend.length > 0) {
+        setLastClickedText(textToSend);
+        window.dispatchEvent(
+          new CustomEvent("dibisalitas:translate-sign", {
+            detail: { text: textToSend },
+          })
+        );
+      }
+    };
+
+    window.addEventListener("click", handleGlobalClick);
+    return () => {
+      window.removeEventListener("click", handleGlobalClick);
+    };
+  }, []);
 
   return (
     <>
-    <AnimatePresence>
+      <AnimatePresence>
         {showSplash && <SplashScreen onComplete={() => setShowSplash(false)} />}
       </AnimatePresence>
 
-      <div className="min-h-screen bg-[#FDFEFE] dark:bg-[#050505] text-slate-800 dark:text-slate-100 selection:bg-[#2a9d8f]/20 transition-colors duration-300">
+      <div className="min-h-screen bg-[#FDFEFE] dark:bg-[#050505] text-slate-800 dark:text-slate-100 selection:bg-[#2a9d8f]/20 transition-colors duration-300 relative cursor-default">
+        {/* Floating Hint Toast ketika teks diklik */}
+        <AnimatePresence>
+          {lastClickedText && (
+            <motion.div
+              initial={{ opacity: 0, y: 30, scale: 0.9 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 20, scale: 0.9 }}
+              transition={{ duration: 0.25 }}
+              className="fixed bottom-6 left-6 z-[9990] max-w-sm bg-slate-900/90 dark:bg-white/95 text-white dark:text-slate-900 backdrop-blur-xl px-4 py-2.5 rounded-2xl shadow-2xl border border-white/20 dark:border-black/10 flex items-center gap-3 pointer-events-none"
+            >
+              <div className="w-8 h-8 rounded-xl bg-[#1B9981] flex items-center justify-center shrink-0 shadow-sm text-white">
+                <Hand className="w-4 h-4" />
+              </div>
+              <div className="min-w-0 pr-1">
+                <div className="text-[10px] font-black uppercase tracking-wider text-emerald-400 dark:text-emerald-600">
+                  Rian POLMAN Memperagakan:
+                </div>
+                <div className="text-xs font-bold truncate max-w-[210px]">
+                  &ldquo;{lastClickedText}&rdquo;
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
         <Navbar />
         <HeroSection />
         <AboutProjectSection />
@@ -1403,7 +1534,6 @@ export default function LandingPage() {
         <ShowcaseSection />
         <MobileMockupSection />
         <Footer />
-        
       </div>
     </>
   );

@@ -39,9 +39,9 @@ export const GESTURE_PRESETS: Record<string, GesturePreset> = {
   terima_kasih: {
     key: "terima_kasih",
     name: "Terima Kasih",
-    positionLabel: "Dagu / Bibir Bawah ➔ Maju Terbuka",
+    positionLabel: "Dagu / Bibir Bawah -> Maju Terbuka",
     targetBodyPart: "dagu",
-    icon: "🗣️",
+    icon: "",
     asset3dUrl: "/avatars/rian_terimakasih.jpg",
     description: "Ujung jemari tangan kanan menyentuh dagu/bibir bawah lalu diayunkan maju terbuka ke arah lawan bicara.",
   },
@@ -50,7 +50,7 @@ export const GESTURE_PRESETS: Record<string, GesturePreset> = {
     name: "Salam / Hormat",
     positionLabel: "Dada Kiri / Jantung",
     targetBodyPart: "dada",
-    icon: "🫀",
+    icon: "",
     asset3dUrl: "/avatars/rian_salam.jpg",
     description: "Telapak tangan kanan terbuka diletakkan rapat menempel di dada kiri (jantung) dengan senyuman hangat dan rasa hormat.",
   },
@@ -59,7 +59,7 @@ export const GESTURE_PRESETS: Record<string, GesturePreset> = {
     name: "Ya / Setuju",
     positionLabel: "Tengah Dada (Kepalan Tangan / Jari Ketekuk)",
     targetBodyPart: "kepalan",
-    icon: "✊",
+    icon: "",
     asset3dUrl: "/avatars/rian_ya.jpg",
     description: "Mengepalkan tangan (semua jari ketekuk) di depan dada lalu diayunkan mengangguk ke bawah dengan mantap sebagai tanda setuju.",
   },
@@ -68,7 +68,7 @@ export const GESTURE_PRESETS: Record<string, GesturePreset> = {
     name: "Pasti BISA!",
     positionLabel: "Jempol Mengacung Mantap",
     targetBodyPart: "jempol",
-    icon: "👍",
+    icon: "",
     asset3dUrl: "/avatars/rian_bisa.jpg",
     description: "Mengacungkan jempol ke depan dengan mantap dan penuh rasa percaya diri.",
   },
@@ -77,7 +77,7 @@ export const GESTURE_PRESETS: Record<string, GesturePreset> = {
     name: "Halo / Sapaan",
     positionLabel: "Pelipis / Samping Kepala",
     targetBodyPart: "pelipis",
-    icon: "👋",
+    icon: "",
     asset3dUrl: "/avatars/rian_halo.jpg",
     description: "Mengangkat telapak tangan terbuka setinggi pelipis dan melambaikannya ke samping.",
   },
@@ -86,7 +86,7 @@ export const GESTURE_PRESETS: Record<string, GesturePreset> = {
     name: "Tolong / Bantuan",
     positionLabel: "Kedua Telapak Terbuka Menengadah",
     targetBodyPart: "telapak",
-    icon: "🤲",
+    icon: "",
     asset3dUrl: "/avatars/rian_tolong.jpg",
     description: "Membuka kedua telapak tangan menghadap ke atas di depan tubuh memohon bantuan.",
   },
@@ -214,7 +214,7 @@ export function mapGestureTo3DAsset(
     return {
       poseKey: p.key,
       asset3dUrl: p.asset3dUrl,
-      label: `${p.icon} ${p.name} (${p.positionLabel})`,
+      label: `${p.name} (${p.positionLabel})`,
       positionLabel: p.positionLabel,
       description: p.description,
     };
@@ -238,7 +238,7 @@ export function mapGestureTo3DAsset(
     return {
       poseKey: p.key,
       asset3dUrl: p.asset3dUrl,
-      label: `${p.icon} ${p.name} (${p.positionLabel})`,
+      label: `${p.name} (${p.positionLabel})`,
       positionLabel: p.positionLabel,
       description: p.description,
     };
@@ -260,7 +260,7 @@ export function mapGestureTo3DAsset(
     return {
       poseKey: p.key,
       asset3dUrl: p.asset3dUrl,
-      label: `${p.icon} ${p.name} (${p.positionLabel})`,
+      label: `${p.name} (${p.positionLabel})`,
       positionLabel: p.positionLabel,
       description: p.description,
     };
@@ -281,7 +281,7 @@ export function mapGestureTo3DAsset(
     return {
       poseKey: p.key,
       asset3dUrl: p.asset3dUrl,
-      label: `${p.icon} ${p.name} (${p.positionLabel})`,
+      label: `${p.name} (${p.positionLabel})`,
       positionLabel: p.positionLabel,
       description: p.description,
     };
@@ -301,7 +301,7 @@ export function mapGestureTo3DAsset(
     return {
       poseKey: p.key,
       asset3dUrl: p.asset3dUrl,
-      label: `${p.icon} ${p.name} (${p.positionLabel})`,
+      label: `${p.name} (${p.positionLabel})`,
       positionLabel: p.positionLabel,
       description: p.description,
     };
@@ -324,7 +324,7 @@ export function mapGestureTo3DAsset(
     return {
       poseKey: p.key,
       asset3dUrl: p.asset3dUrl,
-      label: `${p.icon} ${p.name} (${p.positionLabel})`,
+      label: `${p.name} (${p.positionLabel})`,
       positionLabel: p.positionLabel,
       description: p.description,
     };
@@ -335,7 +335,7 @@ export function mapGestureTo3DAsset(
   return {
     poseKey: p.key,
     asset3dUrl: p.asset3dUrl,
-    label: `${p.icon} ${p.name} (${p.positionLabel})`,
+    label: `${p.name} (${p.positionLabel})`,
     positionLabel: p.positionLabel,
     description: p.description,
   };
@@ -667,7 +667,7 @@ interface GestureKeyframe {
 function getGestureKeyframePlan(poseKey: string): GestureKeyframe[] {
   switch (poseKey) {
     case "terima_kasih":
-      // Urutan BISINDO Otentik: Tangan Santai ➔ Naik ke Dada ➔ Ujung Jemari Menyentuh Dagu/Bibir ➔ Diayunkan Maju Terbuka ➔ Melandai Turun
+      // Urutan BISINDO Otentik: Tangan Santai -> Naik ke Dada -> Ujung Jemari Menyentuh Dagu/Bibir -> Diayunkan Maju Terbuka -> Melandai Turun
       return [
         { t: 0.0, src: "/avatars/rian_neutral.jpg", bounceY: 0, scale: 1.0, rotateDeg: 0 },
         { t: 0.14, src: "/avatars/rian_tk_prep.jpg", bounceY: -3, scale: 1.01, rotateDeg: 0.2 },
@@ -679,7 +679,7 @@ function getGestureKeyframePlan(poseKey: string): GestureKeyframe[] {
         { t: 1.0, src: "/avatars/rian_neutral.jpg", bounceY: 0, scale: 1.0, rotateDeg: 0 },
       ];
     case "salam":
-      // Urutan BISINDO Otentik: Tangan Santai ➔ Naik Menuju Dada ➔ Telapak Rapat di Dada Kiri (Jantung) dengan Anggukan Hormat ➔ Melandai Turun
+      // Urutan BISINDO Otentik: Tangan Santai -> Naik Menuju Dada -> Telapak Rapat di Dada Kiri (Jantung) dengan Anggukan Hormat -> Melandai Turun
       return [
         { t: 0.0, src: "/avatars/rian_neutral.jpg", bounceY: 0, scale: 1.0, rotateDeg: 0 },
         { t: 0.18, src: "/avatars/rian_tk_prep.jpg", bounceY: -3, scale: 1.01, rotateDeg: 0 },
@@ -690,7 +690,7 @@ function getGestureKeyframePlan(poseKey: string): GestureKeyframe[] {
         { t: 1.0, src: "/avatars/rian_neutral.jpg", bounceY: 0, scale: 1.0, rotateDeg: 0 },
       ];
     case "ya":
-      // Urutan BISINDO Otentik: Tangan Mengepal Naik ➔ Kepalan Diayunkan Mengangguk ke Bawah ➔ Ketukan Angguk Mantap
+      // Urutan BISINDO Otentik: Tangan Mengepal Naik -> Kepalan Diayunkan Mengangguk ke Bawah -> Ketukan Angguk Mantap
       return [
         { t: 0.0, src: "/avatars/rian_neutral.jpg", bounceY: 0, scale: 1.0, rotateDeg: 0 },
         { t: 0.16, src: "/avatars/rian_ya.jpg", bounceY: -3, scale: 1.02, rotateDeg: 0 },
@@ -701,7 +701,7 @@ function getGestureKeyframePlan(poseKey: string): GestureKeyframe[] {
         { t: 1.0, src: "/avatars/rian_neutral.jpg", bounceY: 0, scale: 1.0, rotateDeg: 0 },
       ];
     case "bisa":
-      // Urutan BISINDO Otentik: Tangan Mengepal Naik ➔ Mengacungkan Jempol ke Depan dengan Senyum Kedip Percaya Diri
+      // Urutan BISINDO Otentik: Tangan Mengepal Naik -> Mengacungkan Jempol ke Depan dengan Senyum Kedip Percaya Diri
       return [
         { t: 0.0, src: "/avatars/rian_neutral.jpg", bounceY: 0, scale: 1.0, rotateDeg: 0 },
         { t: 0.18, src: "/avatars/rian_ya.jpg", bounceY: -3, scale: 1.01, rotateDeg: 0 },
@@ -712,7 +712,7 @@ function getGestureKeyframePlan(poseKey: string): GestureKeyframe[] {
         { t: 1.0, src: "/avatars/rian_neutral.jpg", bounceY: 0, scale: 1.0, rotateDeg: 0 },
       ];
     case "halo":
-      // Urutan BISINDO Otentik: Tangan Terbuka di Pelipis ➔ Melambai Keluar & Kedalam Dua Kali
+      // Urutan BISINDO Otentik: Tangan Terbuka di Pelipis -> Melambai Keluar & Kedalam Dua Kali
       return [
         { t: 0.0, src: "/avatars/rian_neutral.jpg", bounceY: 0, scale: 1.0, rotateDeg: 0 },
         { t: 0.16, src: "/avatars/rian_halo.jpg", bounceY: -6, scale: 1.02, rotateDeg: -2.0 },
@@ -900,7 +900,7 @@ export async function generate3DAnimatedGif(
 
     ctx.clearRect(0, 0, width, height);
 
-    // 1. Studio Backdrop Gradien Bersih (#E8F4F1 ➔ #D0EBE3)
+    // 1. Studio Backdrop Gradien Bersih (#E8F4F1 -> #D0EBE3)
     const bgGrad = ctx.createLinearGradient(0, 0, 0, height);
     bgGrad.addColorStop(0, "#E8F4F1");
     bgGrad.addColorStop(1, "#D0EBE3");
@@ -928,10 +928,10 @@ export async function generate3DAnimatedGif(
     let p = 0.5;
     if (actualFrames > 1) {
       if (f <= apexFrameIdx && apexFrameIdx > 0) {
-        // Naik menuju apex (0.0 ➔ 0.5) persis saat peraga mengangkat tangan
+        // Naik menuju apex (0.0 -> 0.5) persis saat peraga mengangkat tangan
         p = (f / apexFrameIdx) * 0.5;
       } else if (f > apexFrameIdx && actualFrames - 1 > apexFrameIdx) {
-        // Melandai dari apex kembali ke netral (0.5 ➔ 1.0)
+        // Melandai dari apex kembali ke netral (0.5 -> 1.0)
         p = 0.5 + ((f - apexFrameIdx) / (actualFrames - 1 - apexFrameIdx)) * 0.5;
       } else {
         p = f / (actualFrames - 1);

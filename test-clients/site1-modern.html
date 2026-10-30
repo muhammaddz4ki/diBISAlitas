@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aether AI — Modern Cloud Platform (Site 1 Test Client)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #0b0f19;
+      color: #f1f5f9;
+      line-height: 1.6;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 48px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(11, 15, 25, 0.85);
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .logo {
+      font-size: 20px;
+      font-weight: 800;
+      background: linear-gradient(135deg, #38bdf8, #818cf8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+    }
+    .nav-links a {
+      color: #94a3b8;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover {
+      color: #ffffff;
+    }
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 60px 24px 100px;
+    }
+    .badge {
+      display: inline-block;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      background: rgba(56, 189, 248, 0.12);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      color: #38bdf8;
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+    h1 {
+      font-size: 48px;
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 20px;
+      letter-spacing: -0.02em;
+    }
+    h1 span {
+      background: linear-gradient(135deg, #38bdf8 0%, #a855f7 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    p.lead {
+      font-size: 18px;
+      color: #94a3b8;
+      max-width: 680px;
+      margin-bottom: 36px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 24px;
+      margin-bottom: 48px;
+    }
+    .card {
+      background: #131b2e;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      padding: 30px;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(56, 189, 248, 0.35);
+    }
+    .card h3 {
+      font-size: 20px;
+      margin-bottom: 12px;
+      color: #ffffff;
+    }
+    .card p {
+      color: #94a3b8;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+    .test-box {
+      background: linear-gradient(135deg, rgba(30, 41, 59, 0.9), rgba(15, 23, 42, 0.9));
+      border: 2px solid #1B9981;
+      border-radius: 24px;
+      padding: 36px;
+      margin-top: 48px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+    }
+    .test-box h2 {
+      font-size: 24px;
+      color: #10b981;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .test-box p {
+      color: #cbd5e1;
+      font-size: 14px;
+      margin-bottom: 24px;
+    }
+    .btn-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    button.test-btn {
+      background: #1e293b;
+      color: #f8fafc;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      padding: 12px 18px;
+      border-radius: 12px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    button.test-btn:hover {
+      background: #1B9981;
+      border-color: #1B9981;
+      color: #ffffff;
+      transform: scale(1.02);
+    }
+    button.test-btn:active {
+      transform: scale(0.98);
+    }
+    .console-log {
+      background: #050811;
+      border: 1px solid #1e293b;
+      border-radius: 12px;
+      padding: 16px;
+      font-family: monospace;
+      font-size: 12px;
+      color: #38bdf8;
+      max-height: 160px;
+      overflow-y: auto;
+    }
+    .highlight-tip {
+      background: rgba(27, 153, 129, 0.1);
+      border-left: 4px solid #1B9981;
+      padding: 12px 16px;
+      border-radius: 0 12px 12px 0;
+      font-size: 13px;
+      color: #5eead4;
+      margin-top: 16px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="logo">AetherCloud AI</div>
+    <ul class="nav-links">
+      <li><a href="#features">Fitur</a></li>
+      <li><a href="#solutions">Solusi Inklusif</a></li>
+      <li><a href="#test">Uji Coba Widget 3D</a></li>
+    </ul>
+  </nav>
+
+  <!-- Main Container -->
+  <div class="container">
+    <span class="badge">Dark Mode Client — Cross-Origin Widget Test</span>
+    <h1>Platform AI Inklusif dengan <span>Asisten 3D Rian POLMAN</span></h1>
+    <p class="lead">
+      Halaman ini adalah website eksternal simulasi (port independen) yang menyuntikkan skrip 
+      <code>widget.js</code> dari server diBISAlitas untuk memvalidasi performa CORS, isolasi CSS Shadow DOM, dan komunikasi bidirectional postMessage.
+    </p>
+
+    <!-- Content Grid -->
+    <div class="grid" id="features">
+      <div class="card">
+        <h3>Aksesibilitas Tanpa Batas</h3>
+        <p>
+          Teknologi penerjemah teks ke bahasa isyarat BISINDO 3D secara real-time membantu rekan Tuli dan Tunarungu mengakses seluruh materi digital dengan mandiri.
+        </p>
+      </div>
+      <div class="card">
+        <h3>Karya Mahasiswa POLMAN Bandung</h3>
+        <p>
+          Rian adalah representasi avatar 3D mahasiswa Politeknik Manufaktur Negeri Bandung dengan jas almamater resmi yang memperagakan kosakata BISINDO secara presisi.
+        </p>
+      </div>
+      <div class="card">
+        <h3>Deteksi & Seleksi Teks Otomatis</h3>
+        <p>
+          Sorot atau blok kalimat mana pun di halaman web ini untuk melihat floating pill pemicu peragaan langsung oleh Rian POLMAN.
+        </p>
+      </div>
+    </div>
+
+    <!-- Interactive Test Box -->
+    <div class="test-box" id="test">
+      <h2>Uji Coba Public API (window.DiBISAWidget)</h2>
+      <p>
+        Klik tombol-tombol di bawah untuk menguji pemanggilan fungsi JavaScript eksternal yang berkomunikasi langsung dengan iframe 3D Rian POLMAN:
+      </p>
+
+      <div class="btn-group">
+        <button class="test-btn" onclick="triggerSign('Aksesibilitas cerdas kemandirian tanpa batas')">
+          Peragakan: "Aksesibilitas cerdas..."
+        </button>
+        <button class="test-btn" onclick="triggerSign('Halo terima kasih banyak')">
+          Peragakan: "Halo terima kasih..."
+        </button>
+        <button class="test-btn" onclick="triggerSign('Pasti bisa sukses bersama POLMAN Bandung')">
+          Peragakan: "Pasti bisa..."
+        </button>
+        <button class="test-btn" onclick="triggerSign('Tolong bantu saya')">
+          Peragakan: "Tolong bantu saya"
+        </button>
+        <button class="test-btn" onclick="window.DiBISAWidget.toggle()">
+          Toggle Buka/Tutup
+        </button>
+      </div>
+
+      <div class="console-log" id="eventLog">
+        [Status] Menunggu widget.js terinisialisasi...
+      </div>
+
+      <div class="highlight-tip">
+        Tips: Coba blok / seleksi teks kalimat di atas dengan kursor mouse untuk memunculkan tombol pemicu mengambang!
+      </div>
+    </div>
+  </div>
+
+  <!-- Injeksi Skrip Universal diBISAlitas 3D Rian POLMAN -->
+  <script src="http://localhost:3000/widget.js" data-position="bottom-right" data-server="http://localhost:3000" defer></script>
+
+  <script>
+    const logEl = document.getElementById('eventLog');
+    function log(msg) {
+      const time = new Date().toLocaleTimeString();
+      logEl.innerHTML += `<div>[${time}] ${msg}</div>`;
+      logEl.scrollTop = logEl.scrollHeight;
+    }
+
+    function triggerSign(sentence) {
+      if (window.DiBISAWidget) {
+        log(`Memanggil DiBISAWidget.translate("${sentence}")`);
+        window.DiBISAWidget.translate(sentence);
+      } else {
+        log(`Error: window.DiBISAWidget belum siap.`);
+      }
+    }
+
+    // Tunggu widget siap dan pasang listener event
+    window.addEventListener('load', () => {
+      const checkInterval = setInterval(() => {
+        if (window.DiBISAWidget) {
+          clearInterval(checkInterval);
+          log('Sukses: window.DiBISAWidget berhasil terdeteksi!');
+
+          window.DiBISAWidget.on('ready', () => {
+            log('Event Diterima: "ready" (Iframe 3D Rian siap menerima perintah)');
+          });
+
+          window.DiBISAWidget.on('word', (data) => {
+            log(`Event Diterima: "word" -> "${data.word}" (${data.index + 1}/${data.total})`);
+          });
+
+          window.DiBISAWidget.on('finished', (data) => {
+            log(`Event Diterima: "finished" -> Selesai memperagakan: "${data.sentence}"`);
+          });
+        }
+      }, 100);
+    });
+  </script>
+</body>
+</html>
+

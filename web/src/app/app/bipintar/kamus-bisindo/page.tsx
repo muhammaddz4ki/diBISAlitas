@@ -2,7 +2,23 @@
 
 import React, { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-import { ArrowLeft, Volume2, GraduationCap, X, CheckCircle2, Video, Sparkles, Film } from "lucide-react";
+import {
+  ArrowLeft,
+  Volume2,
+  VolumeX,
+  GraduationCap,
+  X,
+  CheckCircle2,
+  Video,
+  Sparkles,
+  Film,
+  Send,
+  Play,
+  Pause,
+  RotateCcw,
+  Type,
+  ChevronRight
+} from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { onAuthStateChanged } from "firebase/auth";
@@ -13,6 +29,7 @@ import { subscribeBisindoItems } from "@/lib/bisindoService";
 import { BisindoItem } from "@/lib/types";
 import Bisindo3DCharacter from "@/components/Bisindo3DCharacter";
 import ModalPortal from "@/components/ModalPortal";
+import { useSignSequencePlayer } from "@/hooks/useSignSequencePlayer";
 
 type Mastery = "none" | "weak" | "ok" | "master";
 
@@ -78,6 +95,14 @@ export type UnifiedSign =
   | { type: "3d"; item: BisindoItem }
   | { type: "static"; item: SignLabel };
 
+const QUICK_PHRASES = [
+  "Halo terima kasih",
+  "Pasti bisa",
+  "Tolong bantu saya",
+  "POLMAN Bandung",
+  "Salam hormat",
+];
+
 export default function KamusBisindoPage() {
   const [stats, setStats] = useState<LearningStats | null>(null);
   const [dynamic3DItems, setDynamic3DItems] = useState<BisindoItem[]>([]);
@@ -86,6 +111,17 @@ export default function KamusBisindoPage() {
   const [activeTab, setActiveTab] = useState<string>("all");
   const [speed3D, setSpeed3D] = useState<number>(1.0);
   const [showRawVideo, setShowRawVideo] = useState(false);
+
+  // State untuk Input Text-to-Sign Interpreter
+  const [inputText, setInputText] = useState("Halo terima kasih");
+  const [showInterpreterPlayer, setShowInterpreterPlayer] = useState(false);
+
+  // Hook State Machine Sequence Player
+  const player = useSignSequencePlayer({
+    customDictionary: dynamic3DItems,
+    defaultSpeed: 1.0,
+    enableTTS: true,
+  });
 
   // Subscribe to learning stats
   useEffect(() => {
@@ -108,37 +144,31 @@ export default function KamusBisindoPage() {
     return () => unsub();
   }, []);
 
-  const learnedCount = useMemo(() => {
-    if (!stats) return 0;
-    return UMUM_LABELS.filter((l) => masteryOf(stats.letters?.[String(l.id)]) === "master").length;
-  }, [stats]);
-
-  // Merge items into filtered view
+  // Filter items
   const displayItems = useMemo<UnifiedSign[]>(() => {
     const d3dList: UnifiedSign[] = dynamic3DItems.map((item) => ({ type: "3d" as const, item }));
     const staticList: UnifiedSign[] = UMUM_LABELS.map((item) => ({ type: "static" as const, item }));
 
-    if (activeTab === "3d") {
-      return d3dList;
-    }
-    if (activeTab === "sapaan") {
-      return d3dList.filter((x) => x.type === "3d" && x.item.category === "sapaan");
-    }
-    if (activeTab === "akademik") {
-      return d3dList.filter((x) => x.type === "3d" && x.item.category === "akademik");
-    }
-    if (activeTab === "darurat") {
-      return d3dList.filter((x) => x.type === "3d" && x.item.category === "darurat");
-    }
-    if (activeTab === "harian") {
-      return d3dList.filter((x) => x.type === "3d" && x.item.category === "harian");
-    }
-    if (activeTab === "alfabet") {
-      return staticList.filter((x) => x.type === "static" && x.item.label.length === 1);
-    }
-    // "all" tab: 3D dynamic items first, then static labels
+    if (activeTab === "3d") return d3dList;
+    if (activeTab === "sapaan") return d3dList.filter((x) => x.type === "3d" && x.item.category === "sapaan");
+    if (activeTab === "akademik") return d3dList.filter((x) => x.type === "3d" && x.item.category === "akademik");
+    if (activeTab === "darurat") return d3dList.filter((x) => x.type === "3d" && x.item.category === "darurat");
+    if (activeTab === "harian") return d3dList.filter((x) => x.type === "3d" && x.item.category === "harian");
+    if (activeTab === "alfabet") return staticList.filter((x) => x.type === "static" && x.item.label.length === 1);
     return [...d3dList, ...staticList];
   }, [dynamic3DItems, activeTab]);
+
+  // Handler Submit Teks ke Interpreter
+  const handleTranslateSentence = (sentenceToPlay?: string) => {
+    const targetText = sentenceToPlay || inputText;
+    if (!targetText.trim()) return;
+
+    setShowInterpreterPlayer(true);
+    player.loadSentence(targetText);
+    setTimeout(() => {
+      player.play();
+    }, 150);
+  };
 
   return (
     <div className="min-h-full bg-[#f4f6fc] flex flex-col pb-12">
@@ -156,7 +186,7 @@ export default function KamusBisindoPage() {
               <p className="text-slate-500 text-[12px] font-bold mt-1.5 uppercase tracking-wide text-3d flex items-center gap-1.5">
                 <span>{displayItems.length} Isyarat</span>
                 <span>•</span>
-                <span className="text-indigo-600">{dynamic3DItems.length} 3D Rian POLMAN</span>
+                <span className="text-indigo-600 font-extrabold">{dynamic3DItems.length} 3D Rian POLMAN</span>
               </p>
             </div>
           </div>
@@ -174,12 +204,12 @@ export default function KamusBisindoPage() {
         <div className="flex items-center gap-2 overflow-x-auto custom-scrollbar pt-4 pb-1">
           {[
             { id: "all", label: "Semua" },
-            { id: "3d", label: "🌟 3D Rian POLMAN" },
-            { id: "sapaan", label: "👋 Sapaan" },
-            { id: "akademik", label: "🎓 Akademik" },
-            { id: "darurat", label: "🚨 Darurat" },
-            { id: "harian", label: "☀️ Harian" },
-            { id: "alfabet", label: "🔤 Abjad A-Z" },
+            { id: "3d", label: "3D Rian POLMAN" },
+            { id: "sapaan", label: "Sapaan" },
+            { id: "akademik", label: "Akademik" },
+            { id: "darurat", label: "Darurat" },
+            { id: "harian", label: "Harian" },
+            { id: "alfabet", label: "Abjad A-Z" },
           ].map((tab) => (
             <button
               key={tab.id}
@@ -196,7 +226,175 @@ export default function KamusBisindoPage() {
         </div>
       </div>
 
-      {/* Grid Isyarat */}
+      {/* =========================================================================
+          FITUR UTAMA: INTERACTIVE TEXT-TO-SIGN INTERPRETER ENGINE (RIAN POLMAN)
+          ========================================================================= */}
+      <div className="px-6 mb-6">
+        <div className="bg-gradient-to-br from-white via-[#f8faff] to-[#edf2fc] rounded-[28px] p-5 border-2 border-indigo-200/80 shadow-3d">
+          <div className="flex items-center justify-between mb-3">
+            <div className="flex items-center gap-2">
+              <span className="w-7 h-7 rounded-xl bg-indigo-600 text-white flex items-center justify-center text-xs font-black shadow-sm">
+                <Sparkles className="w-4 h-4" />
+              </span>
+              <div>
+                <h2 className="text-[15px] font-black text-slate-800 leading-tight">
+                  Penerjemah Kalimat ke Isyarat 3D
+                </h2>
+                <p className="text-[11px] text-slate-500 font-medium">
+                  Rian POLMAN memperagakan kalimat kata demi kata
+                </p>
+              </div>
+            </div>
+
+            {showInterpreterPlayer && (
+              <button
+                onClick={() => {
+                  player.stop();
+                  setShowInterpreterPlayer(false);
+                }}
+                className="text-[11px] font-bold text-slate-400 hover:text-slate-600 px-2 py-1"
+              >
+                Tutup Player
+              </button>
+            )}
+          </div>
+
+          {/* Input Kalimat Bebas */}
+          <div className="relative flex items-center gap-2">
+            <div className="relative flex-1">
+              <input
+                type="text"
+                value={inputText}
+                onChange={(e) => setInputText(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") handleTranslateSentence();
+                }}
+                placeholder="Ketik kalimat (misal: Halo terima kasih POLMAN)..."
+                className="w-full pl-3.5 pr-8 py-3 rounded-2xl bg-[#f4f6fc] border border-indigo-100 text-[13px] font-semibold text-slate-800 placeholder-slate-400 outline-none focus:ring-2 focus:ring-indigo-500/30 transition-all shadow-inner"
+              />
+              {inputText && (
+                <button
+                  onClick={() => setInputText("")}
+                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              )}
+            </div>
+
+            <button
+              onClick={() => handleTranslateSentence()}
+              className="px-4 py-3 rounded-2xl bg-indigo-600 text-white font-bold text-xs flex items-center gap-1.5 shadow-md shadow-indigo-600/30 hover:bg-indigo-700 active:scale-95 transition-all cursor-pointer shrink-0"
+            >
+              <Send className="w-3.5 h-3.5" />
+              <span>Peragakan</span>
+            </button>
+          </div>
+
+          {/* Quick Phrases Chip */}
+          <div className="mt-3 flex items-center gap-1.5 overflow-x-auto custom-scrollbar pb-1">
+            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider shrink-0">
+              Cepat:
+            </span>
+            {QUICK_PHRASES.map((phrase) => (
+              <button
+                key={phrase}
+                onClick={() => {
+                  setInputText(phrase);
+                  handleTranslateSentence(phrase);
+                }}
+                className="px-2.5 py-1 rounded-full bg-white border border-indigo-100 text-indigo-700 font-bold text-[11px] whitespace-nowrap shadow-sm hover:bg-indigo-50 active:scale-95 transition-all cursor-pointer"
+              >
+                {phrase}
+              </button>
+            ))}
+          </div>
+
+          {/* Active Sequence Player Viewport */}
+          <AnimatePresence>
+            {showInterpreterPlayer && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.35, ease: "easeOut" }}
+                className="overflow-hidden mt-4 pt-4 border-t border-indigo-100/80"
+              >
+                {/* 3D Character Viewport Box */}
+                <div className="relative w-full h-64 sm:h-72 bg-gradient-to-b from-[#f8fafc] via-[#edf2f7] to-[#d9e2ec] rounded-3xl overflow-hidden shadow-[inset_2px_2px_5px_rgba(0,0,0,0.06),_inset_-3px_-3px_7px_rgba(255,255,255,1)] border-2 border-white flex items-center justify-center">
+                  <Bisindo3DCharacter
+                    isAnimating={player.isPlaying}
+                    speed={player.playbackSpeed}
+                    avatarModel="rian"
+                    activeFrameUrl={player.activeFrameUrl}
+                    highlightText={player.currentToken?.rawText}
+                    subtitle={player.currentToken?.description}
+                    showControls={true}
+                    isPlaying={player.isPlaying}
+                    onPlay={player.resume}
+                    onPause={player.pause}
+                    onReplay={player.replay}
+                    onSpeedChange={player.setPlaybackSpeed}
+                  />
+
+                  {/* Sound TTS Toggle Badge */}
+                  <button
+                    onClick={() => player.setEnableTTS(!player.enableTTS)}
+                    title={player.enableTTS ? "Suara TTS Aktif" : "Suara TTS Nonaktif"}
+                    className={`absolute top-3 right-3 p-2 rounded-xl backdrop-blur-md border shadow-sm transition-all z-20 ${
+                      player.enableTTS
+                        ? "bg-white/90 text-indigo-600 border-indigo-100"
+                        : "bg-black/40 text-white/60 border-transparent"
+                    }`}
+                  >
+                    {player.enableTTS ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4" />}
+                  </button>
+                </div>
+
+                {/* Progress Bar & Sequence Chips */}
+                <div className="mt-3.5 space-y-2">
+                  {/* Progress Indicator */}
+                  <div className="flex items-center justify-between text-[11px] font-bold text-slate-500">
+                    <span>
+                      Progres Isyarat: {player.currentIndex + 1} dari {player.tokens.length} gestur
+                    </span>
+                    <span className="text-indigo-600">{player.progress}%</span>
+                  </div>
+                  <div className="w-full h-1.5 rounded-full bg-slate-200 overflow-hidden">
+                    <motion.div
+                      className="h-full bg-indigo-600 rounded-full"
+                      animate={{ width: `${player.progress}%` }}
+                      transition={{ ease: "linear" }}
+                    />
+                  </div>
+
+                  {/* Interactive Word Sequence Tokens */}
+                  <div className="flex flex-wrap items-center gap-1.5 pt-1">
+                    {player.tokens.map((token, idx) => {
+                      const isActive = idx === player.currentIndex;
+                      return (
+                        <button
+                          key={token.id}
+                          onClick={() => player.jumpToIndex(idx)}
+                          className={`px-3 py-1 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                            isActive
+                              ? "bg-indigo-600 text-white shadow-md shadow-indigo-600/30 scale-105"
+                              : "bg-white border border-slate-200 text-slate-600 hover:bg-slate-50"
+                          }`}
+                        >
+                          {token.rawText}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+      </div>
+
+      {/* Grid Isyarat Regular */}
       <div className="px-6 grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3.5">
         {displayItems.map((entry, idx) => {
           if (entry.type === "3d") {
@@ -272,7 +470,7 @@ export default function KamusBisindoPage() {
         })}
       </div>
 
-      {/* Detail Modal Portal */}
+      {/* Detail Modal Portal (Bila item diklik dari Grid) */}
       <AnimatePresence>
         {selectedSign && (
           <ModalPortal>
@@ -311,7 +509,6 @@ export default function KamusBisindoPage() {
                 {/* Content Renderer */}
                 <div className="flex flex-col items-center text-center">
                   {selectedSign.type === "3d" ? (
-                    /* 3D Character Viewport */
                     <div className="w-full space-y-4">
                       {showRawVideo && selectedSign.item.videoRawUrl ? (
                         <div className="w-full h-56 rounded-3xl overflow-hidden bg-black shadow-inner border border-slate-200">
@@ -329,12 +526,14 @@ export default function KamusBisindoPage() {
                             speed={speed3D}
                             isAnimating={true}
                             avatarModel="rian"
+                            highlightText={selectedSign.item.word}
+                            subtitle={selectedSign.item.description}
                           />
                           {/* Speed Badge */}
-                          <div className="absolute bottom-3 right-3 flex items-center gap-1 bg-white/90 backdrop-blur-md px-2.5 py-1 rounded-full shadow-sm border border-white text-[11px] font-bold text-slate-700">
+                          <div className="absolute bottom-3 right-3 flex items-center gap-1 bg-white/90 backdrop-blur-md px-2.5 py-1 rounded-full shadow-sm border border-white text-[11px] font-bold text-slate-700 z-20">
                             <span>Kecepatan:</span>
                             <button
-                              onClick={() => setSpeed3D((prev) => (prev === 1.0 ? 0.75 : prev === 0.75 ? 1.5 : 1.0))}
+                              onClick={() => setSpeed3D((prev) => (prev === 1.0 ? 0.75 : prev === 0.75 ? 1.25 : 1.0))}
                               className="text-indigo-600 underline font-black"
                             >
                               {speed3D}x

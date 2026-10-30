@@ -361,7 +361,27 @@ export default function Navbar() {
               )}
             </AnimatePresence>
           </div>
-          
+
+          {/* Menu Developer / API */}
+          <Link
+            href="/developer"
+            className={`relative px-4 py-2 rounded-xl text-sm transition-all duration-300 flex items-center gap-1.5 ${
+              pathname.startsWith("/developer")
+                ? "text-[#2a9d8f] font-bold"
+                : "text-slate-600 dark:text-slate-300 font-medium hover:text-[#2a9d8f] dark:hover:text-[#4fd1c5] hover:bg-slate-100 dark:hover:bg-white/[0.04]"
+            }`}
+          >
+            {pathname.startsWith("/developer") && (
+              <motion.span
+                layoutId="navbar-active-pill"
+                className="absolute inset-0 rounded-xl bg-white/70 dark:bg-white/10 backdrop-blur-md shadow-sm dark:shadow-none border border-slate-200/60 dark:border-white/5"
+                transition={{ type: "spring", stiffness: 380, damping: 32 }}
+              />
+            )}
+            <span className="relative z-10 flex items-center gap-1.5 notranslate" translate="no">
+              API
+            </span>
+          </Link>
 
         </nav>
 
@@ -485,6 +505,15 @@ export default function Navbar() {
                   })}
                 </div>
               </div>
+
+              {/* Menu Developer / API Mobile */}
+              <Link
+                href="/developer"
+                onClick={() => setMobileOpen(false)}
+                className="block px-3 py-2 text-base font-bold text-slate-800 dark:text-slate-100 hover:text-[#2a9d8f] dark:hover:text-[#4fd1c5]"
+              >
+                Dokumentasi API & Widget
+              </Link>
 
               <div className="pt-4 border-t border-slate-200 dark:border-white/10 space-y-3 px-1">
                 {/* Mobile Language Switcher Card */}
