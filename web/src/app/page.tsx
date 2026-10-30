@@ -124,7 +124,7 @@ function HeroSection() {
       {/* Giant faint background text */}
       <div className="absolute top-[40%] md:top-[45%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-full text-center pointer-events-none opacity-[0.03] dark:opacity-[0.05] flex flex-col justify-center items-center z-0">
          <span className="text-[12rem] md:text-[22rem] font-black leading-none tracking-tighter text-[#2a9d8f] dark:text-[#4fd1c5] notranslate" translate="no">diBISA</span>
-         <span className="text-[12rem] md:text-[22rem] font-black leading-none tracking-tighter text-[#2a9d8f] dark:text-[#4fd1c5]">litas</span>
+         <span className="text-[12rem] md:text-[22rem] font-black leading-none tracking-tighter text-[#2a9d8f] dark:text-[#4fd1c5] notranslate" translate="no">litas</span>
       </div>
 
       <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 flex flex-col items-center text-center mt-12 md:mt-0">
@@ -133,7 +133,8 @@ function HeroSection() {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="mb-6 flex items-center justify-center font-bold tracking-[0.3em] text-xs sm:text-sm text-slate-500 dark:text-white/80 uppercase"
+          className="mb-6 flex items-center justify-center font-bold tracking-[0.3em] text-xs sm:text-sm text-slate-500 dark:text-white/80 uppercase notranslate"
+          translate="no"
         >
           di<span className="text-[#2a9d8f] dark:text-[#4fd1c5] mx-1">BISA</span>litas
         </motion.div>

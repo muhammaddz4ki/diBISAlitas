@@ -218,17 +218,38 @@ export default function EmbedRianPage() {
         </div>
       </div>
 
-      {/* Subtitle Badge & Status Progres di Bagian Atas */}
-      <div className="absolute top-16 left-0 right-0 z-30 flex flex-col items-center pointer-events-none px-4 gap-1.5">
+      {/* Canvas Viewport 3D Karakter Rian POLMAN */}
+      <div className="relative flex-1 w-full h-full overflow-hidden">
+        <Bisindo3DCharacter
+          isAnimating={sequencePlayer.isPlaying}
+          currentSign={
+            sequencePlayer.tokens.length > 0 && sequencePlayer.currentToken
+              ? sequencePlayer.currentToken.poseKey
+              : "neutral"
+          }
+          speed={speed}
+          avatarModel="rian"
+          activeFrameUrl={
+            sequencePlayer.tokens.length > 0
+              ? sequencePlayer.activeFrameUrl
+              : "/avatars/rian_neutral.jpg"
+          }
+        />
+      </div>
+
+      {/* Floating Control Toolbar di Bagian Bawah */}
+      <div className="absolute bottom-3 left-0 right-0 z-40 px-3.5 flex flex-col items-center gap-2 pointer-events-auto">
+        {/* Subtitle Badge & Status Progres di Bagian Bawah */}
+      
         <motion.div
           key={
             sequencePlayer.tokens.length > 0
               ? `${sequencePlayer.currentIndex}-${sequencePlayer.activeFrameUrl}`
               : "idle"
           }
-          initial={{ opacity: 0, y: -6, scale: 0.96 }}
+          initial={{ opacity: 0, y: 6, scale: 0.96 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
-          className="px-4 py-1.5 rounded-full bg-white/95 backdrop-blur-md shadow-md border border-white/80 text-slate-800 text-xs font-bold flex items-center justify-center max-w-[270px] text-center"
+          className="px-4 py-1.5 rounded-full bg-white/95 backdrop-blur-md shadow-md border border-white/80 text-slate-800 text-xs font-bold flex items-center justify-center max-w-[270px] text-center notranslate" translate="no"
         >
           <span className="truncate">
             {sequencePlayer.tokens.length > 0
@@ -260,26 +281,9 @@ export default function EmbedRianPage() {
             </span>
           </motion.div>
         )}
-      </div>
+      
 
-      {/* Canvas Viewport 3D Karakter Rian POLMAN */}
-      <div className="relative flex-1 w-full h-full overflow-hidden">
-        <Bisindo3DCharacter
-          isAnimating={sequencePlayer.isPlaying}
-          currentSign="salam"
-          speed={speed}
-          avatarModel="rian"
-          activeFrameUrl={
-            sequencePlayer.tokens.length > 0
-              ? sequencePlayer.activeFrameUrl
-              : "/avatars/rian_neutral.jpg"
-          }
-        />
-      </div>
-
-      {/* Floating Control Toolbar di Bagian Bawah */}
-      <div className="absolute bottom-3 left-0 right-0 z-40 px-3.5 flex flex-col items-center gap-2 pointer-events-auto">
-        {/* Bilah Kontrol Kaca Frosted */}
+      {/* Bilah Kontrol Kaca Frosted */}
         <div className="w-full max-w-[275px] bg-white/90 backdrop-blur-md rounded-2xl px-4 py-2 border border-white/90 shadow-[0_8px_30px_rgba(0,0,0,0.12)] flex items-center justify-around">
           {/* 1. Tombol Play / Pause / Replay */}
           <button

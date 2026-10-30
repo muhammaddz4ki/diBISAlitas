@@ -38,6 +38,7 @@ export const metadata: Metadata = {
 import { ThemeProvider } from "@/lib/ThemeContext";
 import { LanguageProvider } from "@/lib/LanguageContext";
 import FloatingAccessibility from "@/components/FloatingAccessibility";
+import DomDefensiveGuard from "@/components/DomDefensiveGuard";
 
 export default function RootLayout({
   children,
@@ -51,12 +52,20 @@ export default function RootLayout({
       suppressHydrationWarning
       className={`${jakarta.variable} ${geistMono.variable} ${playfair.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-[#ffffff] dark:bg-black text-slate-800 dark:text-slate-100 transition-colors duration-300">
+      <body
+        suppressHydrationWarning
+        className="min-h-full flex flex-col bg-[#ffffff] dark:bg-black text-slate-800 dark:text-slate-100 transition-colors duration-300"
+      >
+        <DomDefensiveGuard />
         <LanguageProvider>
           <ThemeProvider>
-            <div className="a11y-content-wrapper flex-1 flex flex-col">
+            <div
+              id="app-wrapper"
+              className="a11y-content-wrapper flex-1 flex flex-col"
+            >
               {children}
             </div>
+            <div id="portal-root" />
             <FloatingAccessibility />
           </ThemeProvider>
         </LanguageProvider>
@@ -64,4 +73,3 @@ export default function RootLayout({
     </html>
   );
 }
-

@@ -574,17 +574,40 @@ export default function FloatingAccessibility() {
               </div>
             </div>
 
-            {/* Subtitle Badge at Top Center (Current Sign Word or Sequence Text - Tanpa Emotikon) */}
-            <div className="absolute top-16 left-0 right-0 z-30 flex flex-col items-center pointer-events-none px-4 gap-1.5">
+            {/* 3D Character Canvas (Fills the phone viewport) */}
+            <div className="relative flex-1 w-full h-full overflow-hidden">
+              <Bisindo3DCharacter
+                isAnimating={sequencePlayer.isPlaying || bisindoAutoPlay}
+                currentSign={
+                  sequencePlayer.tokens.length > 0 && sequencePlayer.currentToken
+                    ? sequencePlayer.currentToken.poseKey
+                    : bisindoSign
+                }
+                speed={bisindoSpeed}
+                avatarModel={avatarModel}
+                jacketColor={jacketColor}
+                activeFrameUrl={
+                  sequencePlayer.tokens.length > 0
+                    ? sequencePlayer.activeFrameUrl
+                    : undefined
+                }
+                onSignChange={(newSign) => setBisindoSign(newSign)}
+              />
+            </div>
+
+            {/* Floating Controls Overlay at Bottom (EXACTLY like user reference photo!) */}
+            <div className="absolute bottom-4 left-0 right-0 z-40 px-4 flex flex-col items-center gap-2">
+              {/* Subtitle Badge at Top Center (Current Sign Word or Sequence Text - Tanpa Emotikon) */}
+            
               <motion.div
                 key={
                   sequencePlayer.tokens.length > 0
                     ? `${sequencePlayer.currentIndex}-${sequencePlayer.activeFrameUrl}`
                     : bisindoSign
                 }
-                initial={{ opacity: 0, y: -6, scale: 0.96 }}
+                initial={{ opacity: 0, y: 6, scale: 0.96 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
-                className="px-4 py-1.5 rounded-full bg-white/95 backdrop-blur-md shadow-md border border-white/80 text-slate-800 text-xs font-bold flex items-center justify-center max-w-[270px] text-center"
+                className="px-4 py-1.5 rounded-full bg-white/95 backdrop-blur-md shadow-md border border-white/80 text-slate-800 text-xs font-bold flex items-center justify-center max-w-[270px] text-center notranslate" translate="no"
               >
                 <span className="truncate">
                   {sequencePlayer.tokens.length > 0
@@ -618,28 +641,9 @@ export default function FloatingAccessibility() {
                   </span>
                 </motion.div>
               )}
-            </div>
+            
 
-            {/* 3D Character Canvas (Fills the phone viewport) */}
-            <div className="relative flex-1 w-full h-full overflow-hidden">
-              <Bisindo3DCharacter
-                isAnimating={sequencePlayer.isPlaying || bisindoAutoPlay}
-                currentSign={bisindoSign}
-                speed={bisindoSpeed}
-                avatarModel={avatarModel}
-                jacketColor={jacketColor}
-                activeFrameUrl={
-                  sequencePlayer.tokens.length > 0
-                    ? sequencePlayer.activeFrameUrl
-                    : undefined
-                }
-                onSignChange={(newSign) => setBisindoSign(newSign)}
-              />
-            </div>
-
-            {/* Floating Controls Overlay at Bottom (EXACTLY like user reference photo!) */}
-            <div className="absolute bottom-4 left-0 right-0 z-40 px-4 flex flex-col items-center gap-2">
-              {/* White Frosted Glass Pill with 3 Teal Buttons */}
+            {/* White Frosted Glass Pill with 3 Teal Buttons */}
               <div className="w-full max-w-[275px] bg-white/88 backdrop-blur-md rounded-2xl px-4 py-2.5 border border-white/90 shadow-[0_8px_30px_rgba(0,0,0,0.12)] flex items-center justify-around">
                 {/* 1. Pause/Play/Replay Button */}
                 <button

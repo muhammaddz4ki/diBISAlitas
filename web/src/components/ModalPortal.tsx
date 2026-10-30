@@ -3,17 +3,32 @@
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 
-export default function ModalPortal({ children }: { children: React.ReactNode }) {
-  const [mounted, setMounted] = useState(false);
+export default function ModalPortal({
+  children,
+  targetId,
+}: {
+  children: React.ReactNode;
+  targetId?: string;
+}) {
+  const [targetElement, setTargetElement] = useState<HTMLElement | null>(null);
 
   useEffect(() => {
-    setMounted(true);
-  }, []);
+    if (typeof document === "undefined") return;
 
-  if (!mounted) return null;
+    let el: HTMLElement | null = null;
+    if (targetId) {
+      el = document.getElementById(targetId);
+    }
+    if (!el) {
+      el =
+        document.getElementById("portal-root") ||
+        document.getElementById("app-wrapper") ||
+        document.body;
+    }
+    setTargetElement(el);
+  }, [targetId]);
 
-  const appWrapper = document.getElementById("app-wrapper");
-  if (!appWrapper) return null;
+  if (!targetElement) return null;
 
-  return createPortal(children, appWrapper);
+  return createPortal(children, targetElement);
 }

@@ -3,10 +3,12 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import { Play, Pause, RotateCcw, Volume2, VolumeX, Sparkles } from "lucide-react";
+import { Play, Pause, RotateCcw, Sparkles, Box, Layers } from "lucide-react";
 import { RIAN_GESTURE_FRAMES } from "@/utils/textToSignEngine";
+import Rian3DCanvas from "@/components/Rian3DCanvas";
 
 export type AvatarModelId = "rian" | "budi" | "nadia";
+export type AvatarRenderMode = "3d" | "2.5d" | "auto";
 
 export interface Bisindo3DCharacterProps {
   isAnimating?: boolean;
@@ -16,6 +18,8 @@ export interface Bisindo3DCharacterProps {
   avatarModel?: AvatarModelId;
   jacketColor?: "blue" | "dark" | "mustard";
   customImage?: string;
+  renderMode?: AvatarRenderMode;
+  allowModeSwitch?: boolean;
   onSignComplete?: () => void;
   onSignChange?: (sign: string) => void;
 
@@ -31,7 +35,7 @@ export interface Bisindo3DCharacterProps {
   onSpeedChange?: (speed: number) => void;
 }
 
-// Mapping dasar pose statis BISINDO Rian POLMAN
+// Mapping dasar pose statis BISINDO Rian POLMAN (Fallback 2.5D)
 const RIAN_POSES: Record<string, string> = {
   idle: "/avatars/rian_neutral.jpg",
   neutral: "/avatars/rian_neutral.jpg",
@@ -70,6 +74,8 @@ export default function Bisindo3DCharacter({
   avatarModel = "rian",
   jacketColor = "blue",
   customImage,
+  renderMode = "auto",
+  allowModeSwitch = true,
   onSignComplete,
   onSignChange,
   // Props Sekuens Baru
@@ -86,6 +92,11 @@ export default function Bisindo3DCharacter({
   const [activeSign, setActiveSign] = useState(currentSign);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [internalFrameUrl, setInternalFrameUrl] = useState<string>("");
+  const [currentRenderMode, setCurrentRenderMode] = useState<"3d" | "2.5d">(
+    renderMode === "2.5d" ? "2.5d" : "3d"
+  );
+  const [webGLError, setWebGLError] = useState<boolean>(false);
+
   const containerRef = useRef<HTMLDivElement>(null);
   const frameIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
@@ -94,8 +105,19 @@ export default function Bisindo3DCharacter({
     setActiveSign(currentSign);
   }, [currentSign]);
 
-  // Pemutaran Sekuens Mikro-Frame internal jika pose memiliki multi-frame animasi
+  // Sinkronisasi mode rendering jika prop berubah
   useEffect(() => {
+    if (renderMode === "2.5d") {
+      setCurrentRenderMode("2.5d");
+    } else if (renderMode === "3d" && !webGLError) {
+      setCurrentRenderMode("3d");
+    }
+  }, [renderMode, webGLError]);
+
+  // Pemutaran Sekuens Mikro-Frame internal jika mode 2.5D aktif
+  useEffect(() => {
+    if (currentRenderMode !== "2.5d") return;
+
     if (activeFrameUrl) {
       setInternalFrameUrl(activeFrameUrl);
       return;
@@ -124,11 +146,16 @@ export default function Bisindo3DCharacter({
     } else {
       setInternalFrameUrl("");
     }
-  }, [activeSign, activeFrameUrl, isAnimating, speed]);
+  }, [activeSign, activeFrameUrl, isAnimating, speed, currentRenderMode]);
 
-  // Autoplay demonstration cycle hanya jika eksplisit diminta (currentSign === "cycle" atau "demo")
+  // Autoplay demonstration cycle jika diminta
   useEffect(() => {
-    if (!isAnimating || customImage || activeFrameUrl || (currentSign && currentSign !== "cycle" && currentSign !== "demo")) {
+    if (
+      !isAnimating ||
+      customImage ||
+      activeFrameUrl ||
+      (currentSign && currentSign !== "cycle" && currentSign !== "demo")
+    ) {
       return;
     }
 
@@ -144,10 +171,19 @@ export default function Bisindo3DCharacter({
     }, intervalTime);
 
     return () => clearInterval(interval);
-  }, [isAnimating, speed, onSignChange, onSignComplete, customImage, currentSign, activeFrameUrl]);
+  }, [
+    isAnimating,
+    speed,
+    onSignChange,
+    onSignComplete,
+    customImage,
+    currentSign,
+    activeFrameUrl,
+  ]);
 
-  // 3D Parallax Tilt effect pada kursor mouse / layar sentuh
+  // Parallax Tilt untuk mode 2.5D
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (currentRenderMode === "3d") return;
     if (!containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
     const x = (e.clientX - rect.left) / rect.width - 0.5;
@@ -156,10 +192,11 @@ export default function Bisindo3DCharacter({
   };
 
   const handleMouseLeave = () => {
+    if (currentRenderMode === "3d") return;
     setMousePos({ x: 0, y: 0 });
   };
 
-  // Menentukan sumber gambar visual avatar (100% Eksklusif 3D Rian POLMAN)
+  // Menentukan sumber gambar visual avatar (Fallback 2.5D)
   const getImageSrc = () => {
     if (activeFrameUrl) return activeFrameUrl;
     if (internalFrameUrl) return internalFrameUrl;
@@ -172,65 +209,122 @@ export default function Bisindo3DCharacter({
   const getJacketFilter = () => {
     if (jacketColor === "dark") return "contrast(1.05) brightness(0.85)";
     if (jacketColor === "mustard") return "hue-rotate(45deg) saturate(1.2)";
-    return "none"; // Default Royal Blue POLMAN Bandung
+    return "none";
   };
+
+  const is3DActive =
+    currentRenderMode === "3d" &&
+    !webGLError &&
+    !customImage &&
+    avatarModel === "rian";
 
   return (
     <div className="flex flex-col items-center w-full h-full relative select-none">
+      {/* Tombol Alih Mode 3D Canvas / 2.5D Parallax */}
+      {allowModeSwitch && !customImage && avatarModel === "rian" && (
+        <div className="absolute top-4 left-16 z-30 flex items-center bg-white/90 dark:bg-slate-900/90 backdrop-blur-md rounded-full p-0.5 border border-slate-200/80 dark:border-slate-800 shadow-xs">
+          <button
+            type="button"
+            onClick={() => setCurrentRenderMode("3d")}
+            title="Mode 3D Real-Time Skeletal Engine"
+            className={`flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold transition-all ${
+              is3DActive
+                ? "bg-[#1B9981] text-white shadow-xs"
+                : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+            }`}
+          >
+            <Box className="w-3 h-3" />
+            <span>3D</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => setCurrentRenderMode("2.5d")}
+            title="Mode 2.5D Clay Parallax"
+            className={`flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold transition-all ${
+              !is3DActive
+                ? "bg-[#1B9981] text-white shadow-xs"
+                : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+            }`}
+          >
+            <Layers className="w-3 h-3" />
+            <span>2.5D</span>
+          </button>
+        </div>
+      )}
+
       {/* 3D Viewport Box */}
       <div
         ref={containerRef}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
         className="relative w-full h-full flex items-center justify-center overflow-hidden cursor-pointer"
-        style={{ perspective: "1000px" }}
+        style={{ perspective: is3DActive ? undefined : "1000px" }}
       >
-        {/* Subtle Studio Lighting Vignette */}
-        <div className="absolute inset-0 bg-radial from-transparent via-black/[0.015] to-black/[0.06] pointer-events-none z-10" />
+        {is3DActive ? (
+          /* Real-time 3D Three.js Skeletal Animation Engine */
+          <Rian3DCanvas
+            key="rian-3d-skeletal-canvas"
+            currentSign={activeSign}
+            isAnimating={isAnimating}
+            speed={speed}
+            jacketColor={jacketColor}
+            enableParallax={true}
+            enableBreathing={true}
+            onError={() => {
+              setWebGLError(true);
+              setCurrentRenderMode("2.5d");
+            }}
+          />
+        ) : (
+          /* Fallback 2.5D Clay Parallax */
+          <div key="rian-2.5d-clay-container" className="relative w-full h-full flex items-center justify-center">
+            {/* Subtle Studio Lighting Vignette */}
+            <div className="absolute inset-0 bg-radial from-transparent via-black/[0.015] to-black/[0.06] pointer-events-none z-10" />
 
-        {/* 3D Floating Avatar Container */}
-        <motion.div
-          animate={{
-            rotateY: mousePos.x * 12,
-            rotateX: -mousePos.y * 12,
-            y: [0, -5, 0],
-          }}
-          transition={{
-            rotateY: { type: "spring", stiffness: 120, damping: 20 },
-            rotateX: { type: "spring", stiffness: 120, damping: 20 },
-            y: { repeat: Infinity, duration: 4 / speed, ease: "easeInOut" },
-          }}
-          className="relative w-full h-full flex items-center justify-center transform-gpu"
-          style={{ transformStyle: "preserve-3d" }}
-        >
-          <AnimatePresence mode="wait">
             <motion.div
-              key={`${avatarModel}-${getImageSrc()}`}
-              initial={{ opacity: 0.92, scale: 0.98 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0.92, scale: 0.98 }}
-              transition={{ duration: 0.22, ease: "easeOut" }}
-              className="relative w-full h-full flex items-center justify-center"
-              style={{ filter: getJacketFilter() }}
+              animate={{
+                rotateY: mousePos.x * 12,
+                rotateX: -mousePos.y * 12,
+                y: [0, -5, 0],
+              }}
+              transition={{
+                rotateY: { type: "spring", stiffness: 120, damping: 20 },
+                rotateX: { type: "spring", stiffness: 120, damping: 20 },
+                y: { repeat: Infinity, duration: 4 / speed, ease: "easeInOut" },
+              }}
+              className="relative w-full h-full flex items-center justify-center transform-gpu"
+              style={{ transformStyle: "preserve-3d" }}
             >
-              <Image
-                src={getImageSrc()}
-                alt={`Avatar 3D BISINDO Rian - ${activeSign}`}
-                fill
-                priority
-                unoptimized
-                sizes="(max-width: 768px) 320px, 400px"
-                className="object-cover object-top select-none pointer-events-none drop-shadow-xl"
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={`${avatarModel}-${getImageSrc()}`}
+                  initial={{ opacity: 0.92, scale: 0.98 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0.92, scale: 0.98 }}
+                  transition={{ duration: 0.22, ease: "easeOut" }}
+                  className="relative w-full h-full flex items-center justify-center"
+                  style={{ filter: getJacketFilter() }}
+                >
+                  <Image
+                    src={getImageSrc()}
+                    alt={`Avatar 3D BISINDO Rian - ${activeSign}`}
+                    fill
+                    priority
+                    unoptimized
+                    sizes="(max-width: 768px) 320px, 400px"
+                    className="object-cover object-top select-none pointer-events-none drop-shadow-xl"
+                  />
+                </motion.div>
+              </AnimatePresence>
+
+              {/* Studio Ground Shadow Simulation */}
+              <div
+                className="absolute -bottom-6 w-3/4 h-8 bg-slate-900/15 rounded-full blur-xl pointer-events-none"
+                style={{ transform: "translateZ(-30px)" }}
               />
             </motion.div>
-          </AnimatePresence>
-
-          {/* Studio Ground Shadow Simulation */}
-          <div
-            className="absolute -bottom-6 w-3/4 h-8 bg-slate-900/15 rounded-full blur-xl pointer-events-none"
-            style={{ transform: "translateZ(-30px)" }}
-          />
-        </motion.div>
+          </div>
+        )}
       </div>
 
       {/* Indikator Sorot Teks Real-Time (Live Highlight Subtitle) */}
@@ -259,6 +353,7 @@ export default function Bisindo3DCharacter({
           <div className="flex items-center gap-2">
             {isPlaying ? (
               <button
+                type="button"
                 onClick={onPause}
                 title="Jeda Peragaan"
                 className="w-8 h-8 rounded-xl bg-white dark:bg-slate-800 flex items-center justify-center text-slate-700 dark:text-slate-200 shadow-sm hover:bg-slate-50 active:scale-95 transition-all"
@@ -267,6 +362,7 @@ export default function Bisindo3DCharacter({
               </button>
             ) : (
               <button
+                type="button"
                 onClick={onPlay}
                 title="Mulai Peragaan"
                 className="w-8 h-8 rounded-xl bg-[#1B9981] text-white flex items-center justify-center shadow-[0_2px_8px_rgba(27,153,129,0.35)] hover:bg-[#16816d] active:scale-95 transition-all"
@@ -276,6 +372,7 @@ export default function Bisindo3DCharacter({
             )}
 
             <button
+              type="button"
               onClick={onReplay}
               title="Ulangi dari Awal"
               className="w-8 h-8 rounded-xl bg-white dark:bg-slate-800 flex items-center justify-center text-slate-700 dark:text-slate-200 shadow-sm hover:bg-slate-50 active:scale-95 transition-all"
@@ -290,6 +387,7 @@ export default function Bisindo3DCharacter({
             {[0.75, 1.0, 1.25].map((s) => (
               <button
                 key={s}
+                type="button"
                 onClick={() => onSpeedChange?.(s)}
                 className={`px-2 py-0.5 rounded-lg text-xs font-bold transition-all ${
                   speed === s

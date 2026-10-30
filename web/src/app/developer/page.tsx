@@ -611,7 +611,7 @@ export default function DeveloperPage() {
 
       {/* Footer Minimalis */}
       <footer className="border-t border-white/10 py-10 px-6 text-center text-xs text-slate-500">
-        &copy; 2026 diBISAlitas — Platform Ekosistem Aksesibilitas Cerdas Berbasis AI. Inovasi Mahasiswa POLMAN Bandung.
+        &copy; 2026 <span className="notranslate" translate="no">diBISAlitas</span> — Platform Ekosistem Aksesibilitas Cerdas Berbasis AI. Inovasi Mahasiswa <span className="notranslate" translate="no">POLMAN Bandung</span>.
       </footer>
     </div>
   );

@@ -2,6 +2,14 @@
 
 import React, { createContext, useContext, useEffect, useState, useCallback, useRef } from "react";
 import { usePathname } from "next/navigation";
+import {
+  DO_NOT_TRANSLATE_WHITELIST,
+  BRAND_DICTIONARY,
+  BRAND_NAME,
+  unmaskBrand,
+} from "@/lib/brandProtection";
+
+export { DO_NOT_TRANSLATE_WHITELIST, BRAND_DICTIONARY, BRAND_NAME };
 
 export type Language = "id" | "en";
 
@@ -86,11 +94,42 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
     return false;
   }, []);
 
-  // Active observer to suppress any Google Translate banner iframes and body offset
+  // Active observer: Suppress Google banner & Proteksi Nama Merek diBISAlitas di Live DOM
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    const suppressBanner = () => {
+    const protectBrandInDom = () => {
+      const mistranslationRegex = /\b(can[- ]abilities|can[- ]ability|in[- ]abilities|in[- ]ability|at[- ]bisalitas|di[- ]bisalitas|dibisalitas|di[- ]bisa[- ]litas)\b/i;
+
+      // Scan and protect any occurrences of "diBISAlitas" mistranslations on live DOM
+      const walker = document.createTreeWalker(
+        document.body,
+        NodeFilter.SHOW_TEXT,
+        {
+          acceptNode: (node) => {
+            if (!node.nodeValue) return NodeFilter.FILTER_REJECT;
+            if (mistranslationRegex.test(node.nodeValue)) {
+              return NodeFilter.FILTER_ACCEPT;
+            }
+            return NodeFilter.FILTER_SKIP;
+          },
+        }
+      );
+
+      const nodesToFix: Text[] = [];
+      let current: Node | null;
+      while ((current = walker.nextNode())) {
+        nodesToFix.push(current as Text);
+      }
+
+      nodesToFix.forEach((textNode) => {
+        if (textNode.nodeValue) {
+          textNode.nodeValue = unmaskBrand(textNode.nodeValue);
+        }
+      });
+    };
+
+    const suppressBannerAndProtectBrand = () => {
       if (document.body.style.top && document.body.style.top !== "0px") {
         document.body.style.top = "0px";
       }
@@ -110,14 +149,18 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
           el.style.setProperty("pointer-events", "none", "important");
         }
       });
+
+      protectBrandInDom();
     };
 
-    suppressBanner();
-    const observer = new MutationObserver(suppressBanner);
+    suppressBannerAndProtectBrand();
+    const observer = new MutationObserver(suppressBannerAndProtectBrand);
     observer.observe(document.body, {
       attributes: true,
       attributeFilter: ["style", "class"],
       childList: true,
+      characterData: true,
+      subtree: true,
     });
 
     return () => observer.disconnect();
@@ -177,8 +220,6 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
   }, [applyGoogleTranslate]);
 
   // In English mode, intercept internal link clicks to perform full-page navigation.
-  // This allows Google Translate to naturally parse and translate 100% of the new route's DOM,
-  // preventing untranslated client-side SPA route transitions.
   useEffect(() => {
     if (typeof window === "undefined") return;
 
@@ -206,8 +247,6 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
   }, [language]);
 
   // Handle client-side Next.js route transitions:
-  // If navigating while in English mode via programmatic routing (e.g. router.push),
-  // refresh so the freshly mounted route is 100% translated by Google Translate.
   const lastPathnameRef = useRef(pathname);
   useEffect(() => {
     if (language === "en" && lastPathnameRef.current !== pathname) {
@@ -233,7 +272,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
     // Announce to Screen Readers / Accessibility Talkback
     const announcement =
       newLang === "en"
-        ? "Bahasa berhasil diubah ke Bahasa Inggris"
+        ? "Language changed to English"
         : "Bahasa berhasil diubah ke Bahasa Indonesia";
     const liveRegion = document.getElementById("a11y-live-announcer");
     if (liveRegion) {

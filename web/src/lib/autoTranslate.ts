@@ -1,7 +1,9 @@
 /**
  * Client-side auto-translation utility for diBISAlitas
- * Handles translating strings, arrays, or objects automatically
+ * Dilengkapi proteksi token masking merek resmi "diBISAlitas"
  */
+
+import { maskBrand, unmaskBrand } from "@/lib/brandProtection";
 
 export async function translateText(
   text: string,
@@ -12,18 +14,19 @@ export async function translateText(
   if (target === source) return text;
 
   try {
+    const maskedText = maskBrand(text);
     const res = await fetch("/api/translate", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ text, target, source }),
+      body: JSON.stringify({ text: maskedText, target, source }),
     });
 
-    if (!res.ok) return text;
+    if (!res.ok) return unmaskBrand(text);
     const data = await res.json();
-    return data.translation || text;
+    return unmaskBrand(data.translation || text);
   } catch (err) {
     console.warn("Client translation fallback:", err);
-    return text;
+    return unmaskBrand(text);
   }
 }
 
@@ -33,21 +36,23 @@ export async function translateBatch(
   source: "id" | "en" = "id"
 ): Promise<string[]> {
   if (!texts || texts.length === 0) return texts;
-  if (target === source) return texts;
+  if (target === source) return texts.map(unmaskBrand);
 
   try {
+    const maskedTexts = texts.map(maskBrand);
     const res = await fetch("/api/translate", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ texts, target, source }),
+      body: JSON.stringify({ texts: maskedTexts, target, source }),
     });
 
-    if (!res.ok) return texts;
+    if (!res.ok) return texts.map(unmaskBrand);
     const data = await res.json();
-    return data.translations || texts;
+    const rawTranslations: string[] = data.translations || texts;
+    return rawTranslations.map(unmaskBrand);
   } catch (err) {
     console.warn("Batch translation error:", err);
-    return texts;
+    return texts.map(unmaskBrand);
   }
 }
 
