@@ -322,8 +322,8 @@ export default function FloatingAccessibility() {
 
   const handleBisindoWordClick = (sign: string) => {
     sequencePlayer.stop();
-    setBisindoAutoPlay(false);
     setBisindoSign(sign);
+    setBisindoAutoPlay(true);
   };
 
   const handleBisindoTextSubmit = () => {
@@ -580,7 +580,7 @@ export default function FloatingAccessibility() {
                 isAnimating={sequencePlayer.isPlaying || bisindoAutoPlay}
                 currentSign={
                   sequencePlayer.tokens.length > 0 && sequencePlayer.currentToken
-                    ? sequencePlayer.currentToken.poseKey
+                    ? sequencePlayer.currentToken.poseKey || sequencePlayer.currentToken.displayWord || sequencePlayer.currentToken.rawText
                     : bisindoSign
                 }
                 speed={bisindoSpeed}

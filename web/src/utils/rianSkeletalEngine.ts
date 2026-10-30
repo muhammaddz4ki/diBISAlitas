@@ -204,43 +204,17 @@ export const SKELETAL_POSE_LIBRARY: Record<string, BoneEulerAngles> = {
     }),
   },
 
-  // 2. Pose Salam diBISAlitas (Tangan Kanan di Dada Kiri / Jantung)
+  // 2. Pose Salam diBISAlitas & Bantuan (Kedua tangan terangkat ke depan dada, telapak menghadap ke atas/depan)
   salam: {
-    [RIAN_BONES.SPINE1]: [0.04, 0.02, 0],
-    [RIAN_BONES.NECK]: [0.05, 0, 0],
-    [RIAN_BONES.HEAD]: [0.06, 0, 0], // sedikit menunduk hormat
-    [RIAN_BONES.RIGHT_ARM]: [-0.75, -0.22, 0.58],
-    [RIAN_BONES.RIGHT_FOREARM]: [-1.45, -0.38, 0.48],
-    [RIAN_BONES.RIGHT_HAND]: [0.28, 0.22, -0.18],
-    [RIAN_BONES.LEFT_ARM]: [0.05, 0, 0.06],
-    [RIAN_BONES.LEFT_FOREARM]: [-0.18, 0, -0.05],
-    [RIAN_BONES.LEFT_HAND]: [0.05, -0.08, 0.05],
-    ...createFingerRotations("Right", {
-      thumb: [0.1, -0.2, 0],
-      indexCurl: OPEN_CURL,
-      middleCurl: OPEN_CURL,
-      ringCurl: OPEN_CURL,
-      pinkyCurl: OPEN_CURL,
-    }),
-    ...createFingerRotations("Left", {
-      thumb: [-0.18, 0.12, 0],
-      indexCurl: -0.28,
-      middleCurl: -0.32,
-      ringCurl: -0.35,
-      pinkyCurl: -0.38,
-    }),
-  },
-
-  // 3. Pose Kata "Halo" (Tangan kanan di samping pelipis, siap melambai)
-  halo: {
-    [RIAN_BONES.SPINE1]: [0.02, -0.04, 0],
-    [RIAN_BONES.HEAD]: [-0.04, -0.08, 0],
-    [RIAN_BONES.RIGHT_SHOULDER]: [-0.05, 0.05, -0.1],
-    [RIAN_BONES.RIGHT_ARM]: [-0.35, 0.15, -1.05],
-    [RIAN_BONES.RIGHT_FOREARM]: [-1.82, -0.38, 0.12],
-    [RIAN_BONES.RIGHT_HAND]: [0.28, 0.45, -0.2],
-    [RIAN_BONES.LEFT_ARM]: [0.05, 0, 0.06],
-    [RIAN_BONES.LEFT_FOREARM]: [-0.15, 0, -0.05],
+    [RIAN_BONES.SPINE1]: [0.04, 0, 0],
+    [RIAN_BONES.NECK]: [0.04, 0, 0],
+    [RIAN_BONES.HEAD]: [0.05, 0, 0], // sedikit menunduk hormat
+    [RIAN_BONES.RIGHT_ARM]: [-0.72, -0.15, 0.32],
+    [RIAN_BONES.RIGHT_FOREARM]: [-1.55, 0.1, 0.28],
+    [RIAN_BONES.RIGHT_HAND]: [0.32, 0.38, -0.2],
+    [RIAN_BONES.LEFT_ARM]: [-0.72, 0.15, -0.32],
+    [RIAN_BONES.LEFT_FOREARM]: [-1.55, -0.1, -0.28],
+    [RIAN_BONES.LEFT_HAND]: [0.32, -0.38, 0.2],
     ...createFingerRotations("Right", {
       thumb: [0.2, -0.3, 0],
       indexCurl: OPEN_CURL,
@@ -248,19 +222,8 @@ export const SKELETAL_POSE_LIBRARY: Record<string, BoneEulerAngles> = {
       ringCurl: OPEN_CURL,
       pinkyCurl: OPEN_CURL,
     }),
-  },
-
-  // 4. Pose Kata "Terima Kasih" (Ujung jari dari dagu lalu bergerak maju terbuka)
-  terima_kasih: {
-    [RIAN_BONES.SPINE1]: [0.04, 0, 0],
-    [RIAN_BONES.HEAD]: [0.08, 0, 0], // anggukan terima kasih
-    [RIAN_BONES.RIGHT_ARM]: [-0.85, -0.25, 0.28],
-    [RIAN_BONES.RIGHT_FOREARM]: [-1.35, -0.12, 0.18],
-    [RIAN_BONES.RIGHT_HAND]: [0.35, 0.12, -0.35],
-    [RIAN_BONES.LEFT_ARM]: [0.05, 0, 0.06],
-    [RIAN_BONES.LEFT_FOREARM]: [-0.15, 0, -0.05],
-    ...createFingerRotations("Right", {
-      thumb: [0.15, -0.25, 0],
+    ...createFingerRotations("Left", {
+      thumb: [0.2, 0.3, 0],
       indexCurl: OPEN_CURL,
       middleCurl: OPEN_CURL,
       ringCurl: OPEN_CURL,
@@ -268,47 +231,160 @@ export const SKELETAL_POSE_LIBRARY: Record<string, BoneEulerAngles> = {
     }),
   },
 
-  // 5. Pose Kata "Bisa" (Kepalan mantap dengan jempol teracung ke atas)
+  // 3. Pose Kata "Halo" / "Sapa" (Tangan kanan terangkat setinggi pelipis/kepala, siap melambai)
+  halo: {
+    [RIAN_BONES.SPINE1]: [0.02, -0.03, 0],
+    [RIAN_BONES.HEAD]: [-0.02, -0.06, 0],
+    [RIAN_BONES.RIGHT_SHOULDER]: [-0.05, 0.05, -0.1],
+    [RIAN_BONES.RIGHT_ARM]: [-0.85, 0.2, -0.85],
+    [RIAN_BONES.RIGHT_FOREARM]: [-1.75, -0.3, 0.2],
+    [RIAN_BONES.RIGHT_HAND]: [0.3, 0.45, -0.2],
+    [RIAN_BONES.LEFT_ARM]: [-0.35, 0.12, -0.15],
+    [RIAN_BONES.LEFT_FOREARM]: [-0.85, -0.1, -0.15],
+    [RIAN_BONES.LEFT_HAND]: [0.15, -0.2, 0.1],
+    ...createFingerRotations("Right", {
+      thumb: [0.25, -0.35, 0],
+      indexCurl: OPEN_CURL,
+      middleCurl: OPEN_CURL,
+      ringCurl: OPEN_CURL,
+      pinkyCurl: OPEN_CURL,
+    }),
+    ...createFingerRotations("Left", {
+      thumb: [-0.18, 0.12, 0],
+      indexCurl: -0.35,
+      middleCurl: -0.4,
+      ringCurl: -0.42,
+      pinkyCurl: -0.45,
+    }),
+  },
+
+  // 4. Pose Kata "Terima Kasih" (Tangan kanan menyentuh dagu lalu bergerak maju terbuka)
+  terima_kasih: {
+    [RIAN_BONES.SPINE1]: [0.04, 0, 0],
+    [RIAN_BONES.HEAD]: [0.07, 0, 0], // anggukan terima kasih
+    [RIAN_BONES.RIGHT_ARM]: [-0.88, -0.25, 0.35],
+    [RIAN_BONES.RIGHT_FOREARM]: [-1.58, -0.1, 0.22],
+    [RIAN_BONES.RIGHT_HAND]: [0.45, 0.25, -0.3],
+    [RIAN_BONES.LEFT_ARM]: [-0.35, 0.12, -0.15],
+    [RIAN_BONES.LEFT_FOREARM]: [-0.85, -0.1, -0.15],
+    [RIAN_BONES.LEFT_HAND]: [0.15, -0.2, 0.1],
+    ...createFingerRotations("Right", {
+      thumb: [0.2, -0.3, 0],
+      indexCurl: OPEN_CURL,
+      middleCurl: OPEN_CURL,
+      ringCurl: OPEN_CURL,
+      pinkyCurl: OPEN_CURL,
+    }),
+    ...createFingerRotations("Left", {
+      thumb: [-0.18, 0.12, 0],
+      indexCurl: -0.35,
+      middleCurl: -0.4,
+      ringCurl: -0.42,
+      pinkyCurl: -0.45,
+    }),
+  },
+
+  // 5. Pose Kata "Bisa" (Tangan kanan terangkat di dada dengan acungan jempol mantap)
   bisa: {
     [RIAN_BONES.SPINE1]: [0.03, -0.02, 0],
-    [RIAN_BONES.HEAD]: [0.05, 0, 0],
-    [RIAN_BONES.RIGHT_ARM]: [-0.62, -0.18, 0.22],
-    [RIAN_BONES.RIGHT_FOREARM]: [-1.55, 0.08, 0.28],
-    [RIAN_BONES.RIGHT_HAND]: [0.25, 0.35, -0.18],
-    [RIAN_BONES.LEFT_ARM]: [0.05, 0, 0.06],
-    [RIAN_BONES.LEFT_FOREARM]: [-0.15, 0, -0.05],
+    [RIAN_BONES.HEAD]: [0.06, 0, 0],
+    [RIAN_BONES.RIGHT_ARM]: [-0.70, -0.18, 0.28],
+    [RIAN_BONES.RIGHT_FOREARM]: [-1.58, 0.08, 0.3],
+    [RIAN_BONES.RIGHT_HAND]: [0.3, 0.35, -0.2],
+    [RIAN_BONES.LEFT_ARM]: [-0.35, 0.12, -0.15],
+    [RIAN_BONES.LEFT_FOREARM]: [-0.85, -0.1, -0.15],
+    [RIAN_BONES.LEFT_HAND]: [0.15, -0.2, 0.1],
     ...createFingerRotations("Right", {
-      thumb: [0.45, -0.65, 0.2], // Jempol tegak lurus ke atas
+      thumb: [0.55, -0.75, 0.25], // Jempol tegak lurus ke atas
       indexCurl: FIST_CURL,
       middleCurl: FIST_CURL,
       ringCurl: FIST_CURL,
       pinkyCurl: FIST_CURL,
     }),
+    ...createFingerRotations("Left", {
+      thumb: [-0.18, 0.12, 0],
+      indexCurl: -0.35,
+      middleCurl: -0.4,
+      ringCurl: -0.42,
+      pinkyCurl: -0.45,
+    }),
   },
 
-  // 6. Pose Kata "Tolong" / "Sama Sama" (Kedua tangan terbuka ke depan)
+  // 6. Pose Kata "Tolong" / "Bantuan" (Kedua tangan terangkat di depan dada menengadah)
   tolong: {
     [RIAN_BONES.SPINE1]: [0.04, 0, 0],
     [RIAN_BONES.HEAD]: [0.04, 0, 0],
-    [RIAN_BONES.RIGHT_ARM]: [-0.55, -0.22, 0.25],
-    [RIAN_BONES.RIGHT_FOREARM]: [-1.32, 0.12, 0.32],
-    [RIAN_BONES.RIGHT_HAND]: [0.32, 0.45, -0.25],
-    [RIAN_BONES.LEFT_ARM]: [-0.55, 0.22, -0.25],
-    [RIAN_BONES.LEFT_FOREARM]: [-1.32, -0.12, -0.32],
-    [RIAN_BONES.LEFT_HAND]: [0.32, -0.45, 0.25],
+    [RIAN_BONES.RIGHT_ARM]: [-0.68, -0.18, 0.28],
+    [RIAN_BONES.RIGHT_FOREARM]: [-1.52, 0.12, 0.28],
+    [RIAN_BONES.RIGHT_HAND]: [0.35, 0.45, -0.22],
+    [RIAN_BONES.LEFT_ARM]: [-0.68, 0.18, -0.28],
+    [RIAN_BONES.LEFT_FOREARM]: [-1.52, -0.12, -0.28],
+    [RIAN_BONES.LEFT_HAND]: [0.35, -0.45, 0.22],
     ...createFingerRotations("Right", {
       thumb: [0.25, -0.35, 0],
-      indexCurl: -0.15,
-      middleCurl: -0.15,
-      ringCurl: -0.15,
-      pinkyCurl: -0.15,
+      indexCurl: OPEN_CURL,
+      middleCurl: OPEN_CURL,
+      ringCurl: OPEN_CURL,
+      pinkyCurl: OPEN_CURL,
     }),
     ...createFingerRotations("Left", {
       thumb: [0.25, 0.35, 0],
-      indexCurl: -0.15,
-      middleCurl: -0.15,
-      ringCurl: -0.15,
-      pinkyCurl: -0.15,
+      indexCurl: OPEN_CURL,
+      middleCurl: OPEN_CURL,
+      ringCurl: OPEN_CURL,
+      pinkyCurl: OPEN_CURL,
+    }),
+  },
+
+  // 7. Pose Kata "Pemetaan" / "Komunitas" (Kedua tangan bergerak dinamis di depan dada)
+  pemetaan: {
+    [RIAN_BONES.SPINE1]: [0.03, 0, 0],
+    [RIAN_BONES.HEAD]: [0.03, 0, 0],
+    [RIAN_BONES.RIGHT_ARM]: [-0.65, -0.22, 0.28],
+    [RIAN_BONES.RIGHT_FOREARM]: [-1.48, 0.1, 0.25],
+    [RIAN_BONES.RIGHT_HAND]: [0.28, 0.4, -0.2],
+    [RIAN_BONES.LEFT_ARM]: [-0.65, 0.22, -0.28],
+    [RIAN_BONES.LEFT_FOREARM]: [-1.48, -0.1, -0.25],
+    [RIAN_BONES.LEFT_HAND]: [0.28, -0.4, 0.2],
+    ...createFingerRotations("Right", {
+      thumb: [0.2, -0.3, 0],
+      indexCurl: OPEN_CURL,
+      middleCurl: OPEN_CURL,
+      ringCurl: OPEN_CURL,
+      pinkyCurl: OPEN_CURL,
+    }),
+    ...createFingerRotations("Left", {
+      thumb: [0.2, 0.3, 0],
+      indexCurl: OPEN_CURL,
+      middleCurl: OPEN_CURL,
+      ringCurl: OPEN_CURL,
+      pinkyCurl: OPEN_CURL,
+    }),
+  },
+
+  // 8. Pose Default Signing (Tangan kanan terangkat ke dada aktif menerangkan dengan artikulasi jari, tangan kiri siap di dada bawah)
+  default_signing: {
+    [RIAN_BONES.SPINE1]: [0.03, 0, 0],
+    [RIAN_BONES.HEAD]: [0.02, 0, 0],
+    [RIAN_BONES.RIGHT_ARM]: [-0.68, -0.18, 0.28],
+    [RIAN_BONES.RIGHT_FOREARM]: [-1.52, 0.1, 0.25],
+    [RIAN_BONES.RIGHT_HAND]: [0.28, 0.3, -0.18],
+    [RIAN_BONES.LEFT_ARM]: [-0.35, 0.12, -0.15],
+    [RIAN_BONES.LEFT_FOREARM]: [-0.85, -0.1, -0.15],
+    [RIAN_BONES.LEFT_HAND]: [0.15, -0.2, 0.1],
+    ...createFingerRotations("Right", {
+      thumb: [0.25, -0.3, 0],
+      indexCurl: -0.2,
+      middleCurl: -0.25,
+      ringCurl: -0.45,
+      pinkyCurl: -0.45,
+    }),
+    ...createFingerRotations("Left", {
+      thumb: [-0.18, 0.12, 0],
+      indexCurl: -0.35,
+      middleCurl: -0.4,
+      ringCurl: -0.42,
+      pinkyCurl: -0.45,
     }),
   },
 
@@ -488,6 +564,7 @@ export const SKELETAL_POSE_LIBRARY: Record<string, BoneEulerAngles> = {
 };
 
 // Aliaskan variasi nama isyarat ke preset kunci utama
+SKELETAL_POSE_LIBRARY.bantuan = SKELETAL_POSE_LIBRARY.tolong;
 SKELETAL_POSE_LIBRARY.terimakasih = SKELETAL_POSE_LIBRARY.terima_kasih;
 SKELETAL_POSE_LIBRARY.dagu = SKELETAL_POSE_LIBRARY.terima_kasih;
 SKELETAL_POSE_LIBRARY.bibir = SKELETAL_POSE_LIBRARY.terima_kasih;
@@ -498,42 +575,159 @@ SKELETAL_POSE_LIBRARY.sama_sama = SKELETAL_POSE_LIBRARY.tolong;
 SKELETAL_POSE_LIBRARY.dada = SKELETAL_POSE_LIBRARY.salam;
 SKELETAL_POSE_LIBRARY.hormat = SKELETAL_POSE_LIBRARY.salam;
 SKELETAL_POSE_LIBRARY.jantung = SKELETAL_POSE_LIBRARY.salam;
+SKELETAL_POSE_LIBRARY.komunitas = SKELETAL_POSE_LIBRARY.pemetaan;
+SKELETAL_POSE_LIBRARY.peta = SKELETAL_POSE_LIBRARY.pemetaan;
 SKELETAL_POSE_LIBRARY.idle = SKELETAL_POSE_LIBRARY.neutral;
 
 /**
- * Mengambil pose target berdasarkan kata atau huruf.
+ * Mengambil pose target berdasarkan kata, frase, atau huruf.
+ * Seluruh kata aktif DIWAJIBKAN mengangkat lengan ke signing space (dada ke wajah).
+ * Hanya kata netral/idle/pause/istirahat yang mengembalikan pose netral rileks.
+ * Jika kata tidak ada di pustaka khusus, default_signing yang digunakan (BUKAN netral).
  */
 export function resolveSkeletalPose(signKey: string): BoneEulerAngles {
-  const normalized = (signKey || "").trim();
-  const lower = normalized.toLowerCase().replace(/[-_ ]/g, "_");
+  if (!signKey || typeof signKey !== "string") {
+    return SKELETAL_POSE_LIBRARY.neutral;
+  }
 
+  const raw = signKey.trim();
+  const lower = raw.toLowerCase().replace(/[-_ ]/g, "_");
+
+  // Jika kata secara eksplisit adalah netral / idle / pause / istirahat / string kosong
+  if (
+    lower === "neutral" ||
+    lower === "idle" ||
+    lower === "pause" ||
+    lower === "istirahat" ||
+    lower === "siap" ||
+    lower === ""
+  ) {
+    return SKELETAL_POSE_LIBRARY.neutral;
+  }
+
+  // 1. Cek kunci persis di SKELETAL_POSE_LIBRARY
   if (SKELETAL_POSE_LIBRARY[lower]) {
     return SKELETAL_POSE_LIBRARY[lower];
   }
 
-  // Cek huruf besar alfabet tunggal (A-Z)
-  if (normalized.length === 1 && /[a-zA-Z]/.test(normalized)) {
-    const char = normalized.toUpperCase();
+  // 2. Cek fingerspelling huruf alfabet tunggal (A-Z)
+  if (raw.length === 1 && /[a-zA-Z]/.test(raw)) {
+    const char = raw.toUpperCase();
     if (SKELETAL_POSE_LIBRARY[char]) {
       return SKELETAL_POSE_LIBRARY[char];
     }
-    // Fallback alfabet bersih (tangan terangkat di dada memperagakan huruf)
+    // Fallback alfabet umum: tangan terangkat di dada memperagakan bentuk huruf
     return {
-      ...SKELETAL_POSE_LIBRARY.neutral,
-      [RIAN_BONES.RIGHT_ARM]: [-0.55, -0.12, 0.18],
-      [RIAN_BONES.RIGHT_FOREARM]: [-1.52, 0.1, 0.22],
-      [RIAN_BONES.RIGHT_HAND]: [0.2, 0.25, -0.18],
+      ...SKELETAL_POSE_LIBRARY.default_signing,
+      [RIAN_BONES.RIGHT_ARM]: [-0.68, -0.18, 0.28],
+      [RIAN_BONES.RIGHT_FOREARM]: [-1.52, 0.1, 0.25],
+      [RIAN_BONES.RIGHT_HAND]: [0.25, 0.25, -0.18],
       ...createFingerRotations("Right", {
-        thumb: [0.3, -0.4, 0],
+        thumb: [0.35, -0.4, 0],
         indexCurl: OPEN_CURL,
-        middleCurl: -0.8,
-        ringCurl: -1.2,
-        pinkyCurl: -1.2,
+        middleCurl: -0.6,
+        ringCurl: -1.0,
+        pinkyCurl: -1.0,
       }),
     };
   }
 
-  return SKELETAL_POSE_LIBRARY.neutral;
+  // 3. Pencocokan Semantik Berdasarkan Kata Kunci (Keyword Semantic Matching)
+  // Salam & Penghormatan
+  if (
+    lower.includes("salam") ||
+    lower.includes("hormat") ||
+    lower.includes("jantung") ||
+    lower.includes("dada") ||
+    lower.includes("sama_sama")
+  ) {
+    return SKELETAL_POSE_LIBRARY.salam;
+  }
+
+  // Bantuan & Tolong
+  if (
+    lower.includes("tolong") ||
+    lower.includes("bantu") ||
+    lower.includes("bantuan")
+  ) {
+    return SKELETAL_POSE_LIBRARY.tolong;
+  }
+
+  // Sapaan / Halo
+  if (
+    lower.includes("halo") ||
+    lower.includes("hai") ||
+    lower.includes("sapa") ||
+    lower.includes("pagi") ||
+    lower.includes("siang") ||
+    lower.includes("sore") ||
+    lower.includes("malam") ||
+    lower.includes("datang") ||
+    lower.includes("kabar")
+  ) {
+    return SKELETAL_POSE_LIBRARY.halo;
+  }
+
+  // Terima Kasih
+  if (
+    lower.includes("terima") ||
+    lower.includes("kasih") ||
+    lower.includes("makasih") ||
+    lower.includes("dagu") ||
+    lower.includes("bibir")
+  ) {
+    return SKELETAL_POSE_LIBRARY.terima_kasih;
+  }
+
+  // Bisa / Optimisme / Kemandirian
+  if (
+    lower.includes("bisa") ||
+    lower.includes("mampu") ||
+    lower.includes("sukses") ||
+    lower.includes("jempol") ||
+    lower.includes("cerdas") ||
+    lower.includes("unggul") ||
+    lower.includes("pasti")
+  ) {
+    return SKELETAL_POSE_LIBRARY.bisa;
+  }
+
+  // Pemetaan / Komunitas / Navigasi / Fitur
+  if (
+    lower.includes("peta") ||
+    lower.includes("pemetaan") ||
+    lower.includes("komunitas") ||
+    lower.includes("wilayah") ||
+    lower.includes("ekosistem") ||
+    lower.includes("lingkungan")
+  ) {
+    return SKELETAL_POSE_LIBRARY.pemetaan;
+  }
+
+  // Persetujuan / Ya
+  if (
+    lower.includes("ya") ||
+    lower.includes("setuju") ||
+    lower.includes("oke") ||
+    lower.includes("benar") ||
+    lower.includes("fist")
+  ) {
+    return SKELETAL_POSE_LIBRARY.ya;
+  }
+
+  // Penolakan / Tidak
+  if (
+    lower.includes("tidak") ||
+    lower.includes("bukan") ||
+    lower.includes("jangan") ||
+    lower.includes("tolak")
+  ) {
+    return SKELETAL_POSE_LIBRARY.tidak;
+  }
+
+  // 4. Default Fallback untuk seluruh kata aktif lainnya:
+  // JANGAN PERNAH biarkan tangan menggantung di samping! Wajib selalu terangkat di signing space!
+  return SKELETAL_POSE_LIBRARY.default_signing;
 }
 
 /**
@@ -605,7 +799,7 @@ export class RianSkeletalController {
    * Pembaruan per-frame menggunakan Quaternion Slerp halus dengan peredaman (damping rate 7.0 - 9.0 * delta)
    * Dilengkapi secondary motion follow-through pada pergelangan tangan,
    * pernapasan idle organik menggunakan gelombang sinus Math.sin(time * 1.8),
-   * dan parallax lerp peredaman lembut (0.05).
+   * parallax lerp peredaman lembut (0.05), serta animasi dinamis kontinu saat isyarat aktif.
    */
   public update(options: {
     deltaTime: number;
@@ -613,6 +807,7 @@ export class RianSkeletalController {
     mouseParallax?: { x: number; y: number };
     enableBreathing?: boolean;
     clockTime?: number;
+    isAnimating?: boolean;
   }): void {
     const {
       deltaTime,
@@ -620,6 +815,7 @@ export class RianSkeletalController {
       mouseParallax = { x: 0, y: 0 },
       enableBreathing = true,
       clockTime = 0,
+      isAnimating = true,
     } = options;
 
     const clampedDelta = Math.min(deltaTime, 0.1);
@@ -725,44 +921,187 @@ export class RianSkeletalController {
       }
     }
 
-    // 4. Dinamika Gestur Berkelanjutan (Lambaian Tangan pada "Halo", Anggukan Mantap pada "Bisa")
-    const lowerSign = this.activeSignKey.toLowerCase().replace(/[-_ ]/g, "_");
+    // 4. Dinamika Gestur Berkelanjutan (Lambaian Tangan, Anggukan, Pulsa Isyarat di Signing Space)
+    if (isAnimating) {
+      const lowerSign = (this.activeSignKey || "").toLowerCase().replace(/[-_ ]/g, "_");
 
-    if (lowerSign === "halo") {
-      const rightHandBone = this.bonesMap.get(RIAN_BONES.RIGHT_HAND);
-      const rightForeArmBone = this.bonesMap.get(RIAN_BONES.RIGHT_FOREARM);
+      if (
+        lowerSign === "halo" ||
+        lowerSign.includes("halo") ||
+        lowerSign.includes("sapa") ||
+        lowerSign.includes("pagi") ||
+        lowerSign.includes("siang") ||
+        lowerSign.includes("sore") ||
+        lowerSign.includes("malam")
+      ) {
+        // Melambai ramah di pelipis/kepala
+        const rightHandBone = this.bonesMap.get(RIAN_BONES.RIGHT_HAND);
+        const rightForeArmBone = this.bonesMap.get(RIAN_BONES.RIGHT_FOREARM);
 
-      if (rightHandBone) {
-        const waveAngle = Math.sin(clockTime * 5.8 * speed) * 0.20;
-        const waveEuler = new THREE.Euler(0, 0, waveAngle, "XYZ");
-        rightHandBone.quaternion.multiply(new THREE.Quaternion().setFromEuler(waveEuler));
-      }
-      if (rightForeArmBone) {
-        const swayAngle = Math.sin(clockTime * 5.8 * speed) * 0.035;
-        const swayEuler = new THREE.Euler(0, swayAngle, 0, "XYZ");
-        rightForeArmBone.quaternion.multiply(new THREE.Quaternion().setFromEuler(swayEuler));
-      }
-    } else if (lowerSign === "bisa") {
-      const headBone = this.bonesMap.get(RIAN_BONES.HEAD);
-      if (headBone) {
-        const nodAngle = Math.max(0, Math.sin(clockTime * 3.8 * speed)) * 0.07;
-        const nodEuler = new THREE.Euler(nodAngle, 0, 0, "XYZ");
-        headBone.quaternion.multiply(new THREE.Quaternion().setFromEuler(nodEuler));
-      }
-    } else if (lowerSign === "tidak") {
-      const headBone = this.bonesMap.get(RIAN_BONES.HEAD);
-      const rightHandBone = this.bonesMap.get(RIAN_BONES.RIGHT_HAND);
-      if (headBone) {
-        const shakeAngle = Math.sin(clockTime * 5.2 * speed) * 0.11;
-        headBone.quaternion.multiply(
-          new THREE.Quaternion().setFromEuler(new THREE.Euler(0, shakeAngle, 0, "XYZ"))
-        );
-      }
-      if (rightHandBone) {
-        const wagAngle = Math.sin(clockTime * 5.8 * speed) * 0.16;
-        rightHandBone.quaternion.multiply(
-          new THREE.Quaternion().setFromEuler(new THREE.Euler(0, 0, wagAngle, "XYZ"))
-        );
+        if (rightHandBone) {
+          const waveAngle = Math.sin(clockTime * 6.0 * speed) * 0.22;
+          const waveEuler = new THREE.Euler(0, 0, waveAngle, "XYZ");
+          rightHandBone.quaternion.multiply(new THREE.Quaternion().setFromEuler(waveEuler));
+        }
+        if (rightForeArmBone) {
+          const swayAngle = Math.sin(clockTime * 6.0 * speed) * 0.045;
+          const swayEuler = new THREE.Euler(0, swayAngle, 0, "XYZ");
+          rightForeArmBone.quaternion.multiply(new THREE.Quaternion().setFromEuler(swayEuler));
+        }
+      } else if (
+        lowerSign === "terima_kasih" ||
+        lowerSign.includes("terima") ||
+        lowerSign.includes("kasih") ||
+        lowerSign.includes("makasih")
+      ) {
+        // Pulsa terima kasih dari dagu maju ke depan
+        const rightForeArmBone = this.bonesMap.get(RIAN_BONES.RIGHT_FOREARM);
+        const rightHandBone = this.bonesMap.get(RIAN_BONES.RIGHT_HAND);
+        const headBone = this.bonesMap.get(RIAN_BONES.HEAD);
+        const tkPulse = Math.sin(clockTime * 3.6 * speed);
+
+        if (rightForeArmBone) {
+          const fwdAngle = tkPulse * 0.08;
+          rightForeArmBone.quaternion.multiply(
+            new THREE.Quaternion().setFromEuler(new THREE.Euler(fwdAngle, 0, 0, "XYZ"))
+          );
+        }
+        if (rightHandBone) {
+          const handPitch = tkPulse * 0.06;
+          rightHandBone.quaternion.multiply(
+            new THREE.Quaternion().setFromEuler(new THREE.Euler(handPitch, 0, 0, "XYZ"))
+          );
+        }
+        if (headBone) {
+          const bowAngle = Math.max(0, tkPulse) * 0.06;
+          headBone.quaternion.multiply(
+            new THREE.Quaternion().setFromEuler(new THREE.Euler(bowAngle, 0, 0, "XYZ"))
+          );
+        }
+      } else if (
+        lowerSign === "bisa" ||
+        lowerSign.includes("bisa") ||
+        lowerSign.includes("pasti") ||
+        lowerSign.includes("jempol")
+      ) {
+        // Anggukan mantap dan pulsa acungan jempol
+        const headBone = this.bonesMap.get(RIAN_BONES.HEAD);
+        const rightForeArmBone = this.bonesMap.get(RIAN_BONES.RIGHT_FOREARM);
+
+        if (headBone) {
+          const nodAngle = Math.max(0, Math.sin(clockTime * 4.0 * speed)) * 0.08;
+          headBone.quaternion.multiply(
+            new THREE.Quaternion().setFromEuler(new THREE.Euler(nodAngle, 0, 0, "XYZ"))
+          );
+        }
+        if (rightForeArmBone) {
+          const pumpAngle = Math.sin(clockTime * 4.0 * speed) * 0.04;
+          rightForeArmBone.quaternion.multiply(
+            new THREE.Quaternion().setFromEuler(new THREE.Euler(pumpAngle, 0, 0, "XYZ"))
+          );
+        }
+      } else if (
+        lowerSign === "salam" ||
+        lowerSign === "tolong" ||
+        lowerSign === "bantuan" ||
+        lowerSign.includes("salam") ||
+        lowerSign.includes("tolong") ||
+        lowerSign.includes("bantu")
+      ) {
+        // Kedua tangan terangkat di depan dada berdenyut lembut penuh hormat
+        const rForeArm = this.bonesMap.get(RIAN_BONES.RIGHT_FOREARM);
+        const lForeArm = this.bonesMap.get(RIAN_BONES.LEFT_FOREARM);
+        const offeringPulse = Math.sin(clockTime * 3.0 * speed) * 0.045;
+
+        if (rForeArm) {
+          rForeArm.quaternion.multiply(
+            new THREE.Quaternion().setFromEuler(new THREE.Euler(offeringPulse, 0, 0, "XYZ"))
+          );
+        }
+        if (lForeArm) {
+          lForeArm.quaternion.multiply(
+            new THREE.Quaternion().setFromEuler(new THREE.Euler(offeringPulse, 0, 0, "XYZ"))
+          );
+        }
+      } else if (
+        lowerSign === "pemetaan" ||
+        lowerSign === "komunitas" ||
+        lowerSign.includes("peta") ||
+        lowerSign.includes("wilayah") ||
+        lowerSign.includes("komunitas")
+      ) {
+        // Kedua tangan menyapu ke samping dan saling membuka di depan dada
+        const rHand = this.bonesMap.get(RIAN_BONES.RIGHT_HAND);
+        const lHand = this.bonesMap.get(RIAN_BONES.LEFT_HAND);
+        const rForeArm = this.bonesMap.get(RIAN_BONES.RIGHT_FOREARM);
+        const lForeArm = this.bonesMap.get(RIAN_BONES.LEFT_FOREARM);
+        const mapSweep = Math.sin(clockTime * 3.2 * speed) * 0.08;
+
+        if (rHand) {
+          rHand.quaternion.multiply(
+            new THREE.Quaternion().setFromEuler(new THREE.Euler(0, mapSweep, -mapSweep * 0.4, "XYZ"))
+          );
+        }
+        if (lHand) {
+          lHand.quaternion.multiply(
+            new THREE.Quaternion().setFromEuler(new THREE.Euler(0, -mapSweep, mapSweep * 0.4, "XYZ"))
+          );
+        }
+        if (rForeArm) {
+          rForeArm.quaternion.multiply(
+            new THREE.Quaternion().setFromEuler(new THREE.Euler(0, mapSweep * 0.35, 0, "XYZ"))
+          );
+        }
+        if (lForeArm) {
+          lForeArm.quaternion.multiply(
+            new THREE.Quaternion().setFromEuler(new THREE.Euler(0, -mapSweep * 0.35, 0, "XYZ"))
+          );
+        }
+      } else if (lowerSign === "tidak" || lowerSign.includes("tidak") || lowerSign.includes("bukan")) {
+        const headBone = this.bonesMap.get(RIAN_BONES.HEAD);
+        const rightHandBone = this.bonesMap.get(RIAN_BONES.RIGHT_HAND);
+        if (headBone) {
+          const shakeAngle = Math.sin(clockTime * 5.2 * speed) * 0.11;
+          headBone.quaternion.multiply(
+            new THREE.Quaternion().setFromEuler(new THREE.Euler(0, shakeAngle, 0, "XYZ"))
+          );
+        }
+        if (rightHandBone) {
+          const wagAngle = Math.sin(clockTime * 5.8 * speed) * 0.16;
+          rightHandBone.quaternion.multiply(
+            new THREE.Quaternion().setFromEuler(new THREE.Euler(0, 0, wagAngle, "XYZ"))
+          );
+        }
+      } else if (
+        lowerSign !== "neutral" &&
+        lowerSign !== "idle" &&
+        lowerSign !== "pause" &&
+        lowerSign !== "istirahat"
+      ) {
+        // Default signing gesture dinamis untuk seluruh kata umum di signing space
+        const rForeArm = this.bonesMap.get(RIAN_BONES.RIGHT_FOREARM);
+        const rHand = this.bonesMap.get(RIAN_BONES.RIGHT_HAND);
+        const rIndex = this.bonesMap.get(RIAN_BONES.RIGHT_INDEX_1);
+        const speakPulse = Math.sin(clockTime * 3.5 * speed);
+
+        if (rForeArm) {
+          const floatAngle = speakPulse * 0.05;
+          rForeArm.quaternion.multiply(
+            new THREE.Quaternion().setFromEuler(new THREE.Euler(floatAngle, 0, floatAngle * 0.3, "XYZ"))
+          );
+        }
+        if (rHand) {
+          const pitchAngle = Math.cos(clockTime * 3.5 * speed) * 0.07;
+          rHand.quaternion.multiply(
+            new THREE.Quaternion().setFromEuler(new THREE.Euler(pitchAngle, 0, 0, "XYZ"))
+          );
+        }
+        if (rIndex) {
+          const fingerFlex = Math.sin(clockTime * 3.5 * speed) * 0.08;
+          rIndex.quaternion.multiply(
+            new THREE.Quaternion().setFromEuler(new THREE.Euler(fingerFlex, 0, 0, "XYZ"))
+          );
+        }
       }
     }
   }

@@ -59,11 +59,20 @@ export default function Rian3DCanvas({
   const startTimeRef = useRef<number>(0);
 
   // Refs reaktif untuk props agar tidak memicu unmount WebGL berulang
+  const currentSignRef = useRef<string>(currentSign);
   const isAnimatingRef = useRef<boolean>(isAnimating);
   const speedRef = useRef<number>(speed);
   const enableParallaxRef = useRef<boolean>(enableParallax);
   const enableBreathingRef = useRef<boolean>(enableBreathing);
   const jacketColorRef = useRef<"blue" | "dark" | "mustard">(jacketColor);
+
+  useEffect(() => {
+    currentSignRef.current = currentSign;
+    if (controllerRef.current) {
+      const target = currentSign && currentSign.trim() ? currentSign : "neutral";
+      controllerRef.current.setTargetSign(target);
+    }
+  }, [currentSign]);
 
   useEffect(() => {
     isAnimatingRef.current = isAnimating;
@@ -80,14 +89,6 @@ export default function Rian3DCanvas({
   useEffect(() => {
     enableBreathingRef.current = enableBreathing;
   }, [enableBreathing]);
-
-  // Update target sign pose ketika prop berubah
-  useEffect(() => {
-    if (controllerRef.current) {
-      const target = currentSign && currentSign.trim() ? currentSign : "neutral";
-      controllerRef.current.setTargetSign(target);
-    }
-  }, [currentSign]);
 
   // Update warna jas almamater secara dinamis tanpa recreate context
   useEffect(() => {
@@ -240,7 +241,9 @@ export default function Rian3DCanvas({
         controllerRef.current = controller;
 
         const initialSign =
-          currentSign && currentSign.trim() ? currentSign : "neutral";
+          currentSignRef.current && currentSignRef.current.trim()
+            ? currentSignRef.current
+            : "neutral";
         controller.setTargetSign(initialSign);
 
         setIsLoading(false);
@@ -267,7 +270,8 @@ export default function Rian3DCanvas({
       lastTimeRef.current = currentTime;
       const elapsed = (currentTime - startTimeRef.current) / 1000;
 
-      if (controllerRef.current && isAnimatingRef.current) {
+      // Controller selalu di-update setiap frame agar slerp pose selalu tereksekusi mulus
+      if (controllerRef.current) {
         controllerRef.current.update({
           deltaTime: delta,
           speed: speedRef.current,
@@ -276,6 +280,7 @@ export default function Rian3DCanvas({
             : { x: 0, y: 0 },
           enableBreathing: enableBreathingRef.current,
           clockTime: elapsed,
+          isAnimating: isAnimatingRef.current,
         });
       }
 

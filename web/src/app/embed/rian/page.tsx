@@ -224,8 +224,8 @@ export default function EmbedRianPage() {
           isAnimating={sequencePlayer.isPlaying}
           currentSign={
             sequencePlayer.tokens.length > 0 && sequencePlayer.currentToken
-              ? sequencePlayer.currentToken.poseKey
-              : "neutral"
+              ? sequencePlayer.currentToken.poseKey || sequencePlayer.currentToken.displayWord || sequencePlayer.currentToken.rawText
+              : "salam"
           }
           speed={speed}
           avatarModel="rian"

@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import { Play, Pause, RotateCcw, Sparkles, Box, Layers } from "lucide-react";
+import { Play, Pause, RotateCcw, Sparkles } from "lucide-react";
 import { RIAN_GESTURE_FRAMES } from "@/utils/textToSignEngine";
 import Rian3DCanvas from "@/components/Rian3DCanvas";
 
@@ -220,38 +220,6 @@ export default function Bisindo3DCharacter({
 
   return (
     <div className="flex flex-col items-center w-full h-full relative select-none">
-      {/* Tombol Alih Mode 3D Canvas / 2.5D Parallax */}
-      {allowModeSwitch && !customImage && avatarModel === "rian" && (
-        <div className="absolute top-4 left-16 z-30 flex items-center bg-white/90 dark:bg-slate-900/90 backdrop-blur-md rounded-full p-0.5 border border-slate-200/80 dark:border-slate-800 shadow-xs">
-          <button
-            type="button"
-            onClick={() => setCurrentRenderMode("3d")}
-            title="Mode 3D Real-Time Skeletal Engine"
-            className={`flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold transition-all ${
-              is3DActive
-                ? "bg-[#1B9981] text-white shadow-xs"
-                : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
-            }`}
-          >
-            <Box className="w-3 h-3" />
-            <span>3D</span>
-          </button>
-          <button
-            type="button"
-            onClick={() => setCurrentRenderMode("2.5d")}
-            title="Mode 2.5D Clay Parallax"
-            className={`flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold transition-all ${
-              !is3DActive
-                ? "bg-[#1B9981] text-white shadow-xs"
-                : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
-            }`}
-          >
-            <Layers className="w-3 h-3" />
-            <span>2.5D</span>
-          </button>
-        </div>
-      )}
-
       {/* 3D Viewport Box */}
       <div
         ref={containerRef}
