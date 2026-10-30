@@ -207,11 +207,29 @@ export default function Rian3DCanvas({
         root.position.set(0, -0.18, 0);
         scene.add(root);
 
-        // Kumpulkan semua tulang armature
+        // Kumpulkan semua tulang armature secara komprehensif
         const bones: THREE.Bone[] = [];
+        const seenBones = new Set<THREE.Bone>();
+
         root.traverse((child) => {
-          if ((child as any).isBone) {
-            bones.push(child as THREE.Bone);
+          if ((child as any).isBone || child.type === "Bone") {
+            const b = child as THREE.Bone;
+            if (!seenBones.has(b)) {
+              seenBones.add(b);
+              bones.push(b);
+            }
+          }
+
+          if ((child as any).isSkinnedMesh && (child as THREE.SkinnedMesh).skeleton) {
+            const sm = child as THREE.SkinnedMesh;
+            if (Array.isArray(sm.skeleton.bones)) {
+              sm.skeleton.bones.forEach((b) => {
+                if (b && !seenBones.has(b)) {
+                  seenBones.add(b);
+                  bones.push(b);
+                }
+              });
+            }
           }
 
           // Deteksi material blazer untuk penggantian warna dinamis
@@ -236,7 +254,7 @@ export default function Rian3DCanvas({
           }
         });
 
-        // Inisialisasi Skeletal Motion Controller
+        // Inisialisasi Skeletal Motion Controller dengan Fuzzy Bone Resolver
         const controller = new RianSkeletalController(bones);
         controllerRef.current = controller;
 
@@ -305,17 +323,18 @@ export default function Rian3DCanvas({
 
     resizeObserver.observe(mountContainer);
 
-    // 8. Pembersihan Defensif (Defensive Cleanup saat Unmount)
+    // 8. Pembersihan Defensif & Pencegahan Kebocoran Memori WebGL (Mencegah "Too many active WebGL contexts")
     return () => {
       isDisposed = true;
 
+      // Hentikan render loop sesegera mungkin
       if (animFrameIdRef.current !== null) {
         cancelAnimationFrame(animFrameIdRef.current);
         animFrameIdRef.current = null;
       }
       resizeObserver.disconnect();
 
-      // Bersihkan scene tanpa melempar exception
+      // Bersihkan dan buang semua geometry, material, dan tekstur dari scene
       try {
         if (sceneRef.current) {
           sceneRef.current.traverse((child) => {
@@ -323,31 +342,53 @@ export default function Rian3DCanvas({
               const mesh = child as THREE.Mesh;
               mesh.geometry?.dispose();
               if (Array.isArray(mesh.material)) {
-                mesh.material.forEach((m) => m?.dispose());
+                mesh.material.forEach((m) => {
+                  if (m) {
+                    (m as any).map?.dispose();
+                    (m as any).normalMap?.dispose();
+                    (m as any).roughnessMap?.dispose();
+                    m.dispose();
+                  }
+                });
               } else if (mesh.material) {
+                (mesh.material as any).map?.dispose();
+                (mesh.material as any).normalMap?.dispose();
+                (mesh.material as any).roughnessMap?.dispose();
                 mesh.material.dispose();
               }
             }
           });
+          sceneRef.current.clear();
         }
       } catch {
         // Abaikan error traversal pada scene saat unmount
       }
 
-      // Pembuangan WebGLRenderer defensif
+      // Pembuangan WebGLRenderer defensif & pelepasan konteks WebGL total
       try {
-        const canvas = rendererRef.current?.domElement;
-        if (mountContainer && canvas && canvas.parentNode === mountContainer) {
-          mountContainer.removeChild(canvas);
+        const renderer = rendererRef.current;
+        if (renderer) {
+          // 1. Paksa pelepasan konteks WebGL Three.js
+          renderer.forceContextLoss();
+
+          // 2. Panggil ekstensi WEBGL_lose_context browser secara langsung
+          const gl = renderer.getContext?.();
+          if (gl) {
+            const loseContextExt = gl.getExtension("WEBGL_lose_context");
+            loseContextExt?.loseContext();
+          }
+
+          // 3. Lepaskan elemen canvas dari mount container
+          const canvas = renderer.domElement;
+          if (mountContainer && canvas && canvas.parentNode === mountContainer) {
+            mountContainer.removeChild(canvas);
+          }
+
+          // 4. Hancurkan resource internal renderer Three.js
+          renderer.dispose();
         }
       } catch {
-        // Abaikan error pelepasan node jika DOM sudah di-detach oleh browser
-      }
-
-      try {
-        rendererRef.current?.dispose();
-      } catch {
-        // Abaikan error dispose renderer
+        // Abaikan error pelepasan WebGL context
       }
 
       controllerRef.current = null;
