@@ -206,7 +206,7 @@ export default function InteractiveDeviceMockup({
                 </div>
               </div>
             ) : (
-              <AnimatePresence mode="wait">
+              <AnimatePresence mode="popLayout">
               {/* 1. BiSAFE SCREEN */}
               {activeFeature === "bisafe" && (
                 <motion.div

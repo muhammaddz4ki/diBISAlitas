@@ -170,7 +170,7 @@ export default function FloatingBisindo3D({ position = "bottom-right" }: Floatin
             </div>
 
             {/* Content */}
-            <AnimatePresence mode="wait">
+            <AnimatePresence mode="popLayout">
               {!isMinimized && (
                 <motion.div
                   initial={{ height: 0, opacity: 0 }}

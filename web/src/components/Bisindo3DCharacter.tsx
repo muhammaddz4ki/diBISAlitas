@@ -295,7 +295,7 @@ export default function Bisindo3DCharacter({
               className="relative w-full h-full flex items-center justify-center transform-gpu"
               style={{ transformStyle: "preserve-3d" }}
             >
-              <AnimatePresence mode="wait">
+              <AnimatePresence mode="popLayout">
                 <motion.div
                   key={`${avatarModel}-${getImageSrc()}`}
                   initial={{ opacity: 0.92, scale: 0.98 }}

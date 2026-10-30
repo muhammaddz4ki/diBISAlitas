@@ -587,7 +587,7 @@ function BentoFeaturesSection() {
             <div className="absolute inset-0 z-10 flex flex-row items-center justify-between gap-2 sm:gap-6 px-3 pr-4 sm:px-8 md:px-12">
               
               {/* 3D Tilted Phone Video Mockup */}
-              <AnimatePresence mode="wait">
+              <AnimatePresence mode="popLayout">
                 <motion.div
                   key={activePillar.key + "-video"}
                   initial={{ opacity: 0, x: -30, rotateY: 25, rotateX: 10, scale: 0.9 }}
@@ -625,7 +625,7 @@ function BentoFeaturesSection() {
               </AnimatePresence>
 
               {/* 2 Glass Cards stacked */}
-              <AnimatePresence mode="wait">
+              <AnimatePresence mode="popLayout">
                 <motion.div
                   key={activePillar.key + "-glass"}
                   initial={{ opacity: 0, x: 30 }}
@@ -702,7 +702,7 @@ function BentoFeaturesSection() {
           >
 
             {/* RIGHT TOP: Title + Description */}
-            <AnimatePresence mode="wait">
+            <AnimatePresence mode="popLayout">
               <motion.div
                 key={activePillar.key + "-desc"}
                 initial={{ opacity: 0, y: 15 }}
@@ -1023,7 +1023,7 @@ function ImpactSection() {
             className="flex items-center justify-center gap-2 sm:gap-4 md:gap-6 lg:gap-8 w-full"
             style={{ perspective: "2000px", transformStyle: "preserve-3d" }}
           >
-            <AnimatePresence mode="wait">
+            <AnimatePresence mode="popLayout">
               {/* Card -2 */}
               <motion.div 
                 key={`c-2-${activeIndex}`}
@@ -1089,7 +1089,7 @@ function ImpactSection() {
               transition={{ duration: 0.8, ease: [0.32, 0.72, 0, 1] }}
               className={`order-3 relative w-[240px] sm:w-[280px] md:w-[350px] lg:w-[400px] h-[340px] sm:h-[380px] md:h-[480px] lg:h-[550px] rounded-[1.5rem] md:rounded-[2rem] lg:rounded-[3rem] p-3 md:p-5 flex flex-col ${activeItem.color} shadow-2xl z-20 flex-shrink-0 transform transition-colors duration-700 hover:scale-[1.02]`}
             >
-              <AnimatePresence mode="wait">
+              <AnimatePresence mode="popLayout">
                 <motion.div 
                   key={`center-content-${activeIndex}`}
                   initial={{ opacity: 0 }}

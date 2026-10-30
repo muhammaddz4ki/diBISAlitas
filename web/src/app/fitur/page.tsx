@@ -188,7 +188,7 @@ export default function FiturOverviewPage() {
 
       <section id="fitur-showcase" className="relative min-h-screen pt-20 flex items-center overflow-hidden transition-colors duration-300">
         {/* Dynamic Background Glow based on active pillar */}
-        <AnimatePresence mode="wait">
+        <AnimatePresence mode="popLayout">
           <motion.div
             key={activeFeature.key + "-bg"}
             initial={{ opacity: 0 }}
@@ -254,7 +254,7 @@ export default function FiturOverviewPage() {
 
           {/* CENTER COLUMN: 3D Phone Video Mockup */}
           <div className="relative w-full h-[400px] sm:h-[450px] lg:h-[500px] xl:h-[550px] flex justify-center items-center pointer-events-none z-10 my-4 lg:my-0">
-            <AnimatePresence mode="wait">
+            <AnimatePresence mode="popLayout">
               <motion.div
                 key={activeFeature.key + "-phone"}
                 initial={{ opacity: 0, scale: 0.85, filter: "blur(10px)" }}
@@ -282,7 +282,7 @@ export default function FiturOverviewPage() {
             </AnimatePresence>
 
             {/* Central Intense Glow */}
-            <AnimatePresence mode="wait">
+            <AnimatePresence mode="popLayout">
                <motion.div
                  key={activeFeature.key + "-centerglow"}
                  initial={{ opacity: 0, scale: 0.5 }}
@@ -296,7 +296,7 @@ export default function FiturOverviewPage() {
 
           {/* RIGHT COLUMN: Feature Details Card & Selector */}
           <div className="flex flex-col items-center lg:items-end justify-center w-full z-20 gap-3 lg:gap-4">
-            <AnimatePresence mode="wait">
+            <AnimatePresence mode="popLayout">
               <motion.div
                 key={activeFeature.key + "-detailcard"}
                 initial={{ opacity: 0, x: 40 }}

@@ -54,7 +54,9 @@ export default function Rian3DCanvas({
 
   // Parallax koordinat mouse kursor
   const mousePosRef = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
-  const clockRef = useRef<THREE.Clock>(new THREE.Clock());
+  // Waktu render loop presisi tinggi (pengganti THREE.Clock yang deprecated)
+  const lastTimeRef = useRef<number>(0);
+  const startTimeRef = useRef<number>(0);
 
   // Refs reaktif untuk props agar tidak memicu unmount WebGL berulang
   const isAnimatingRef = useRef<boolean>(isAnimating);
@@ -254,13 +256,16 @@ export default function Rian3DCanvas({
       }
     );
 
-    // 6. Loop Animasi Utama (Render Loop berbasis THREE.Clock untuk 60 FPS mentah stabil)
-    clockRef.current.start();
-    const renderLoop = () => {
+    // 6. Loop Animasi Utama (Render Loop murni presisi tinggi performance.now() - Bebas Warning Deprecated)
+    lastTimeRef.current = performance.now();
+    startTimeRef.current = performance.now();
+    const renderLoop = (timeNow?: number) => {
       animFrameIdRef.current = requestAnimationFrame(renderLoop);
 
-      const delta = clockRef.current.getDelta();
-      const elapsed = clockRef.current.getElapsedTime();
+      const currentTime = typeof timeNow === "number" && timeNow > 0 ? timeNow : performance.now();
+      const delta = Math.min((currentTime - lastTimeRef.current) / 1000, 0.1);
+      lastTimeRef.current = currentTime;
+      const elapsed = (currentTime - startTimeRef.current) / 1000;
 
       if (controllerRef.current && isAnimatingRef.current) {
         controllerRef.current.update({
